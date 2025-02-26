@@ -1,0 +1,10 @@
+{
+  "collabs":[
+      { "id": 1, 
+      "firstName": "Donggeun", 
+      "lastName": "Tak", 
+      "affiliation": "Seoul National University", 
+      "workingGroup": "MMA, Transients", 
+      "email": "donggeun.tak@gmail.com" }
+  ]
+}

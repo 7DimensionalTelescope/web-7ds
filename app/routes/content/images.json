@@ -1,0 +1,34 @@
+[
+  {
+    "name": "The 7-Dimensional Telescope.",
+    "file": "Figure1_7DT.jpeg"
+  },
+  {
+    "name": "Another view of the 7-Dimensional Telescope.",
+    "file": "Figure2_7DT.jpg"
+  },
+  {
+    "name": "The 7-Dimensional Telescope in action at night. ",
+    "file": "Figure3_7DTatNight.JPG"
+  },
+    {
+    "name": "Image of the Sculptor Galaxy (NGC 253) ",
+    "file": "Figure4_NGC0253.jpg"
+  },
+    {
+    "name": "An image demonstrating the field of view of the 7-Dimensional Telescope. ",
+    "file": "Figure5_NGC253+6moon.jpg"
+  },
+    {
+    "name": "Pseudo-color composite Image of the Helix Nebula",
+    "file": "Figure7_Helix_Nebula_Zoomin.jpeg"
+  },
+  {
+    "name": "Pseudo-color Images of the Helix Nebula taken at wavelengths of 370 nm, 500 nm, and 650 nm, corresponding to blue, green, and red.",
+    "file": "Figure8a(lowres)_u-500-650_asinh.png"
+  },
+  {
+    "name": "Pseudo-color image of the Trifid Nebula.",
+    "file": "Figure9(lowres)_NGC6514_RGB.jpg"
+  }
+]

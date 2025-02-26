@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Crab Nebula",
+    "ra": 83.633208,
+    "dec": 22.014472,
+    "exposure": 0.333,
+    "sigma": 7.8,
+    "ref": false
+  },
+  {
+    "name": "Andromeda Galaxy",
+    "ra": 10.685542,
+    "dec": 41.269278,
+    "exposure": 0.5,
+    "sigma": 6.5,
+    "ref": false
+  },
+  {
+    "name": "Orion Nebula",
+    "ra": 83.82208,
+    "dec": -5.391111,
+    "exposure": 0.25,
+    "sigma": 8.2,
+    "ref": false
+  },
+  {
+    "name": "Whirlpool Galaxy",
+    "ra": 197.470375,
+    "dec": 47.195278,
+    "exposure": 0.41666667,
+    "sigma": 6.9,
+    "ref": false
+  },
+  {
+    "name": "Pleiades Cluster",
+    "ra": 56.85,
+    "dec": 24.116667,
+    "exposure": 0.16666667,
+    "sigma": 9.1,
+    "ref": false
+  },
+  {
+    "name": "Eagle Nebula",
+    "ra": 274.8,
+    "dec": -13.783333,
+    "exposure": 0.27777778,
+    "sigma": 7.3,
+    "ref": false
+  },
+  {
+    "name": "Horsehead Nebula",
+    "ra": 85.246875,
+    "dec": -2.458333,
+    "exposure": 0.22222222,
+    "sigma": 8.5,
+    "ref": false
+  },
+  {
+    "name": "Ring Nebula",
+    "ra": 283.39775,
+    "dec": 33.029167,
+    "exposure": 0.30555556,
+    "sigma": 7.2,
+    "ref": false
+  },
+  {
+    "name": "Sombrero Galaxy",
+    "ra": 185.728708,
+    "dec": -11.629167,
+    "exposure": 0.36111111,
+    "sigma": 6.7,
+    "ref": false
+  },
+  {
+    "name": "Lagoon Nebula",
+    "ra": 271.57125,
+    "dec": -24.386667,
+    "exposure": 0.26388889,
+    "sigma": 8.0,
+    "ref": false
+  },
+  {
+    "name": "Helix Nebula",
+    "ra": 337.410375,
+    "dec": -20.836667,
+    "exposure": 0.23611111,
+    "sigma": 8.7,
+    "ref": false
+  },
+  {
+    "name": "Antennae Galaxies",
+    "ra": 180.471167,
+    "dec": -18.869528,
+    "exposure": 0.47222222,
+    "sigma": 7.1,
+    "ref": false
+  },
+  {
+    "name": "Boomerang Nebula",
+    "ra": 191.20625,
+    "dec": -54.517222,
+    "exposure": 0.33333333,
+    "sigma": 9.3,
+    "ref": false
+  },
+  {
+    "name": "Omega Nebula",
+    "ra": 271.57125,
+    "dec": -24.386667,
+    "exposure": 0.26388889,
+    "sigma": 8.0,
+    "ref": false
+  },
+  {
+    "name": "Tarantula Nebula",
+    "ra": 89.658675,
+    "dec": -69.085,
+    "exposure": 0.38888889,
+    "sigma": 7.4,
+    "ref": false
+  },
+  {
+    "name": "Cat's Eye Nebula",
+    "ra": 137.389583,
+    "dec": 13.226667,
+    "exposure": 0.27777778,
+    "sigma": 8.4,
+    "ref": false
+  },
+  {
+    "name": "Veil Nebula",
+    "ra": 311.40925,
+    "dec": 30.721389,
+    "exposure": 0.23611111,
+    "sigma": 7.6,
+    "ref": false
+  },
+  {
+    "name": "North America Nebula",
+    "ra": 344.48875,
+    "dec": 44.51,
+    "exposure": 0.26388889,
+    "sigma": 7.9,
+    "ref": false
+  },
+  {
+    "name": "Trifid Nebula",
+    "ra": 270.59125,
+    "dec": -23.03,
+    "exposure": 0.33333333,
+    "sigma": 7.0,
+    "ref": false
+  },
+  {
+    "name": "Andromeda Galaxy",
+    "ra": 10.685542,
+    "dec": 41.269278,
+    "exposure": 0.5,
+    "sigma": 6.5,
+    "ref": false
+  }
+]
