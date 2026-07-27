@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { Link } from '@remix-run/react';
 import news from './content/news.json';
 import surveys from './content/surveys.json';
 import { mainText1, mainText2, mainText3, mainText4 } from './content/text';
@@ -73,10 +74,13 @@ const MainPage = () => {
         progressBar.style.width = `${span > 0 ? (scrollTop / span) * 100 : 0}%`;
       }
 
-      // A section is "active" once it is the one filling the viewport; the
-      // class drives the reveal transition in CSS.
+      // A section is "active" once it is the one filling the viewport.
+      // `has-revealed` is deliberately never removed: if the reveal were tied
+      // to `is-active` alone, content would fade back out whenever the index
+      // flipped while a snap was settling, which reads as flickering.
       sectionsRef.current.forEach((section, i) => {
         section.classList.toggle('is-active', i === index);
+        if (i === index) section.classList.add('has-revealed');
       });
     };
 
@@ -178,25 +182,27 @@ const MainPage = () => {
               </p>
               <h1>7-Dimensional Telescope</h1>
               <p className="fullpage-hero__lede">
-                Twenty 50-cm telescopes on one mountain in Chile, carrying forty medium-band
-                filters between them. Imaging that reads like spectroscopy, over a field no
-                spectrograph can cover.
+An array of twenty 50-cm telescopes in the Río Hurtado Valley, Chile,
+                carrying forty medium-band filters between them. Imaging that reads like
+                spectroscopy, over a field no spectrograph can cover.
               </p>
               <div className="stat-grid stat-grid--on-dark">
                 <div className="stat">
-                  <span className="stat__value">16<span className="stat__unit">/ 20</span></span>
-                  <span className="stat__label">Units on sky</span>
+                  <span className="stat__value">20</span>
+                  <span className="stat__label">Telescopes in the array</span>
+                  <span className="stat__note stat__note--live">16 online</span>
                 </div>
                 <div className="stat">
-                  <span className="stat__value">35<span className="stat__unit">/ 40</span></span>
-                  <span className="stat__label">Medium bands</span>
+                  <span className="stat__value">40</span>
+                  <span className="stat__label">Medium-band filters</span>
+                  <span className="stat__note">35 installed</span>
                 </div>
                 <div className="stat">
-                  <span className="stat__value">375–875<span className="stat__unit">nm</span></span>
-                  <span className="stat__label">Coverage</span>
+                  <span className="stat__value">30–70</span>
+                  <span className="stat__label">Spectral resolution R</span>
                 </div>
                 <div className="stat">
-                  <span className="stat__value">1.25<span className="stat__unit">deg²</span></span>
+                  <span className="stat__value">1.2<span className="stat__unit">deg²</span></span>
                   <span className="stat__label">Per pointing</span>
                 </div>
               </div>
@@ -218,9 +224,7 @@ const MainPage = () => {
                 <h2>An array that observes in seven dimensions</h2>
                 <p className="prose">{mainText1}</p>
                 <p style={{ marginTop: '1.5rem' }}>
-                  <a className="link-arrow" href="/about/intro">
-                    What is 7DS
-                  </a>
+                  <Link className="link-arrow" to="/about/intro">What is 7DS</Link>
                 </p>
               </div>
               <figure className="figure">
@@ -255,9 +259,7 @@ const MainPage = () => {
                   {mainText2}
                 </p>
                 <p style={{ marginTop: '1.5rem' }}>
-                  <a className="link-arrow" href="/science/overview" style={{ color: 'var(--accent-on-dark)' }}>
-                    Science programme
-                  </a>
+                  <Link className="link-arrow" to="/science/overview" style={{ color: 'var(--accent-on-dark)' }}>Science programme</Link>
                 </p>
               </div>
               <div className="stat-grid stat-grid--on-dark" style={{ gridTemplateColumns: '1fr 1fr' }}>
@@ -344,9 +346,7 @@ const MainPage = () => {
                 <h2>Twenty telescopes, one instrument</h2>
                 <p className="prose">{mainText4}</p>
                 <p style={{ marginTop: '1.5rem' }}>
-                  <a className="link-arrow" href="/telescope/overview">
-                    Telescope &amp; site
-                  </a>
+                  <Link className="link-arrow" to="/telescope/overview">Telescope &amp; site</Link>
                 </p>
               </div>
               <ul className="feature-list">
@@ -435,12 +435,8 @@ const MainPage = () => {
               </div>
 
               <div className="btn-row" style={{ marginTop: '2rem' }}>
-                <a className="btn btn--secondary" href="/news">
-                  All news
-                </a>
-                <a className="btn btn--secondary" href="/publication/list">
-                  Publications
-                </a>
+                <Link className="btn btn--secondary" to="/news">All news</Link>
+                <Link className="btn btn--secondary" to="/publication/list">Publications</Link>
               </div>
             </div>
           </div>

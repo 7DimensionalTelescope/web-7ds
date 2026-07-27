@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
 import { surveyDesignText, surveyDesignText2, modeText } from './content/text';
@@ -107,12 +108,8 @@ const Index = () => {
           ))}
         </div>
         <div className="btn-row" style={{ marginTop: '2rem' }}>
-          <a className="btn btn--primary" href="/survey/status">
-            Current status
-          </a>
-          <a className="btn btn--secondary" href="/survey/overview">
-            Survey overview
-          </a>
+          <Link className="btn btn--primary" to="/survey/status">Current status</Link>
+          <Link className="btn btn--secondary" to="/survey/overview">Survey overview</Link>
         </div>
       </Section>
     </PageLayout>

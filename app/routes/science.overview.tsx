@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
 import { scienceOverviewText, scienceOverviewText2 } from './content/text';
@@ -74,12 +75,8 @@ const Index = () => {
           ))}
         </ul>
         <div className="btn-row" style={{ marginTop: '2rem' }}>
-          <a className="btn btn--primary" href="/science/sci">
-            Early science results
-          </a>
-          <a className="btn btn--secondary" href="/publication/list">
-            Publications
-          </a>
+          <Link className="btn btn--primary" to="/science/sci">Early science results</Link>
+          <Link className="btn btn--secondary" to="/publication/list">Publications</Link>
         </div>
       </Section>
     </PageLayout>

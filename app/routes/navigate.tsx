@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from '@remix-run/react';
 
 const MENU = [
   {
@@ -82,17 +83,28 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
     }
 
     const wrapper = document.querySelector('.fullpage-wrapper');
+    let frame = 0;
 
-    const onScroll = () => {
+    // Hysteresis: a single threshold flips back and forth while a scroll snap
+    // settles, and each flip restarts the background transition — which is what
+    // made the bar blink. Solid above 64px, transparent only below 8px.
+    const measure = () => {
+      frame = 0;
       const offset = wrapper ? wrapper.scrollTop : window.scrollY;
-      setScrolled(offset > 24);
+      setScrolled((was) => (was ? offset > 8 : offset > 64));
     };
 
-    onScroll();
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(measure);
+    };
+
+    measure();
     window.addEventListener('scroll', onScroll, { passive: true });
     if (wrapper) wrapper.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
+      if (frame) window.cancelAnimationFrame(frame);
       window.removeEventListener('scroll', onScroll);
       if (wrapper) wrapper.removeEventListener('scroll', onScroll);
     };
@@ -121,15 +133,15 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
   return (
     <nav className={`site-nav${scrolled ? ' site-nav--solid' : ''}`} onKeyDown={(e) => e.key === 'Escape' && closeNow()}>
       <div className="site-nav__inner">
-        <a href="/" className="site-nav__brand" aria-label="7-Dimensional Telescope — home">
+        <Link to="/" className="site-nav__brand" aria-label="7-Dimensional Telescope — home">
           <img src="/img/logo_name.png" alt="7DT" />
-        </a>
+        </Link>
 
         <div className="site-nav__menu">
           <div className="site-nav__item">
-            <a href="/" className={`site-nav__link${isActive('manuHome') ? ' site-nav__link--active' : ''}`}>
+            <Link to="/" className={`site-nav__link${isActive('manuHome') ? ' site-nav__link--active' : ''}`}>
               Home
-            </a>
+            </Link>
           </div>
 
           {MENU.map((menu) => (
@@ -143,7 +155,6 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
                 type="button"
                 className={`site-nav__link${isActive(menu.key) ? ' site-nav__link--active' : ''}`}
                 aria-expanded={openDropdown === menu.key}
-                aria-haspopup="true"
                 onClick={() => (openDropdown === menu.key ? closeNow() : openNow(menu.key))}
               >
                 {menu.label}
@@ -151,12 +162,12 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
               </button>
 
               {openDropdown === menu.key && (
-                <div className="site-nav__dropdown" role="menu">
+                <div className="site-nav__dropdown">
                   <div className="site-nav__dropdown-label">{menu.label}</div>
                   {menu.items.map((item) => (
-                    <a key={item.label} href={item.href} role="menuitem" onClick={closeNow}>
+                    <Link key={item.label} to={item.href} onClick={closeNow}>
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}
@@ -164,19 +175,19 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
           ))}
 
           <div className="site-nav__item">
-            <a href="/publication/list" className={`site-nav__link${isActive('manuPaper') ? ' site-nav__link--active' : ''}`}>
+            <Link to="/publication/list" className={`site-nav__link${isActive('manuPaper') ? ' site-nav__link--active' : ''}`}>
               Publications
-            </a>
+            </Link>
           </div>
           <div className="site-nav__item">
-            <a href="/gallery" className={`site-nav__link${isActive('manuGallery') ? ' site-nav__link--active' : ''}`}>
+            <Link to="/gallery" className={`site-nav__link${isActive('manuGallery') ? ' site-nav__link--active' : ''}`}>
               Gallery
-            </a>
+            </Link>
           </div>
           <div className="site-nav__item">
-            <a href="/news" className={`site-nav__link${isActive('manuNews') ? ' site-nav__link--active' : ''}`}>
+            <Link to="/news" className={`site-nav__link${isActive('manuNews') ? ' site-nav__link--active' : ''}`}>
               News
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -200,7 +211,7 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
 
       {showMenu && (
         <div className="site-nav__mobile" id="mobile-menu">
-          <a href="/">Home</a>
+          <Link to="/">Home</Link>
 
           {/* Full two-level menu: on a phone the section landing pages alone
               left most of the site two hops away. */}
@@ -235,9 +246,9 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
                 {open && (
                   <div className="site-nav__mobile-sub" id={`m-${menu.key}`}>
                     {menu.items.map((item) => (
-                      <a key={item.href} href={item.href}>
+                      <Link key={item.href} to={item.href}>
                         {item.label}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -245,9 +256,9 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
             );
           })}
 
-          <a href="/publication/list">Publications</a>
-          <a href="/gallery">Gallery</a>
-          <a href="/news">News</a>
+          <Link to="/publication/list">Publications</Link>
+          <Link to="/gallery">Gallery</Link>
+          <Link to="/news">News</Link>
         </div>
       )}
     </nav>

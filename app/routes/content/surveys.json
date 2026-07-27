@@ -54,7 +54,7 @@
     {
       "name": "Spec",
       "tagline": "Maximum spectral resolution",
-      "body": "The default mode. Units rotate through every available medium and broad band, covering the full spectral range in as few exposures as the filter distribution allows. This is the mode that makes 7DT behave like a low-resolution spectrograph over 1.25 square degrees."
+      "body": "The default mode. Units rotate through every available medium and broad band, covering the full spectral range in as few exposures as the filter distribution allows. This is the mode that makes 7DT behave like a low-resolution spectrograph over 1.2 square degrees."
     },
     {
       "name": "Deep",

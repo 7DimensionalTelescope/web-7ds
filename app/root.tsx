@@ -7,14 +7,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
+  useRouteError,
 } from "@remix-run/react";
 import CSS from "./css/app.css";
 import CustomCSS from "./css/custom.css";
-import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 
 export const links: LinksFunction = () => [
   { rel: "icon", href: "/favicon.ico", sizes: "any" },
-  { rel: "stylesheet", href: bootstrap },
   { rel: "stylesheet", href: CSS },
   { rel: "stylesheet", href: CustomCSS },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -71,6 +71,62 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+      </body>
+    </html>
+  );
+}
+
+/* A 404 or a thrown error otherwise renders Remix's unbranded fallback. */
+export function ErrorBoundary() {
+  const error = useRouteError();
+  const is404 = isRouteErrorResponse(error) && error.status === 404;
+
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{is404 ? "Page not found · 7DT" : "Something went wrong · 7DT"}</title>
+        <Meta />
+        <Links />
+      </head>
+      <body className="antialiased">
+        <main
+          id="content"
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            background: "var(--ink-950, #05080f)",
+            color: "#fff",
+          }}
+        >
+          <div className="container container--wide">
+            <span className="eyebrow eyebrow--on-dark">
+              {is404 ? "404" : "Error"}
+            </span>
+            <h1 className="hero__title">
+              {is404 ? "That page is not here" : "Something went wrong"}
+            </h1>
+            <p className="hero__lede">
+              {is404
+                ? "The page you asked for does not exist. It may have moved, or the link may be out of date."
+                : "An unexpected error occurred while rendering this page."}
+            </p>
+            <div className="btn-row">
+              <a className="btn btn--on-dark" href="/">
+                Return home
+              </a>
+              <a className="btn btn--on-dark" href="/telescope/overview">
+                The telescope
+              </a>
+              <a className="btn btn--on-dark" href="/news">
+                News
+              </a>
+            </div>
+          </div>
+        </main>
+        <Scripts />
       </body>
     </html>
   );

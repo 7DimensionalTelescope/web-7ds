@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 
 import { PageLayout, PageHero, Section, SimpleTable } from '../components/site';
@@ -110,12 +111,8 @@ const Index = () => {
         </div>
 
         <div className="btn-row" style={{ marginTop: '2rem' }}>
-          <a className="btn btn--secondary" href="/data/software">
-            How the pipeline works
-          </a>
-          <a className="btn btn--secondary" href="/publication/policy">
-            Publication policy
-          </a>
+          <Link className="btn btn--secondary" to="/data/software">How the pipeline works</Link>
+          <Link className="btn btn--secondary" to="/publication/policy">Publication policy</Link>
         </div>
       </Section>
     </PageLayout>

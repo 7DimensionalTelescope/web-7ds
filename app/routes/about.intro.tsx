@@ -26,8 +26,8 @@ const Index = () => {
         lede="A multi-telescope array built to find the optical counterparts of gravitational-wave events — and, in the process, to map the southern sky in forty colours."
         image="/img/hero/about.jpg"
         meta={[
-          { value: '16', unit: '/ 20', label: 'Units on sky' },
-          { value: '35', unit: '/ 40', label: 'Medium bands' },
+          { value: '20', label: 'Telescopes', note: '16 online', live: true },
+          { value: '40', label: 'Medium bands', note: '35 installed' },
           { value: '2023', label: 'First light' },
           { value: 'Chile', label: 'El Sauce Obs.' },
         ]}

@@ -36,7 +36,7 @@ const Index = () => {
           { value: '58', unit: '%', label: 'RIS complete' },
           { value: '260', unit: '+', label: 'IMS cycles' },
           { value: '1.75', unit: 'M', label: 'Images acquired' },
-          { value: '16', unit: '/ 20', label: 'Units operating' },
+          { value: '20', label: 'Telescopes', note: '16 online', live: true },
         ]}
       />
 

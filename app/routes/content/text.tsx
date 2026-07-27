@@ -13,11 +13,12 @@
 /* --- Home page ----------------------------------------------------------- */
 
 export const mainText1 =
-  'The 7-Dimensional Telescope (7DT) is a multi-telescope array built and operated by \
-the Center for the Gravitational-wave Universe at Seoul National University. Sixteen of \
-its twenty 50-cm telescopes are now on sky at El Sauce Observatory in Chile, each \
-carrying a share of a 35-filter medium-band set. Together they turn imaging into \
-low-resolution spectroscopy across 1.25 square degrees at a time.'
+  'The 7-Dimensional Telescope (7DT) is an array of twenty 50-cm telescopes at El \
+Sauce Observatory in Chile, built and operated by the Center for the Gravitational-wave \
+Universe at Seoul National University. Each unit carries a share of a forty-filter \
+medium-band set, and together they turn imaging into low-resolution spectroscopy across \
+1.2 square degrees at a time. Sixteen units and thirty-five filters are in routine \
+operation today; the remainder complete the designed array.'
 
 export const mainText2 =
   'A resolution of R = 30-70 across 400-900 nm captures the 4000 A break, strong \
@@ -34,11 +35,11 @@ the south ecliptic pole. All three observe the same tile grid, so their data coa
 without compromise.'
 
 export const mainText4 =
-  'Sixteen DeltaRho 500 units on direct-drive mounts — twenty by design — one control \
-computer per operational telescope, a robotic scheduler that can interrupt the night \
-and start a follow-up exposure in under a minute, and a pipeline that reduces a \
-3,000-image night within the daily budget. 7DT is built to be pointed at a transient \
-while it is still bright.'
+  'Twenty DeltaRho 500 units on direct-drive mounts, sixteen of them observing \
+tonight, one control computer per operational telescope, a robotic scheduler that can \
+interrupt the night and start a follow-up exposure in under a minute, and a pipeline \
+that reduces a 3,000-image night within the daily budget. 7DT is built to be pointed at \
+a transient while it is still bright.'
 
 /* --- About / 7DS overview ------------------------------------------------- */
 
@@ -49,15 +50,15 @@ identify the electromagnetic counterparts of gravitational-wave events. Its defi
 feature is a set of 40 medium-band filters of 25 nm width spanning 400 to 900 nm, \
 distributed across the array so that the full set is covered in a small number of \
 exposures. This yields IFU-like data at low spectral resolution (R = 30-70) over \
-approximately 1.25 square degrees per pointing - imaging that behaves like \
+approximately 1.2 square degrees per pointing — imaging that behaves like \
 spectroscopy, over an area no spectrograph can reach.'
 
 export const aboutText2 =
   'Since first light in October 2023 the array has grown from twelve to sixteen \
-operational units and from twenty to thirty-five installed medium-band filters. \
-Commissioning has reached closure, robotic operation runs unattended, and the science \
-programme - the 7-Dimensional Sky Survey (7DS) - is under way on two of its three \
-tiers.'
+operational units, and from twenty to thirty-five installed medium-band filters, \
+against a design of twenty telescopes and forty filters. Commissioning has reached \
+closure, robotic operation runs unattended, and the science programme — the \
+7-Dimensional Sky Survey (7DS) — is under way on two of its three tiers.'
 
 export const aboutText3 =
   'The name counts the axes of the data. Two of position on the sky, one of \
@@ -124,13 +125,13 @@ follow-ups and some ten gravitational-wave event campaigns.'
 /* --- Telescope ----------------------------------------------------------- */
 
 export const telescopeOverviewText =
-  '7DT is, in its full design, an array of twenty 50-cm commercial off-the-shelf \
-telescopes. Each unit is a PlaneWave DeltaRho 500 optical tube assembly on an L-500 \
-direct-drive mount operated in equatorial configuration, paired with a Moravian \
-Instruments C3-61000 PRO CMOS camera. Sixteen units are deployed and operational as of \
-June 2026; the four remaining units complete the planned array. All operational units \
-share a common configuration of optics, mount and camera, and show consistent optical \
-performance in routine use.'
+  '7DT is an array of twenty 50-cm commercial off-the-shelf telescopes. Each unit is a \
+PlaneWave DeltaRho 500 optical tube assembly on an L-500 direct-drive mount operated in \
+equatorial configuration, paired with a Moravian Instruments C3-61000 PRO CMOS camera — \
+every unit identical but for the filters it carries. Sixteen of the twenty are deployed \
+and operational as of June 2026, and the four remaining units complete the array. All \
+operational units share a common configuration and show consistent optical performance \
+in routine use.'
 
 export const locationText =
   'El Sauce Observatory sits in the Rio Hurtado Valley of Chile at 30 deg 28 min 16 \
@@ -161,7 +162,7 @@ export const cameraText =
   'Each unit carries a Moravian Instruments C3-61000 PRO. Its back-illuminated SONY \
 IMX455 CMOS sensor measures 36 by 24 mm with 9,576 by 6,388 pixels of 3.76 micron \
 pitch. At the DeltaRho focal plane this gives a field of view of 1.34 by 0.90 degrees \
-at a pixel scale of 0.5 arcseconds - about 1.25 square degrees of spectral mapping per \
+at a pixel scale of 0.5 arcseconds - about 1.2 square degrees of spectral mapping per \
 pointing. Bias levels are consistent with the manufacturer specification of roughly \
 3.5 electrons RMS, and the horizontal pattern characteristic of CMOS detectors is \
 present but stable.'

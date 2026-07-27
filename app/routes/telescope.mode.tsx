@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
 import { modeText } from './content/text';
@@ -79,12 +80,8 @@ const Index = () => {
           alert ingestion to the start of a follow-up exposure is under one minute.
         </p>
         <div className="btn-row" style={{ marginTop: '1.5rem' }}>
-          <a className="btn btn--primary" href="/data/software">
-            How ToO data are processed
-          </a>
-          <a className="btn btn--secondary" href="/survey/design">
-            Survey design
-          </a>
+          <Link className="btn btn--primary" to="/data/software">How ToO data are processed</Link>
+          <Link className="btn btn--secondary" to="/survey/design">Survey design</Link>
         </div>
       </Section>
     </PageLayout>

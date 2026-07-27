@@ -1,3 +1,4 @@
+import { Link } from '@remix-run/react';
 const PARTNERS = [
   { src: '/img/institutes/snu.jpeg', alt: 'Seoul National University' },
   { src: '/img/institutes/kasi.gif', alt: 'Korea Astronomy and Space Science Institute' },
@@ -80,7 +81,7 @@ const FooterBar = () => {
                 <ul>
                   {column.links.map((link) => (
                     <li key={link.label}>
-                      <a href={link.href}>{link.label}</a>
+                      <Link to={link.href}>{link.label}</Link>
                     </li>
                   ))}
                 </ul>
@@ -109,8 +110,8 @@ const FooterBar = () => {
             © 2026 7-Dimensional Telescope · Center for the Gravitational-wave Universe, SNU
           </div>
           <div className="site-footer__legal">
-            <a href="/publication/policy">Publication Policy</a>
-            <a href="/links">Links</a>
+            <Link to="/publication/policy">Publication Policy</Link>
+            <Link to="/links">Links</Link>
             <a href="mailto:mim@astro.snu.ac.kr">Contact</a>
           </div>
         </div>

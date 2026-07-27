@@ -68,7 +68,7 @@ const Index = () => {
             Instrument <em>specification</em>
           </>
         }
-        lede="Each of the sixteen operational units is identical: the same optics, the same mount, the same camera. What differs between them is the filters they carry — and that is the whole design."
+        lede="All twenty units of the array are identical: the same optics, the same mount, the same camera. What differs between them is the filters they carry — and that is the whole design."
         image="/img/hero/instrument.jpg"
       />
 

@@ -17,7 +17,7 @@
       "id": "galaxies",
       "n": "03",
       "title": "Galaxy Formation & Evolution",
-      "summary": "Medium-band mapping over 1.25 square degrees is IFU-like data at survey scale. Star-forming clumps are identified through Hα emission in stellar-continuum-subtracted images, and pilot studies indicate that pixel-based SED fitting of 7DT and SPHEREx data can recover spatially resolved stellar populations approaching the quality of high-resolution IFU spectroscopy — for galaxies that would otherwise demand dedicated campaigns on much larger telescopes. Both studies are as yet unpublished (Shim et al., submitted; Lee et al., in prep)."
+      "summary": "Medium-band mapping over 1.2 square degrees is IFU-like data at survey scale. Star-forming clumps are identified through Hα emission in stellar-continuum-subtracted images, and pilot studies indicate that pixel-based SED fitting of 7DT and SPHEREx data can recover spatially resolved stellar populations approaching the quality of high-resolution IFU spectroscopy — for galaxies that would otherwise demand dedicated campaigns on much larger telescopes. Both studies are as yet unpublished (Shim et al., submitted; Lee et al., in prep)."
     },
     {
       "id": "cosmology",

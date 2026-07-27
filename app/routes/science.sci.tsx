@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
 import science from './content/science.json';
@@ -18,7 +19,7 @@ const Index = () => {
       <PageHero
         eyebrow="Science"
         title="Themes & early results"
-        lede="Each theme below draws on the same data product — a medium-band spectral energy distribution for every source in a 1.25 square degree field."
+        lede="Each theme below draws on the same data product — a medium-band spectral energy distribution for every source in a 1.2 square degree field."
         image="/img/hero/sci.jpg"
       />
 
@@ -69,12 +70,8 @@ const Index = () => {
               pixel-based SED fitting without further conversion.
             </p>
             <div className="btn-row" style={{ marginTop: '1.5rem' }}>
-              <a className="btn btn--primary" href="/data/overview">
-                Data &amp; products
-              </a>
-              <a className="btn btn--secondary" href="/data/software">
-                Reduction software
-              </a>
+              <Link className="btn btn--primary" to="/data/overview">Data &amp; products</Link>
+              <Link className="btn btn--secondary" to="/data/software">Reduction software</Link>
             </div>
           </div>
           <figure className="figure">

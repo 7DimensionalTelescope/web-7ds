@@ -23,13 +23,13 @@ const Index = () => {
             The <em>7DT</em> array
           </>
         }
-        lede="Twenty commercial 50-cm telescopes, operated as one instrument. Off-the-shelf optics kept the array inexpensive and quick to bring on line; the filter set is what makes it unusual."
+        lede="An array of twenty commercial 50-cm telescopes, operated as a single instrument. Off-the-shelf optics kept it inexpensive and quick to bring on line; the filter set is what makes it unusual."
         image="/img/hero/telescope.jpg"
         meta={[
+          { value: '20', label: 'Telescopes', note: '16 online', live: true },
           { value: '50.8', unit: 'cm', label: 'Primary diameter' },
           { value: 'f/3.0', label: 'Focal ratio' },
           { value: '1.34 × 0.90', unit: '°', label: 'FoV per unit' },
-          { value: '0.5', unit: '″', label: 'Pixel scale' },
         ]}
       />
 

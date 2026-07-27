@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@remix-run/react';
 import NavBar from '../routes/navigate';
 import FooterBar from '../routes/footer';
 
@@ -7,7 +8,7 @@ import FooterBar from '../routes/footer';
    type scale and rules stay identical across the site.
 --------------------------------------------------------------------------- */
 
-type Meta = { value: string; unit?: string; label: string };
+type Meta = { value: string; unit?: string; label: string; note?: string; live?: boolean };
 
 export function PageLayout({
   menu,
@@ -65,6 +66,11 @@ export function PageHero({
                     {item.unit && <span className="stat__unit">{item.unit}</span>}
                   </span>
                   <span className="hero__meta-label">{item.label}</span>
+                  {item.note && (
+                    <span className={`stat__note${item.live ? ' stat__note--live' : ''}`}>
+                      {item.note}
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
@@ -118,6 +124,11 @@ export function StatGrid({ items, onDark }: { items: Meta[]; onDark?: boolean })
             {item.unit && <span className="stat__unit">{item.unit}</span>}
           </span>
           <span className="stat__label">{item.label}</span>
+          {item.note && (
+            <span className={`stat__note${item.live ? ' stat__note--live' : ''}`}>
+              {item.note}
+            </span>
+          )}
         </div>
       ))}
     </div>
@@ -214,9 +225,9 @@ export function NextLinks({
       {title && <span className="eyebrow">{title}</span>}
       <div className="chip-row">
         {links.map((link) => (
-          <a className="chip" href={link.href} key={link.label}>
+          <Link className="chip" to={link.href} key={link.label}>
             {link.label}
-          </a>
+          </Link>
         ))}
       </div>
     </div>

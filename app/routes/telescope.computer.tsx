@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section, SimpleTable, StatGrid } from '../components/site';
 import { computingText, storageText, protonText } from './content/text';
@@ -99,12 +100,8 @@ const Index = () => {
           </figcaption>
         </figure>
         <div className="btn-row" style={{ marginTop: '2rem' }}>
-          <a className="btn btn--primary" href="/data/software">
-            Reduction software
-          </a>
-          <a className="btn btn--secondary" href="/data/overview">
-            Data products
-          </a>
+          <Link className="btn btn--primary" to="/data/software">Reduction software</Link>
+          <Link className="btn btn--secondary" to="/data/overview">Data products</Link>
         </div>
       </Section>
     </PageLayout>

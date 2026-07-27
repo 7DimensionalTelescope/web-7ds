@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { Carousel } from 'react-bootstrap';
+// Bootstrap's stylesheet is loaded per-route: this is the only page using it,
+// and it was previously 232 KB of render-blocking CSS on all 22 pages.
+import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 
 import { PageLayout, PageHero, Section, SimpleTable } from '../components/site';
 import { locationText } from './content/text';
+
+export const links = () => [{ rel: 'stylesheet', href: bootstrap }];
 
 export const meta: MetaFunction = () => [
   { title: 'Location · 7-Dimensional Telescope' },
@@ -133,12 +139,8 @@ const Index = () => {
           to the Korean processing facility over KREONET each night.
         </p>
         <div className="btn-row" style={{ marginTop: '1.5rem' }}>
-          <a className="btn btn--primary" href="/telescope/computer">
-            Computational resources
-          </a>
-          <a className="btn btn--secondary" href="/telescope/instrument">
-            Instrument
-          </a>
+          <Link className="btn btn--primary" to="/telescope/computer">Computational resources</Link>
+          <Link className="btn btn--secondary" to="/telescope/instrument">Instrument</Link>
         </div>
       </Section>
     </PageLayout>
