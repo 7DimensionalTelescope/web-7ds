@@ -511,7 +511,6 @@ hr {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.28);
   color: #fff;
-  backdrop-filter: blur(6px);
 }
 
 .btn--on-dark:hover {
@@ -580,7 +579,7 @@ hr {
   display: flex;
   align-items: flex-end;
   min-height: 62vh;
-  padding: calc(4rem + var(--space-3xl)) 0 var(--space-3xl);
+  padding: calc(4.5rem + var(--space-3xl)) 0 var(--space-3xl);
   background-color: var(--ink-900);
   background-size: cover;
   background-position: center;
@@ -1619,15 +1618,14 @@ hr {
   right: 0;
   z-index: 1000;
   color: #fff;
-  background-color: rgba(5, 8, 15, 0.72);
+  background-color: rgba(5, 8, 15, 0.82);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  /* Promote to its own compositor layer. A fixed, backdrop-filtered bar over a
-     snap-scrolling container otherwise repaints — and visibly flickers — on
-     every frame. */
+  /* No backdrop-filter. A fixed, blurred bar has to re-sample and re-blur the
+     content beneath it on every scrolled frame, which is what made the menu
+     flicker over the snap-scrolling home page. A flat translucent fill costs
+     nothing and looks the same over a dark hero. */
   transform: translateZ(0);
-  will-change: background-color;
+  backface-visibility: hidden;
   transition: background-color 220ms linear, border-color 220ms linear;
 }
 
@@ -1641,7 +1639,7 @@ hr {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-lg);
-  height: 4rem;
+  height: 4.5rem;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 var(--space-xl);
@@ -1654,7 +1652,7 @@ hr {
 }
 
 .site-nav__brand img {
-  height: 26px;
+  height: 40px;
   width: auto;
   display: block;
 }
@@ -1665,7 +1663,33 @@ hr {
   gap: 0.125rem;
 }
 
-.site-nav__item { position: relative; }
+.site-nav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.site-nav__caret-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 28px;
+  margin-left: -0.375rem;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.6);
+  background: none;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+
+.site-nav__caret-btn:hover,
+.site-nav__item--open .site-nav__caret-btn {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
 
 .site-nav__link {
   display: inline-flex;
@@ -1713,18 +1737,18 @@ hr {
 
 .site-nav__item--open .site-nav__caret { transform: rotate(180deg); }
 
+.site-nav__caret-btn .site-nav__caret { width: 10px; height: 10px; opacity: 1; }
+
 .site-nav__dropdown {
   position: absolute;
   top: calc(100% + 2px);
   left: 0;
   min-width: 15rem;
   padding: 0.375rem;
-  background: rgba(10, 16, 28, 0.97);
+  background: #0d1421;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-md);
   box-shadow: 0 20px 44px -18px rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   animation: navDropIn 180ms var(--ease) both;
 }
 
@@ -1776,7 +1800,7 @@ hr {
 }
 
 .site-nav__mobile {
-  max-height: calc(100dvh - 4rem);
+  max-height: calc(100dvh - 4.5rem);
   overflow-y: auto;
   overscroll-behavior: contain;
 }
@@ -2185,7 +2209,6 @@ html.fullpage-active { overflow: hidden; }
   opacity: 0;
   visibility: hidden;
   z-index: 900;
-  backdrop-filter: blur(8px);
   transition: opacity var(--dur) var(--ease), visibility var(--dur) var(--ease),
     background-color var(--dur) var(--ease);
 }
@@ -2225,7 +2248,7 @@ html.fullpage-active { overflow: hidden; }
 }
 
 @media (max-width: 560px) {
-  .hero { padding: calc(4rem + var(--space-xl)) 0 var(--space-2xl); min-height: 0; }
+  .hero { padding: calc(4.5rem + var(--space-xl)) 0 var(--space-2xl); min-height: 0; }
   .hero__meta {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2336,11 +2359,10 @@ table[class*='w-full'] thead {
   font-size: 0.6875rem;
   letter-spacing: 0.08em;
   color: #fff;
-  background: rgba(5, 8, 15, 0.72);
+  background: rgba(5, 8, 15, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  backdrop-filter: blur(6px);
 }
 
 .carousel-pause:hover { background: rgba(5, 8, 15, 0.9); }

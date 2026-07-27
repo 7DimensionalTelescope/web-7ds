@@ -151,13 +151,22 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
               onMouseEnter={() => openNow(menu.key)}
               onMouseLeave={closeSoon}
             >
-              <button
-                type="button"
+              {/* The label navigates to the section's first page; the caret
+                  beside it opens the submenu without leaving the page. */}
+              <Link
+                to={menu.href}
                 className={`site-nav__link${isActive(menu.key) ? ' site-nav__link--active' : ''}`}
-                aria-expanded={openDropdown === menu.key}
-                onClick={() => (openDropdown === menu.key ? closeNow() : openNow(menu.key))}
+                onFocus={() => openNow(menu.key)}
               >
                 {menu.label}
+              </Link>
+              <button
+                type="button"
+                className="site-nav__caret-btn"
+                aria-expanded={openDropdown === menu.key}
+                aria-label={`${menu.label} submenu`}
+                onClick={() => (openDropdown === menu.key ? closeNow() : openNow(menu.key))}
+              >
                 <CaretIcon />
               </button>
 

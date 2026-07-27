@@ -115,10 +115,10 @@ import {
 } from "@remix-run/react";
 
 // app/css/app.css
-var app_default = "/build/_assets/app-4VGBKHVJ.css";
+var app_default = "/build/_assets/app-7VOXCDPI.css";
 
 // app/css/custom.css
-var custom_default = "/build/_assets/custom-H4REQXCS.css";
+var custom_default = "/build/_assets/custom-4CYPCYKE.css";
 
 // app/root.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
@@ -338,17 +338,24 @@ function NavBar(props) {
             onMouseEnter: () => openNow(menu.key),
             onMouseLeave: closeSoon,
             children: [
-              /* @__PURE__ */ jsxs2(
+              /* @__PURE__ */ jsx3(
+                Link,
+                {
+                  to: menu.href,
+                  className: `site-nav__link${isActive(menu.key) ? " site-nav__link--active" : ""}`,
+                  onFocus: () => openNow(menu.key),
+                  children: menu.label
+                }
+              ),
+              /* @__PURE__ */ jsx3(
                 "button",
                 {
                   type: "button",
-                  className: `site-nav__link${isActive(menu.key) ? " site-nav__link--active" : ""}`,
+                  className: "site-nav__caret-btn",
                   "aria-expanded": openDropdown === menu.key,
+                  "aria-label": `${menu.label} submenu`,
                   onClick: () => openDropdown === menu.key ? closeNow() : openNow(menu.key),
-                  children: [
-                    menu.label,
-                    /* @__PURE__ */ jsx3(CaretIcon, {})
-                  ]
+                  children: /* @__PURE__ */ jsx3(CaretIcon, {})
                 }
               ),
               openDropdown === menu.key && /* @__PURE__ */ jsxs2("div", { className: "site-nav__dropdown", children: [
@@ -2989,7 +2996,7 @@ __export(index_exports, {
 // app/routes/main.tsx
 import { useEffect as useEffect3, useState as useState5, useRef as useRef2, useCallback } from "react";
 import { Link as Link11 } from "@remix-run/react";
-import { jsx as jsx25, jsxs as jsxs24 } from "react/jsx-runtime";
+import { Fragment as Fragment11, jsx as jsx25, jsxs as jsxs24 } from "react/jsx-runtime";
 var SECTION_IS_DARK = [!0, !1, !0, !0, !1, !1, !0], SECTION_COUNT = SECTION_IS_DARK.length, SECTION_NAMES = [
   "Introduction",
   "About 7DT",
@@ -2998,23 +3005,24 @@ var SECTION_IS_DARK = [!0, !1, !0, !0, !1, !1, !0], SECTION_COUNT = SECTION_IS_D
   "Telescope",
   "News",
   "Contact and partners"
-], MainPage = () => {
-  let [current, setCurrent] = useState5(0), [showTop, setShowTop] = useState5(!1), wrapperRef = useRef2(null), sectionsRef = useRef2([]), ticking = useRef2(!1), frame = useRef2(0), scrollToSection = useCallback((index) => {
+];
+function ScrollChrome() {
+  let [current, setCurrent] = useState5(0), [showTop, setShowTop] = useState5(!1), sectionsRef = useRef2([]), wrapperRef = useRef2(null), frame = useRef2(0), scrollToSection = useCallback((index) => {
     let target = sectionsRef.current[index];
     if (!target)
       return;
     let reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     target.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
   }, []);
-  useEffect3(() => {
-    let wrapper = wrapperRef.current;
+  return useEffect3(() => {
+    let wrapper = document.querySelector(".fullpage-wrapper");
     if (!wrapper)
       return;
-    sectionsRef.current = Array.from(
+    wrapperRef.current = wrapper, sectionsRef.current = Array.from(
       wrapper.querySelectorAll(".fullpage-section")
     ), document.body.classList.add("fullpage-active"), document.documentElement.classList.add("fullpage-active"), document.documentElement.classList.add("reveal-ready");
-    let progressBar = document.querySelector(".fullpage-progress"), measure = () => {
-      ticking.current = !1;
+    let progressBar = document.querySelector(".fullpage-progress"), nav = document.querySelector(".fullpage-nav"), measure = () => {
+      frame.current = 0;
       let scrollTop = wrapper.scrollTop, viewport = wrapper.clientHeight, midpoint = viewport * 0.5, index = 0;
       if (sectionsRef.current.forEach((section, i) => {
         let rect = section.getBoundingClientRect();
@@ -3023,14 +3031,14 @@ var SECTION_IS_DARK = [!0, !1, !0, !0, !1, !1, !0], SECTION_COUNT = SECTION_IS_D
         let span = wrapper.scrollHeight - viewport;
         progressBar.style.width = `${span > 0 ? scrollTop / span * 100 : 0}%`;
       }
-      sectionsRef.current.forEach((section, i) => {
+      nav && nav.classList.toggle("fullpage-nav--on-light", !SECTION_IS_DARK[index]), sectionsRef.current.forEach((section, i) => {
         section.classList.toggle("is-active", i === index), i === index && section.classList.add("has-revealed");
       });
     }, onScroll = () => {
-      ticking.current || (ticking.current = !0, frame.current = window.requestAnimationFrame(measure));
+      frame.current || (frame.current = window.requestAnimationFrame(measure));
     };
     return measure(), wrapper.addEventListener("scroll", onScroll, { passive: !0 }), window.addEventListener("resize", onScroll, { passive: !0 }), () => {
-      window.cancelAnimationFrame(frame.current), wrapper.removeEventListener("scroll", onScroll), window.removeEventListener("resize", onScroll), document.body.classList.remove("fullpage-active"), document.documentElement.classList.remove("fullpage-active"), document.documentElement.classList.remove("reveal-ready");
+      frame.current && window.cancelAnimationFrame(frame.current), wrapper.removeEventListener("scroll", onScroll), window.removeEventListener("resize", onScroll), document.body.classList.remove("fullpage-active"), document.documentElement.classList.remove("fullpage-active"), document.documentElement.classList.remove("reveal-ready");
     };
   }, []), useEffect3(() => {
     let onKey = (e) => {
@@ -3040,11 +3048,9 @@ var SECTION_IS_DARK = [!0, !1, !0, !0, !1, !1, !0], SECTION_COUNT = SECTION_IS_D
       wrapper && section && section.getBoundingClientRect().height > wrapper.clientHeight + 2 && (e.key === "ArrowDown" || e.key === "ArrowUp") || (e.preventDefault(), e.key === "ArrowDown" || e.key === "PageDown" ? scrollToSection(Math.min(current + 1, SECTION_COUNT - 1)) : e.key === "ArrowUp" || e.key === "PageUp" ? scrollToSection(Math.max(current - 1, 0)) : e.key === "Home" ? scrollToSection(0) : scrollToSection(SECTION_COUNT - 1));
     };
     return window.addEventListener("keydown", onKey), () => window.removeEventListener("keydown", onKey);
-  }, [current, scrollToSection]);
-  let onLight = !SECTION_IS_DARK[current], latest = news_default.news.filter((item) => item.type !== "update").slice(0, 3);
-  return /* @__PURE__ */ jsxs24("div", { className: "fullpage-container", children: [
+  }, [current, scrollToSection]), /* @__PURE__ */ jsxs24(Fragment11, { children: [
     /* @__PURE__ */ jsx25("div", { className: "fullpage-progress" }),
-    /* @__PURE__ */ jsx25("div", { className: `fullpage-nav${onLight ? " fullpage-nav--on-light" : ""}`, children: Array.from({ length: SECTION_COUNT }).map((_, index) => /* @__PURE__ */ jsx25(
+    /* @__PURE__ */ jsx25("div", { className: "fullpage-nav", children: Array.from({ length: SECTION_COUNT }).map((_, index) => /* @__PURE__ */ jsx25(
       "button",
       {
         type: "button",
@@ -3064,8 +3070,14 @@ var SECTION_IS_DARK = [!0, !1, !0, !0, !1, !1, !0], SECTION_COUNT = SECTION_IS_D
         "aria-label": "Back to top",
         children: "\u2191"
       }
-    ),
-    /* @__PURE__ */ jsxs24("div", { className: "fullpage-wrapper", ref: wrapperRef, children: [
+    )
+  ] });
+}
+var MainPage = () => {
+  let latest = news_default.news.filter((item) => item.type !== "update").slice(0, 3);
+  return /* @__PURE__ */ jsxs24("div", { className: "fullpage-container", children: [
+    /* @__PURE__ */ jsx25(ScrollChrome, {}),
+    /* @__PURE__ */ jsxs24("div", { className: "fullpage-wrapper", children: [
       /* @__PURE__ */ jsxs24(
         "section",
         {
@@ -3100,10 +3112,22 @@ var SECTION_IS_DARK = [!0, !1, !0, !0, !1, !1, !0], SECTION_COUNT = SECTION_IS_D
                 ] })
               ] })
             ] }) }),
-            /* @__PURE__ */ jsxs24("button", { type: "button", className: "scroll-cue", onClick: () => scrollToSection(1), children: [
-              /* @__PURE__ */ jsx25("span", { children: "Scroll" }),
-              /* @__PURE__ */ jsx25("span", { className: "scroll-cue__line" })
-            ] })
+            /* @__PURE__ */ jsxs24(
+              "button",
+              {
+                type: "button",
+                className: "scroll-cue",
+                onClick: () => {
+                  document.querySelectorAll(".fullpage-section")[1]?.scrollIntoView({
+                    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+                  });
+                },
+                children: [
+                  /* @__PURE__ */ jsx25("span", { children: "Scroll" }),
+                  /* @__PURE__ */ jsx25("span", { className: "scroll-cue__line" })
+                ]
+              }
+            )
           ]
         }
       ),
@@ -3468,7 +3492,7 @@ var meta22 = () => [
 }, news_default2 = Index22;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-R6ZED3SL.js", imports: ["/build/_shared/chunk-RMUOYFRO.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-AGT22ZHR.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-B7LQN2NY.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-UYIDCLUV.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-NCBNMIWW.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-25K5RTEG.js", imports: ["/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-LZAMKR32.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-KI4WCVN5.js", imports: ["/build/_shared/chunk-4CNFZB4X.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-EWYID6VX.js", imports: ["/build/_shared/chunk-4CNFZB4X.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-FV7JHPF7.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-RTJTIGMJ.js", imports: ["/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-PEF44LD5.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-P2WUI7BO.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-3DGHJEZG.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-FEW2CQQF.js", imports: ["/build/_shared/chunk-EG4MTBFI.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-IH6O7WEG.js", imports: ["/build/_shared/chunk-EG4MTBFI.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-Z6X35QFQ.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-QJY5IHA5.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-HQDRQTP7.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-B5NZC3JW.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-Z6NQ3RXL.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-PEJSZINE.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-PI2WXJQ5.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-VX7ZGTFD.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-GTG5Y3SM.js", "/build/_shared/chunk-C4DDVHQU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "b25948ec", hmr: void 0, url: "/build/manifest-B25948EC.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-R6ZED3SL.js", imports: ["/build/_shared/chunk-RMUOYFRO.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-UGC26Q5U.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-7WEJDDVY.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-SIUXED4B.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-ARFGNDFB.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-336YDANA.js", imports: ["/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-KJHNJQZ6.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-ROA5EYAX.js", imports: ["/build/_shared/chunk-4CNFZB4X.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-NLSURHLJ.js", imports: ["/build/_shared/chunk-4CNFZB4X.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-FC4DCZPR.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-EKKZIVFA.js", imports: ["/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-77OUF4KJ.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-74MVOQLH.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-NQPYIATK.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-M7H3UDCL.js", imports: ["/build/_shared/chunk-EG4MTBFI.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-NCQVBXKH.js", imports: ["/build/_shared/chunk-EG4MTBFI.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-E3VZX3TS.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-HM2AOLR4.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XI3Z7UJN.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-OXBCPVY5.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-GCAMOBGE.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-VPZKFJ5O.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-YCEGBWAV.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-5IVJ4I3N.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "85cf385e", hmr: void 0, url: "/build/manifest-85CF385E.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

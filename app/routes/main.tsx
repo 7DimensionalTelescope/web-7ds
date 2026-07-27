@@ -19,12 +19,17 @@ const SECTION_NAMES = [
   'Contact and partners',
 ];
 
-const MainPage = () => {
+/* The snap sections are static markup. They are deliberately kept out of any
+   component that holds scroll state: when `current` lived here, changing
+   section re-rendered all seven sections, their images and the footer at the
+   exact moment of the transition, which showed up as a flash. All scroll state
+   now lives in <ScrollChrome/>, which renders only the dots and buttons. */
+
+function ScrollChrome() {
   const [current, setCurrent] = useState(0);
   const [showTop, setShowTop] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
   const sectionsRef = useRef<HTMLElement[]>([]);
-  const ticking = useRef(false);
+  const wrapperRef = useRef<HTMLElement | null>(null);
   const frame = useRef(0);
 
   const scrollToSection = useCallback((index: number) => {
@@ -37,8 +42,9 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    const wrapper = wrapperRef.current;
+    const wrapper = document.querySelector<HTMLElement>('.fullpage-wrapper');
     if (!wrapper) return undefined;
+    wrapperRef.current = wrapper;
 
     sectionsRef.current = Array.from(
       wrapper.querySelectorAll<HTMLElement>('.fullpage-section')
@@ -51,9 +57,10 @@ const MainPage = () => {
     document.documentElement.classList.add('reveal-ready');
 
     const progressBar = document.querySelector<HTMLElement>('.fullpage-progress');
+    const nav = document.querySelector<HTMLElement>('.fullpage-nav');
 
     const measure = () => {
-      ticking.current = false;
+      frame.current = 0;
 
       const scrollTop = wrapper.scrollTop;
       const viewport = wrapper.clientHeight;
@@ -73,8 +80,10 @@ const MainPage = () => {
         const span = wrapper.scrollHeight - viewport;
         progressBar.style.width = `${span > 0 ? (scrollTop / span) * 100 : 0}%`;
       }
+      // Driven through the DOM rather than React so that scrolling over a
+      // light section never re-renders anything.
+      if (nav) nav.classList.toggle('fullpage-nav--on-light', !SECTION_IS_DARK[index]);
 
-      // A section is "active" once it is the one filling the viewport.
       // `has-revealed` is deliberately never removed: if the reveal were tied
       // to `is-active` alone, content would fade back out whenever the index
       // flipped while a snap was settling, which reads as flickering.
@@ -85,8 +94,7 @@ const MainPage = () => {
     };
 
     const onScroll = () => {
-      if (ticking.current) return;
-      ticking.current = true;
+      if (frame.current) return;
       frame.current = window.requestAnimationFrame(measure);
     };
 
@@ -95,7 +103,7 @@ const MainPage = () => {
     window.addEventListener('resize', onScroll, { passive: true });
 
     return () => {
-      window.cancelAnimationFrame(frame.current);
+      if (frame.current) window.cancelAnimationFrame(frame.current);
       wrapper.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
       document.body.classList.remove('fullpage-active');
@@ -140,14 +148,11 @@ const MainPage = () => {
     return () => window.removeEventListener('keydown', onKey);
   }, [current, scrollToSection]);
 
-  const onLight = !SECTION_IS_DARK[current];
-  const latest = (news.news as any[]).filter((item) => item.type !== 'update').slice(0, 3);
-
   return (
-    <div className="fullpage-container">
+    <>
       <div className="fullpage-progress" />
 
-      <div className={`fullpage-nav${onLight ? ' fullpage-nav--on-light' : ''}`}>
+      <div className="fullpage-nav">
         {Array.from({ length: SECTION_COUNT }).map((_, index) => (
           <button
             key={index}
@@ -168,8 +173,18 @@ const MainPage = () => {
       >
         ↑
       </button>
+    </>
+  );
+}
 
-      <div className="fullpage-wrapper" ref={wrapperRef}>
+const MainPage = () => {
+  const latest = (news.news as any[]).filter((item) => item.type !== 'update').slice(0, 3);
+
+  return (
+    <div className="fullpage-container">
+      <ScrollChrome />
+
+      <div className="fullpage-wrapper">
         {/* 01 — Hero ------------------------------------------------------ */}
         <section
           className="fullpage-section fullpage-section--dark fullpage-hero"
@@ -209,7 +224,18 @@ An array of twenty 50-cm telescopes in the Río Hurtado Valley, Chile,
             </div>
           </div>
 
-          <button type="button" className="scroll-cue" onClick={() => scrollToSection(1)}>
+          <button
+            type="button"
+            className="scroll-cue"
+            onClick={() => {
+              const next = document.querySelectorAll('.fullpage-section')[1];
+              next?.scrollIntoView({
+                behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                  ? 'auto'
+                  : 'smooth',
+              });
+            }}
+          >
             <span>Scroll</span>
             <span className="scroll-cue__line" />
           </button>
