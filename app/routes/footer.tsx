@@ -1,121 +1,122 @@
+const PARTNERS = [
+  { src: '/img/institutes/snu.jpeg', alt: 'Seoul National University' },
+  { src: '/img/institutes/kasi.gif', alt: 'Korea Astronomy and Space Science Institute' },
+  { src: '/img/institutes/postech.png', alt: 'POSTECH' },
+  { src: '/img/institutes/ewha.png', alt: 'Ewha Womans University' },
+  { src: '/img/institutes/gwuniv.png', alt: 'Center for the Gravitational-wave Universe' },
+  { src: '/img/institutes/nrf.jpg', alt: 'National Research Foundation of Korea' },
+];
+
+const COLUMNS = [
+  {
+    title: 'About',
+    links: [
+      { label: 'What is 7DS', href: '/about/intro' },
+      { label: 'Team', href: '/about/team' },
+      { label: 'Funding', href: '/about/funding' },
+      { label: 'Gallery', href: '/gallery' },
+      { label: 'Links', href: '/links' },
+    ],
+  },
+  {
+    title: 'Survey',
+    links: [
+      { label: 'Overview', href: '/survey/overview' },
+      { label: 'Design', href: '/survey/design' },
+      { label: 'Status', href: '/survey/status' },
+    ],
+  },
+  {
+    title: 'Science',
+    links: [
+      { label: 'Overview', href: '/science/overview' },
+      { label: 'Multi-messenger Astronomy', href: '/science/sci#mma' },
+      { label: 'Transients', href: '/science/sci#transients' },
+      { label: 'Galaxy Formation & Evolution', href: '/science/sci#galaxies' },
+      { label: 'Cosmology', href: '/science/sci#cosmology' },
+      { label: 'Active Galactic Nuclei', href: '/science/sci#agn' },
+      { label: 'Galactic Science', href: '/science/sci#galactic' },
+      { label: 'Solar System Objects', href: '/science/sci#solar' },
+    ],
+  },
+  {
+    title: 'Facilities',
+    links: [
+      { label: 'Overview', href: '/telescope/overview' },
+      { label: 'Location', href: '/telescope/location' },
+      { label: 'Instrument', href: '/telescope/instrument' },
+      { label: 'Computational Resources', href: '/telescope/computer' },
+      { label: 'Observing Mode', href: '/telescope/mode' },
+      { label: 'Data & Software', href: '/data/overview' },
+    ],
+  },
+];
 
 const FooterBar = () => {
   return (
-  <footer style={{backgroundColor:"black", zIndex:1000, position: "relative"}}>
-    <div className="mx-auto w-full flex" style={{maxWidth: "1440px", margin:"0 auto"}}>
-      <div className="grid grid-cols-2 gap-8 py-6 lg:py-8 md:grid-cols-5">
-        <div>
-          <h2 className="text-sm font-semibold text-gray-900 uppercase text-white">Contact</h2>
-          <hr className="mb-2"/>
-            <p className="text-gray-500"> Myungshin Im </p>
-            <p className="text-gray-500"> Professor, Dept. of Physics & Astronomy, Seoul National University,</p>
-            <p className="text-gray-500"> 56-1 San, Shillim-dong, Kwanak-gu, Seoul, KOREA </p>
-            <p className="text-gray-500"> +82-2-880-6585/6761 </p>
-            <p className="text-gray-500 mb-2"> <a href="mailto:mim@astro.snu.ac.kr">mim@astro.snu.ac.kr</a></p>
-          <hr/>
-        </div>
-        <div>
-          <h2 className="text-sm font-semibold text-gray-900 uppercase text-white">About</h2>
-          <hr className="mb-2"/>
-            <ul className="text-gray-500 dark:text-gray-400 font-medium">
-              <li className="mb-2">
-                  <a href="/about/intro" className="hover:color-org">What is 7DS</a>
-              </li>
-              <li className="mb-2">
-                  <a href="/about/team" className="hover:color-org">Team</a>
-              </li>
-            </ul>
+    <footer className="site-footer">
+      <div className="site-footer__spectrum" />
 
-          <hr className="mb-6"/>
-          <h2 className="text-sm font-semibold text-gray-900 uppercase text-white">Survey</h2>
-          <hr className="mb-2"/>
-            <ul className="text-gray-500 dark:text-gray-400 font-medium">
-              <li className="mb-2">
-                  <a href="/survey/overview" className="hover:color-org">Overview</a>
-              </li>
-              <li className="mb-2">
-                  <a href="/survey/design" className="hover:color-org">Design</a>
-              </li>
-              <li className="mb-2">
-                  <a href="/survey/status" className="hover:color-org">Status</a>
-              </li>
-            </ul>
-        </div>
-        <div>
-          <h2 className="text-sm font-semibold text-gray-900 uppercase text-white">Science</h2>
-          <hr className="mb-2"/>
-          <ul className="text-gray-500 dark:text-gray-400 font-medium">
-            <li className="mb-2">
-              <a href="/science/sci" className="hover:color-org">Multi-messenger Astronomy</a>
-            </li>
-            <li className="mb-2">
-              <a href="/science/sci" className="hover:color-org">Galaxy Formation & Evolution</a>
-            </li>
-            <li className="mb-2">
-              <a href="/science/sci" className="hover:color-org">Cosmology</a>
-            </li>
-            <li className="mb-2">
-              <a href="/science/sci" className="hover:color-org">Active Galactic Nuclei</a>
-            </li>
-            <li className="mb-2">
-              <a href="/science/sci" className="hover:color-org">Galactic Science</a>
-            </li>
-            <li className="mb-2">
-              <a href="/science/sci" className="hover:color-org">Solar System Objects</a>
-            </li>
-            <li className="mb-2">
-              <a href="/science/sci" className="hover:color-org">Transients</a>
-            </li>
-          </ul>
-        </div>
+      <div className="site-footer__top">
+        <div className="container container--wide">
+          <div className="site-footer__grid">
+            <div className="site-footer__contact">
+              <h3 className="site-footer__heading">Contact</h3>
+              <p className="site-footer__name">Prof. Myungshin Im</p>
+              <p>Principal Investigator</p>
+              <p>Dept. of Physics &amp; Astronomy</p>
+              <p>Seoul National University</p>
+              <p>1 Gwanak-ro, Gwanak-gu</p>
+              <p>Seoul 08826, Republic of Korea</p>
+              <p>+82-2-880-6585 / 6761</p>
+              <p style={{ marginTop: '0.75rem' }}>
+                <a href="mailto:mim@astro.snu.ac.kr">mim@astro.snu.ac.kr</a>
+              </p>
+            </div>
 
-        <div>
-          <h2 className="text-sm font-semibold text-gray-900 uppercase text-white">Facilities</h2>
-          <hr className="mb-2"/>
-          <ul className="text-gray-500 dark:text-gray-400 font-medium">
-            <li className="mb-2">
-              <a href="/telescope/overview" className="hover:color-org">Overview</a>
-            </li>
-            <li className="mb-2">
-              <a href="/telescope/location" className="hover:color-org">Location</a>
-            </li>
-            <li className="mb-2">
-              <a href="/telescope/instrument" className="hover:color-org">Instrument</a>
-            </li>
-            <li className="mb-2">
-              <a href="/telescope/computer" className="hover:color-org">Computational<br/>Resources</a>
-            </li>
-            <li className="mb-2">
-              <a href="/telescope/mode" className="hover:color-org">Observing<br/>Mode</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2 className="text-sm font-semibold text-gray-900 uppercase text-white">Data</h2>
-          <hr className="mb-2"/>
-          <ul className="text-gray-500 dark:text-gray-400 font-medium">
-            <li className="mb-2">
-              <a href="/data/overview" className="hover:color-org">Overview</a>
-            </li>
-            <li className="mb-2">
-              <a href="/data/data" className="hover:color-org">Data</a>
-            </li>
-            <li className="mb-2">
-              <a href="/data/science" className="hover:color-org">Software</a>
-            </li>
-          </ul>
-          <hr className="mb-4"/>
-          <h2 className="text-sm font-semibold text-gray-900 uppercase text-white"><a href="/publication">Publications</a></h2>
-          <hr className="mb-4"/>
-          <h2 className="text-sm font-semibold text-gray-900 uppercase text-white"><a href="/news">News</a></h2>
-          <hr className="mb-4"/>
-          <h2 className="text-sm font-semibold text-gray-900 uppercase text-white"><a href="/gallery">Gallery</a></h2>
+            {COLUMNS.map((column) => (
+              <div key={column.title}>
+                <h3 className="site-footer__heading">{column.title}</h3>
+                <ul>
+                  {column.links.map((link) => (
+                    <li key={link.label}>
+                      <a href={link.href}>{link.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
-  );
-}
 
+      <div className="site-footer__partners">
+        <div className="container container--wide">
+          <h3 className="site-footer__heading">Participating institutions</h3>
+          <div className="logo-strip">
+            {PARTNERS.map((partner) => (
+              <div className="logo-strip__item" key={partner.alt}>
+                <img src={partner.src} alt={partner.alt} loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="container container--wide">
+        <div className="site-footer__bottom">
+          <div className="site-footer__copyright">
+            © 2026 7-Dimensional Telescope · Center for the Gravitational-wave Universe, SNU
+          </div>
+          <div className="site-footer__legal">
+            <a href="/publication/policy">Publication Policy</a>
+            <a href="/links">Links</a>
+            <a href="mailto:mim@astro.snu.ac.kr">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
 
 export default FooterBar;

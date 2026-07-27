@@ -1,107 +1,94 @@
-import React, { useState, useEffect } from "react";
-import NavBar from './navigate';
-import FooterBar from "./footer";
-import { overviewText } from './content/text';
+import React from 'react';
+import type { MetaFunction } from '@remix-run/node';
+import { PageLayout, PageHero, Section, SpecTable, StatGrid, NextLinks } from '../components/site';
+import { telescopeOverviewText, performanceText, depthText } from './content/text';
+import specs from './content/specs.json';
+
+export const meta: MetaFunction = () => [
+  { title: 'Telescope · 7-Dimensional Telescope' },
+  {
+    name: 'description',
+    content:
+      'System overview of the 7-Dimensional Telescope: twenty 50-cm units, medium-band filters, and measured optical and photometric performance.',
+  },
+];
 
 const Index = () => {
-  const backgroundImageStyle = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("../img/telescope.jpg")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px",
-    position: "relative", // Add this line
-  };
-
-  const transparentBoxStyle = {
-    position: "absolute",
-    top: "30%", // Adjust this value as per your requirement
-    left: "50%", // Adjust this value as per your requirement
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "rgba(255, 255, 255, 0.85)", // Adjust the transparency here
-    padding: "50px",
-    borderRadius: "10px",
-    maxWidth: "90%",
-    marginTop:"200px",
-
-  };
-
-  const buttonStyle = {
-    backgroundColor: "var(--pickled-bluewood-900)",
-    border: "none",
-    color: "white",
-    padding: "15px 32px",
-    textAlign: "center",
-    textDecoration: "none",
-    display: "inline-block",
-    fontSize: "16px",
-    margin: "4px 10px",
-    cursor: "pointer",
-    borderRadius: "10px",
-
-  };
-
-  const buttonHoverStyle = {
-    backgroundColor: "var(--pickled-bluewood-600)",
-  };
-
-  const handleMouseOver = (e) => {
-    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-  };
-
-  const handleMouseOut = (e) => {
-    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-  };
-
-
   return (
-    <div style={{background: "#fff"}}>
-      <NavBar manu="manu7dt"/>
-      
-      <div style={backgroundImageStyle}>
-        <div style={{height:"100vh"}}></div>
-        <div style={transparentBoxStyle}>
-          <div className="mx-auto w-full">
-            <div className="max-w-screen-lg mx-auto">
-              <div className="justify-between mb-5" style={{maxWidth: "1200px", margin: "0 auto"}}>
-                <p className="mt-4 text-sm leading-7 text-gray-500 font-regular" style={{textAlign:"center"}}>
-                  7-Dimensional Telescope (7DT)
-                </p>
-                <h3 className="mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900" style={{textAlign:"center", fontWeight: "700", color:"var(--pickled-bluewood-900)"}}>
-                  Overview of <span style={{color:"var(--pickled-bluewood-600)"}}>7DT</span>
-                </h3>
-                <p className="text-content">{overviewText}</p>
-                <br/>
-                <p className="mt-4 text-gray-900 font-regular">To explore further,  </p>
-                <div className="flex justify-center" >
-                  <a href='./location'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Location
-                    </button>
-                  </a>
-                  <a href='./instrument'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Instrument
-                    </button>
-                  </a>
-                  <a href='./computer'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Computational Resorces
-                    </button>
-                  </a>
-                  <a href='./mode'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Observing Mode
-                    </button>
-                  </a>
-                </div>
-              </div>
-            </div>
+    <PageLayout menu="manu7dt">
+      <PageHero
+        eyebrow="Telescope"
+        title={
+          <>
+            The <em>7DT</em> array
+          </>
+        }
+        lede="Twenty commercial 50-cm telescopes, operated as one instrument. Off-the-shelf optics kept the array inexpensive and quick to bring on line; the filter set is what makes it unusual."
+        image="/img/hero/telescope.jpg"
+        meta={[
+          { value: '50.8', unit: 'cm', label: 'Primary diameter' },
+          { value: 'f/3.0', label: 'Focal ratio' },
+          { value: '1.34 × 0.90', unit: '°', label: 'FoV per unit' },
+          { value: '0.5', unit: '″', label: 'Pixel scale' },
+        ]}
+      />
+
+      <Section eyebrow="Overview" title="One instrument in twenty parts">
+        <div className="split split--wide-text">
+          <div>
+            <p className="prose">{telescopeOverviewText}</p>
+            <p className="prose">{performanceText}</p>
           </div>
+          <figure className="figure">
+            <img
+              src="/img/images/Figure2_7DT.jpg"
+              alt="The 7-Dimensional Telescope array seen from the front"
+              loading="lazy"
+            />
+            <figcaption>
+              <b>DeltaRho 500</b> Each unit is a 508 mm corrected Cassegrain on an L-500
+              direct-drive mount, with its own camera and filter wheel.
+            </figcaption>
+          </figure>
         </div>
-      </div>
-      <FooterBar />
-    </div>
+      </Section>
+
+      <Section eyebrow="Performance" title="As measured on sky" alt>
+        <StatGrid items={specs.performance} />
+        <p className="prose" style={{ marginTop: '2rem' }}>
+          {depthText}
+        </p>
+        <div className="table-wrap" style={{ marginTop: '1.5rem', maxWidth: '620px' }}>
+          <table className="spec-table">
+            <caption>{specs.depths.caption}</caption>
+            <tbody>
+              {specs.depths.rows.map((row) => (
+                <tr key={row[0]}>
+                  <th scope="row">{row[0]}</th>
+                  <td>{row[1]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section eyebrow="Specifications" title="System summary">
+        <SpecTable caption="7DT system specifications — June 2026" groups={specs.groups} />
+        <div style={{ marginTop: '2.5rem' }}>
+          <NextLinks
+            title="In detail"
+            links={[
+              { label: 'Location', href: '/telescope/location' },
+              { label: 'Instrument', href: '/telescope/instrument' },
+              { label: 'Computational resources', href: '/telescope/computer' },
+              { label: 'Observing mode', href: '/telescope/mode' },
+            ]}
+          />
+        </div>
+      </Section>
+    </PageLayout>
   );
-}
+};
 
 export default Index;

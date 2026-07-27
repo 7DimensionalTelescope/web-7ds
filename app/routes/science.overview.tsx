@@ -1,125 +1,89 @@
-import React, { useState, useEffect } from "react";
-import NavBar from './navigate';
-import FooterBar from "./footer";
-import { overviewText } from './content/text';
+import React from 'react';
+import type { MetaFunction } from '@remix-run/node';
+import { PageLayout, PageHero, Section } from '../components/site';
+import { scienceOverviewText, scienceOverviewText2 } from './content/text';
+import science from './content/science.json';
+
+export const meta: MetaFunction = () => [
+  { title: 'Science · 7-Dimensional Telescope' },
+  {
+    name: 'description',
+    content:
+      'From gravitational-wave counterparts to photometric redshifts: the science programme of the 7-Dimensional Telescope.',
+  },
+];
 
 const Index = () => {
-  const backgroundImageStyle = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("../img/science.jpg")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px",
-    position: "relative", // Add this line
-  };
-
-  const transparentBoxStyle = {
-    position: "absolute",
-    top: "30%", // Adjust this value as per your requirement
-    left: "50%", // Adjust this value as per your requirement
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "rgba(255, 255, 255, 0.85)", // Adjust the transparency here
-    padding: "50px",
-    borderRadius: "10px",
-    maxWidth: "90%",
-    marginTop:"200px",
-
-  };
-
-  const buttonStyle = {
-    backgroundColor: "var(--pickled-bluewood-900)",
-    border: "none",
-    color: "white",
-    padding: "15px 32px",
-    textAlign: "center",
-    textDecoration: "none",
-    display: "inline-block",
-    fontSize: "16px",
-    margin: "4px 5px",
-    cursor: "pointer",
-    borderRadius: "10px",
-
-  };
-
-  const buttonHoverStyle = {
-    backgroundColor: "var(--pickled-bluewood-600)",
-  };
-
-  const handleMouseOver = (e) => {
-    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-  };
-
-  const handleMouseOut = (e) => {
-    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-  };
-
-
   return (
-    <div style={{background: "#fff"}}>
-      <NavBar manu="manuScience"/>
-      
-      <div style={backgroundImageStyle}>
-        <div style={{height:"100vh"}}></div>
-        <div style={transparentBoxStyle}>
-          <div className="mx-auto w-full">
-            <div className="max-w-screen-lg mx-auto">
-              <div className="justify-between mb-5" style={{maxWidth: "1200px", margin: "0 auto"}}>
-                <p className="mt-4 text-sm leading-7 text-gray-500 font-regular" style={{textAlign:"center"}}>
-                  Shed light on the physics of the Universe
-                </p>
-                <h3 className="mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900" style={{textAlign:"center", fontWeight: "700", color:"var(--pickled-bluewood-900)"}}>
-                  Overview of <span style={{color:"var(--pickled-bluewood-600)"}}>Science</span>
-                </h3>
-                <p className="text-content">{overviewText}</p>
-                <br/>
-                <p className="mt-4 text-gray-900 font-regular">To explore further,  </p>
-                <div className="flex justify-center" >
-                  <a href='/sci'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Multi-Messenger Astronomy
-                    </button>
-                  </a>
-                  <a href='/sci'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Galaxy Formation Evolution
-                    </button>
-                  </a>
-                  <a href='/sci'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Cosmology
-                    </button>
-                  </a>
-                </div>
-                <div className="flex justify-center" >
+    <PageLayout menu="manuScience">
+      <PageHero
+        eyebrow="Science"
+        title="Shedding light on the physics of the Universe"
+        lede="A medium-band array turns a single visit into a low-resolution spectrum for every source in the field. That capability starts with kilonovae and reaches across the whole of time-domain and extragalactic astronomy."
+        image="/img/hero/science.jpg"
+        meta={[
+          { value: '30–70', label: 'Spectral resolution R' },
+          { value: '0.4–0.9', unit: 'µm', label: 'Wavelength range' },
+          { value: '7', label: 'Science themes' },
+        ]}
+      />
 
-                  <a href='/sci'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Active Galactic Nuclei
-                    </button>
-                  </a>
-                  <a href='/sci'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Galactic Science
-                    </button>
-                  </a>
-                  <a href='/sci'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Solar System Objects
-                    </button>
-                  </a>
-                  <a href='/sci'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Transients
-                    </button>
-                  </a>
-                </div>
-              </div>
-            </div>
+      <Section eyebrow="Motivation" title="Why medium bands">
+        <div className="split split--wide-text">
+          <div>
+            <p className="prose">{scienceOverviewText}</p>
+            <p className="prose">{scienceOverviewText2}</p>
           </div>
+          <figure className="figure">
+            <img src="/img/filter.png" alt="Transmission curves of the 7DT medium-band filter set" loading="lazy" />
+            <figcaption>
+              <b>Filter set</b> Medium bands of 25 nm width spanning 375–875 nm, distributed
+              across the array so the full set is covered in a small number of exposures.
+            </figcaption>
+          </figure>
         </div>
-      </div>
-      <FooterBar />
-    </div>
+      </Section>
+
+      <Section eyebrow="Programme" title="Seven science themes" alt>
+        <div className="grid grid-cols-2">
+          {science.themes.map((theme) => (
+            <a className="theme-card" href={`/science/sci#${theme.id}`} key={theme.id}>
+              <span className="theme-card__index">{theme.n}</span>
+              <h3 className="theme-card__title">{theme.title}</h3>
+              <p className="theme-card__body">{theme.summary}</p>
+            </a>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Verification" title="What commissioning observed">
+        <p className="lede">
+          Science verification ran alongside instrument commissioning from first light, covering
+          the full range of intended use cases.
+        </p>
+        <ul className="feature-list">
+          {science.verification.map((item, index) => (
+            <li key={item}>
+              <span className="feature-list__key">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <p className="feature-list__body" style={{ margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div className="btn-row" style={{ marginTop: '2rem' }}>
+          <a className="btn btn--primary" href="/science/sci">
+            Early science results
+          </a>
+          <a className="btn btn--secondary" href="/publication/list">
+            Publications
+          </a>
+        </div>
+      </Section>
+    </PageLayout>
   );
-}
+};
 
 export default Index;

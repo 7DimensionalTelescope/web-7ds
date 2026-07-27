@@ -6,9 +6,9 @@
   "scripts": {
     "build": "npm run build:css && remix build",
     "build:css": "tailwindcss -m -i ./css/app.css -o app/css/app.css",
-    "dev": "PORT=3002 remix dev",
+    "dev": "PORT=3003 remix dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "PORT=3002 remix-serve ./build/index.js",
+    "start": "PORT=3001 remix-serve ./build/index.js",
     "typecheck": "tsc"
   },
   "dependencies": {

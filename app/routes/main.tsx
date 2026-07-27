@@ -1,264 +1,467 @@
-import React, {useEffect, useState, useRef} from 'react';
-import news from './content/news.json'
-import { mainText1, mainText2, mainText3, mainText4 } from './content/text'
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import news from './content/news.json';
+import surveys from './content/surveys.json';
+import { mainText1, mainText2, mainText3, mainText4 } from './content/text';
+import FooterBar from './footer';
+
+/* Which snap sections carry a dark background — the dot navigation and the
+   scroll cue invert against it. The last entry is the footer. */
+const SECTION_IS_DARK = [true, false, true, true, false, false, true];
+const SECTION_COUNT = SECTION_IS_DARK.length;
+const SECTION_NAMES = [
+  'Introduction',
+  'About 7DT',
+  'Science',
+  'Sky survey',
+  'Telescope',
+  'News',
+  'Contact and partners',
+];
 
 const MainPage = () => {
+  const [current, setCurrent] = useState(0);
+  const [showTop, setShowTop] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const sectionsRef = useRef<HTMLElement[]>([]);
+  const ticking = useRef(false);
+  const frame = useRef(0);
 
+  const scrollToSection = useCallback((index: number) => {
+    const target = sectionsRef.current[index];
+    if (!target) return;
+    // An explicit `behavior: smooth` overrides the CSS reduced-motion rule,
+    // so the preference has to be checked here too.
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  }, []);
 
-  const [smallWindow, setSmallWindow] = useState(true);
-  const [backgroudImageSet, setBackgroudImageSet] = useState("fixed");
-  const [scrollPos, setScrollPos] = useState(0);
-  const rulerImageRef = useRef(false);
-  const rulerImageRefFixed = useRef(false);
-  const [hovered, setHovered] = useState(0);
-
-  const handleHover = (val) => {
-    setHovered(val);
-  };
-  
   useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return undefined;
 
-    const updateWindow = () => {
-      if (window.innerWidth < 1200){
-        setSmallWindow(false)
-      } else {
-        setSmallWindow(true)
+    sectionsRef.current = Array.from(
+      wrapper.querySelectorAll<HTMLElement>('.fullpage-section')
+    );
+
+    document.body.classList.add('fullpage-active');
+    document.documentElement.classList.add('fullpage-active');
+    // Only opt into the reveal transition once the script is live, so the
+    // copy is readable if it never is.
+    document.documentElement.classList.add('reveal-ready');
+
+    const progressBar = document.querySelector<HTMLElement>('.fullpage-progress');
+
+    const measure = () => {
+      ticking.current = false;
+
+      const scrollTop = wrapper.scrollTop;
+      const viewport = wrapper.clientHeight;
+      // Sections are min-height:100vh, so any that overflows breaks a
+      // scrollTop/viewport estimate. Measure where they actually are.
+      const midpoint = viewport * 0.5;
+      let index = 0;
+      sectionsRef.current.forEach((section, i) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= midpoint && rect.bottom > midpoint) index = i;
+      });
+
+      setCurrent(index);
+      setShowTop(scrollTop > viewport * 0.75);
+
+      if (progressBar) {
+        const span = wrapper.scrollHeight - viewport;
+        progressBar.style.width = `${span > 0 ? (scrollTop / span) * 100 : 0}%`;
       }
- 
-    };
-    
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setScrollPos(scrollY);
+
+      // A section is "active" once it is the one filling the viewport; the
+      // class drives the reveal transition in CSS.
+      sectionsRef.current.forEach((section, i) => {
+        section.classList.toggle('is-active', i === index);
+      });
     };
 
-    updateWindow();
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', updateWindow);
+    const onScroll = () => {
+      if (ticking.current) return;
+      ticking.current = true;
+      frame.current = window.requestAnimationFrame(measure);
+    };
 
+    measure();
+    wrapper.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('resize', updateWindow);
-      window.removeEventListener('scroll', handleScroll);
+      window.cancelAnimationFrame(frame.current);
+      wrapper.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      document.body.classList.remove('fullpage-active');
+      document.documentElement.classList.remove('fullpage-active');
+      document.documentElement.classList.remove('reveal-ready');
     };
   }, []);
 
+  // Keyboard paging
   useEffect(() => {
-    const handleScroll = () => {
-      
-      if (rulerImageRef.current) {
-        const scrollX = window.scrollY || window.pageYOffset;
-        rulerImageRef.current.style.backgroundPositionX = `-${scrollX}px`;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
+
+      const target = e.target as HTMLElement | null;
+      if (target?.closest('input, textarea, select, [contenteditable]')) return;
+
+      const keys = ['ArrowDown', 'PageDown', 'ArrowUp', 'PageUp', 'Home', 'End'];
+      if (!keys.includes(e.key)) return;
+
+      // If this section is taller than the viewport, let the browser scroll it
+      // normally — paging past it would make the overflow unreachable.
+      const wrapper = wrapperRef.current;
+      const section = sectionsRef.current[current];
+      if (
+        wrapper &&
+        section &&
+        section.getBoundingClientRect().height > wrapper.clientHeight + 2 &&
+        (e.key === 'ArrowDown' || e.key === 'ArrowUp')
+      ) {
+        return;
       }
 
-      if (rulerImageRefFixed.current) {
-        const scrollX = window.scrollY || window.pageYOffset;
-        rulerImageRefFixed.current.style.backgroundPositionX = `-${scrollX}px`;
-      }
+      e.preventDefault();
 
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') scrollToSection(Math.min(current + 1, SECTION_COUNT - 1));
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') scrollToSection(Math.max(current - 1, 0));
+      else if (e.key === 'Home') scrollToSection(0);
+      else scrollToSection(SECTION_COUNT - 1);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [current, scrollToSection]);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const onLight = !SECTION_IS_DARK[current];
+  const latest = (news.news as any[]).filter((item) => item.type !== 'update').slice(0, 3);
 
-  const backgroundImage = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("./img/main.jpg")',
-    backgroundAttachment: backgroudImageSet,
-    backgroundPosition: "50% 0px",
-  }
-
-  const backgroundImage2 = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("./img/science.jpg")',
-    backgroundAttachment: backgroudImageSet,
-    backgroundPosition: "50% 0px",
-  }
-
-  const backgroundImage3 = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("./img/survey.jpg")',
-    backgroundAttachment: backgroudImageSet,
-    backgroundPosition: "50% 0px",
-  }
-
-  const backgroundImage4 = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("./img/telescope.jpg")',
-    backgroundAttachment: backgroudImageSet,
-    backgroundPosition: "50% 0px",
-  }
-
-  const rulerImage = {
-    backgroundSize: 'cover',
-    backgroundImage: 'url("./img/ruler.jpg")',
-    backgroundRepeat: "none repeat-x",
-    backgroundPosition: '50% 0px',
-    width: '100%',
-    height: '40px',
-    zIndex: 200,
-  };
-
-  useEffect(() => {
-
-    if (window.innerWidth < 768) {
-      setBackgroudImageSet("scroll")
-    }
-  }, []);
-
-  
   return (
-    <div>
-      <div style = {backgroundImage}>
-        <div className="w-full" style={{ height: "100vh" }}>
-          <img src="./img/title.png" style={{ width: "max(1000px, 70%)", paddingTop: "120px", paddingLeft: "15%" }} alt="7DT telescope" />
-        </div>
+    <div className="fullpage-container">
+      <div className="fullpage-progress" />
+
+      <div className={`fullpage-nav${onLight ? ' fullpage-nav--on-light' : ''}`}>
+        {Array.from({ length: SECTION_COUNT }).map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            className={`fullpage-dot${current === index ? ' active' : ''}`}
+            onClick={() => scrollToSection(index)}
+            aria-label={SECTION_NAMES[index]}
+            aria-current={current === index}
+          />
+        ))}
       </div>
 
-    
-      <div style={{backgroundColor:"#fff"}}>
-        <a href="./about/intro">
-        <div className="main w-full">
-          <div className="w-full mx-auto">
-            <p style={{maxWidth:"1440px"}}>
-              <h2 className="mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900" style={{textAlign:"center", fontWeight: "700"}}>
-                Introduction
-              </h2>
-              <img className="inline-flex" src="/img/NGC0253.gif" width="40%"/>
-              
-              <h4 style={{paddingTop:"20px"}}>
-                {mainText1}
-              </h4>
-            </p>
-          </div>
-        </div>
-        </a>
-      </div>
+      <button
+        type="button"
+        className={`scroll-to-top${showTop ? ' visible' : ''}`}
+        onClick={() => scrollToSection(0)}
+        aria-label="Back to top"
+      >
+        ↑
+      </button>
 
-      <div style={{backgroundColor:"#f9f9f9"}}>
-        <a href="./science/overview">
-        <div className="main w-full main-style">
-          <div className="w-full mx-auto" 
-            onMouseEnter={() => handleHover(1)}
-            onMouseLeave={() => handleHover(0)}
-            style={(hovered===1) ? backgroundImage2 : {backgroundColor:"#f9f9f9"}}>
-            <p style={{maxWidth:"1440px"}}>
-              <h2 className="mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900" style={{textAlign:"center", fontWeight: "700"}}>
-                <span>7 Scientific Goals</span>
-              </h2>
-              {(hovered!=1)?<img className="inline-flex" src="/img/science.jpg" style={{height: "350px", width: "600px"}}/>:''}
-              <h4 style={(hovered===1)?{paddingTop:"400px"}:{paddingTop:"50px"}}>
-                {mainText2}
-              </h4>
-            </p>
-          </div>
-        </div>
-        </a>
-      </div>
-
-      <div style={{backgroundColor:"#fff"}}>
-        <a href="./survey/overview">
-        <div className="main w-full main-style">
-          <div className="w-full mx-auto" 
-            onMouseEnter={() => handleHover(2)}
-            onMouseLeave={() => handleHover(0)}
-            style={(hovered===2) ? backgroundImage3 : {} }>
-            <p style={{maxWidth:"1440px"}}>
-              <h2 className="mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900" style={{textAlign:"center", fontWeight: "700"}}>
-                <span>7 Dimensional Sky Survey</span>
-              </h2>
-              {(hovered!=2)?<img className="inline-flex" src="/img/survey.jpg" style={{height: "350px", width: "600px"}}/>:''}
-              <h4 style={(hovered===2)?{paddingTop:"400px"}:{paddingTop:"50px"}}>
-                {mainText3}
-              </h4>
-            </p>
-          </div>
-        </div>
-        </a>
-      </div>
-
-      <div style={{backgroundColor:"#f9f9f9"}}>
-        <a href="./telescope/overview">
-        <div className="main w-full main-style">
-          <div className="w-full mx-auto" 
-            onMouseEnter={() => handleHover(3)}
-            onMouseLeave={() => handleHover(0)}
-            style={(hovered===3) ? backgroundImage4 : {backgroundColor:"#f9f9f9"} }>
-            <p style={{maxWidth:"1440px"}}>
-              <h2 className="mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900" style={{textAlign:"center", fontWeight: "700"}}>
-                <span>7 Dimensional Telescope</span>
-              </h2>
-              {(hovered!=3)?<img className="inline-flex" src="/img/telescope.jpg" style={{height: "350px", width: "600px"}}/>:''}
-              <h4 style={(hovered===3)?{paddingTop:"400px"}:{paddingTop:"50px"}}>
-                {mainText4}
-              </h4>
-            </p>
-          </div>
-        </div>
-        </a>
-      </div>
-        
-      <div style={{backgroundColor:"#fff", paddingTop: "100px"}}>
-        <div className="mx-auto w-full" style={{maxWidth: "1440px"}}>
-          <div className="justify-center mb-5"  style={{maxWidth: "1200px", margin: "0 auto", color:"--pickled-bluewood-900"}}>
-            <p>
-              <h2 className="mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900" style={{textAlign:"center", fontWeight: "700"}}>
-                Meet Our Latest News
-              </h2>
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center justify-center" style={{maxWidth: "1200px", margin: "0 auto", marginBottom:"5rem", textAlign:"center"}}>
-            {news.news.map((news, index) => {
-              index = index+1
-              if (index<=3){
-              return(
-                <div className={`card card-${index}`} key={`card-${index}`}>
-                  <img src={`./img/news/${news.imgName}`}></img>
-                  <a href={news.webpage} target='_blank'>
-                    <div className="card-img-hovered" style={{backgroundImage: `var(--card-img-hovered-overlay), url(./img/news/${news.imgName})`}}></div>
-                  </a>
-                  <div className="card-info">
-                    <div className="card-about">
-                      <a className={`card-tag ${news.type === "meeting" ? "tag-news" : news.type==="publication"? "tag-publication":news.type==="press"? "tag-press":null}`}>{news.type}</a>
-                    <div className="card-time">{news.date}</div>
-                    </div>
-                    <h1 className="card-title">{news.title}</h1>
-                    {news.type === "meeting" ?
-                      <div className="card-creator">in <a href="">{news.place}</a></div> :
-                    news.type === "publication" ?
-                      <div className="card-creator">by <a href="">{news.shortAuthor}</a></div>:
-                      <div className="card-creator">by <a href="">{news.source}</a></div>
-                    }
-                  </div>
+      <div className="fullpage-wrapper" ref={wrapperRef}>
+        {/* 01 — Hero ------------------------------------------------------ */}
+        <section
+          className="fullpage-section fullpage-section--dark fullpage-hero"
+          style={{ backgroundImage: "url('/img/hero/home.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+        >
+          <div className="container container--wide">
+            <div className="reveal">
+              <p className="fullpage-hero__eyebrow">
+                Center for the Gravitational-wave Universe · Seoul National University
+              </p>
+              <h1>7-Dimensional Telescope</h1>
+              <p className="fullpage-hero__lede">
+                Twenty 50-cm telescopes on one mountain in Chile, carrying forty medium-band
+                filters between them. Imaging that reads like spectroscopy, over a field no
+                spectrograph can cover.
+              </p>
+              <div className="stat-grid stat-grid--on-dark">
+                <div className="stat">
+                  <span className="stat__value">16<span className="stat__unit">/ 20</span></span>
+                  <span className="stat__label">Units on sky</span>
                 </div>
-            )}})}
+                <div className="stat">
+                  <span className="stat__value">35<span className="stat__unit">/ 40</span></span>
+                  <span className="stat__label">Medium bands</span>
+                </div>
+                <div className="stat">
+                  <span className="stat__value">375–875<span className="stat__unit">nm</span></span>
+                  <span className="stat__label">Coverage</span>
+                </div>
+                <div className="stat">
+                  <span className="stat__value">1.25<span className="stat__unit">deg²</span></span>
+                  <span className="stat__label">Per pointing</span>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <button type="button" className="scroll-cue" onClick={() => scrollToSection(1)}>
+            <span>Scroll</span>
+            <span className="scroll-cue__line" />
+          </button>
+        </section>
+
+        {/* 02 — Introduction --------------------------------------------- */}
+        <section className="fullpage-section">
+          <div className="container container--wide">
+            <div className="split split--wide-text split--middle reveal">
+              <div>
+                <span className="eyebrow">Introduction</span>
+                <h2>An array that observes in seven dimensions</h2>
+                <p className="prose">{mainText1}</p>
+                <p style={{ marginTop: '1.5rem' }}>
+                  <a className="link-arrow" href="/about/intro">
+                    What is 7DS
+                  </a>
+                </p>
+              </div>
+              <figure className="figure">
+                <img
+                  src="/img/NGC0253.gif"
+                  alt="The Sculptor Galaxy, NGC 253, scanned through the 7DT medium-band filter set"
+                  width={900}
+                  height={929}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>
+                  <b>NGC 253</b> The Sculptor Galaxy seen through successive medium bands from
+                  400 to 875 nm — each frame a different slice of the spectrum.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        {/* 03 — Science --------------------------------------------------- */}
+        <section
+          className="fullpage-section fullpage-section--dark"
+          style={{ backgroundImage: "url('/img/hero/science.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+        >
+          <div className="container container--wide">
+            <div className="split split--middle reveal">
+              <div>
+                <span className="eyebrow eyebrow--on-dark">Science</span>
+                <h2>Spectra without a spectrograph</h2>
+                <p className="prose" style={{ color: 'rgba(255,255,255,.78)' }}>
+                  {mainText2}
+                </p>
+                <p style={{ marginTop: '1.5rem' }}>
+                  <a className="link-arrow" href="/science/overview" style={{ color: 'var(--accent-on-dark)' }}>
+                    Science programme
+                  </a>
+                </p>
+              </div>
+              <div className="stat-grid stat-grid--on-dark" style={{ gridTemplateColumns: '1fr 1fr' }}>
+                <div className="stat">
+                  <span className="stat__value">30–70</span>
+                  <span className="stat__label">Spectral resolution R</span>
+                </div>
+                <div className="stat">
+                  <span className="stat__value">&lt; 1<span className="stat__unit">min</span></span>
+                  <span className="stat__label">Alert to exposure start</span>
+                </div>
+                <div className="stat">
+                  <span className="stat__value">1.75<span className="stat__unit">M</span></span>
+                  <span className="stat__label">Images, unattended</span>
+                </div>
+                <div className="stat">
+                  <span className="stat__value">≈ 100</span>
+                  <span className="stat__label">ToO follow-ups</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 04 — Survey ---------------------------------------------------- */}
+        <section
+          className="fullpage-section fullpage-section--dark"
+          style={{ backgroundImage: "url('/img/hero/survey.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+        >
+          <div className="container container--wide">
+            <div className="reveal">
+              <span className="eyebrow eyebrow--on-dark">7-Dimensional Sky Survey</span>
+              <h2>Three tiers over the southern sky</h2>
+              <p className="prose" style={{ color: 'rgba(255,255,255,.78)', maxWidth: '60ch' }}>
+                {mainText3}
+              </p>
+
+              <div className="grid grid-cols-3" style={{ marginTop: '2rem' }}>
+                {surveys.tiers.map((tier) => (
+                  <div className="tier-card" key={tier.code} style={{ background: 'rgba(255,255,255,.04)', borderColor: 'rgba(255,255,255,.16)' }}>
+                    <span className="tier-card__code" style={{ color: 'var(--accent-on-dark)' }}>
+                      {tier.code}
+                    </span>
+                    <h3 className="tier-card__name" style={{ color: '#fff' }}>{tier.name}</h3>
+                    <dl style={{ borderTopColor: 'rgba(255,255,255,.16)' }}>
+                      <div style={{ borderBottomColor: 'rgba(255,255,255,.1)' }}>
+                        <dt style={{ color: 'rgba(255,255,255,.55)' }}>Area</dt>
+                        <dd style={{ color: '#fff' }}>{tier.area}</dd>
+                      </div>
+                      <div style={{ borderBottomColor: 'rgba(255,255,255,.1)' }}>
+                        <dt style={{ color: 'rgba(255,255,255,.55)' }}>Cadence</dt>
+                        <dd style={{ color: '#fff' }}>{tier.cadence}</dd>
+                      </div>
+                      <div style={{ borderBottomColor: 'rgba(255,255,255,.1)' }}>
+                        <dt style={{ color: 'rgba(255,255,255,.55)' }}>Depth</dt>
+                        <dd style={{ color: '#fff' }}>{tier.depth}</dd>
+                      </div>
+                    </dl>
+                    <span className={`pill pill--${tier.status}`} style={tier.status === 'planned' ? { color: 'rgba(255,255,255,.6)' } : undefined}>
+                      {tier.statusLabel}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="dimension-row" style={{ marginTop: '2rem' }}>
+                {surveys.dimensions.map((dim) => (
+                  <span className="dimension-item" key={dim.n}>
+                    <span className="dimension-item__n">{dim.n}</span>
+                    {dim.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 05 — Telescope -------------------------------------------------- */}
+        <section className="fullpage-section">
+          <div className="container container--wide">
+            <div className="split split--middle reveal">
+              <div>
+                <span className="eyebrow">The instrument</span>
+                <h2>Twenty telescopes, one instrument</h2>
+                <p className="prose">{mainText4}</p>
+                <p style={{ marginTop: '1.5rem' }}>
+                  <a className="link-arrow" href="/telescope/overview">
+                    Telescope &amp; site
+                  </a>
+                </p>
+              </div>
+              <ul className="feature-list">
+                <li>
+                  <span className="feature-list__key">OTA</span>
+                  <div>
+                    <h3 className="feature-list__title">PlaneWave DeltaRho 500</h3>
+                    <p className="feature-list__body">
+                      508 mm corrected Cassegrain at f/3.0, covering 1.34° × 0.90° at 0.5″ per pixel.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <span className="feature-list__key">Site</span>
+                  <div>
+                    <h3 className="feature-list__title">El Sauce Observatory, Chile</h3>
+                    <p className="feature-list__body">
+                      1.5″ median seeing, over 300 clear nights a year, next to Rubin and CTIO.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <span className="feature-list__key">Ops</span>
+                  <div>
+                    <h3 className="feature-list__title">Robotic, unattended</h3>
+                    <p className="feature-list__body">
+                      RTCSpy runs the night end to end and interrupts it for an alert in under a minute.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <span className="feature-list__key">Data</span>
+                  <div>
+                    <h3 className="feature-list__title">Same-night reduction</h3>
+                    <p className="feature-list__body">
+                      Py7DT clears a 3,000-image night in about five hours on 128 cores and two A100s.
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 06 — News ------------------------------------------------------- */}
+        <section className="fullpage-section section--alt">
+          <div className="container container--wide">
+            <div className="reveal">
+              <div className="section-title">
+                <span className="eyebrow">Latest</span>
+                <h2>News &amp; publications</h2>
+              </div>
+
+              <div className="grid grid-cols-3">
+                {latest.map((item, index) => (
+                  <article className="card" key={index}>
+                    <img src={`/img/news/${item.imgName}`} alt="" loading="lazy" />
+                    <div className="card-info">
+                      <div className="card-about">
+                        <span
+                          className={`card-tag ${
+                            item.type === 'meeting'
+                              ? 'tag-news'
+                              : item.type === 'publication'
+                              ? 'tag-publication'
+                              : item.type === 'press'
+                              ? 'tag-press'
+                              : 'tag-update'
+                          }`}
+                        >
+                          {item.type}
+                        </span>
+                        <span className="card-time">{item.date}</span>
+                      </div>
+                      <h3 className="card-title">{item.title}</h3>
+                      <div className="card-creator">
+                        {item.type === 'meeting'
+                          ? item.place
+                          : item.type === 'publication'
+                          ? item.shortAuthor
+                          : item.source}
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <div className="btn-row" style={{ marginTop: '2rem' }}>
+                <a className="btn btn--secondary" href="/news">
+                  All news
+                </a>
+                <a className="btn btn--secondary" href="/publication/list">
+                  Publications
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 07 — Footer ----------------------------------------------------- */}
+        <div
+          className="fullpage-section"
+          style={{
+            display: 'block',
+            height: 'auto',
+            minHeight: '100vh',
+            alignItems: 'stretch',
+            overflow: 'visible',
+          }}
+        >
+          <FooterBar />
         </div>
       </div>
-      <div style={{backgroundColor:"#fff"}}>
-        <div className="mx-auto w-full" style={{maxWidth: "1200px"}}>
-          <div className="flex flex-wrap justify-between" >
-            <a href="https://www.nrf.re.kr/eng/index" target="_blank"><img src="./img/institutes/nrf.jpg" style={{height:"100px", padding:"20px"}}/></a>
-            <a href="https://gwuniverse.snu.ac.kr/" target="_blank"><img src="./img/institutes/gwuniv.png" style={{height:"100px", padding:"20px"}}/></a>
-            <a href="https://en.snu.ac.kr/" target="_blank"><img src="./img/institutes/snu.jpeg" style={{height:"100px", padding:"20px"}}/></a>
-          </div>
-          <div className="flex flex-wrap justify-between" >
-            <a href="https://www.kasi.re.kr/eng/index" target="_blank"><img src="./img/institutes/kasi.gif" style={{height:"100px", padding:"20px"}}/></a>
-            <a href="https://www.ewha.ac.kr/ewhaen/index.do" target="_blank"><img src="./img/institutes/ewha.png" style={{height:"100px", padding:"20px"}}/></a>
-            <a href="https://www.postech.ac.kr/eng/" target="_blank"><img src="./img/institutes/postech.png" style={{height:"100px", padding:"20px"}}/></a>
-          </div>
-        </div>
-      </div>
-      <div ref={rulerImageRef} style={{...rulerImage, position:"fixed", bottom: "0"}}></div>
     </div>
   );
-}
-
+};
 
 export default MainPage;
-
-

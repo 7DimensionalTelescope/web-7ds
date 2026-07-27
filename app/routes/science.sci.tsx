@@ -1,83 +1,97 @@
+import React from 'react';
+import type { MetaFunction } from '@remix-run/node';
+import { PageLayout, PageHero, Section } from '../components/site';
+import science from './content/science.json';
 
-import React, {useState, useEffect} from "react"
+export const meta: MetaFunction = () => [
+  { title: 'Science themes · 7-Dimensional Telescope' },
+  {
+    name: 'description',
+    content:
+      'Science themes and early results from the 7-Dimensional Telescope: multi-messenger astronomy, transients, galaxies, cosmology, AGN, Galactic and solar-system science.',
+  },
+];
 
-import NavBar from './navigate';
-import FooterBar from "./footer"
-
-import ScatterGeoPlot from './plot'
-
-import data from './content/data'
-
-
-const Index=() => {
-
-  const backgroundImage = {
-    backgroundSize: "cover",
-    backgroundRepeat: "repeat",
-    backgroundImage: 'url("./img/science.jpg")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px",
-  }
-
-  const [submenuTop, setSubmenuTop] = useState("750px");
-  
-  const [smallWindow, setSmallWindow] = useState(true);
-
-  useEffect(() => {
-
-    const updateWindow = () => {
-      if (window.innerWidth < 1500){
-        setSmallWindow(false)
-      } else {
-        setSmallWindow(true)
-      }
- 
-    };
-    updateWindow();
-
-    window.addEventListener('resize', updateWindow);
-
-    return () => {
-      window.removeEventListener('resize', updateWindow);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const slowFactor = 0.5
-      const newTop = `calc(750px - ${(scrollPosition * slowFactor / windowHeight) * 100}%)`;
-      setSubmenuTop(newTop);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
+const Index = () => {
   return (
-    <div style={{background: "#fff"}}>
-      <NavBar manu="manuScience" fixed={true} />
+    <PageLayout menu="manuScience">
+      <PageHero
+        eyebrow="Science"
+        title="Themes & early results"
+        lede="Each theme below draws on the same data product — a medium-band spectral energy distribution for every source in a 1.25 square degree field."
+        image="/img/hero/sci.jpg"
+      />
 
-      <div className="mx-auto w-full main-container" style={{paddingTop: "100px"}}>
-        <div className="p-10 max-w-screen-lg mx-auto">
-          <div className="justify-between mb-5"  style={{maxWidth: "1200px", margin: "0 auto"}}>
-            <p className="mt-4 text-sm leading-7 text-gray-500 font-regular" style={{textAlign:"center"}}>
-              questions
-            </p>
-            <h3 className="mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900" style={{textAlign:"center", fontWeight: "700", color:"var(--pickled-bluewood-900)"}}>
-              Templates <span style={{color:"var(--pickled-bluewood-600)"}}>ASD</span>
-            </h3>
-          </div>
+      <Section eyebrow="Themes" title="The 7DS science programme">
+        <ul className="feature-list">
+          {science.themes.map((theme) => (
+            <li key={theme.id} id={theme.id} style={{ scrollMarginTop: '6rem' }}>
+              <span className="feature-list__key">{theme.n}</span>
+              <div>
+                <h2 className="feature-list__title" style={{ fontSize: '1.25rem' }}>
+                  {theme.title}
+                </h2>
+                <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
+                  {theme.summary}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section eyebrow="Early science" title="Results from commissioning and first survey data" alt>
+        <div className="grid grid-cols-2">
+          {science.results.map((result) => (
+            <div className="panel" key={result.title}>
+              <div className="panel__title">{result.tag}</div>
+              <h3 style={{ fontSize: '1.0625rem' }}>{result.title}</h3>
+              <p className="feature-list__body" style={{ margin: 0 }}>
+                {result.body}
+              </p>
+            </div>
+          ))}
         </div>
-      </div>
-      <FooterBar />
-    </div>
-  )
-}
 
+        <p className="note" style={{ marginTop: '1.5rem' }}>
+          Figures quoted above are drawn from the 7DT status report and the associated early
+          science papers. See <a href="/publication/list">Publications</a> for the full list.
+        </p>
+      </Section>
+
+      <Section eyebrow="Data" title="Working with 7DT data">
+        <div className="split">
+          <div>
+            <p className="prose">
+              7DT data products are medium-band images and matched source catalogues on a fixed
+              tile grid, calibrated against Gaia DR3 synthetic photometry and flux-scaled so that
+              pixel values carry units of microjansky. That makes them directly usable for
+              pixel-based SED fitting without further conversion.
+            </p>
+            <div className="btn-row" style={{ marginTop: '1.5rem' }}>
+              <a className="btn btn--primary" href="/data/overview">
+                Data &amp; products
+              </a>
+              <a className="btn btn--secondary" href="/data/software">
+                Reduction software
+              </a>
+            </div>
+          </div>
+          <figure className="figure">
+            <img
+              src="/img/images/Figure8a(lowres)_u-500-650_asinh.png"
+              alt="Pseudo-colour image of the Helix Nebula from Sloan u and the m500 and m650 medium bands"
+              loading="lazy"
+            />
+            <figcaption>
+              <b>Helix Nebula</b> Pseudo-colour composite from Sloan u and the m500 and m650
+              medium bands, mapped to blue, green and red.
+            </figcaption>
+          </figure>
+        </div>
+      </Section>
+    </PageLayout>
+  );
+};
 
 export default Index;
-      

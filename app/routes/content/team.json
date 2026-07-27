@@ -1,21 +1,28 @@
 {
 	"members":[
-
 		{
 			"name": "Prof. Myungshin Im",
 			"role": "Principal Investigator",
 			"title": "Professor",
 			"affiliation": "Seoul National University",
 			"email": "mim@astro.snu.ac.kr",
-			"webpage":"http://astro.snu.ac.kr/~mim",
+			"webpage": "http://astro.snu.ac.kr/~mim",
 			"imgName": "ImMS.jpeg"
 		},
 		{
-			"name": "Dr. Jihoon Kim",
+			"name": "Prof. Hyung Mok Lee",
+			"role": "Co-Investigator",
+			"title": "Professor",
+			"affiliation": "Seoul National University",
+			"email": "",
+			"imgName": ""
+		},
+		{
+			"name": "Dr. Ji Hoon Kim",
 			"role": "Project Manager",
 			"title": "Associate Research Professor",
 			"affiliation": "Seoul National University",
-			"email":"jhkim.astrosnu@gmail.com",
+			"email": "jhkim.astrosnu@gmail.com",
 			"imgName": "KimJH.jpeg"
 		},
 		{
@@ -23,24 +30,40 @@
 			"role": "Database Manager",
 			"title": "Associate Research Professor",
 			"affiliation": "Seoul National University",
-			"email":"seowon.chang@snu.ac.kr",
+			"email": "seowon.chang@snu.ac.kr",
 			"imgName": "ChangSW.jpeg"
 		},
 		{
+			"name": "Dr. Donggeun Tak",
+			"role": "Multi-messenger & Transients",
+			"title": "",
+			"affiliation": "Kyung Hee University",
+			"email": "donggeun.tak@gmail.com",
+			"imgName": ""
+		},
+		{
 			"name": "Gregory S.H. Paek",
-			"role": "Data Reduction Pipeline",
-			"title": "PhD Candidate",
-			"affiliation": "Seoul National University",
-			"email":"gregorypaek94@gmail.com",
+			"role": "Photometric Calibration",
+			"title": "",
+			"affiliation": "Institute for Astronomy, University of Hawaii",
+			"email": "gregorypaek94@gmail.com",
 			"imgName": "PaekG.jpeg"
 		},
 		{
 			"name": "Hyeonho Choi",
-			"role": "Science Operation Development",
+			"role": "Telescope Control & Scheduling",
 			"title": "PhD Student",
 			"affiliation": "Seoul National University",
-			"email":"hhchoi1022@gmail.com",
+			"email": "hhchoi1022@gmail.com",
 			"imgName": "ChoiHH.jpeg"
+		},
+		{
+			"name": "Donghwan Hyun",
+			"role": "Data Reduction Pipeline",
+			"title": "",
+			"affiliation": "Seoul National University",
+			"email": "",
+			"imgName": ""
 		}
 	]
 }

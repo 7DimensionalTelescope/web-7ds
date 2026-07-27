@@ -1,0 +1,87 @@
+{
+  "note": "Operations and reduction software. Source: Kim et al., Proc. SPIE 14147-84, Sec. 2.4; Hyun et al., Proc. SPIE 14155-12.",
+  "systems": [
+    {
+      "name": "RTCSpy",
+      "expansion": "Robotic Telescope Control System with Python",
+      "role": "Array control, scheduling and target-of-opportunity response",
+      "since": "Operational since August 2024",
+      "body": "The autonomous operations framework that drives the array. Built on the TCSpy control layer, RTCSpy automates the whole night — startup, target selection, science observation, calibration acquisition, data transfer and shutdown — while coordinating all sixteen operational units over real-time network communication. A dedicated Target of Opportunity manager watches external alerts and can interrupt an ongoing observation, giving a response time of less than one minute between alert ingestion and the start of a follow-up exposure.",
+      "layers": [
+        ["Control layer", "Device interfaces to mounts, cameras, focusers and filter wheels through ASCOM Alpaca and the PWI4 HTTP API."],
+        ["Support layer", "A MySQL dynamic target database holding targets, status and precomputed observability; an observation queue manager that ranks candidates in real time; a data transfer manager; and a weather monitor that suspends and resumes operation."],
+        ["Application layer", "Composes those components into the high-level applications executed during routine nightly operation."]
+      ],
+      "stats": [
+        { "value": "1.75", "unit": "M", "label": "Images acquired unattended" },
+        { "value": "< 1", "unit": "min", "label": "Alert to first exposure" },
+        { "value": "≈ 100", "unit": "", "label": "ToO follow-ups" }
+      ]
+    },
+    {
+      "name": "Py7DT",
+      "expansion": "7DT data reduction pipeline",
+      "role": "Preprocessing through difference imaging, at survey throughput",
+      "since": "Sole operational pipeline since January 2026",
+      "body": "Py7DT reduces heterogeneous data from many telescope units, filters and observing modes while sustaining nightly survey throughput and minimizing latency for transient events. It succeeds gpPy-GPU, inheriting its scientific routines and choice of external engines but rebuilding the orchestration around them. Images are grouped by their properties into configurations, submitted to an SQLite-backed system queue, and dispatched in parallel according to priority and stage hierarchy — typically fifteen workers, three of them reserved for preprocessing.",
+      "layers": [
+        ["Orchestration", "DataReduction, BluePrint and Scheduler convert observations into executable processing units and track their dependencies."],
+        ["Processing", "Preprocess, Astrometry, Photometry, ImCoadd and ImSubtract run the standard reduction on each group."],
+        ["Management", "Multi-level logging, a composite-error registry for structured exception handling, automatically generated quality-assessment flags carried in FITS headers, and a web-based monitoring interface."]
+      ],
+      "stats": [
+        { "value": "66 ± 24", "unit": "GB/hr", "label": "Median throughput" },
+        { "value": "≈ 5", "unit": "hr", "label": "Per 3,000-image night" },
+        { "value": "3.3 ± 2.0", "unit": "s", "label": "Preprocessing per image" }
+      ]
+    },
+    {
+      "name": "gwportal",
+      "expansion": "7DS data and operations database",
+      "role": "System of record for observations, processing state and data quality",
+      "since": "In operational use",
+      "body": "A Django and PostgreSQL database that manages all 7DT data and integrates the operations of RTCSpy and Py7DT. Its survey schema is synchronized in real time and mirrors the operational state of the pipeline: process_status records the progress of every product along with its software version and any error codes, while image_qa holds quality metrics — seeing, ellipticity, 5σ depth, astrometric precision — for every image produced. A companion dependency table traces the provenance of any output back through coadds, processed singles, master frames and raw exposures.",
+      "layers": [
+        ["Pipeline status", "Real-time processing progress, QA summaries, logs, check plots and manual reprocessing triggers."],
+        ["ToO page", "Observation requests, the history of past events and the current status of the telescope units."],
+        ["Documentation wiki", "User manuals, event logs and QA criteria for internal team members and external users of 7DT data."]
+      ],
+      "stats": [
+        { "value": "3.6", "unit": "PB", "label": "Archive capacity" },
+        { "value": "≈ 3,000", "unit": "", "label": "Images ingested nightly" },
+        { "value": "≈ 30", "unit": "", "label": "Tiles observed nightly" }
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "module": "Preprocess",
+      "body": "Bias, dark and flat correction against master frames matched to the science data by camera, gain, binning, unit, night and filter. Raw frames sharing a master set are loaded as a cube and processed by array broadcasting, reducing per-image time to about one second under optimal conditions, and to 3.3 ± 2.0 s in routine operation; GPU preprocessing through CuPy is available as an option, though the throughput gain in this deployment is minimal. Master-frame selection quality is recorded as a bitmask in the FITS header so that a compromise is always visible downstream."
+    },
+    {
+      "module": "Astrometry",
+      "body": "World coordinate solutions against Gaia DR3, pre-cut to RIS tiles and to HEALPix cells for arbitrary pointings. SCAMP is the default engine, with Astrometry.net as a fallback for blind solves. This is also the first stage that extracts sources, so it generates the image-quality metrics: astrometric separation statistics, field vertices and position angle, PSF size and elongation in radial bins, and source counts against a magnitude-limited reference."
+    },
+    {
+      "module": "Photometry",
+      "body": "Flux-calibrated source catalogues from SExtractor, in fixed apertures and in the AUTO aperture. Zero points come from synthetic photometry integrated from Gaia XP spectra over each 7DT bandpass — an unusual advantage for an instrument with an unusual filter set. The module runs on single, coadd and difference images alike."
+    },
+    {
+      "module": "ImCoadd",
+      "body": "Background subtraction, zero-point scaling, weight maps, bad-pixel interpolation, PSF homogenization, reprojection and combination via SWarp with a LANCZOS3 kernel. Flux scaling is defined to put the coadd at a zero point of 23.9 AB, so that pixel values carry units of microjansky."
+    },
+    {
+      "module": "ImSubtract",
+      "body": "Difference image analysis with HOTPANTS against a reference of the same field. Because of the unusual filter set, 7DT uses homogeneous references from RIS taken with the same instrument; Pan-STARRS templates are available as an option for the broad bands. Difference imaging is skipped where no reference exists yet."
+    }
+  ],
+  "external": [
+    ["SExtractor", "Source extraction and photometry"],
+    ["SCAMP", "Astrometric and photometric solution"],
+    ["SWarp", "Reprojection and coaddition"],
+    ["HOTPANTS", "Difference image analysis"],
+    ["Astrometry.net", "Blind astrometric fallback"],
+    ["CuPy", "GPU-accelerated preprocessing"],
+    ["Gaia DR3 / XP", "Astrometric and spectrophotometric reference"]
+  ]
+}

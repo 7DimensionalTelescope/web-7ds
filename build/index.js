@@ -14,7 +14,7 @@ import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import isbot from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
-import { jsxDEV } from "react/jsx-dev-runtime";
+import { jsx } from "react/jsx-runtime";
 var ABORT_DELAY = 5e3;
 function handleRequest(request, responseStatusCode, responseHeaders, remixContext, loadContext) {
   return isbot(request.headers.get("user-agent")) ? handleBotRequest(
@@ -32,21 +32,13 @@ function handleRequest(request, responseStatusCode, responseHeaders, remixContex
 function handleBotRequest(request, responseStatusCode, responseHeaders, remixContext) {
   return new Promise((resolve, reject) => {
     let shellRendered = !1, { pipe, abort } = renderToPipeableStream(
-      /* @__PURE__ */ jsxDEV(
+      /* @__PURE__ */ jsx(
         RemixServer,
         {
           context: remixContext,
           url: request.url,
           abortDelay: ABORT_DELAY
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/entry.server.tsx",
-          lineNumber: 51,
-          columnNumber: 7
-        },
-        this
+        }
       ),
       {
         onAllReady() {
@@ -73,21 +65,13 @@ function handleBotRequest(request, responseStatusCode, responseHeaders, remixCon
 function handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext) {
   return new Promise((resolve, reject) => {
     let shellRendered = !1, { pipe, abort } = renderToPipeableStream(
-      /* @__PURE__ */ jsxDEV(
+      /* @__PURE__ */ jsx(
         RemixServer,
         {
           context: remixContext,
           url: request.url,
           abortDelay: ABORT_DELAY
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/entry.server.tsx",
-          lineNumber: 101,
-          columnNumber: 7
-        },
-        this
+        }
       ),
       {
         onShellReady() {
@@ -127,2148 +111,1241 @@ import {
   ScrollRestoration
 } from "@remix-run/react";
 
-// app/css/app_modified.css
-var app_modified_default = "/build/_assets/app_modified-VMFOEVZZ.css";
+// app/css/app.css
+var app_default = "/build/_assets/app-4VGBKHVJ.css";
 
 // app/css/custom.css
-var custom_default = "/build/_assets/custom-BWSDPYOC.css";
+var custom_default = "/build/_assets/custom-K6HCKQ4Y.css";
 
 // node_modules/bootstrap/dist/css/bootstrap.min.css
-var bootstrap_min_default = "/build/_assets/bootstrap.min-43MNHBU2.css";
+var bootstrap_min_default = "/build/_assets/bootstrap.min-TQVI2G2N.css";
 
 // app/root.tsx
-import { jsxDEV as jsxDEV2 } from "react/jsx-dev-runtime";
+import { jsx as jsx2, jsxs } from "react/jsx-runtime";
 var links = () => [
+  { rel: "icon", href: "/favicon.ico", sizes: "any" },
   { rel: "stylesheet", href: bootstrap_min_default },
-  { rel: "stylesheet", href: app_modified_default },
+  { rel: "stylesheet", href: app_default },
   { rel: "stylesheet", href: custom_default },
-  { rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" },
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+  },
   ...void 0 ? [{ rel: "stylesheet", href: void 0 }] : []
 ];
 function App() {
-  return /* @__PURE__ */ jsxDEV2("html", { lang: "en", children: [
-    /* @__PURE__ */ jsxDEV2("head", { children: [
-      /* @__PURE__ */ jsxDEV2("meta", { charSet: "utf-8" }, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 29,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV2("meta", { name: "viewport", content: "width=device-width, initial-scale=1" }, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 30,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV2("script", { src: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js" }, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 31,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV2(Meta, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 32,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV2(Links, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 33,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/root.tsx",
-      lineNumber: 28,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV2("body", { children: [
-      /* @__PURE__ */ jsxDEV2(Outlet, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 36,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV2(ScrollRestoration, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 37,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV2(Scripts, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 38,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV2(LiveReload, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 39,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/root.tsx",
-      lineNumber: 35,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/root.tsx",
-    lineNumber: 27,
-    columnNumber: 5
-  }, this);
+  return /* @__PURE__ */ jsxs("html", { lang: "en", className: "scroll-smooth", children: [
+    /* @__PURE__ */ jsxs("head", { children: [
+      /* @__PURE__ */ jsx2("meta", { charSet: "utf-8" }),
+      /* @__PURE__ */ jsx2("meta", { name: "viewport", content: "width=device-width, initial-scale=1" }),
+      /* @__PURE__ */ jsx2(
+        "meta",
+        {
+          name: "description",
+          content: "The 7-Dimensional Telescope: a medium-band multi-telescope array at El Sauce Observatory, Chile, and the 7-Dimensional Sky Survey of the southern sky."
+        }
+      ),
+      /* @__PURE__ */ jsx2(
+        "meta",
+        {
+          name: "keywords",
+          content: "7DT, 7DS, telescope, astronomy, medium-band, gravitational waves, multi-messenger, survey, Chile, El Sauce"
+        }
+      ),
+      /* @__PURE__ */ jsx2("meta", { name: "author", content: "Center for the Gravitational-wave Universe, Seoul National University" }),
+      /* @__PURE__ */ jsx2("meta", { name: "theme-color", content: "#05080f" }),
+      /* @__PURE__ */ jsx2("meta", { property: "og:type", content: "website" }),
+      /* @__PURE__ */ jsx2("meta", { property: "og:url", content: "https://7dt.org/" }),
+      /* @__PURE__ */ jsx2("meta", { property: "og:title", content: "7-Dimensional Telescope" }),
+      /* @__PURE__ */ jsx2(
+        "meta",
+        {
+          property: "og:description",
+          content: "Twenty 50-cm telescopes carrying forty medium-band filters \u2014 imaging that reads like spectroscopy, over the whole southern sky."
+        }
+      ),
+      /* @__PURE__ */ jsx2("meta", { property: "og:image", content: "/img/title.png" }),
+      /* @__PURE__ */ jsx2("meta", { property: "twitter:card", content: "summary_large_image" }),
+      /* @__PURE__ */ jsx2("meta", { property: "twitter:url", content: "https://7dt.org/" }),
+      /* @__PURE__ */ jsx2("meta", { property: "twitter:title", content: "7-Dimensional Telescope" }),
+      /* @__PURE__ */ jsx2(
+        "meta",
+        {
+          property: "twitter:description",
+          content: "Twenty 50-cm telescopes carrying forty medium-band filters \u2014 imaging that reads like spectroscopy, over the whole southern sky."
+        }
+      ),
+      /* @__PURE__ */ jsx2("meta", { property: "twitter:image", content: "/img/title.png" }),
+      /* @__PURE__ */ jsx2(Meta, {}),
+      /* @__PURE__ */ jsx2(Links, {})
+    ] }),
+    /* @__PURE__ */ jsxs("body", { className: "antialiased", children: [
+      /* @__PURE__ */ jsx2(Outlet, {}),
+      /* @__PURE__ */ jsx2(ScrollRestoration, {}),
+      /* @__PURE__ */ jsx2(Scripts, {}),
+      /* @__PURE__ */ jsx2(LiveReload, {})
+    ] })
+  ] });
 }
 
 // app/routes/telescope.instrument.tsx
 var telescope_instrument_exports = {};
 __export(telescope_instrument_exports, {
-  default: () => telescope_instrument_default
+  default: () => telescope_instrument_default,
+  meta: () => meta
 });
 
+// app/components/site.tsx
+import React2 from "react";
+
 // app/routes/navigate.tsx
-var navigate_exports = {};
-__export(navigate_exports, {
-  default: () => navigate_default
-});
-import { useState, useEffect } from "react";
-import { jsxDEV as jsxDEV3 } from "react/jsx-dev-runtime";
-function buttonStyle(valid) {
-  return {
-    height: "380px",
-    backgroundColor: valid ? "#fff" : null,
-    color: valid ? "#000" : null,
-    borderTop: valid ? "2px solid var(--pickled-bluewood-900)" : null,
-    transition: "all 0.3s ease"
-  };
-}
-function menuClass(valid) {
-  return valid ? "font-bold border-transparent sm:mx-6 transition duration-300 ease-in-out transform border-default-500 text-orange" : "font-bold border-transparent sm:mx-6 transition duration-300 ease-in-out transform hover:border-default-500 hover:text-white";
-}
+import { useState, useEffect, useRef } from "react";
+import { jsx as jsx3, jsxs as jsxs2 } from "react/jsx-runtime";
+var MENU = [
+  {
+    key: "manuAbout",
+    label: "About",
+    href: "/about/intro",
+    items: [
+      { label: "What is 7DS", href: "/about/intro" },
+      { label: "Team", href: "/about/team" },
+      { label: "Funding", href: "/about/funding" }
+    ]
+  },
+  {
+    key: "manuScience",
+    label: "Science",
+    href: "/science/overview",
+    items: [
+      { label: "Overview", href: "/science/overview" },
+      { label: "Multi-messenger Astronomy", href: "/science/sci#mma" },
+      { label: "Transients", href: "/science/sci#transients" },
+      { label: "Galaxy Formation & Evolution", href: "/science/sci#galaxies" },
+      { label: "Cosmology", href: "/science/sci#cosmology" },
+      { label: "Active Galactic Nuclei", href: "/science/sci#agn" },
+      { label: "Galactic Science", href: "/science/sci#galactic" },
+      { label: "Solar System Objects", href: "/science/sci#solar" }
+    ]
+  },
+  {
+    key: "manu7ds",
+    label: "Survey",
+    href: "/survey/overview",
+    items: [
+      { label: "Overview", href: "/survey/overview" },
+      { label: "Design", href: "/survey/design" },
+      { label: "Status", href: "/survey/status" }
+    ]
+  },
+  {
+    key: "manu7dt",
+    label: "Telescope",
+    href: "/telescope/overview",
+    items: [
+      { label: "Overview", href: "/telescope/overview" },
+      { label: "Location", href: "/telescope/location" },
+      { label: "Instrument", href: "/telescope/instrument" },
+      { label: "Computational Resources", href: "/telescope/computer" },
+      { label: "Observing Mode", href: "/telescope/mode" }
+    ]
+  },
+  {
+    key: "manuData",
+    label: "Data",
+    href: "/data/overview",
+    items: [
+      { label: "Overview", href: "/data/overview" },
+      { label: "Data Archive", href: "/data/data" },
+      { label: "Software", href: "/data/software" }
+    ]
+  }
+], CaretIcon = () => /* @__PURE__ */ jsx3("svg", { className: "site-nav__caret", viewBox: "0 0 12 12", fill: "none", "aria-hidden": "true", children: /* @__PURE__ */ jsx3("path", { d: "M2.5 4.5L6 8l3.5-3.5", stroke: "currentColor", strokeWidth: "1.6", strokeLinecap: "round", strokeLinejoin: "round" }) });
 function NavBar(props) {
-  let [onMouse, setOnMouse] = useState(!1), [isTop, setIsTop] = useState(!props.fixed), [activeMenu, setActiveMenu] = useState(null), [showMenu, setShowMenu] = useState(!1), handleScroll = () => {
-    let isTop2 = window.scrollY === 0;
-    setIsTop(isTop2 && !props.fixed);
-  }, handleManu = (manu, onMouse2) => {
-    setActiveMenu(manu), setOnMouse(onMouse2);
-  };
-  return useEffect(() => (window.addEventListener("scroll", handleScroll), () => {
-    window.removeEventListener("scroll", handleScroll);
-  }), []), useEffect(() => {
-    setActiveMenu(props.manu);
-  }, []), /* @__PURE__ */ jsxDEV3("nav", { className: "justify-center mx-auto shadow fixed w-full top-0 z-1000 text-white", style: {
-    backgroundColor: `rgba(7, 28, 48, ${isTop ? 0.5 : 1})`,
-    margin: "0 auto"
-  }, children: /* @__PURE__ */ jsxDEV3(
-    "div",
-    {
-      className: "container flex mx-auto capitalize",
-      style: { maxWidth: "1440px", color: "#fff", margin: "0 auto" },
-      onMouseLeave: () => handleManu(props.manu, !1),
-      children: [
-        /* @__PURE__ */ jsxDEV3("div", { children: /* @__PURE__ */ jsxDEV3("button", { onClick: () => setShowMenu(!showMenu), "data-collapse-toggle": "navbar-dropdown", type: "button", className: "inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600", "aria-controls": "navbar-dropdown", "aria-expanded": "false", children: [
-          /* @__PURE__ */ jsxDEV3("span", { className: "sr-only", children: "Open main menu" }, void 0, !1, {
-            fileName: "app/routes/navigate.tsx",
-            lineNumber: 68,
-            columnNumber: 15
-          }, this),
-          /* @__PURE__ */ jsxDEV3("svg", { className: "w-10 h-10", "aria-hidden": "true", xmlns: "http://www.w3.org/2000/svg", fill: "none", viewBox: "0 0 17 14", children: /* @__PURE__ */ jsxDEV3("path", { stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M1 1h15M1 7h15M1 13h15" }, void 0, !1, {
-            fileName: "app/routes/navigate.tsx",
-            lineNumber: 70,
-            columnNumber: 19
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/navigate.tsx",
-            lineNumber: 69,
-            columnNumber: 15
-          }, this),
-          /* @__PURE__ */ jsxDEV3("a", { className: "logo-container", href: "/", children: /* @__PURE__ */ jsxDEV3("img", { src: "/logo_name.png", alt: "Logo", className: " h-10" }, void 0, !1, {
-            fileName: "app/routes/navigate.tsx",
-            lineNumber: 73,
-            columnNumber: 17
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/navigate.tsx",
-            lineNumber: 72,
-            columnNumber: 15
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/navigate.tsx",
-          lineNumber: 67,
-          columnNumber: 11
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/navigate.tsx",
-          lineNumber: 66,
-          columnNumber: 9
-        }, this),
-        /* @__PURE__ */ jsxDEV3("div", { className: `w-full md:block md:w-auto ${showMenu ? "block pt-5 justify-start" : "hidden"}`, id: "navbar-dropdown", children: [
-          /* @__PURE__ */ jsxDEV3("ul", { className: "flex flex-col font-medium py-2 md:p-0 mt-0 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 mx-auto", style: { margin: "0 auto" }, children: [
-            /* @__PURE__ */ jsxDEV3("li", { className: "$(showMenu) ? pb-2 : ''", style: { textAlign: showMenu ? "left" : "center" }, children: /* @__PURE__ */ jsxDEV3(
-              "div",
-              {
-                onMouseEnter: () => handleManu("manuHome", !0),
-                children: /* @__PURE__ */ jsxDEV3(
-                  "button",
+  let [scrolled, setScrolled] = useState(Boolean(props.fixed)), [showMenu, setShowMenu] = useState(!1), [mobileOpen, setMobileOpen] = useState(null), [openDropdown, setOpenDropdown] = useState(null), closeTimer = useRef(void 0);
+  useEffect(() => {
+    if (props.fixed) {
+      setScrolled(!0);
+      return;
+    }
+    let wrapper = document.querySelector(".fullpage-wrapper"), onScroll = () => {
+      let offset = wrapper ? wrapper.scrollTop : window.scrollY;
+      setScrolled(offset > 24);
+    };
+    return onScroll(), window.addEventListener("scroll", onScroll, { passive: !0 }), wrapper && wrapper.addEventListener("scroll", onScroll, { passive: !0 }), () => {
+      window.removeEventListener("scroll", onScroll), wrapper && wrapper.removeEventListener("scroll", onScroll);
+    };
+  }, [props.fixed]), useEffect(() => () => clearTimeout(closeTimer.current), []);
+  let openNow = (key) => {
+    clearTimeout(closeTimer.current), setOpenDropdown(key);
+  }, closeSoon = () => {
+    clearTimeout(closeTimer.current), closeTimer.current = setTimeout(() => setOpenDropdown(null), 140);
+  }, closeNow = () => {
+    clearTimeout(closeTimer.current), setOpenDropdown(null);
+  }, isActive = (key) => props.manu === key;
+  return /* @__PURE__ */ jsxs2("nav", { className: `site-nav${scrolled ? " site-nav--solid" : ""}`, onKeyDown: (e) => e.key === "Escape" && closeNow(), children: [
+    /* @__PURE__ */ jsxs2("div", { className: "site-nav__inner", children: [
+      /* @__PURE__ */ jsx3("a", { href: "/", className: "site-nav__brand", "aria-label": "7-Dimensional Telescope \u2014 home", children: /* @__PURE__ */ jsx3("img", { src: "/img/logo_name.png", alt: "7DT" }) }),
+      /* @__PURE__ */ jsxs2("div", { className: "site-nav__menu", children: [
+        /* @__PURE__ */ jsx3("div", { className: "site-nav__item", children: /* @__PURE__ */ jsx3("a", { href: "/", className: `site-nav__link${isActive("manuHome") ? " site-nav__link--active" : ""}`, children: "Home" }) }),
+        MENU.map((menu) => /* @__PURE__ */ jsxs2(
+          "div",
+          {
+            className: `site-nav__item${openDropdown === menu.key ? " site-nav__item--open" : ""}`,
+            onMouseEnter: () => openNow(menu.key),
+            onMouseLeave: closeSoon,
+            children: [
+              /* @__PURE__ */ jsxs2(
+                "button",
+                {
+                  type: "button",
+                  className: `site-nav__link${isActive(menu.key) ? " site-nav__link--active" : ""}`,
+                  "aria-expanded": openDropdown === menu.key,
+                  "aria-haspopup": "true",
+                  onClick: () => openDropdown === menu.key ? closeNow() : openNow(menu.key),
+                  children: [
+                    menu.label,
+                    /* @__PURE__ */ jsx3(CaretIcon, {})
+                  ]
+                }
+              ),
+              openDropdown === menu.key && /* @__PURE__ */ jsxs2("div", { className: "site-nav__dropdown", role: "menu", children: [
+                /* @__PURE__ */ jsx3("div", { className: "site-nav__dropdown-label", children: menu.label }),
+                menu.items.map((item) => /* @__PURE__ */ jsx3("a", { href: item.href, role: "menuitem", onClick: closeNow, children: item.label }, item.label))
+              ] })
+            ]
+          },
+          menu.key
+        )),
+        /* @__PURE__ */ jsx3("div", { className: "site-nav__item", children: /* @__PURE__ */ jsx3("a", { href: "/publication/list", className: `site-nav__link${isActive("manuPaper") ? " site-nav__link--active" : ""}`, children: "Publications" }) }),
+        /* @__PURE__ */ jsx3("div", { className: "site-nav__item", children: /* @__PURE__ */ jsx3("a", { href: "/gallery", className: `site-nav__link${isActive("manuGallery") ? " site-nav__link--active" : ""}`, children: "Gallery" }) }),
+        /* @__PURE__ */ jsx3("div", { className: "site-nav__item", children: /* @__PURE__ */ jsx3("a", { href: "/news", className: `site-nav__link${isActive("manuNews") ? " site-nav__link--active" : ""}`, children: "News" }) })
+      ] }),
+      /* @__PURE__ */ jsx3(
+        "button",
+        {
+          type: "button",
+          className: "site-nav__toggle",
+          onClick: () => setShowMenu(!showMenu),
+          "aria-expanded": showMenu,
+          "aria-controls": "mobile-menu",
+          "aria-label": showMenu ? "Close navigation menu" : "Open navigation menu",
+          children: /* @__PURE__ */ jsx3("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", "aria-hidden": "true", children: showMenu ? /* @__PURE__ */ jsx3("path", { d: "M6 6l12 12M18 6L6 18", strokeLinecap: "round" }) : /* @__PURE__ */ jsx3("path", { d: "M4 7h16M4 12h16M4 17h16", strokeLinecap: "round" }) })
+        }
+      )
+    ] }),
+    showMenu && /* @__PURE__ */ jsxs2("div", { className: "site-nav__mobile", id: "mobile-menu", children: [
+      /* @__PURE__ */ jsx3("a", { href: "/", children: "Home" }),
+      MENU.map((menu) => {
+        let open = mobileOpen === menu.key;
+        return /* @__PURE__ */ jsxs2("div", { className: "site-nav__mobile-group", children: [
+          /* @__PURE__ */ jsxs2(
+            "button",
+            {
+              type: "button",
+              className: "site-nav__mobile-toggle",
+              "aria-expanded": open,
+              "aria-controls": `m-${menu.key}`,
+              onClick: () => setMobileOpen(open ? null : menu.key),
+              children: [
+                menu.label,
+                /* @__PURE__ */ jsx3(
+                  "svg",
                   {
-                    id: "home",
-                    "data-dropdown-toggle": "manuHome",
-                    className: menuClass(activeMenu === "manuHome"),
-                    style: { marginRight: "1rem", marginLeft: "1rem" },
-                    children: /* @__PURE__ */ jsxDEV3("a", { href: "/", children: "Home" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 90,
-                      columnNumber: 19
-                    }, this)
-                  },
-                  void 0,
-                  !1,
-                  {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 84,
-                    columnNumber: 17
-                  },
-                  this
+                    className: "site-nav__caret",
+                    viewBox: "0 0 12 12",
+                    fill: "none",
+                    "aria-hidden": "true",
+                    style: { transform: open ? "rotate(180deg)" : void 0 },
+                    children: /* @__PURE__ */ jsx3(
+                      "path",
+                      {
+                        d: "M2.5 4.5L6 8l3.5-3.5",
+                        stroke: "currentColor",
+                        strokeWidth: "1.6",
+                        strokeLinecap: "round",
+                        strokeLinejoin: "round"
+                      }
+                    )
+                  }
                 )
-              },
-              void 0,
-              !1,
-              {
-                fileName: "app/routes/navigate.tsx",
-                lineNumber: 81,
-                columnNumber: 15
-              },
-              this
-            ) }, void 0, !1, {
-              fileName: "app/routes/navigate.tsx",
-              lineNumber: 80,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ jsxDEV3("li", { className: "$(showMenu) ? pb-2 : ''", style: { textAlign: showMenu ? "left" : "center" }, children: /* @__PURE__ */ jsxDEV3(
-              "div",
-              {
-                onMouseEnter: () => handleManu("manuAbout", !0),
-                children: [
-                  /* @__PURE__ */ jsxDEV3(
-                    "button",
-                    {
-                      id: "team",
-                      "data-dropdown-toggle": "manuAbout",
-                      className: menuClass(activeMenu === "manuAbout"),
-                      style: { marginRight: "1.5rem", marginLeft: "1.5rem" },
-                      children: /* @__PURE__ */ jsxDEV3("a", { href: "/about/intro", children: "About" }, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 104,
-                        columnNumber: 19
-                      }, this)
-                    },
-                    void 0,
-                    !1,
-                    {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 98,
-                      columnNumber: 17
-                    },
-                    this
-                  ),
-                  onMouse && !showMenu ? /* @__PURE__ */ jsxDEV3("div", { style: buttonStyle(activeMenu === "manuAbout"), children: /* @__PURE__ */ jsxDEV3("ul", { className: "text-xs", children: [
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/about/intro", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "What is 7DS" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 110,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 109,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/about/team", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Team" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 113,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 112,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/about/funding", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: [
-                      "Funding",
-                      /* @__PURE__ */ jsxDEV3("br", {}, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 116,
-                        columnNumber: 123
-                      }, this),
-                      "Sources"
-                    ] }, void 0, !0, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 116,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 115,
-                      columnNumber: 21
-                    }, this)
-                  ] }, void 0, !0, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 108,
-                    columnNumber: 19
-                  }, this) }, void 0, !1, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 107,
-                    columnNumber: 17
-                  }, this) : showMenu ? /* @__PURE__ */ jsxDEV3("ul", { className: "text-sm", children: [
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/about/intro", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- What is 7DS" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 122,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 121,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/about/team", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Team" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 125,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 124,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/about/funding", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Funding Sources" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 128,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 127,
-                      columnNumber: 21
-                    }, this)
-                  ] }, void 0, !0, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 120,
-                    columnNumber: 17
-                  }, this) : null
-                ]
-              },
-              void 0,
-              !0,
-              {
-                fileName: "app/routes/navigate.tsx",
-                lineNumber: 95,
-                columnNumber: 15
-              },
-              this
-            ) }, void 0, !1, {
-              fileName: "app/routes/navigate.tsx",
-              lineNumber: 94,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ jsxDEV3("li", { className: "$(showMenu) ? pb-2 : ''", style: { textAlign: showMenu ? "left" : "center" }, children: /* @__PURE__ */ jsxDEV3(
-              "div",
-              {
-                onMouseEnter: () => handleManu("manuScience", !0),
-                children: [
-                  /* @__PURE__ */ jsxDEV3(
-                    "button",
-                    {
-                      id: "home",
-                      "data-dropdown-toggle": "manuScience",
-                      className: menuClass(activeMenu === "manuScience"),
-                      style: { marginRight: "2rem", marginLeft: "2rem" },
-                      children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/overview", children: "Science" }, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 143,
-                        columnNumber: 19
-                      }, this)
-                    },
-                    void 0,
-                    !1,
-                    {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 137,
-                      columnNumber: 17
-                    },
-                    this
-                  ),
-                  onMouse && !showMenu ? /* @__PURE__ */ jsxDEV3("div", { style: buttonStyle(activeMenu === "manuScience"), children: /* @__PURE__ */ jsxDEV3("ul", { className: "text-xs", children: [
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/overview", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Overview" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 149,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 148,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: [
-                      "Multi-messenger",
-                      /* @__PURE__ */ jsxDEV3("br", {}, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 152,
-                        columnNumber: 129
-                      }, this),
-                      "Astronomy"
-                    ] }, void 0, !0, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 152,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 151,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: [
-                      "Galaxy Formation",
-                      /* @__PURE__ */ jsxDEV3("br", {}, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 155,
-                        columnNumber: 130
-                      }, this),
-                      "& Evolution"
-                    ] }, void 0, !0, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 155,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 154,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Cosmology" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 158,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 157,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: [
-                      "Active Galactic",
-                      /* @__PURE__ */ jsxDEV3("br", {}, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 161,
-                        columnNumber: 129
-                      }, this),
-                      "Nuclei"
-                    ] }, void 0, !0, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 161,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 160,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Galactic Science" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 164,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 163,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: [
-                      "Solar System",
-                      /* @__PURE__ */ jsxDEV3("br", {}, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 167,
-                        columnNumber: 126
-                      }, this),
-                      "Objects"
-                    ] }, void 0, !0, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 167,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 166,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Transients" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 170,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 169,
-                      columnNumber: 21
-                    }, this)
-                  ] }, void 0, !0, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 147,
-                    columnNumber: 19
-                  }, this) }, void 0, !1, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 146,
-                    columnNumber: 17
-                  }, this) : showMenu ? /* @__PURE__ */ jsxDEV3("ul", { className: "text-sm", children: [
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Multi-messenger Astronomy" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 176,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 175,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Galaxy Formation & Evolution" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 179,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 178,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Cosmology" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 182,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 181,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Active Galactic Nuclei" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 185,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 184,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Galactic Science" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 188,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 187,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Solar System Objects" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 191,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 190,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/science/sci", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Transients" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 194,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 193,
-                      columnNumber: 21
-                    }, this)
-                  ] }, void 0, !0, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 174,
-                    columnNumber: 17
-                  }, this) : null
-                ]
-              },
-              void 0,
-              !0,
-              {
-                fileName: "app/routes/navigate.tsx",
-                lineNumber: 134,
-                columnNumber: 15
-              },
-              this
-            ) }, void 0, !1, {
-              fileName: "app/routes/navigate.tsx",
-              lineNumber: 133,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ jsxDEV3("li", { className: "$(showMenu) ? pb-2 : ''", style: { textAlign: showMenu ? "left" : "center" }, children: /* @__PURE__ */ jsxDEV3(
-              "div",
-              {
-                onMouseEnter: () => handleManu("manu7ds", !0),
-                children: [
-                  /* @__PURE__ */ jsxDEV3(
-                    "button",
-                    {
-                      id: "7ds",
-                      "data-dropdown-toggle": "manu7ds",
-                      className: menuClass(activeMenu === "manu7ds"),
-                      style: { marginRight: "1rem", marginLeft: "1rem" },
-                      children: /* @__PURE__ */ jsxDEV3("a", { href: "/survey/overview", children: "Survey" }, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 210,
-                        columnNumber: 19
-                      }, this)
-                    },
-                    void 0,
-                    !1,
-                    {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 204,
-                      columnNumber: 17
-                    },
-                    this
-                  ),
-                  onMouse && !showMenu ? /* @__PURE__ */ jsxDEV3("div", { style: buttonStyle(activeMenu === "manu7ds"), children: /* @__PURE__ */ jsxDEV3("ul", { className: "text-xs", children: [
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/survey/overview", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Overview" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 216,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 215,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/survey/design", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Design" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 219,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 218,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/survey/status", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Status" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 222,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 221,
-                      columnNumber: 21
-                    }, this)
-                  ] }, void 0, !0, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 214,
-                    columnNumber: 19
-                  }, this) }, void 0, !1, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 213,
-                    columnNumber: 17
-                  }, this) : showMenu ? /* @__PURE__ */ jsxDEV3("ul", { className: "text-sm", children: [
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/survey/overview", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Overview" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 228,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 227,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/survey/survey", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Design" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 231,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 230,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/survey/status", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Status" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 234,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 233,
-                      columnNumber: 21
-                    }, this)
-                  ] }, void 0, !0, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 226,
-                    columnNumber: 17
-                  }, this) : null
-                ]
-              },
-              void 0,
-              !0,
-              {
-                fileName: "app/routes/navigate.tsx",
-                lineNumber: 201,
-                columnNumber: 15
-              },
-              this
-            ) }, void 0, !1, {
-              fileName: "app/routes/navigate.tsx",
-              lineNumber: 200,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ jsxDEV3("li", { className: "$(showMenu) ? pb-2 : ''", style: { textAlign: showMenu ? "left" : "center" }, children: /* @__PURE__ */ jsxDEV3(
-              "div",
-              {
-                onMouseEnter: () => handleManu("manu7dt", !0),
-                children: [
-                  /* @__PURE__ */ jsxDEV3(
-                    "button",
-                    {
-                      id: "7dt",
-                      "data-dropdown-toggle": "manu7dt",
-                      className: menuClass(activeMenu === "manu7dt"),
-                      style: { marginRight: "1rem", marginLeft: "1rem" },
-                      children: /* @__PURE__ */ jsxDEV3("a", { href: "/telescope/overview", children: "Facilities" }, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 249,
-                        columnNumber: 19
-                      }, this)
-                    },
-                    void 0,
-                    !1,
-                    {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 243,
-                      columnNumber: 17
-                    },
-                    this
-                  ),
-                  onMouse && !showMenu ? /* @__PURE__ */ jsxDEV3("div", { style: buttonStyle(activeMenu === "manu7dt"), children: /* @__PURE__ */ jsxDEV3("ul", { className: "text-xs", style: { margin: "0 auto" }, children: [
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/telescope/overview", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Overview" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 255,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 254,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/telescope/location", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Location" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 258,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 257,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/telescope/instrument", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Instrument" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 261,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 260,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/telescope/computer", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: [
-                      "Computational",
-                      /* @__PURE__ */ jsxDEV3("br", {}, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 264,
-                        columnNumber: 134
-                      }, this),
-                      "Resources"
-                    ] }, void 0, !0, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 264,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 263,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/telescope/mode", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: [
-                      "Observing",
-                      /* @__PURE__ */ jsxDEV3("br", {}, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 267,
-                        columnNumber: 126
-                      }, this),
-                      "Mode"
-                    ] }, void 0, !0, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 267,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 266,
-                      columnNumber: 21
-                    }, this)
-                  ] }, void 0, !0, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 253,
-                    columnNumber: 19
-                  }, this) }, void 0, !1, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 252,
-                    columnNumber: 17
-                  }, this) : showMenu ? /* @__PURE__ */ jsxDEV3("ul", { className: "text-sm", style: { margin: "0 auto" }, children: [
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/telescope/overview", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Overview" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 273,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 272,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/telescope/location", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Location" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 276,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 275,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/telescope/instrument", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Instrument" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 279,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 278,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/telescope/computer", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Computational Resources" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 282,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 281,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/telescope/mode", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Observing Mode" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 285,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 284,
-                      columnNumber: 21
-                    }, this)
-                  ] }, void 0, !0, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 271,
-                    columnNumber: 17
-                  }, this) : null
-                ]
-              },
-              void 0,
-              !0,
-              {
-                fileName: "app/routes/navigate.tsx",
-                lineNumber: 240,
-                columnNumber: 15
-              },
-              this
-            ) }, void 0, !1, {
-              fileName: "app/routes/navigate.tsx",
-              lineNumber: 239,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ jsxDEV3("li", { className: "$(showMenu) ? pb-2 : ''", style: { textAlign: showMenu ? "left" : "center" }, children: /* @__PURE__ */ jsxDEV3(
-              "div",
-              {
-                onMouseEnter: () => handleManu("manuData", !0),
-                children: [
-                  /* @__PURE__ */ jsxDEV3(
-                    "button",
-                    {
-                      id: "data",
-                      "data-dropdown-toggle": "manuData",
-                      className: menuClass(activeMenu === "manuData"),
-                      style: { marginRight: "1rem", marginLeft: "1rem" },
-                      children: /* @__PURE__ */ jsxDEV3("a", { href: "/data/overview", children: "Data" }, void 0, !1, {
-                        fileName: "app/routes/navigate.tsx",
-                        lineNumber: 300,
-                        columnNumber: 19
-                      }, this)
-                    },
-                    void 0,
-                    !1,
-                    {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 294,
-                      columnNumber: 17
-                    },
-                    this
-                  ),
-                  onMouse && !showMenu ? /* @__PURE__ */ jsxDEV3("div", { style: buttonStyle(activeMenu === "manuData"), children: /* @__PURE__ */ jsxDEV3("ul", { className: "text-xs", children: [
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/data/overview", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Overview" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 306,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 305,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/data/data", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Data" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 309,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 308,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/data/software", className: "block py-2 hover:bg-oran-100", style: { padding: "0.5rem" }, children: "Software" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 312,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 311,
-                      columnNumber: 21
-                    }, this)
-                  ] }, void 0, !0, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 304,
-                    columnNumber: 19
-                  }, this) }, void 0, !1, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 303,
-                    columnNumber: 17
-                  }, this) : showMenu ? /* @__PURE__ */ jsxDEV3("ul", { className: "text-sm", children: [
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/data/overview", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Overview" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 318,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 317,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/data/data", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Data" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 321,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 320,
-                      columnNumber: 21
-                    }, this),
-                    /* @__PURE__ */ jsxDEV3("li", { children: /* @__PURE__ */ jsxDEV3("a", { href: "/data/software", className: "block py-0 ml-5 hover:text-bluewood-600", style: { padding: "0.5rem" }, children: "- Software" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 324,
-                      columnNumber: 23
-                    }, this) }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 323,
-                      columnNumber: 21
-                    }, this)
-                  ] }, void 0, !0, {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 316,
-                    columnNumber: 19
-                  }, this) : null
-                ]
-              },
-              void 0,
-              !0,
-              {
-                fileName: "app/routes/navigate.tsx",
-                lineNumber: 291,
-                columnNumber: 15
-              },
-              this
-            ) }, void 0, !1, {
-              fileName: "app/routes/navigate.tsx",
-              lineNumber: 290,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ jsxDEV3("li", { className: "$(showMenu) ? pb-2 : ''", style: { textAlign: showMenu ? "left" : "center" }, children: /* @__PURE__ */ jsxDEV3(
-              "div",
-              {
-                onMouseEnter: () => handleManu("manuPaper", !0),
-                children: /* @__PURE__ */ jsxDEV3(
-                  "button",
-                  {
-                    id: "publication",
-                    "data-dropdown-toggle": "manuPaper",
-                    className: menuClass(activeMenu === "manuPaper"),
-                    style: { marginRight: "1rem", marginLeft: "1rem" },
-                    children: /* @__PURE__ */ jsxDEV3("a", { href: "/publication/list", children: "Publications" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 339,
-                      columnNumber: 19
-                    }, this)
-                  },
-                  void 0,
-                  !1,
-                  {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 333,
-                    columnNumber: 17
-                  },
-                  this
-                )
-              },
-              void 0,
-              !1,
-              {
-                fileName: "app/routes/navigate.tsx",
-                lineNumber: 330,
-                columnNumber: 15
-              },
-              this
-            ) }, void 0, !1, {
-              fileName: "app/routes/navigate.tsx",
-              lineNumber: 329,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ jsxDEV3("li", { className: "$(showMenu) ? pb-2 : ''", style: { textAlign: showMenu ? "left" : "center" }, children: /* @__PURE__ */ jsxDEV3(
-              "div",
-              {
-                onMouseEnter: () => handleManu("manuNews", !0),
-                children: /* @__PURE__ */ jsxDEV3(
-                  "button",
-                  {
-                    id: "news",
-                    "data-dropdown-toggle": "manuNews",
-                    className: menuClass(activeMenu === "manuNews"),
-                    style: { marginRight: "2rem", marginLeft: "2rem" },
-                    children: /* @__PURE__ */ jsxDEV3("a", { href: "/news", children: "News" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 353,
-                      columnNumber: 19
-                    }, this)
-                  },
-                  void 0,
-                  !1,
-                  {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 347,
-                    columnNumber: 17
-                  },
-                  this
-                )
-              },
-              void 0,
-              !1,
-              {
-                fileName: "app/routes/navigate.tsx",
-                lineNumber: 344,
-                columnNumber: 15
-              },
-              this
-            ) }, void 0, !1, {
-              fileName: "app/routes/navigate.tsx",
-              lineNumber: 343,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ jsxDEV3("li", { className: "$(showMenu) ? pb-2 : ''", style: { textAlign: showMenu ? "left" : "center" }, children: /* @__PURE__ */ jsxDEV3(
-              "div",
-              {
-                onMouseEnter: () => handleManu("manuImages", !0),
-                children: /* @__PURE__ */ jsxDEV3(
-                  "button",
-                  {
-                    id: "news",
-                    "data-dropdown-toggle": "manuImages",
-                    className: menuClass(activeMenu === "manuImages"),
-                    style: { marginRight: "1rem", marginLeft: "1rem" },
-                    children: /* @__PURE__ */ jsxDEV3("a", { href: "/gallery", children: "Gallery" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 367,
-                      columnNumber: 19
-                    }, this)
-                  },
-                  void 0,
-                  !1,
-                  {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 361,
-                    columnNumber: 17
-                  },
-                  this
-                )
-              },
-              void 0,
-              !1,
-              {
-                fileName: "app/routes/navigate.tsx",
-                lineNumber: 358,
-                columnNumber: 15
-              },
-              this
-            ) }, void 0, !1, {
-              fileName: "app/routes/navigate.tsx",
-              lineNumber: 357,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ jsxDEV3("li", { className: "$(showMenu) ? pb-2 : ''", style: { textAlign: showMenu ? "left" : "center" }, children: /* @__PURE__ */ jsxDEV3(
-              "div",
-              {
-                onMouseEnter: () => handleManu("manuLinks", !0),
-                children: /* @__PURE__ */ jsxDEV3(
-                  "button",
-                  {
-                    id: "links",
-                    "data-dropdown-toggle": "manuLinks",
-                    className: menuClass(activeMenu === "manuLinks"),
-                    style: { marginRight: "1rem", marginLeft: "1rem" },
-                    children: /* @__PURE__ */ jsxDEV3("a", { href: "/links", children: "Useful Links" }, void 0, !1, {
-                      fileName: "app/routes/navigate.tsx",
-                      lineNumber: 381,
-                      columnNumber: 19
-                    }, this)
-                  },
-                  void 0,
-                  !1,
-                  {
-                    fileName: "app/routes/navigate.tsx",
-                    lineNumber: 375,
-                    columnNumber: 17
-                  },
-                  this
-                )
-              },
-              void 0,
-              !1,
-              {
-                fileName: "app/routes/navigate.tsx",
-                lineNumber: 372,
-                columnNumber: 15
-              },
-              this
-            ) }, void 0, !1, {
-              fileName: "app/routes/navigate.tsx",
-              lineNumber: 371,
-              columnNumber: 13
-            }, this)
-          ] }, void 0, !0, {
-            fileName: "app/routes/navigate.tsx",
-            lineNumber: 79,
-            columnNumber: 11
-          }, this),
-          showMenu ? null : /* @__PURE__ */ jsxDEV3("a", { className: "logo-container", href: "/", children: /* @__PURE__ */ jsxDEV3("img", { src: "/logo.png", alt: "Logo", className: "h-10 items-center", style: { top: "50%", transform: "translateY(0%)" } }, void 0, !1, {
-            fileName: "app/routes/navigate.tsx",
-            lineNumber: 388,
-            columnNumber: 15
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/navigate.tsx",
-            lineNumber: 387,
-            columnNumber: 26
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/navigate.tsx",
-          lineNumber: 78,
-          columnNumber: 9
-        }, this)
-      ]
-    },
-    void 0,
-    !0,
-    {
-      fileName: "app/routes/navigate.tsx",
-      lineNumber: 61,
-      columnNumber: 7
-    },
-    this
-  ) }, void 0, !1, {
-    fileName: "app/routes/navigate.tsx",
-    lineNumber: 58,
-    columnNumber: 5
-  }, this);
+              ]
+            }
+          ),
+          open && /* @__PURE__ */ jsx3("div", { className: "site-nav__mobile-sub", id: `m-${menu.key}`, children: menu.items.map((item) => /* @__PURE__ */ jsx3("a", { href: item.href, children: item.label }, item.href)) })
+        ] }, menu.key);
+      }),
+      /* @__PURE__ */ jsx3("a", { href: "/publication/list", children: "Publications" }),
+      /* @__PURE__ */ jsx3("a", { href: "/gallery", children: "Gallery" }),
+      /* @__PURE__ */ jsx3("a", { href: "/news", children: "News" })
+    ] })
+  ] });
 }
 var navigate_default = NavBar;
 
 // app/routes/footer.tsx
-var footer_exports = {};
-__export(footer_exports, {
-  default: () => footer_default
-});
-import { jsxDEV as jsxDEV4 } from "react/jsx-dev-runtime";
-var FooterBar = () => /* @__PURE__ */ jsxDEV4("footer", { style: { backgroundColor: "black", zIndex: 1e3, position: "relative" }, children: /* @__PURE__ */ jsxDEV4("div", { className: "mx-auto w-full flex", style: { maxWidth: "1440px", margin: "0 auto" }, children: /* @__PURE__ */ jsxDEV4("div", { className: "grid grid-cols-2 gap-8 py-6 lg:py-8 md:grid-cols-5", children: [
-  /* @__PURE__ */ jsxDEV4("div", { children: [
-    /* @__PURE__ */ jsxDEV4("h2", { className: "text-sm font-semibold text-gray-900 uppercase text-white", children: "Contact" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 8,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("hr", { className: "mb-2" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 9,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("p", { className: "text-gray-500", children: " Myungshin Im " }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 10,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV4("p", { className: "text-gray-500", children: " Professor, Dept. of Physics & Astronomy, Seoul National University," }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 11,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV4("p", { className: "text-gray-500", children: " 56-1 San, Shillim-dong, Kwanak-gu, Seoul, KOREA " }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 12,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV4("p", { className: "text-gray-500", children: " +82-2-880-6585/6761 " }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 13,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV4("p", { className: "text-gray-500 mb-2", children: [
-      " ",
-      /* @__PURE__ */ jsxDEV4("a", { href: "mailto:mim@astro.snu.ac.kr", children: "mim@astro.snu.ac.kr" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 14,
-        columnNumber: 48
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 14,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV4("hr", {}, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 15,
-      columnNumber: 11
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/footer.tsx",
-    lineNumber: 7,
-    columnNumber: 9
-  }, this),
-  /* @__PURE__ */ jsxDEV4("div", { children: [
-    /* @__PURE__ */ jsxDEV4("h2", { className: "text-sm font-semibold text-gray-900 uppercase text-white", children: "About" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 18,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("hr", { className: "mb-2" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 19,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("ul", { className: "text-gray-500 dark:text-gray-400 font-medium", children: [
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/about/intro", className: "hover:color-org", children: "What is 7DS" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 22,
-        columnNumber: 19
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 21,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/about/team", className: "hover:color-org", children: "Team" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 25,
-        columnNumber: 19
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 24,
-        columnNumber: 15
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 20,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV4("hr", { className: "mb-6" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 29,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("h2", { className: "text-sm font-semibold text-gray-900 uppercase text-white", children: "Survey" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 30,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("hr", { className: "mb-2" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 31,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("ul", { className: "text-gray-500 dark:text-gray-400 font-medium", children: [
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/survey/overview", className: "hover:color-org", children: "Overview" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 34,
-        columnNumber: 19
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 33,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/survey/design", className: "hover:color-org", children: "Design" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 37,
-        columnNumber: 19
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 36,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/survey/status", className: "hover:color-org", children: "Status" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 40,
-        columnNumber: 19
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 39,
-        columnNumber: 15
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 32,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/footer.tsx",
-    lineNumber: 17,
-    columnNumber: 9
-  }, this),
-  /* @__PURE__ */ jsxDEV4("div", { children: [
-    /* @__PURE__ */ jsxDEV4("h2", { className: "text-sm font-semibold text-gray-900 uppercase text-white", children: "Science" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 45,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("hr", { className: "mb-2" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 46,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("ul", { className: "text-gray-500 dark:text-gray-400 font-medium", children: [
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/science/sci", className: "hover:color-org", children: "Multi-messenger Astronomy" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 49,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 48,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/science/sci", className: "hover:color-org", children: "Galaxy Formation & Evolution" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 52,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 51,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/science/sci", className: "hover:color-org", children: "Cosmology" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 55,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 54,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/science/sci", className: "hover:color-org", children: "Active Galactic Nuclei" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 58,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 57,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/science/sci", className: "hover:color-org", children: "Galactic Science" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 61,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 60,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/science/sci", className: "hover:color-org", children: "Solar System Objects" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 64,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 63,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/science/sci", className: "hover:color-org", children: "Transients" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 67,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 66,
-        columnNumber: 13
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 47,
-      columnNumber: 11
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/footer.tsx",
-    lineNumber: 44,
-    columnNumber: 9
-  }, this),
-  /* @__PURE__ */ jsxDEV4("div", { children: [
-    /* @__PURE__ */ jsxDEV4("h2", { className: "text-sm font-semibold text-gray-900 uppercase text-white", children: "Facilities" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 73,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("hr", { className: "mb-2" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 74,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("ul", { className: "text-gray-500 dark:text-gray-400 font-medium", children: [
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/telescope/overview", className: "hover:color-org", children: "Overview" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 77,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 76,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/telescope/location", className: "hover:color-org", children: "Location" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 80,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 79,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/telescope/instrument", className: "hover:color-org", children: "Instrument" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 83,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 82,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/telescope/computer", className: "hover:color-org", children: [
-        "Computational",
-        /* @__PURE__ */ jsxDEV4("br", {}, void 0, !1, {
-          fileName: "app/routes/footer.tsx",
-          lineNumber: 86,
-          columnNumber: 86
-        }, this),
-        "Resources"
-      ] }, void 0, !0, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 86,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 85,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/telescope/mode", className: "hover:color-org", children: [
-        "Observing",
-        /* @__PURE__ */ jsxDEV4("br", {}, void 0, !1, {
-          fileName: "app/routes/footer.tsx",
-          lineNumber: 89,
-          columnNumber: 78
-        }, this),
-        "Mode"
-      ] }, void 0, !0, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 89,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 88,
-        columnNumber: 13
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 75,
-      columnNumber: 11
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/footer.tsx",
-    lineNumber: 72,
-    columnNumber: 9
-  }, this),
-  /* @__PURE__ */ jsxDEV4("div", { children: [
-    /* @__PURE__ */ jsxDEV4("h2", { className: "text-sm font-semibold text-gray-900 uppercase text-white", children: "Data" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 94,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("hr", { className: "mb-2" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 95,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("ul", { className: "text-gray-500 dark:text-gray-400 font-medium", children: [
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/data/overview", className: "hover:color-org", children: "Overview" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 98,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 97,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/data/data", className: "hover:color-org", children: "Data" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 101,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 100,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV4("li", { className: "mb-2", children: /* @__PURE__ */ jsxDEV4("a", { href: "/data/science", className: "hover:color-org", children: "Software" }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 104,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/footer.tsx",
-        lineNumber: 103,
-        columnNumber: 13
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 96,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("hr", { className: "mb-4" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 107,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("h2", { className: "text-sm font-semibold text-gray-900 uppercase text-white", children: /* @__PURE__ */ jsxDEV4("a", { href: "/publication", children: "Publications" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 108,
-      columnNumber: 84
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 108,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("hr", { className: "mb-4" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 109,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("h2", { className: "text-sm font-semibold text-gray-900 uppercase text-white", children: /* @__PURE__ */ jsxDEV4("a", { href: "/news", children: "News" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 110,
-      columnNumber: 84
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 110,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("hr", { className: "mb-4" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 111,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV4("h2", { className: "text-sm font-semibold text-gray-900 uppercase text-white", children: /* @__PURE__ */ jsxDEV4("a", { href: "/gallery", children: "Gallery" }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 112,
-      columnNumber: 84
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/footer.tsx",
-      lineNumber: 112,
-      columnNumber: 11
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/footer.tsx",
-    lineNumber: 93,
-    columnNumber: 9
-  }, this)
-] }, void 0, !0, {
-  fileName: "app/routes/footer.tsx",
-  lineNumber: 6,
-  columnNumber: 7
-}, this) }, void 0, !1, {
-  fileName: "app/routes/footer.tsx",
-  lineNumber: 5,
-  columnNumber: 5
-}, this) }, void 0, !1, {
-  fileName: "app/routes/footer.tsx",
-  lineNumber: 4,
-  columnNumber: 3
-}, this), footer_default = FooterBar;
+import { jsx as jsx4, jsxs as jsxs3 } from "react/jsx-runtime";
+var PARTNERS = [
+  { src: "/img/institutes/snu.jpeg", alt: "Seoul National University" },
+  { src: "/img/institutes/kasi.gif", alt: "Korea Astronomy and Space Science Institute" },
+  { src: "/img/institutes/postech.png", alt: "POSTECH" },
+  { src: "/img/institutes/ewha.png", alt: "Ewha Womans University" },
+  { src: "/img/institutes/gwuniv.png", alt: "Center for the Gravitational-wave Universe" },
+  { src: "/img/institutes/nrf.jpg", alt: "National Research Foundation of Korea" }
+], COLUMNS = [
+  {
+    title: "About",
+    links: [
+      { label: "What is 7DS", href: "/about/intro" },
+      { label: "Team", href: "/about/team" },
+      { label: "Funding", href: "/about/funding" },
+      { label: "Gallery", href: "/gallery" },
+      { label: "Links", href: "/links" }
+    ]
+  },
+  {
+    title: "Survey",
+    links: [
+      { label: "Overview", href: "/survey/overview" },
+      { label: "Design", href: "/survey/design" },
+      { label: "Status", href: "/survey/status" }
+    ]
+  },
+  {
+    title: "Science",
+    links: [
+      { label: "Overview", href: "/science/overview" },
+      { label: "Multi-messenger Astronomy", href: "/science/sci#mma" },
+      { label: "Transients", href: "/science/sci#transients" },
+      { label: "Galaxy Formation & Evolution", href: "/science/sci#galaxies" },
+      { label: "Cosmology", href: "/science/sci#cosmology" },
+      { label: "Active Galactic Nuclei", href: "/science/sci#agn" },
+      { label: "Galactic Science", href: "/science/sci#galactic" },
+      { label: "Solar System Objects", href: "/science/sci#solar" }
+    ]
+  },
+  {
+    title: "Facilities",
+    links: [
+      { label: "Overview", href: "/telescope/overview" },
+      { label: "Location", href: "/telescope/location" },
+      { label: "Instrument", href: "/telescope/instrument" },
+      { label: "Computational Resources", href: "/telescope/computer" },
+      { label: "Observing Mode", href: "/telescope/mode" },
+      { label: "Data & Software", href: "/data/overview" }
+    ]
+  }
+], FooterBar = () => /* @__PURE__ */ jsxs3("footer", { className: "site-footer", children: [
+  /* @__PURE__ */ jsx4("div", { className: "site-footer__spectrum" }),
+  /* @__PURE__ */ jsx4("div", { className: "site-footer__top", children: /* @__PURE__ */ jsx4("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs3("div", { className: "site-footer__grid", children: [
+    /* @__PURE__ */ jsxs3("div", { className: "site-footer__contact", children: [
+      /* @__PURE__ */ jsx4("h3", { className: "site-footer__heading", children: "Contact" }),
+      /* @__PURE__ */ jsx4("p", { className: "site-footer__name", children: "Prof. Myungshin Im" }),
+      /* @__PURE__ */ jsx4("p", { children: "Principal Investigator" }),
+      /* @__PURE__ */ jsx4("p", { children: "Dept. of Physics & Astronomy" }),
+      /* @__PURE__ */ jsx4("p", { children: "Seoul National University" }),
+      /* @__PURE__ */ jsx4("p", { children: "1 Gwanak-ro, Gwanak-gu" }),
+      /* @__PURE__ */ jsx4("p", { children: "Seoul 08826, Republic of Korea" }),
+      /* @__PURE__ */ jsx4("p", { children: "+82-2-880-6585 / 6761" }),
+      /* @__PURE__ */ jsx4("p", { style: { marginTop: "0.75rem" }, children: /* @__PURE__ */ jsx4("a", { href: "mailto:mim@astro.snu.ac.kr", children: "mim@astro.snu.ac.kr" }) })
+    ] }),
+    COLUMNS.map((column) => /* @__PURE__ */ jsxs3("div", { children: [
+      /* @__PURE__ */ jsx4("h3", { className: "site-footer__heading", children: column.title }),
+      /* @__PURE__ */ jsx4("ul", { children: column.links.map((link) => /* @__PURE__ */ jsx4("li", { children: /* @__PURE__ */ jsx4("a", { href: link.href, children: link.label }) }, link.label)) })
+    ] }, column.title))
+  ] }) }) }),
+  /* @__PURE__ */ jsx4("div", { className: "site-footer__partners", children: /* @__PURE__ */ jsxs3("div", { className: "container container--wide", children: [
+    /* @__PURE__ */ jsx4("h3", { className: "site-footer__heading", children: "Participating institutions" }),
+    /* @__PURE__ */ jsx4("div", { className: "logo-strip", children: PARTNERS.map((partner) => /* @__PURE__ */ jsx4("div", { className: "logo-strip__item", children: /* @__PURE__ */ jsx4("img", { src: partner.src, alt: partner.alt, loading: "lazy" }) }, partner.alt)) })
+  ] }) }),
+  /* @__PURE__ */ jsx4("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs3("div", { className: "site-footer__bottom", children: [
+    /* @__PURE__ */ jsx4("div", { className: "site-footer__copyright", children: "\xA9 2026 7-Dimensional Telescope \xB7 Center for the Gravitational-wave Universe, SNU" }),
+    /* @__PURE__ */ jsxs3("div", { className: "site-footer__legal", children: [
+      /* @__PURE__ */ jsx4("a", { href: "/publication/policy", children: "Publication Policy" }),
+      /* @__PURE__ */ jsx4("a", { href: "/links", children: "Links" }),
+      /* @__PURE__ */ jsx4("a", { href: "mailto:mim@astro.snu.ac.kr", children: "Contact" })
+    ] })
+  ] }) })
+] }), footer_default = FooterBar;
+
+// app/components/site.tsx
+import { jsx as jsx5, jsxs as jsxs4 } from "react/jsx-runtime";
+function PageLayout({
+  menu,
+  children
+}) {
+  return /* @__PURE__ */ jsxs4("div", { className: "page", children: [
+    /* @__PURE__ */ jsx5("a", { className: "skip-link", href: "#content", children: "Skip to content" }),
+    /* @__PURE__ */ jsx5(navigate_default, { manu: menu, fixed: !0 }),
+    /* @__PURE__ */ jsx5("main", { id: "content", children }),
+    /* @__PURE__ */ jsx5(footer_default, {})
+  ] });
+}
+function PageHero({
+  eyebrow,
+  title,
+  lede,
+  image,
+  meta: meta23,
+  actions,
+  tall
+}) {
+  return /* @__PURE__ */ jsxs4(
+    "header",
+    {
+      className: `hero${tall ? " hero--tall" : ""}`,
+      style: image ? { backgroundImage: `url("${image}")` } : void 0,
+      children: [
+        /* @__PURE__ */ jsx5("div", { className: "hero__inner", children: /* @__PURE__ */ jsxs4("div", { className: "container container--wide", children: [
+          eyebrow && /* @__PURE__ */ jsx5("span", { className: "eyebrow eyebrow--on-dark", children: eyebrow }),
+          /* @__PURE__ */ jsx5("h1", { className: "hero__title", children: title }),
+          lede && /* @__PURE__ */ jsx5("p", { className: "hero__lede", children: lede }),
+          actions && /* @__PURE__ */ jsx5("div", { className: "btn-row", children: actions }),
+          meta23 && meta23.length > 0 && /* @__PURE__ */ jsx5("div", { className: "hero__meta", children: meta23.map((item) => /* @__PURE__ */ jsxs4("div", { className: "hero__meta-item", children: [
+            /* @__PURE__ */ jsxs4("span", { className: "hero__meta-value", children: [
+              item.value,
+              item.unit && /* @__PURE__ */ jsx5("span", { className: "stat__unit", children: item.unit })
+            ] }),
+            /* @__PURE__ */ jsx5("span", { className: "hero__meta-label", children: item.label })
+          ] }, item.label)) })
+        ] }) }),
+        /* @__PURE__ */ jsx5("div", { className: "hero__spectrum" })
+      ]
+    }
+  );
+}
+function Section({
+  id,
+  eyebrow,
+  title,
+  alt,
+  center,
+  wide,
+  children
+}) {
+  return /* @__PURE__ */ jsx5("section", { className: `section${alt ? " section--alt" : ""}`, id, children: /* @__PURE__ */ jsxs4("div", { className: `container${wide ? " container--wide" : ""}`, children: [
+    (eyebrow || title) && /* @__PURE__ */ jsxs4("div", { className: `section-title${center ? " section-title--center" : ""}`, children: [
+      eyebrow && /* @__PURE__ */ jsx5("span", { className: "eyebrow", children: eyebrow }),
+      title && /* @__PURE__ */ jsx5("h2", { children: title })
+    ] }),
+    children
+  ] }) });
+}
+function StatGrid({ items, onDark }) {
+  return /* @__PURE__ */ jsx5("div", { className: `stat-grid${onDark ? " stat-grid--on-dark" : ""}`, children: items.map((item) => /* @__PURE__ */ jsxs4("div", { className: "stat", children: [
+    /* @__PURE__ */ jsxs4("span", { className: "stat__value", children: [
+      item.value,
+      item.unit && /* @__PURE__ */ jsx5("span", { className: "stat__unit", children: item.unit })
+    ] }),
+    /* @__PURE__ */ jsx5("span", { className: "stat__label", children: item.label })
+  ] }, item.label)) });
+}
+function SpecTable({
+  caption,
+  groups
+}) {
+  return /* @__PURE__ */ jsx5("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs4("table", { className: "spec-table", children: [
+    caption && /* @__PURE__ */ jsx5("caption", { children: caption }),
+    /* @__PURE__ */ jsx5("tbody", { children: groups.map((group) => /* @__PURE__ */ jsxs4(React2.Fragment, { children: [
+      /* @__PURE__ */ jsx5("tr", { className: "spec-group", children: /* @__PURE__ */ jsx5("th", { colSpan: 2, children: group.group }) }),
+      group.rows.map((row) => /* @__PURE__ */ jsxs4("tr", { children: [
+        /* @__PURE__ */ jsx5("th", { scope: "row", children: row[0] }),
+        /* @__PURE__ */ jsx5("td", { children: row[1] })
+      ] }, row[0]))
+    ] }, group.group)) })
+  ] }) });
+}
+function SimpleTable({
+  caption,
+  rows
+}) {
+  return /* @__PURE__ */ jsx5("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs4("table", { className: "spec-table", children: [
+    caption && /* @__PURE__ */ jsx5("caption", { children: caption }),
+    /* @__PURE__ */ jsx5("tbody", { children: rows.map((row) => /* @__PURE__ */ jsxs4("tr", { children: [
+      /* @__PURE__ */ jsx5("th", { scope: "row", children: row[0] }),
+      /* @__PURE__ */ jsx5("td", { children: row[1] })
+    ] }, row[0])) })
+  ] }) });
+}
+function NextLinks({
+  title,
+  links: links2
+}) {
+  return /* @__PURE__ */ jsxs4("div", { children: [
+    title && /* @__PURE__ */ jsx5("span", { className: "eyebrow", children: title }),
+    /* @__PURE__ */ jsx5("div", { className: "chip-row", children: links2.map((link) => /* @__PURE__ */ jsx5("a", { className: "chip", href: link.href, children: link.label }, link.label)) })
+  ] });
+}
 
 // app/routes/content/text.tsx
-var mainText1 = "A research team from the Department of Physics &   Astronomy at Seoul National has revealed first-light images of the 7-Dimensional   Telescope (7DT). The released images show colorful views of several celestial   bodies and demonstrate scientific capabilities of 7DT", mainText2 = "Through meticulous observations and advanced analysis,   our goal is to shed light on unraveling mysterious objects in the universe such   as gravitational-wave sources, supermassive black holes, new transient sources,   peculiar stellar phenomena, and small bodies of the solar system.", mainText3 = "Leveraging both wide-area and high-cadence observation   strategies, the 7 Dimensional Survey (7DS) delves into previously unexplored   cosmic realms by dedicated working groups.", mainText4 = "The 7-Dimensional Telescope (7DT), a pioneering   multi-telescope system, comprises 20 individual telescopes, each with a 50cm   diameter, strategically positioned at Chile.", overviewText = "The 7-Dimensional Telsceope (7DT) is a multi-telescope array that consists of 20  50-cm commercial off-the-shelf (COTS) telescopes. Equipped with 40 medium-  band filters of 25 nm FWHM, 7DT can obtain low-resolution spectra with the wavelength  range of 400 nm and 900 nm for all the objects within a large field of  view (~1.2 square degrees) by taking 2 exposures with each telescope.", locationText = "7DT is located at El Sauce Observatory   (The Willow tree in Spanish) in Chilean Rio Hurdato Valley, in the south of the  Atacama desert. Just south of the sites of the World\u2019s leading astronomical   observatories, such as the Vera C. Rubin Observatory and the Cerro Tololo   Inter-American Observatory, El Sauce Observatory provide excellent seeing   conditions and clear nights (up to 320 nights per year).", opticText = "We deploy 20 units of the DeltaRho 500 manufactured by  PlaneWave. Utilizing an ellipsoidal primary mirror of 508 mm and a spherical  secondary mirror of 286 mm, the DeltaRho offers fast optics (f/3) with a very large  field of view.", mountText = "The L-500 mount, which is also manufactured by PlaneWave, handles the  DeltraRho 500. Utilizing a direct-drive motor system, the L-500 mount offers fast  slewing speed, stable pointing, and tracking accuracies.  Camera Each DeltaRho 500 is equipped with a C3-61000 PRO camera.  Manufactured by Moravian Instruments, a Czech company, the C3-61000 PRO  employs SONY IMX455 sCMOS sensors that have a dimension of 9576 by 6488  with a pixel size of 3.76 by 3.76 microns. Attached to the DeltaRho 500, the  C3-61000 PRO offers a field of view of 1.2 square degrees with pixel scales of 0.5  by 0.5 arcseconds.", filterText = "7DT utilizes 40 medium-band filters of 25 FWHM along with Sloan broad-  band filters. These medium-band filters cover from 400 nm through 900 nm with a  25 nm gap between their central wavelengths. At the moment, however, 20 out of  40 filters are available. These 20 filters still cover the wavelength range between  400 nm through 900 nm with a 50 nm gap between their central wavelengths.", storageText = "The data inflow rate of 7DT is up to 1TB per night and 1PB per year.  A data storage server of 1PB, named \u2018Lyman\u2019 copes with such inflow. \u2018Balmer\u2019 and  \u2018Paschen\u2019 will follow suit.", protonText = "To carry out real-time data reduction and analysis, 7DT requires high-  performance computing. Equipped with 2 NVIDIA A100 GPUs, Proton handles the  job.";
+var mainText1 = "The 7-Dimensional Telescope (7DT) is a multi-telescope array built and operated by the Center for the Gravitational-wave Universe at Seoul National University. Sixteen of its twenty 50-cm telescopes are now on sky at El Sauce Observatory in Chile, each carrying a share of a 35-filter medium-band set. Together they turn imaging into low-resolution spectroscopy across 1.25 square degrees at a time.", mainText2 = "A resolution of R = 30-70 across 400-900 nm captures the 4000 A break, strong emission lines and broad continuum shape for every source in the field. That is enough to tell a kilonova from the hundred other transients in a gravitational-wave localization, to place galaxies in redshift without a spectrograph, and to follow colour changes on timescales of a single night.", mainText3 = "The 7-Dimensional Sky Survey (7DS) runs on three tiers that trade area against depth and cadence: a single-visit reference map of the southern sky, a wide time-domain survey on a 10-14 day cadence, and nightly monitoring of a deep field at the south ecliptic pole. All three observe the same tile grid, so their data coadd without compromise.", mainText4 = "Sixteen DeltaRho 500 units on direct-drive mounts \u2014 twenty by design \u2014 one control computer per operational telescope, a robotic scheduler that can interrupt the night and start a follow-up exposure in under a minute, and a pipeline that reduces a 3,000-image night within the daily budget. 7DT is built to be pointed at a transient while it is still bright.", overviewText = "The 7-Dimensional Telescope (7DT) is a multi-telescope array of twenty 50-cm commercial off-the-shelf telescopes at El Sauce Observatory, Chile, designed to identify the electromagnetic counterparts of gravitational-wave events. Its defining feature is a set of 40 medium-band filters of 25 nm width spanning 400 to 900 nm, distributed across the array so that the full set is covered in a small number of exposures. This yields IFU-like data at low spectral resolution (R = 30-70) over approximately 1.25 square degrees per pointing - imaging that behaves like spectroscopy, over an area no spectrograph can reach.", aboutText2 = "Since first light in October 2023 the array has grown from twelve to sixteen operational units and from twenty to thirty-five installed medium-band filters. Commissioning has reached closure, robotic operation runs unattended, and the science programme - the 7-Dimensional Sky Survey (7DS) - is under way on two of its three tiers.", aboutText3 = "The name counts the axes of the data. Two of position on the sky, one of brightness, one of wavelength and one of time come directly from the observations; distance and radial velocity follow from the medium-band spectral energy distribution. A single visit therefore records not just where a source is and how bright it is, but what it is made of and how it is moving.", scienceOverviewText = "The primary mission of 7DT is the rapid identification of electromagnetic counterparts to gravitational-wave events. A typical kilonova peaks near an absolute magnitude of \u221215 to \u221217 and fades by roughly 0.5 mag per day, inside a localization region of hundreds to thousands of square degrees \u2014 where even a single 100 deg\xB2 patch is expected to hold of order a hundred unrelated transients over a seven-day window. Finding one demands wide-area coverage, fast response, and spectral information good enough to reject the contaminants, which is precisely what a medium-band array delivers.", scienceOverviewText2 = "The same data serve a much broader programme. Low-resolution spectral mapping of the southern sky supports photometric redshift catalogues, resolved stellar populations in nearby galaxies, active galactic nuclei, variable stars, and the time-domain study of solar-system bodies. Several of the science verification observations taken during commissioning have since matured into refereed or near-complete analyses.", surveyOverviewText = "7DS is the science programme of 7DT. It is structured as three complementary surveys distinguished by area, cadence and depth: the Reference Imaging Survey (RIS), the Wide-area Time-domain Survey (WTS), and the Intensive Monitoring Survey (IMS). Across the three tiers sky coverage decreases and depth increases, spanning the range from a single-visit all-southern-sky reference map to daily monitoring of a small field, while sharing a single observational infrastructure.", surveyDesignText = "All 7DS observations follow a common tile pattern generated from a HEALPix pixelization of the celestial sphere, with adjacent pointings overlapping by about 5 arcminutes in right ascension and 4 arcminutes in declination near the celestial equator and by more toward the poles. Tiles are numbered T00000 to T28519 in order of increasing declination, covering everything accessible to the array from the south pole to +30 degrees.", surveyDesignText2 = "The RIS tile grid is the operational reference for the entire programme: WTS and IMS point at the same tile centres, and target-of-opportunity observations use them wherever the field allows. Because every survey shares the grid, data from any tier coadd homogeneously with data from the others, and difference imaging always runs against a consistent reference. A visit is three consecutive 100-second exposures, coadded to a 300-second frame - a number set by the unguided tracking capability of the mount and the read noise of the detector.", surveyStatusText = "RIS began routine operation in July 2024 and IMS in April 2025; WTS is scheduled to commence in 2026. In a typical night the array observes about 30 tiles, including the seven IMS tiles, for roughly 3,000 individual exposures. Since RTCSpy took over nightly operation in August 2024 the array has acquired approximately 1.75 million images under fully unattended operation, alongside about 100 target-of-opportunity follow-ups and some ten gravitational-wave event campaigns.", telescopeOverviewText = "7DT is, in its full design, an array of twenty 50-cm commercial off-the-shelf telescopes. Each unit is a PlaneWave DeltaRho 500 optical tube assembly on an L-500 direct-drive mount operated in equatorial configuration, paired with a Moravian Instruments C3-61000 PRO CMOS camera. Sixteen units are deployed and operational as of June 2026; the four remaining units complete the planned array. All operational units share a common configuration of optics, mount and camera, and show consistent optical performance in routine use.", locationText = "El Sauce Observatory sits in the Rio Hurtado Valley of Chile at 30 deg 28 min 16 sec South, 70 deg 45 min 47 sec West, 1,600 m above sea level. It neighbours the sites of Cerro Tololo Inter-American Observatory, Gemini South, the Southern Astrophysical Research Telescope and the Vera C. Rubin Observatory, and shares their sky conditions: typical seeing of about 1.5 arcseconds, more than 300 clear nights a year, and a mean zenith sky brightness of 21.97 mag per square arcsecond. Site infrastructure and maintenance are provided by ObsTech, a Chilean telescope hosting company.", opticText = "Each unit is a PlaneWave DeltaRho 500, a corrected Cassegrain of 508 mm aperture with a focal length of 1,537 mm and a focal ratio of f/3.0. The design delivers a 70 mm image circle covering approximately 2.6 degrees - fast optics over a field far wider than a conventional research telescope of the same aperture. Optomechanical alignment of all sixteen operational units is complete, and image quality is monitored continuously through routine survey operations rather than in scheduled campaigns.", mountText = "The DeltaRho 500 rides on a PlaneWave L-500 mount operated in equatorial configuration. Its direct-drive motors reach a slew rate of 20 degrees per second and sustain unguided tracking longer than the 100-second exposure used for survey work. Polar alignment is maintained through pointing models built by PWI4 from 40 to 50 sky points, and pointing and tracking accuracies are monitored continuously, with models refreshed when required.", cameraText = "Each unit carries a Moravian Instruments C3-61000 PRO. Its back-illuminated SONY IMX455 CMOS sensor measures 36 by 24 mm with 9,576 by 6,388 pixels of 3.76 micron pitch. At the DeltaRho focal plane this gives a field of view of 1.34 by 0.90 degrees at a pixel scale of 0.5 arcseconds - about 1.25 square degrees of spectral mapping per pointing. Bias levels are consistent with the manufacturer specification of roughly 3.5 electrons RMS, and the horizontal pattern characteristic of CMOS detectors is present but stable.", filterText = "Every unit carries a nine-slot filter wheel. Three slots in each wheel hold Sloan g, r and i; one unit adds u and three units add z. The remaining slots hold medium-band filters, distributed across the array so that the full set is covered in a small number of exposures. The original twenty medium bands are spaced regularly at 25 nm from 400 to 875 nm with 25 nm FWHM. Fifteen more, procured from Edmund Optics and installed in late 2025, fill the gaps between them with central wavelengths from 412 to 832 nm and bandwidths of 14 to 41 nm. The current suite of 35 filters covers 375 to 875 nm, advancing toward the designed complement of 40 medium bands at 12.5 nm spacing.", filterCaveatText = "The additional fifteen filters depart from the regularity of the original set: their central wavelengths are not precisely aligned to the 12.5 nm grid, their bandwidths vary, and no filter between 700 and 800 nm is included in the second batch. These departures reflect availability and will be addressed as the remaining five filters become available. Their spectrophotometric calibration is in preparation; the original twenty remain the calibrated set in operational use.", performanceText = "Across the sixteen operational units the point-spread function measured at field centre on good nights ranges from 1.4 to 2.2 arcseconds FWHM, with an array median of 2.0 arcseconds closely tracking the median site seeing. Unit-to-unit scatter in delivered FWHM is 0.2 arcseconds, and the PSF grows by 0.3 arcseconds from field centre to corner while ellipticity stays below 0.1 over the central 80 per cent of the field. The array behaves as a coherent set of instruments rather than sixteen independent telescopes. Median delivered FWHM has held stable to within 0.3 arcseconds since routine survey operations began in July 2024.", photometryText = "Photometric calibration runs against synthetic photometry derived from Gaia DR3 BP/RP spectra, homogenized to correct the colour- and magnitude-dependent residuals reported by the Gaia collaboration. The procedure was established during commissioning on 68 spectrophotometric standard stars, including CALSPEC sources, with non-variable point sources selected following criteria adapted from SkyMapper DR4. Zero-point uncertainty across the twenty medium bands in operational use is 15 to 25 mmag, with the larger values redward of 775 nm where detector quantum efficiency falls and signal-to-noise drops accordingly.", depthText = "For the canonical 100-second exposure the 5-sigma point-source depth reaches 19.06 mag in the bluest medium band (m400) and 16.60 mag at the longest wavelength (m875), peaking at 19.61 mag in m475 near maximum system throughput. The Sloan broad bands reach 20.59, 20.25 and 19.17 mag in g, r and i. These are nominal-condition figures: seeing better than 2.0 arcseconds, airmass below 1.5, and non-bright nights.", modeText = "Because each unit carries its own filter complement, the array can be reconfigured between science goals without changing hardware. The full spectral range is covered by assigning unique filter combinations to individual units and rotating through them during an observation. Four modes are in routine use, and the choice between them is the choice of what to spend the night on: spectral resolution, depth, or sky coverage.", computingText = "On-site computing consists of sixteen Telescope Control Computers, one per operational unit, and a single Main Control Computer that coordinates the array. Each TCC drives its own mount, camera, focuser and filter wheel and writes exposures to local storage as they complete. The MCC dispatches observation commands through RTCSpy, aggregates data from every TCC, and manages transfer to the processing facility at Seoul National University over KREONET.", storageText = "A typical night yields about 3,000 raw frames of roughly 117 MiB each, some 350 GB before compression. Raw data are compressed on site and transferred by GridFTP at a typical 80 MB/s, a procedure that usually completes in under twelve hours; target-of-opportunity data skip the compression and the wait for sunrise, cutting latency to tens of minutes. Storage is provided by two servers named for the hydrogen transition series: Lyman, with two 1.2 PB volumes, and Balmer, with one, for a combined capacity of approximately 3.6 PB. Both are attached to the compute server as NFS mounts over a 10 Gbps class network, so that I/O buffering does not burden processing.", protonText = "All 7DT data are reduced on Proton, a dedicated server with dual AMD EPYC 7513 processors providing 128 cores at up to 2.6 GHz, 512 GB of memory, and two NVIDIA A100 GPUs sharing memory over NVLink. A nightly volume of roughly 3,000 raw images requires an effective per-image processing time of about 30 seconds to complete within the daily budget; the current pipeline sustains a median end-to-end throughput of 66 \xB1 24 GB per hour and clears a typical survey night in about five hours of wall-clock time after transfer completes. GPU acceleration is available for preprocessing, though in this deployment the throughput gain over the CPU path is minimal \u2014 the pipeline is bound by I/O rather than by computation.", dataOverviewText = "Data flow from Chile to Seoul every night. Observation, reduction and analysis are closed into a single loop by three software systems: RTCSpy drives the array and schedules what it observes, Py7DT reduces what it acquires, and gwportal records the state of both. Three web interfaces expose that state to the team - a pipeline status page with real-time progress and quality-assurance summaries, a target-of-opportunity page carrying observation requests and event history, and a wiki hosting user manuals and QA criteria for internal and external users of 7DT data.", dataProductText = "The basic data product of the survey is a 300-second coadd of three 100-second exposures, with a source catalogue attached to every processed single, coadd and difference image. Coadds are flux-scaled to a zero point of 23.9 AB magnitudes, which puts each pixel directly in units of microjansky - a convenient convention for the pixel-based, IFU-like analysis that medium-band data invite. Quality-assurance metrics including seeing, ellipticity, 5-sigma depth and astrometric precision are written to FITS headers and ingested into the database for every image produced.", pipelineText = "Py7DT is the operational data reduction pipeline. It addresses the reduction challenge specific to 7DT: heterogeneous data from many telescope units, filters and observing modes, reduced at survey throughput while keeping latency low for transient events. Orchestration modules group images by their properties into configurations backed by YAML files and submit them to an SQLite-based system queue, which dispatches them in parallel by priority and stage. Processing modules then run the standard sequence on each group, wrapping established astronomical software behind Python interfaces rather than reimplementing it.", pipelineToOText = "Target-of-opportunity data are handled in the same framework at elevated priority. A ToO configuration is placed ahead of routine survey work in the queue, and for the highest-priority cases - typically broadband frames, where a rapid community report is valuable - all other processing pauses to dedicate the full system to the job. Users receive notification when raw data arrive, again as each filter set completes, and once more on full completion with an SED plot and magnitude table attached. Every ToO event is tracked in a dedicated database recording timestamps, progress and output products, and all ToO data are reprocessed alongside routine data in the next daily run to produce the deepest possible coadds.", softwareReuseText = "Beyond its pipeline role, Py7DT is structured for offline reuse. Researchers inside and outside the 7DT team can run the same codebase to reprocess data with custom configurations, resuming from any stage of the reduction, and choose for themselves how far to trust the standard products. Images are passed through the pipeline as string paths with metadata in FITS headers and YAML files, rather than wrapped in a bespoke data model - a deliberate choice that keeps products inspectable outside the pipeline and keeps the learning cost of processing 7DT data low.", fundingGWText = "The 7-Dimensional Telescope is designed, built and operated by the Center for the Gravitational-wave Universe at Seoul National University. The Center is supported by National Research Foundation of Korea grant No. 2021M3F7A1084525, funded by the Korean government (MSIT).", fundingNRFText = "Further project support is provided by the National Research Foundation of Korea under grant No. RS-2026-25490019, funded by the Korean government (MSIT). Several members of the collaboration are additionally supported by individual NRF awards, listed separately below; those grants support the researchers rather than the facility.", fundingKASIText = "7DT is operated in part with support from special funding of the Korea Astronomy and Space Science Institute (KASI).", fundingKreonetText = "Nightly transfer of roughly 350 GB of raw data from Chile to the processing facility in Seoul is carried by KREONET, the Korea Research Environment Open NETwork, operated by KISTI, the Korea Institute of Science and Technology Information. The 7DT project gratefully acknowledges this support, without which same-day reduction of survey and target-of-opportunity data would not be possible.", publicationPolicyText = "The 7DS publication policy governs authorship, data rights and the acknowledgement of 7DT observations in refereed work. It is being prepared by the collaboration and will be posted here once ratified. In the meantime, anyone intending to publish results based on 7DT data is asked to contact the principal investigator so that the appropriate collaboration authors and funding acknowledgements can be agreed in advance.", archiveText = "A complete record of 7DT data \u2014 every image type and source catalogue \u2014 is maintained internally in the gwportal database, with the provenance of any product traceable back to the raw frames it was built from. There is no public archive interface yet: a public release of survey products is being prepared alongside the completion of the Reference Imaging Survey. Until then, data requests are handled directly by the project.";
 
 // app/routes/telescope.instrument.tsx
-import { jsxDEV as jsxDEV5 } from "react/jsx-dev-runtime";
-var Index = () => /* @__PURE__ */ jsxDEV5("div", { children: [
-  /* @__PURE__ */ jsxDEV5(navigate_default, { manu: "manu7dt", fixed: !0 }, void 0, !1, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 13,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV5("div", { className: "p-10 max-w-screen-lg mx-auto", style: { paddingTop: "150px", paddingBottom: "100px" }, children: /* @__PURE__ */ jsxDEV5("div", { className: "p-10 max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV5("div", { className: "justify-between", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-    /* @__PURE__ */ jsxDEV5("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "The Biggest Ground-based Multi-telescope System" }, void 0, !1, {
-      fileName: "app/routes/telescope.instrument.tsx",
-      lineNumber: 18,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV5("h3", { className: "text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-      "Specifcation of ",
-      /* @__PURE__ */ jsxDEV5("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "7DT" }, void 0, !1, {
-        fileName: "app/routes/telescope.instrument.tsx",
-        lineNumber: 22,
-        columnNumber: 31
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/telescope.instrument.tsx",
-      lineNumber: 21,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 17,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 16,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 15,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV5("div", { style: { backgroundColor: "#f9f9f9" }, children: /* @__PURE__ */ jsxDEV5("div", { className: "mx-auto w-full", style: { maxWidth: "1440px", margin: "0 auto", padding: "0 10vw 0 10vw" }, children: /* @__PURE__ */ jsxDEV5("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-    /* @__PURE__ */ jsxDEV5("h3", { className: "text-2xl sm:text-3xl leading-normal font-extrabold tracking-tight", style: { fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: "Optical Tube Assembly" }, void 0, !1, {
-      fileName: "app/routes/telescope.instrument.tsx",
-      lineNumber: 33,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV5("p", { className: "text-content", children: opticText }, void 0, !1, {
-      fileName: "app/routes/telescope.instrument.tsx",
-      lineNumber: 36,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 32,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 31,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 30,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV5("div", { style: { backgroundColor: "#fff" }, children: /* @__PURE__ */ jsxDEV5("div", { className: "mx-auto w-full", style: { maxWidth: "1440px", margin: "0 auto", padding: "0 10vw 0 10vw" }, children: /* @__PURE__ */ jsxDEV5("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-    /* @__PURE__ */ jsxDEV5("h3", { className: "text-2xl sm:text-3xl leading-normal font-extrabold tracking-tight", style: { fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: "Mount" }, void 0, !1, {
-      fileName: "app/routes/telescope.instrument.tsx",
-      lineNumber: 44,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV5("p", { className: "text-content", children: mountText }, void 0, !1, {
-      fileName: "app/routes/telescope.instrument.tsx",
-      lineNumber: 47,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 43,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 42,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 41,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV5("div", { style: { backgroundColor: "#f9f9f9" }, children: /* @__PURE__ */ jsxDEV5("div", { className: "mx-auto w-full", style: { maxWidth: "1440px", margin: "0 auto", padding: "0 10vw 0 10vw" }, children: /* @__PURE__ */ jsxDEV5("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-    /* @__PURE__ */ jsxDEV5("h3", { className: "mb-3 text-2xl sm:text-3xl leading-normal font-extrabold tracking-tight", style: { fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: "Filter" }, void 0, !1, {
-      fileName: "app/routes/telescope.instrument.tsx",
-      lineNumber: 56,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV5("p", { className: "text-content", children: filterText }, void 0, !1, {
-      fileName: "app/routes/telescope.instrument.tsx",
-      lineNumber: 60,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV5("img", { className: "p-6", src: "/img/filter.png" }, void 0, !1, {
-      fileName: "app/routes/telescope.instrument.tsx",
-      lineNumber: 62,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV5("p", { className: "text-content", children: "Here are two examples: NGC7293(left) and NGC0253(right)" }, void 0, !1, {
-      fileName: "app/routes/telescope.instrument.tsx",
-      lineNumber: 64,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV5("div", { className: "flex flex-wrap justify-between p-10", style: { textAlign: "center" }, children: [
-      /* @__PURE__ */ jsxDEV5("img", { src: "/img/NGC7293.gif", width: "40%" }, void 0, !1, {
-        fileName: "app/routes/telescope.instrument.tsx",
-        lineNumber: 67,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ jsxDEV5("img", { src: "/img/NGC0253.gif", width: "40%" }, void 0, !1, {
-        fileName: "app/routes/telescope.instrument.tsx",
-        lineNumber: 68,
-        columnNumber: 15
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/telescope.instrument.tsx",
-      lineNumber: 66,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 55,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 54,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 52,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV5(footer_default, {}, void 0, !1, {
-    fileName: "app/routes/telescope.instrument.tsx",
-    lineNumber: 75,
-    columnNumber: 7
-  }, this)
-] }, void 0, !0, {
-  fileName: "app/routes/telescope.instrument.tsx",
-  lineNumber: 12,
-  columnNumber: 5
-}, this), telescope_instrument_default = Index;
+import { Fragment, jsx as jsx6, jsxs as jsxs5 } from "react/jsx-runtime";
+var meta = () => [
+  { title: "Instrument \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "Optics, mount, camera and the 35-filter medium-band set of the 7-Dimensional Telescope."
+  }
+], OPTICS = [
+  ["Model", "PlaneWave DeltaRho 500"],
+  ["Design", "Corrected Cassegrain"],
+  ["Primary diameter", "50.8 cm"],
+  ["Focal length", "1537 mm"],
+  ["Focal ratio", "f/3.0"],
+  ["Image circle", "70 mm (\u2248 2.6\xB0)"]
+], MOUNT = [
+  ["Model", "PlaneWave L-500"],
+  ["Drive", "Direct drive, equatorial"],
+  ["Slew rate", "20 deg s\u207B\xB9"],
+  ["Unguided tracking", "> 100 s"],
+  ["Pointing model", "PWI4, 40\u201350 sky points"]
+], CAMERA = [
+  ["Model", "Moravian C3-61000 PRO"],
+  ["Sensor", "SONY IMX455 back-illuminated CMOS"],
+  ["Sensor size", "36 \xD7 24 mm"],
+  ["Dimension", "9576 \xD7 6388 pixels"],
+  ["Pixel size", "3.76 \xB5m"],
+  ["Pixel scale", "0.5 arcsec"],
+  ["Field of view", "1.34\xB0 \xD7 0.90\xB0"],
+  ["Operating temperature", "\u221210 \xB0C"]
+], FILTERS = [
+  ["Filter wheel", "9 slots per unit"],
+  ["Sloan g, r, i", "Every unit"],
+  ["Sloan u", "1 unit"],
+  ["Sloan z", "3 units"],
+  ["Medium bands installed", "35 of 40 planned"],
+  ["Wavelength coverage", "375\u2013875 nm"],
+  ["FWHM", "14\u201341 nm (typ. 25\u201330)"],
+  ["Manufacturers", "Chroma (broad), Edmund Optics (medium)"]
+], Index = () => /* @__PURE__ */ jsxs5(PageLayout, { menu: "manu7dt", children: [
+  /* @__PURE__ */ jsx6(
+    PageHero,
+    {
+      eyebrow: "Telescope",
+      title: /* @__PURE__ */ jsxs5(Fragment, { children: [
+        "Instrument ",
+        /* @__PURE__ */ jsx6("em", { children: "specification" })
+      ] }),
+      lede: "Each of the sixteen operational units is identical: the same optics, the same mount, the same camera. What differs between them is the filters they carry \u2014 and that is the whole design.",
+      image: "/img/hero/instrument.jpg"
+    }
+  ),
+  /* @__PURE__ */ jsx6(Section, { eyebrow: "01", title: "Optical tube assembly", children: /* @__PURE__ */ jsxs5("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsx6("p", { className: "prose", children: opticText }),
+    /* @__PURE__ */ jsx6(SimpleTable, { caption: "DeltaRho 500", rows: OPTICS })
+  ] }) }),
+  /* @__PURE__ */ jsx6(Section, { eyebrow: "02", title: "Mount", alt: !0, children: /* @__PURE__ */ jsxs5("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsx6("p", { className: "prose", children: mountText }),
+    /* @__PURE__ */ jsx6(SimpleTable, { caption: "L-500 mount", rows: MOUNT })
+  ] }) }),
+  /* @__PURE__ */ jsx6(Section, { eyebrow: "03", title: "Camera", children: /* @__PURE__ */ jsxs5("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsx6("p", { className: "prose", children: cameraText }),
+    /* @__PURE__ */ jsx6(SimpleTable, { caption: "C3-61000 PRO", rows: CAMERA })
+  ] }) }),
+  /* @__PURE__ */ jsxs5(Section, { eyebrow: "04", title: "Filters", alt: !0, children: [
+    /* @__PURE__ */ jsxs5("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsxs5("div", { children: [
+        /* @__PURE__ */ jsx6("p", { className: "prose", children: filterText }),
+        /* @__PURE__ */ jsx6("p", { className: "prose", children: filterCaveatText })
+      ] }),
+      /* @__PURE__ */ jsx6(SimpleTable, { caption: "Filter complement", rows: FILTERS })
+    ] }),
+    /* @__PURE__ */ jsxs5("figure", { className: "figure", style: { marginTop: "2.5rem" }, children: [
+      /* @__PURE__ */ jsx6("img", { src: "/img/filter.png", alt: "Transmission curves of the 7DT medium-band filter set", loading: "lazy" }),
+      /* @__PURE__ */ jsxs5("figcaption", { children: [
+        /* @__PURE__ */ jsx6("b", { children: "System response" }),
+        " Filter response curves incorporating detector quantum efficiency, sky transmission, telescope optics and filter throughput. Filters are designated by central wavelength in nanometres \u2014 m400 is the band centred at 400 nm."
+      ] })
+    ] })
+  ] }),
+  /* @__PURE__ */ jsx6(Section, { eyebrow: "05", title: "Calibration", children: /* @__PURE__ */ jsx6("p", { className: "prose", children: photometryText }) }),
+  /* @__PURE__ */ jsx6(Section, { eyebrow: "On sky", title: "What the filter set looks like", alt: !0, children: /* @__PURE__ */ jsxs5("div", { className: "split", children: [
+    /* @__PURE__ */ jsxs5("figure", { className: "figure", children: [
+      /* @__PURE__ */ jsx6("img", { src: "/img/NGC7293.gif", alt: "The Helix Nebula through successive 7DT medium bands", loading: "lazy" }),
+      /* @__PURE__ */ jsxs5("figcaption", { children: [
+        /* @__PURE__ */ jsx6("b", { children: "NGC 7293" }),
+        " The Helix Nebula, band by band across the medium-band set."
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs5("figure", { className: "figure", children: [
+      /* @__PURE__ */ jsx6("img", { src: "/img/NGC0253.gif", alt: "The Sculptor Galaxy through successive 7DT medium bands", loading: "lazy" }),
+      /* @__PURE__ */ jsxs5("figcaption", { children: [
+        /* @__PURE__ */ jsx6("b", { children: "NGC 253" }),
+        " The Sculptor Galaxy, band by band across the medium-band set."
+      ] })
+    ] })
+  ] }) })
+] }), telescope_instrument_default = Index;
 
 // app/routes/publication.policy.tsx
 var publication_policy_exports = {};
 __export(publication_policy_exports, {
-  default: () => publication_policy_default
+  default: () => publication_policy_default,
+  meta: () => meta2
 });
-import { jsxDEV as jsxDEV6 } from "react/jsx-dev-runtime";
-var Index2 = () => /* @__PURE__ */ jsxDEV6("div", { style: { background: "#fff" }, children: [
-  /* @__PURE__ */ jsxDEV6(navigate_default, { manu: "manuPaper", fixed: !0 }, void 0, !1, {
-    fileName: "app/routes/publication.policy.tsx",
-    lineNumber: 9,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV6("div", { className: "mx-auto w-full main-container", style: { paddingTop: "300px" }, children: /* @__PURE__ */ jsxDEV6("div", { className: "p-10 max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV6("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: /* @__PURE__ */ jsxDEV6("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "To be determined." }, void 0, !1, {
-    fileName: "app/routes/publication.policy.tsx",
-    lineNumber: 14,
-    columnNumber: 13
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/publication.policy.tsx",
-    lineNumber: 13,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/publication.policy.tsx",
-    lineNumber: 12,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/publication.policy.tsx",
-    lineNumber: 11,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV6(footer_default, {}, void 0, !1, {
-    fileName: "app/routes/publication.policy.tsx",
-    lineNumber: 20,
-    columnNumber: 7
-  }, this)
-] }, void 0, !0, {
-  fileName: "app/routes/publication.policy.tsx",
-  lineNumber: 8,
-  columnNumber: 5
-}, this), publication_policy_default = Index2;
+import { jsx as jsx7, jsxs as jsxs6 } from "react/jsx-runtime";
+var meta2 = () => [
+  { title: "Publication policy \xB7 7-Dimensional Telescope" },
+  { name: "description", content: "Authorship, data rights and acknowledgement for work using 7DT data." }
+], Index2 = () => /* @__PURE__ */ jsxs6(PageLayout, { menu: "manuPaper", children: [
+  /* @__PURE__ */ jsx7(
+    PageHero,
+    {
+      eyebrow: "Publications",
+      title: "Publication policy",
+      lede: "How authorship, data rights and acknowledgement are handled for work based on 7DT observations.",
+      image: "/img/hero/policy.jpg"
+    }
+  ),
+  /* @__PURE__ */ jsxs6(Section, { eyebrow: "Status", title: "In preparation", children: [
+    /* @__PURE__ */ jsx7("p", { className: "prose", children: publicationPolicyText }),
+    /* @__PURE__ */ jsxs6("div", { className: "panel", style: { marginTop: "2rem", maxWidth: "68ch" }, children: [
+      /* @__PURE__ */ jsx7("div", { className: "panel__title", children: "In the meantime" }),
+      /* @__PURE__ */ jsxs6("ul", { className: "prose", style: { paddingLeft: "1.25rem", margin: 0 }, children: [
+        /* @__PURE__ */ jsxs6("li", { children: [
+          "Contact the principal investigator at",
+          " ",
+          /* @__PURE__ */ jsx7("a", { href: "mailto:mim@astro.snu.ac.kr", children: "mim@astro.snu.ac.kr" }),
+          " before submitting."
+        ] }),
+        /* @__PURE__ */ jsxs6("li", { children: [
+          "Acknowledge the Center for the Gravitational-wave Universe at Seoul National University and the NRF grants listed on the",
+          " ",
+          /* @__PURE__ */ jsx7("a", { href: "/about/funding", children: "funding" }),
+          " page."
+        ] }),
+        /* @__PURE__ */ jsxs6("li", { children: [
+          "Cite the instrument and pipeline papers listed under",
+          " ",
+          /* @__PURE__ */ jsx7("a", { href: "/publication/list", children: "publications" }),
+          "."
+        ] })
+      ] })
+    ] })
+  ] })
+] }), publication_policy_default = Index2;
 
 // app/routes/telescope.computer.tsx
 var telescope_computer_exports = {};
 __export(telescope_computer_exports, {
-  default: () => telescope_computer_default
+  default: () => telescope_computer_default,
+  meta: () => meta3
 });
-import { jsxDEV as jsxDEV7 } from "react/jsx-dev-runtime";
-var Index3 = () => /* @__PURE__ */ jsxDEV7("div", { children: [
-  /* @__PURE__ */ jsxDEV7(navigate_default, { manu: "manu7dt", fixed: !0 }, void 0, !1, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 13,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV7("div", { className: "p-10 max-w-screen-lg mx-auto", style: { paddingTop: "150px", paddingBottom: "100px" }, children: /* @__PURE__ */ jsxDEV7("div", { className: "p-10 max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV7("div", { className: "justify-between", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-    /* @__PURE__ */ jsxDEV7("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Center for Machine Learning Viability" }, void 0, !1, {
-      fileName: "app/routes/telescope.computer.tsx",
-      lineNumber: 18,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV7("h3", { className: "text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-      /* @__PURE__ */ jsxDEV7("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "Computational" }, void 0, !1, {
-        fileName: "app/routes/telescope.computer.tsx",
-        lineNumber: 22,
-        columnNumber: 15
-      }, this),
-      " Resorces"
-    ] }, void 0, !0, {
-      fileName: "app/routes/telescope.computer.tsx",
-      lineNumber: 21,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 17,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 16,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 15,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV7("div", { style: { backgroundColor: "#f9f9f9" }, children: /* @__PURE__ */ jsxDEV7("div", { className: "mx-auto w-full", style: { maxWidth: "1440px", margin: "0 auto", padding: "0 10vw 0 10vw" }, children: /* @__PURE__ */ jsxDEV7("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-    /* @__PURE__ */ jsxDEV7("h3", { className: "text-2xl sm:text-3xl leading-normal font-extrabold tracking-tight", style: { fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: "Data Storage" }, void 0, !1, {
-      fileName: "app/routes/telescope.computer.tsx",
-      lineNumber: 31,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV7("p", { className: "text-content", children: storageText }, void 0, !1, {
-      fileName: "app/routes/telescope.computer.tsx",
-      lineNumber: 34,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 30,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 29,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 28,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV7("div", { style: { backgroundColor: "#fff" }, children: /* @__PURE__ */ jsxDEV7("div", { className: "mx-auto w-full", style: { maxWidth: "1440px", margin: "0 auto", padding: "0 10vw 0 10vw" }, children: /* @__PURE__ */ jsxDEV7("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-    /* @__PURE__ */ jsxDEV7("h3", { className: "text-2xl sm:text-3xl leading-normal font-extrabold tracking-tight", style: { fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: "Proton" }, void 0, !1, {
-      fileName: "app/routes/telescope.computer.tsx",
-      lineNumber: 42,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV7("p", { className: "text-content", children: protonText }, void 0, !1, {
-      fileName: "app/routes/telescope.computer.tsx",
-      lineNumber: 45,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 41,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 40,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 39,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV7("div", { style: { backgroundColor: "#f9f9f9" }, children: /* @__PURE__ */ jsxDEV7("p", { className: "flex", style: { margin: "0 auto", justifyContent: "center", padding: "50px" }, children: /* @__PURE__ */ jsxDEV7("img", { src: "../img/computer.jpeg", width: "30%" }, void 0, !1, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 51,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 50,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 49,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV7(footer_default, {}, void 0, !1, {
-    fileName: "app/routes/telescope.computer.tsx",
-    lineNumber: 56,
-    columnNumber: 7
-  }, this)
-] }, void 0, !0, {
-  fileName: "app/routes/telescope.computer.tsx",
-  lineNumber: 12,
-  columnNumber: 5
-}, this), telescope_computer_default = Index3;
+import { Fragment as Fragment2, jsx as jsx8, jsxs as jsxs7 } from "react/jsx-runtime";
+var meta3 = () => [
+  { title: "Computational resources \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "On-site control computers, the Proton processing server and the Lyman and Balmer storage servers behind 7DT."
+  }
+], ONSITE = [
+  ["Telescope control computers", "16, one per operational unit"],
+  ["Main control computer", "1, array-level command hub"],
+  ["Dispatch", "RTCSpy over real-time network"],
+  ["Link to Korea", "KREONET"],
+  ["Transfer protocol", "GridFTP, \u2248 80 MB s\u207B\xB9"],
+  ["Typical transfer time", "< 12 hours (ToO: tens of minutes)"]
+], PROTON = [
+  ["CPU", "2 \xD7 AMD EPYC 7513"],
+  ["Cores", "128 @ up to 2.6 GHz"],
+  ["Memory", "512 GB (8 \xD7 64 GB)"],
+  ["GPU", "2 \xD7 NVIDIA A100, 82 GB VRAM"],
+  ["GPU interconnect", "NVLink"],
+  ["Target throughput", "\u2248 30 s per image"]
+], STORAGE = [
+  ["Lyman", "2 \xD7 1.2 PB (RAID 60)"],
+  ["Balmer", "1 \xD7 1.2 PB, extensible"],
+  ["Total capacity", "\u2248 3.6 PB"],
+  ["Attachment", "NFS over 10 Gbps class network"],
+  ["Nightly inflow", "\u2248 350 GB (\u2248 3,000 \xD7 117 MiB)"]
+], Index3 = () => /* @__PURE__ */ jsxs7(PageLayout, { menu: "manu7dt", children: [
+  /* @__PURE__ */ jsx8(
+    PageHero,
+    {
+      eyebrow: "Telescope",
+      title: /* @__PURE__ */ jsxs7(Fragment2, { children: [
+        /* @__PURE__ */ jsx8("em", { children: "Computational" }),
+        " resources"
+      ] }),
+      lede: "Some 350 gigabytes a night cross the Pacific and are reduced within the daily budget. That takes as much engineering as the optics do.",
+      image: "/img/hero/computer.jpg",
+      meta: [
+        { value: "128", label: "CPU cores" },
+        { value: "2", unit: "\xD7 A100", label: "GPUs" },
+        { value: "3.6", unit: "PB", label: "Storage" },
+        { value: "66 \xB1 24", unit: "GB/hr", label: "Pipeline throughput" }
+      ]
+    }
+  ),
+  /* @__PURE__ */ jsx8(Section, { eyebrow: "On site", title: "Control computers in Chile", children: /* @__PURE__ */ jsxs7("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsx8("p", { className: "prose", children: computingText }),
+    /* @__PURE__ */ jsx8(SimpleTable, { caption: "On-site infrastructure", rows: ONSITE })
+  ] }) }),
+  /* @__PURE__ */ jsx8(Section, { eyebrow: "Processing", title: "Proton", alt: !0, children: /* @__PURE__ */ jsxs7("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsx8("p", { className: "prose", children: protonText }),
+    /* @__PURE__ */ jsx8(SimpleTable, { caption: "Processing server", rows: PROTON })
+  ] }) }),
+  /* @__PURE__ */ jsxs7(Section, { eyebrow: "Storage", title: "Lyman & Balmer", children: [
+    /* @__PURE__ */ jsxs7("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsx8("p", { className: "prose", children: storageText }),
+      /* @__PURE__ */ jsx8(SimpleTable, { caption: "Storage servers", rows: STORAGE })
+    ] }),
+    /* @__PURE__ */ jsx8("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx8(
+      StatGrid,
+      {
+        items: [
+          { value: "\u2248 3,000", label: "Images per night" },
+          { value: "\u2248 5", unit: "hr", label: "To reduce a night" },
+          { value: "\u2248 350", unit: "GB", label: "Nightly inflow" },
+          { value: "1.75", unit: "M", label: "Images archived" }
+        ]
+      }
+    ) })
+  ] }),
+  /* @__PURE__ */ jsxs7(Section, { eyebrow: "Facility", title: "The processing centre", alt: !0, children: [
+    /* @__PURE__ */ jsxs7("figure", { className: "figure", style: { maxWidth: "760px" }, children: [
+      /* @__PURE__ */ jsx8("img", { src: "/img/computer.jpeg", alt: "The 7DT data processing facility at Seoul National University", loading: "lazy" }),
+      /* @__PURE__ */ jsxs7("figcaption", { children: [
+        /* @__PURE__ */ jsx8("b", { children: "Proton" }),
+        " The dedicated reduction server at Seoul National University, where all 7DT data are processed."
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs7("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
+      /* @__PURE__ */ jsx8("a", { className: "btn btn--primary", href: "/data/software", children: "Reduction software" }),
+      /* @__PURE__ */ jsx8("a", { className: "btn btn--secondary", href: "/data/overview", children: "Data products" })
+    ] })
+  ] })
+] }), telescope_computer_default = Index3;
 
 // app/routes/telescope.location.tsx
 var telescope_location_exports = {};
 __export(telescope_location_exports, {
-  default: () => telescope_location_default
+  default: () => telescope_location_default,
+  meta: () => meta4
 });
-import { useState as useState2 } from "react";
+import { useEffect as useEffect2, useState as useState2 } from "react";
 import { Carousel } from "react-bootstrap";
-import { jsxDEV as jsxDEV8 } from "react/jsx-dev-runtime";
-var Index4 = () => {
-  let [index, setIndex] = useState2(0);
-  return /* @__PURE__ */ jsxDEV8("div", { children: [
-    /* @__PURE__ */ jsxDEV8(navigate_default, { manu: "manu7dt", fixed: !0 }, void 0, !1, {
-      fileName: "app/routes/telescope.location.tsx",
-      lineNumber: 22,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV8("div", { className: "p-10 max-w-screen-lg mx-auto", style: { paddingTop: "300px", paddingBottom: "200px" }, children: [
-      /* @__PURE__ */ jsxDEV8("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-        /* @__PURE__ */ jsxDEV8("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Build the Telescope" }, void 0, !1, {
-          fileName: "app/routes/telescope.location.tsx",
-          lineNumber: 26,
-          columnNumber: 11
-        }, this),
-        /* @__PURE__ */ jsxDEV8("h3", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
+import { Fragment as Fragment3, jsx as jsx9, jsxs as jsxs8 } from "react/jsx-runtime";
+var meta4 = () => [
+  { title: "Location \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "El Sauce Observatory, R\xEDo Hurtado Valley, Chile \u2014 the site of the 7-Dimensional Telescope."
+  }
+], IMAGES = ["c1.jpg", "c2.jpg", "c3.jpg", "c4.jpg", "c5.jpg", "c6.jpg", "c7.jpg"], CAPTIONS = [
+  "Site preparation and pier foundations above the R\xEDo Hurtado Valley",
+  "The roll-off enclosure erected over the instrument deck, before installation",
+  "Inside the closed enclosure: DeltaRho 500 units parked on their piers",
+  "The roof rolled open at dusk, units stowed and ready for the night",
+  "Members of the 7DT team and ObsTech site staff on the instrument deck",
+  "The deck from above \u2014 installed units alongside piers still awaiting theirs",
+  "The array working under the southern Milky Way"
+], SITE = [
+  ["Observatory", "El Sauce, R\xEDo Hurtado Valley"],
+  ["Latitude", "30\xB0 28\u2032 16\u2033 S"],
+  ["Longitude", "70\xB0 45\u2032 47\u2033 W"],
+  ["Altitude", "1600 m"],
+  ["Median seeing", "\u2248 1.5 arcsec"],
+  ["Clear nights", "> 300 per year"],
+  ["Zenith sky brightness", "21.97 mag arcsec\u207B\xB2"],
+  ["Site operator", "ObsTech"]
+], NEIGHBOURS = [
+  "Cerro Tololo Inter-American Observatory",
+  "Gemini South Telescope",
+  "Southern Astrophysical Research Telescope",
+  "Vera C. Rubin Observatory"
+], Index4 = () => {
+  let [index, setIndex] = useState2(0), [paused, setPaused] = useState2(!1), [reduceMotion, setReduceMotion] = useState2(!1);
+  useEffect2(() => {
+    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
+  let autoplay = !paused && !reduceMotion;
+  return /* @__PURE__ */ jsxs8(PageLayout, { menu: "manu7dt", children: [
+    /* @__PURE__ */ jsx9(
+      PageHero,
+      {
+        eyebrow: "Telescope",
+        title: /* @__PURE__ */ jsxs8(Fragment3, { children: [
           "7DT in ",
-          /* @__PURE__ */ jsxDEV8("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "Chile" }, void 0, !1, {
-            fileName: "app/routes/telescope.location.tsx",
-            lineNumber: 30,
-            columnNumber: 20
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/telescope.location.tsx",
-          lineNumber: 29,
-          columnNumber: 11
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/telescope.location.tsx",
-        lineNumber: 25,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV8("p", { className: "text-content", children: locationText }, void 0, !1, {
-        fileName: "app/routes/telescope.location.tsx",
-        lineNumber: 33,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/telescope.location.tsx",
-      lineNumber: 24,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV8(Carousel, { activeIndex: index, onSelect: (selectedIndex, e) => {
-      setIndex(selectedIndex);
-    }, interval: 3e3, style: { zIndex: 100 }, children: ["c1.jpg", "c2.jpg", "c3.jpg", "c4.jpg", "c5.jpg", "c6.jpg", "c7.jpg"].map((image, idx) => /* @__PURE__ */ jsxDEV8(Carousel.Item, { children: /* @__PURE__ */ jsxDEV8(
-      "div",
-      {
-        className: "d-block w-100",
-        style: {
-          backgroundImage: `url(../img/carousel/${image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          width: "100%",
-          height: "700px",
-          overflow: "hidden"
+          /* @__PURE__ */ jsx9("em", { children: "Chile" })
+        ] }),
+        lede: "El Sauce \u2014 the willow tree \u2014 sits in the R\xEDo Hurtado Valley just south of the great Chilean observatories, and shares their skies.",
+        image: "/img/hero/location.jpg",
+        meta: [
+          { value: "1600", unit: "m", label: "Altitude" },
+          { value: "1.5", unit: "\u2033", label: "Median seeing" },
+          { value: "300", unit: "+", label: "Clear nights / yr" },
+          { value: "21.97", label: "Sky brightness" }
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx9(Section, { eyebrow: "The site", title: "R\xEDo Hurtado Valley", children: /* @__PURE__ */ jsxs8("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsxs8("div", { children: [
+        /* @__PURE__ */ jsx9("p", { className: "prose", children: locationText }),
+        /* @__PURE__ */ jsx9("h3", { style: { marginTop: "2rem", fontSize: "1rem" }, children: "Neighbouring facilities" }),
+        /* @__PURE__ */ jsx9("ul", { className: "prose", style: { paddingLeft: "1.25rem" }, children: NEIGHBOURS.map((name) => /* @__PURE__ */ jsx9("li", { children: name }, name)) })
+      ] }),
+      /* @__PURE__ */ jsx9(SimpleTable, { caption: "Site parameters", rows: SITE })
+    ] }) }),
+    /* @__PURE__ */ jsxs8("div", { className: "carousel-frame", children: [
+      /* @__PURE__ */ jsx9(
+        Carousel,
+        {
+          activeIndex: index,
+          onSelect: (selected) => setIndex(selected),
+          interval: autoplay ? 5e3 : null,
+          fade: !reduceMotion,
+          children: IMAGES.map((image, i) => /* @__PURE__ */ jsx9(Carousel.Item, { children: /* @__PURE__ */ jsx9(
+            "div",
+            {
+              className: "carousel-slide",
+              style: { backgroundImage: `url(/img/carousel/${image})` },
+              role: "img",
+              "aria-label": `${CAPTIONS[i]} (${i + 1} of ${IMAGES.length})`
+            }
+          ) }, image))
         }
-      },
-      void 0,
-      !1,
-      {
-        fileName: "app/routes/telescope.location.tsx",
-        lineNumber: 39,
-        columnNumber: 13
-      },
-      this
-    ) }, idx, !1, {
-      fileName: "app/routes/telescope.location.tsx",
-      lineNumber: 38,
-      columnNumber: 11
-    }, this)) }, void 0, !1, {
-      fileName: "app/routes/telescope.location.tsx",
-      lineNumber: 36,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV8(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/telescope.location.tsx",
-      lineNumber: 54,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/telescope.location.tsx",
-    lineNumber: 21,
-    columnNumber: 5
-  }, this);
+      ),
+      /* @__PURE__ */ jsx9(
+        "button",
+        {
+          type: "button",
+          className: "carousel-pause",
+          "aria-pressed": paused,
+          onClick: () => setPaused((p) => !p),
+          children: paused || reduceMotion ? "\u25B6 Play" : "\u275A\u275A Pause"
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsx9("div", { className: "container container--wide", children: /* @__PURE__ */ jsx9("p", { className: "footnote", style: { padding: "0.75rem 0" }, children: CAPTIONS[index] }) }),
+    /* @__PURE__ */ jsxs8(Section, { eyebrow: "On site", title: "Infrastructure", alt: !0, children: [
+      /* @__PURE__ */ jsx9("p", { className: "prose", children: "Site infrastructure, enclosures and on-site computing hardware are maintained by ObsTech, a Chilean telescope hosting company. The array is controlled from sixteen telescope control computers and a single main control computer housed at the site; data are handed to the Korean processing facility over KREONET each night." }),
+      /* @__PURE__ */ jsxs8("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
+        /* @__PURE__ */ jsx9("a", { className: "btn btn--primary", href: "/telescope/computer", children: "Computational resources" }),
+        /* @__PURE__ */ jsx9("a", { className: "btn btn--secondary", href: "/telescope/instrument", children: "Instrument" })
+      ] })
+    ] })
+  ] });
 }, telescope_location_default = Index4;
 
 // app/routes/telescope.overview.tsx
 var telescope_overview_exports = {};
 __export(telescope_overview_exports, {
-  default: () => telescope_overview_default
+  default: () => telescope_overview_default,
+  meta: () => meta5
 });
-import { jsxDEV as jsxDEV9 } from "react/jsx-dev-runtime";
-var Index5 = () => {
-  let backgroundImageStyle = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("../img/telescope.jpg")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px",
-    position: "relative"
-    // Add this line
-  }, transparentBoxStyle = {
-    position: "absolute",
-    top: "30%",
-    // Adjust this value as per your requirement
-    left: "50%",
-    // Adjust this value as per your requirement
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "rgba(255, 255, 255, 0.85)",
-    // Adjust the transparency here
-    padding: "50px",
-    borderRadius: "10px",
-    maxWidth: "90%",
-    marginTop: "200px"
-  }, buttonStyle2 = {
-    backgroundColor: "var(--pickled-bluewood-900)",
-    border: "none",
-    color: "white",
-    padding: "15px 32px",
-    textAlign: "center",
-    textDecoration: "none",
-    display: "inline-block",
-    fontSize: "16px",
-    margin: "4px 10px",
-    cursor: "pointer",
-    borderRadius: "10px"
-  }, buttonHoverStyle = {
-    backgroundColor: "var(--pickled-bluewood-600)"
-  }, handleMouseOver = (e) => {
-    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-  }, handleMouseOut = (e) => {
-    e.target.style.backgroundColor = buttonStyle2.backgroundColor;
-  };
-  return /* @__PURE__ */ jsxDEV9("div", { style: { background: "#fff" }, children: [
-    /* @__PURE__ */ jsxDEV9(navigate_default, { manu: "manu7dt" }, void 0, !1, {
-      fileName: "app/routes/telescope.overview.tsx",
-      lineNumber: 58,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV9("div", { style: backgroundImageStyle, children: [
-      /* @__PURE__ */ jsxDEV9("div", { style: { height: "100vh" } }, void 0, !1, {
-        fileName: "app/routes/telescope.overview.tsx",
-        lineNumber: 61,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV9("div", { style: transparentBoxStyle, children: /* @__PURE__ */ jsxDEV9("div", { className: "mx-auto w-full", children: /* @__PURE__ */ jsxDEV9("div", { className: "max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV9("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-        /* @__PURE__ */ jsxDEV9("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "7-Dimensional Telescope (7DT)" }, void 0, !1, {
-          fileName: "app/routes/telescope.overview.tsx",
-          lineNumber: 66,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV9("h3", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-          "Overview of ",
-          /* @__PURE__ */ jsxDEV9("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "7DT" }, void 0, !1, {
-            fileName: "app/routes/telescope.overview.tsx",
-            lineNumber: 70,
-            columnNumber: 31
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/telescope.overview.tsx",
-          lineNumber: 69,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV9("p", { className: "text-content", children: overviewText }, void 0, !1, {
-          fileName: "app/routes/telescope.overview.tsx",
-          lineNumber: 72,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV9("br", {}, void 0, !1, {
-          fileName: "app/routes/telescope.overview.tsx",
-          lineNumber: 73,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV9("p", { className: "mt-4 text-gray-900 font-regular", children: "To explore further,  " }, void 0, !1, {
-          fileName: "app/routes/telescope.overview.tsx",
-          lineNumber: 74,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV9("div", { className: "flex justify-center", children: [
-          /* @__PURE__ */ jsxDEV9("a", { href: "./location", children: /* @__PURE__ */ jsxDEV9("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Location" }, void 0, !1, {
-            fileName: "app/routes/telescope.overview.tsx",
-            lineNumber: 77,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/telescope.overview.tsx",
-            lineNumber: 76,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV9("a", { href: "./instrument", children: /* @__PURE__ */ jsxDEV9("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Instrument" }, void 0, !1, {
-            fileName: "app/routes/telescope.overview.tsx",
-            lineNumber: 82,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/telescope.overview.tsx",
-            lineNumber: 81,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV9("a", { href: "./computer", children: /* @__PURE__ */ jsxDEV9("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Computational Resorces" }, void 0, !1, {
-            fileName: "app/routes/telescope.overview.tsx",
-            lineNumber: 87,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/telescope.overview.tsx",
-            lineNumber: 86,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV9("a", { href: "./mode", children: /* @__PURE__ */ jsxDEV9("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Observing Mode" }, void 0, !1, {
-            fileName: "app/routes/telescope.overview.tsx",
-            lineNumber: 92,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/telescope.overview.tsx",
-            lineNumber: 91,
-            columnNumber: 19
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/telescope.overview.tsx",
-          lineNumber: 75,
-          columnNumber: 17
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/telescope.overview.tsx",
-        lineNumber: 65,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/telescope.overview.tsx",
-        lineNumber: 64,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/telescope.overview.tsx",
-        lineNumber: 63,
-        columnNumber: 11
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/telescope.overview.tsx",
-        lineNumber: 62,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/telescope.overview.tsx",
-      lineNumber: 60,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV9(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/telescope.overview.tsx",
-      lineNumber: 102,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/telescope.overview.tsx",
-    lineNumber: 57,
-    columnNumber: 5
-  }, this);
-}, telescope_overview_default = Index5;
+
+// app/routes/content/specs.json
+var specs_default = {
+  note: "7DT system specifications as of June 2026. Source: Kim et al., Proc. SPIE 14147-84, Table 1; Hyun et al., Proc. SPIE 14155-12, Sec. 2.",
+  groups: [
+    {
+      group: "Array",
+      rows: [
+        ["Number of units (planned)", "20"],
+        ["Number of units (operational)", "16"],
+        ["Field of view per pointing", "\u2248 1.2 deg\xB2"],
+        ["Spectral resolution", "R = 30\u201370"]
+      ]
+    },
+    {
+      group: "Unit telescope",
+      rows: [
+        ["OTA", "PlaneWave DeltaRho 500"],
+        ["Optical design", "Corrected Cassegrain"],
+        ["Primary diameter", "50.8 cm"],
+        ["Focal length", "1537 mm"],
+        ["Focal ratio", "f/3.0"],
+        ["Image circle", "70 mm (\u2248 2.6\xB0)"],
+        ["Mount", "PlaneWave L-500, direct drive"],
+        ["Mount slew rate", "20 deg s\u207B\xB9"]
+      ]
+    },
+    {
+      group: "Camera & filters",
+      rows: [
+        ["Camera", "Moravian C3-61000 PRO"],
+        ["Sensor", "SONY IMX455 back-illuminated CMOS"],
+        ["Sensor size", "36 \xD7 24 mm"],
+        ["Sensor dimension", "9576 \xD7 6388 pixels"],
+        ["Pixel size", "3.76 \xB5m"],
+        ["Pixel scale", "0.5 arcsec"],
+        ["Field of view per unit", "1.34\xB0 \xD7 0.90\xB0"],
+        ["Filter wheel", "9 slots per unit"],
+        ["Broad bands", "Sloan u, g, r, i, z"],
+        ["Medium bands installed", "35"],
+        ["Medium bands planned", "40"],
+        ["Wavelength coverage", "375\u2013875 nm"],
+        ["Medium-band FWHM", "14\u201341 nm (typ. 25\u201330)"]
+      ]
+    },
+    {
+      group: "Site",
+      rows: [
+        ["Observatory", "El Sauce, R\xEDo Hurtado Valley, Chile"],
+        ["Coordinates", "30\xB028\u203216\u2033 S, 70\xB045\u203247\u2033 W"],
+        ["Altitude", "1600 m"],
+        ["Median seeing", "\u2248 1.5 arcsec"],
+        ["Clear nights", "> 300 per year"],
+        ["Zenith sky brightness", "21.97 mag arcsec\u207B\xB2"]
+      ]
+    },
+    {
+      group: "Computing & storage",
+      rows: [
+        ["Processing server", "Proton \u2014 2 \xD7 AMD EPYC 7513"],
+        ["CPU / memory", "128 cores @ 2.6 GHz / 512 GB"],
+        ["GPU", "2 \xD7 NVIDIA A100, 82 GB (NVLink)"],
+        ["Storage", "Lyman 2 \xD7 1.2 PB, Balmer 1.2 PB"],
+        ["Total capacity", "\u2248 3.6 PB"],
+        ["Data link", "KREONET, GridFTP \u2248 80 MB s\u207B\xB9"]
+      ]
+    }
+  ],
+  depths: {
+    caption: "5\u03C3 point-source depth, single 100 s exposure, nominal conditions",
+    rows: [
+      ["m400 (bluest medium band)", "19.06 mag"],
+      ["m475 (peak throughput)", "19.61 mag"],
+      ["m875 (reddest medium band)", "16.60 mag"],
+      ["Sloan g", "20.59 mag"],
+      ["Sloan r", "20.25 mag"],
+      ["Sloan i", "19.17 mag"]
+    ]
+  },
+  performance: [
+    { value: "1.4\u20132.2", unit: "\u2033", label: "PSF FWHM at centre" },
+    { value: "2.0", unit: "\u2033", label: "Array median FWHM" },
+    { value: "0.2", unit: "\u2033", label: "Unit-to-unit scatter" },
+    { value: "< 0.1", unit: "", label: "PSF ellipticity" },
+    { value: "15\u201325", unit: "mmag", label: "Zero-point uncertainty" }
+  ]
+};
+
+// app/routes/telescope.overview.tsx
+import { Fragment as Fragment4, jsx as jsx10, jsxs as jsxs9 } from "react/jsx-runtime";
+var meta5 = () => [
+  { title: "Telescope \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "System overview of the 7-Dimensional Telescope: twenty 50-cm units, medium-band filters, and measured optical and photometric performance."
+  }
+], Index5 = () => /* @__PURE__ */ jsxs9(PageLayout, { menu: "manu7dt", children: [
+  /* @__PURE__ */ jsx10(
+    PageHero,
+    {
+      eyebrow: "Telescope",
+      title: /* @__PURE__ */ jsxs9(Fragment4, { children: [
+        "The ",
+        /* @__PURE__ */ jsx10("em", { children: "7DT" }),
+        " array"
+      ] }),
+      lede: "Twenty commercial 50-cm telescopes, operated as one instrument. Off-the-shelf optics kept the array inexpensive and quick to bring on line; the filter set is what makes it unusual.",
+      image: "/img/hero/telescope.jpg",
+      meta: [
+        { value: "50.8", unit: "cm", label: "Primary diameter" },
+        { value: "f/3.0", label: "Focal ratio" },
+        { value: "1.34 \xD7 0.90", unit: "\xB0", label: "FoV per unit" },
+        { value: "0.5", unit: "\u2033", label: "Pixel scale" }
+      ]
+    }
+  ),
+  /* @__PURE__ */ jsx10(Section, { eyebrow: "Overview", title: "One instrument in twenty parts", children: /* @__PURE__ */ jsxs9("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsxs9("div", { children: [
+      /* @__PURE__ */ jsx10("p", { className: "prose", children: telescopeOverviewText }),
+      /* @__PURE__ */ jsx10("p", { className: "prose", children: performanceText })
+    ] }),
+    /* @__PURE__ */ jsxs9("figure", { className: "figure", children: [
+      /* @__PURE__ */ jsx10(
+        "img",
+        {
+          src: "/img/images/Figure2_7DT.jpg",
+          alt: "The 7-Dimensional Telescope array seen from the front",
+          loading: "lazy"
+        }
+      ),
+      /* @__PURE__ */ jsxs9("figcaption", { children: [
+        /* @__PURE__ */ jsx10("b", { children: "DeltaRho 500" }),
+        " Each unit is a 508 mm corrected Cassegrain on an L-500 direct-drive mount, with its own camera and filter wheel."
+      ] })
+    ] })
+  ] }) }),
+  /* @__PURE__ */ jsxs9(Section, { eyebrow: "Performance", title: "As measured on sky", alt: !0, children: [
+    /* @__PURE__ */ jsx10(StatGrid, { items: specs_default.performance }),
+    /* @__PURE__ */ jsx10("p", { className: "prose", style: { marginTop: "2rem" }, children: depthText }),
+    /* @__PURE__ */ jsx10("div", { className: "table-wrap", style: { marginTop: "1.5rem", maxWidth: "620px" }, children: /* @__PURE__ */ jsxs9("table", { className: "spec-table", children: [
+      /* @__PURE__ */ jsx10("caption", { children: specs_default.depths.caption }),
+      /* @__PURE__ */ jsx10("tbody", { children: specs_default.depths.rows.map((row) => /* @__PURE__ */ jsxs9("tr", { children: [
+        /* @__PURE__ */ jsx10("th", { scope: "row", children: row[0] }),
+        /* @__PURE__ */ jsx10("td", { children: row[1] })
+      ] }, row[0])) })
+    ] }) })
+  ] }),
+  /* @__PURE__ */ jsxs9(Section, { eyebrow: "Specifications", title: "System summary", children: [
+    /* @__PURE__ */ jsx10(SpecTable, { caption: "7DT system specifications \u2014 June 2026", groups: specs_default.groups }),
+    /* @__PURE__ */ jsx10("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx10(
+      NextLinks,
+      {
+        title: "In detail",
+        links: [
+          { label: "Location", href: "/telescope/location" },
+          { label: "Instrument", href: "/telescope/instrument" },
+          { label: "Computational resources", href: "/telescope/computer" },
+          { label: "Observing mode", href: "/telescope/mode" }
+        ]
+      }
+    ) })
+  ] })
+] }), telescope_overview_default = Index5;
 
 // app/routes/publication.list.tsx
 var publication_list_exports = {};
 __export(publication_list_exports, {
-  default: () => publication_list_default
+  default: () => publication_list_default,
+  meta: () => meta6
 });
-import { useState as useState3 } from "react";
+import { useMemo, useState as useState3 } from "react";
 import { Pagination } from "flowbite-react";
 
 // app/routes/content/news.json
 var news_default = {
+  _note: "Publication entries: 'abstract' holds the author's published abstract, quoted verbatim. 'summary' holds a site-written description and is labelled as such where no published abstract is available. Never put a paraphrase in 'abstract'.",
   news: [
+    {
+      type: "publication",
+      author: "Kim, M.-R.; Lee, J.-E.; Im, M.; Lee, J.; Kim, J. H.; Chang, S.-W.; Paek, G. S. H.; Choi, H.; Tak, D.; Hyun, D.; Lee, W.-H.; Lee, H.; Kim, S.; Megeath, S. T.",
+      shortAuthor: "Kim et al.",
+      title: "7DT Insight: Variability in Young Stellar Objects",
+      journal: "The Astronomical Journal 172, 22",
+      date: "Jul. 2026",
+      doi: "",
+      preprint: "",
+      ref: "2026AJ....172...22K",
+      summary: "Two-epoch 7DT photometry in sixteen medium bands across 400-825 nm identifies 110 variable young stellar objects in the central region of Orion A, and uses the wavelength dependence of the variability to discriminate between extinction-like, gray and spot-like mechanisms on day timescales.",
+      imgName: "news-9.jpg",
+      webpage: "",
+      webpage2: ""
+    },
+    {
+      type: "publication",
+      author: "Kim, Ji Hoon; Im, Myungshin; Lee, Hyung Mok; Chang, Seo-Won; Tak, Donggeun; Paek, Gregory S. H.; Choi, Hyeonho; Hyun, Donghwan; Kim, Chang-wan; Lee, Won-Hyeong",
+      shortAuthor: "Kim et al.",
+      title: "The 7-Dimensional Telescope and the 7-Dimensional Sky Survey: Status Report on Final Commissioning and Survey Operation",
+      journal: "Proc. SPIE 14147, Ground-based and Airborne Telescopes",
+      date: "Jun. 2026",
+      doi: "",
+      preprint: "",
+      ref: "SPIE 14147-84",
+      abstract: "The 7-Dimensional Telescope (7DT), developed by Center for the Gravitational-Wave Universe at Seoul National University, is a multi-telescope array designed to identify the electromagnetic counterparts of gravitational-wave events. 7DT consists of twenty 50-cm telescopes equipped with CMOS cameras, each providing a 1.25 deg\xB2 field of view. This provides IFU-like data with low spectral resolution (R = 30-70) by utilizing 40 medium-band filters of 25 nm width spanning from 400 to 900 nm, distributed across the array. Since achieving first light in October 2023, comprehensive commissioning has been carried out to evaluate instrument functionality and verify science procedures. These activities included optomechanical alignment, focus measurement, optical assessment, the generation of master calibration frames, spectrophotometric calibration, and evaluation of astrometry and image depth. To verify the science capabilities of the 7-Dimensional Sky Survey (7DS), observations were conducted on a wide range of astronomical targets, including nearby galaxies (e.g., PHANGS sample), extragalactic fields (e.g., UDS for photometric redshift tests), Galactic objects, and solar system objects. 7DS comprises three tiered surveys: the Reference Imaging Survey (RIS), which covers over 20,000 deg\xB2 of the Southern Hemisphere sky and aims to provide reference images for image subtraction analysis for gravitational-wave counterparts and other transient objects with a single 5-minute exposure visit, the Wide-area Time-domain Survey (WTS), which will cover 800-1,200 deg\xB2 with a 10-14 day cadence, prioritizing areas with ancillary near-infrared data, such as VIKING or the LSST Deep Drilling Fields, and the Intensive Monitoring Survey (IMS), which focuses on the SPHEREx Deep Field South, near the ecliptic south pole, with a 1-day cadence. RIS commenced in July 2024, and IMS began in April 2025. WTS will commence in 2026. This presentation summarizes the 7DT commissioning status, the early science results derived from the commissioning data, and the current operational status of the 7DS.",
+      imgName: "news-6.jpg",
+      webpage: "",
+      webpage2: ""
+    },
+    {
+      type: "publication",
+      author: "Hyun, Donghwan; Tak, Donggeun; Paek, Gregory S. H.; Im, Myungshin; Kim, Ji Hoon; Chang, Seo-Won; Choi, Hyeonho; Lee, Won-Hyeong; Seol, Danhyeuk; Bae, Jangho",
+      shortAuthor: "Hyun et al.",
+      title: "Py7DT: Data Reduction Pipeline of the 7-Dimensional Telescope",
+      journal: "Proc. SPIE 14155, Software and Cyberinfrastructure for Astronomy",
+      date: "Jun. 2026",
+      doi: "",
+      preprint: "",
+      ref: "SPIE 14155-12",
+      abstract: "We present Py7DT, the operational data reduction pipeline for the 7-Dimensional Telescope (7DT), a medium-band optical telescope array in Chile designed for rapid target-of-opportunity follow-up and the 7-Dimensional Sky Survey of the entire southern sky. Py7DT addresses the main reduction challenge of 7DT: reducing heterogeneous data from many telescope units, filters, and observing modes while sustaining nightly survey throughput and minimizing latency for transient events. The pipeline orchestrates the processing flow by wrapping established astronomical software behind Python interfaces, using a stage-dependent image-grouping scheme, centralized path handling, and priority-aware scheduling. The code is modular and portable, serving as a standard tool for end users to reprocess 7DT data with custom configurations, and supports the diverse scientific goals of 7DT from transient object search to pixel-based analysis of spatially resolved galaxies while remaining flexible and easy to maintain. The pipeline also features multi-level logging, automatically generated quality-assessment statistics and flags, and web-based real-time status monitoring to reduce the management load on the small developer team. Current operational tests show that Py7DT can process a typical nightly survey volume within the daily time budget while producing prompt ToO products on an approximately one-hour end-to-end timescale when the target is immediately observable.",
+      imgName: "news-8.jpg",
+      webpage: "",
+      webpage2: ""
+    },
+    {
+      type: "update",
+      title: "Reference Imaging Survey passes 58 per cent of the southern sky",
+      source: "7DS Survey Operations",
+      date: "Jun. 2026",
+      content: "14,866 of 25,472 RIS tiles have been fully observed since the survey began in July 2024. Completion of the full cycle is anticipated by the end of 2027.",
+      imgName: "news-11.png",
+      webpage: "/survey/status"
+    },
+    {
+      type: "publication",
+      author: "Paek, Gregory S. H.; Im, Myungshin; Chang, Seo-Won; Choi, Hyeonho; Kim, Ji Hoon",
+      shortAuthor: "Paek et al.",
+      title: "A Hybrid Framework for Kilonova Anomaly Detection Using Single-epoch SEDs from the 7-Dimensional Telescope",
+      journal: "The Astrophysical Journal 1001, 198",
+      date: "Apr. 2026",
+      doi: "",
+      preprint: "",
+      ref: "2026ApJ..1001..198P",
+      summary: "An unsupervised anomaly detector coupled to a supervised multiclass classifier, trained on simulated 7DT photometry, reaches macro F1 \u2248 0.80 across eight common transient types while recovering more than 90 per cent of optically detectable kilonovae \u2014 including AT2017gfo \u2014 without direct training on kilonovae.",
+      imgName: "news-1.png",
+      webpage: "",
+      webpage2: ""
+    },
+    {
+      type: "publication",
+      author: "Paek, Gregory S. H.; Im, Myungshin; Jeong, M.; Choi, Hyeonho; Bach, Y. P.; Ishiguro, M.; Lim, B.; Chang, Seo-Won; Kim, Ji Hoon; Geem, J.; Hoogendam, W. B.",
+      shortAuthor: "Paek et al.",
+      title: "Pre-perihelion Emergence of the CN Gas Coma in 3I/ATLAS Temporally and Spatially Resolved by the 7-dimensional Telescope",
+      journal: "The Astrophysical Journal 1000, 53",
+      date: "Mar. 2026",
+      doi: "",
+      preprint: "",
+      ref: "2026ApJ..1000...53P",
+      summary: "Time-series m400-band imaging of the third interstellar object, 3I/ATLAS (C/2025 N1), between July and September 2025 tracks the emergence of pronounced, spatially extended CN emission as the object fell inside 3 au, with the coma half-light radius growing from \u2248 11,000 to \u2248 19,000 km.",
+      imgName: "news-5.jpg",
+      webpage: "",
+      webpage2: ""
+    },
+    {
+      type: "publication",
+      author: "Bae, J.; Lee, B.; Im, M.; Bahk, H.; Dachan, K.; Hwang, H. S.; Hong, S.; Kim, S.; Kim, M.; Kim, T.; Lee, J.; Sohn, J.; Song, H.; Chang, S.-W.; Cheng, Y.-T.; Faisst, A. L.; Huai, Z.; Jeong, W.-S.; Kim, J. H.; Kim, D.; Kim, Y.; Lee, S.-K.; Masters, D. C.; Ko, E.",
+      shortAuthor: "Bae et al.",
+      title: "The redshifts from 122 bands: Comparative redshift forecast for low-resolution spectra from SPHEREx and the 7-Dimensional Sky Survey (7DS)",
+      journal: "Astronomy & Astrophysics 706, A347",
+      date: "Feb. 2026",
+      doi: "",
+      preprint: "",
+      ref: "2026A&A...706A.347B",
+      summary: "Six photometric-redshift methods \u2014 four template-fitting codes and two machine-learning approaches \u2014 applied to combined 7DS and SPHEREx mock catalogues. All deliver \u03C3_NMAD \u2272 0.005 for bright GAMA-like galaxies and \u2248 0.01 for fainter COSMOS-like galaxies, with the combined dataset consistently outperforming either survey alone.",
+      imgName: "news-2.png",
+      webpage: "",
+      webpage2: ""
+    },
+    {
+      type: "publication",
+      author: "Chang, Seo-Won; Im, Myungshin; Kim, Ji Hoon; Tak, Donggeun; Paek, Gregory S.-H.; Choi, Hyeonho; Hyun, Donghwan; 7DS Team",
+      shortAuthor: "Chang et al.",
+      title: "7DT database for survey management",
+      journal: "The Bulletin of the Korean Astronomical Society 51(1), 108",
+      date: "2026",
+      doi: "",
+      preprint: "",
+      ref: "Poster P7DT-01",
+      summary: "Presents gwportal, the database that manages all 7DT data and integrates the operations of the telescope control system and the reduction pipeline.",
+      imgName: "news-3.png",
+      webpage: "",
+      webpage2: ""
+    },
+    {
+      type: "update",
+      title: "Py7DT becomes the sole operational pipeline",
+      source: "7DT Data Center",
+      date: "Jan. 2026",
+      content: "After a parallel-operation period with gpPy-GPU through late 2025, Py7DT took over all 7DT data reduction. The pipeline sustains a median end-to-end throughput of 66 \xB1 24 GB per hour and clears a typical 3,000-image survey night in about five hours.",
+      imgName: "news-8.jpg",
+      webpage: "/data/software"
+    },
+    {
+      type: "publication",
+      author: "Ko, E.; Im, M.; Yang, Y.; Kim, J. H.; Lee, S.-K.; Paek, G. S.-H.",
+      shortAuthor: "Ko et al.",
+      title: "Photometric Redshift Forecast for the 7-Dimensional Sky Survey",
+      journal: "The Astrophysical Journal 994, 224",
+      date: "Dec. 2025",
+      doi: "",
+      preprint: "",
+      ref: "2025ApJ...994..224K",
+      summary: "Forecasts the photometric-redshift performance of the three 7DS tiers using EAZY on EL-COSMOS mock catalogues, reporting \u03C3_NMAD = 0.003-0.007 and catastrophic failure fractions of 0.8-8.1 per cent at 19 < m625 < 22 for the five-year stacked WTS with 40 medium bands.",
+      imgName: "news-2.png",
+      webpage: "",
+      webpage2: ""
+    },
+    {
+      type: "update",
+      title: "Fifteen additional medium-band filters installed across the array",
+      source: "7DT Instrument Team",
+      date: "Late 2025",
+      content: "The medium-band complement grows from 20 to 35 filters, covering 375 to 875 nm with finer spectral sampling and advancing toward the designed set of 40.",
+      imgName: "news-7.png",
+      webpage: "/telescope/instrument"
+    },
+    {
+      type: "update",
+      title: "Intensive Monitoring Survey begins nightly observation of the south ecliptic pole",
+      source: "7DS Survey Operations",
+      date: "Apr. 2025",
+      content: "Seven tiles covering approximately 8.5 deg\xB2, chosen to overlap the SPHEREx Deep Field South, are now observed every available night with the full medium-band set.",
+      imgName: "news-9.jpg",
+      webpage: "/survey/design"
+    },
+    {
+      type: "publication",
+      author: "Lim, H.; Shim, H.; Im, M.; Kim, J. H.; Lee, S.-K.; Paek, G. S. H.; Ko, E.; Kim, D.",
+      shortAuthor: "Lim et al.",
+      title: "Prospect of Deriving Galaxy Properties through Machine Learning: Application to Medium-Band Data from the 7DT",
+      journal: "Journal of the Korean Astronomical Society 58, 43-53",
+      date: "Feb. 2025",
+      doi: "",
+      preprint: "",
+      ref: "2025JKAS...58...43L",
+      summary: "Machine-learning models trained on 7DT-like medium-band photometry recover not only redshifts but derived galaxy properties, reaching \u03C3_\u0394z/(1+z) = 0.008 and gas-phase metallicity to \u03C3_NMAD = 0.081 dex at z < 0.4.",
+      imgName: "news-2.png",
+      webpage: "",
+      webpage2: ""
+    },
+    {
+      type: "update",
+      title: "Array grows to sixteen units and automated ToO response enters service",
+      source: "7DT Operations",
+      date: "Dec. 2024",
+      content: "Four additional DeltaRho 500 units were deployed and brought into routine operation. Automated target-of-opportunity ingestion and interruption logic went live at the same time, letting the scheduler interrupt an ongoing observation and begin a follow-up exposure in under a minute.",
+      imgName: "news-10.jpg",
+      webpage: "/telescope/overview"
+    },
+    {
+      type: "publication",
+      author: "Kim, Ji Hoon; Im, Myungshin; Lee, Hyung Mok; Chang, Seo-Won; Choi, Hyeonho; Paek, Gregory S. H.",
+      shortAuthor: "Kim et al.",
+      title: "Introduction to the 7-Dimensional Telescope: commissioning procedures and data characteristics",
+      journal: "Proc. SPIE 13094, Ground-based and Airborne Telescopes X, 130940X",
+      date: "Aug. 2024",
+      doi: "",
+      preprint: "",
+      ref: "2024SPIE13094E..0XK",
+      summary: "The first full description of the 7DT system \u2014 optical tube assemblies, mounts, cameras and site infrastructure \u2014 together with the commissioning procedures established while twelve of the twenty planned units were on sky, and the resulting data characteristics.",
+      imgName: "news-5.jpg",
+      webpage: "",
+      webpage2: ""
+    },
+    {
+      type: "publication",
+      author: "Choi, Hyeonho; Im, Myungshin; Kim, Ji Hoon",
+      shortAuthor: "Choi et al.",
+      title: "TCSpy: Multitelescope array control software for 7-Dimensional Telescope (7DT)",
+      journal: "Proc. SPIE 13101, Software and Cyberinfrastructure for Astronomy VIII, 131012V",
+      date: "Jul. 2024",
+      doi: "",
+      preprint: "",
+      ref: "2024SPIE13101E..2VC",
+      summary: "TCSpy is the device control layer beneath 7DT array operations, providing interfaces to mounts, cameras, focusers and filter wheels, and forming the foundation on which the autonomous RTCSpy operations framework is built.",
+      imgName: "news-3.png",
+      webpage: "",
+      webpage2: ""
+    },
+    {
+      type: "update",
+      title: "Reference Imaging Survey commences",
+      source: "7DS Survey Operations",
+      date: "Jul. 2024",
+      content: "Routine survey operation begins on the wide-area tier of 7DS, covering approximately 23,000 deg\xB2 at Dec < +20\xB0 with a single visit per tile in the full available medium-band set.",
+      imgName: "news-11.png",
+      webpage: "/survey/overview"
+    },
     {
       type: "press",
       title: "First Release of Images Taken with 7-Dimensional Telescope",
       webpage: "https://sites.google.com/view/7dtfirstimages",
       date: "Feb. 14, 2024",
-      source: "Center for the GW universe",
+      source: "Center for the Gravitational-wave Universe",
       content: "",
       imgName: "news-4.png"
     },
     {
       type: "meeting",
       title: "2024 SPHEREx-7DT Joint Workshop",
-      place: "Grand Hall in Forest Resom",
+      place: "Grand Hall, Forest Resom",
       webpage: "https://sites.google.com/view/spherex-7ds-workshop/home",
       date: "Jan. 24-26, 2024",
       content: "",
@@ -2276,14 +1353,14 @@ var news_default = {
     },
     {
       type: "publication",
-      author: "Paek, Gregory S. H.; Im, Myungshin; Kim, Joonho; Lim, Gu; Park, Bomi; Choi, Changsu; Kim, Sophia; Barbieri, Claudio; Salafia, Om Sharan ; Paek, Insu; Shin, Suhyun; Seo, Jinguk ; Lee, Hyung Mok; Lee, Chung-Uk; Kim, Seung-Lee; Sung, Hyun-Il",
+      author: "Paek, Gregory S. H.; Im, Myungshin; Kim, Joonho; Lim, Gu; Park, Bomi; Choi, Changsu; Kim, Sophia; Barbieri, Claudio; Salafia, Om Sharan; Paek, Insu; Shin, Suhyun; Seo, Jinguk; Lee, Hyung Mok; Lee, Chung-Uk; Kim, Seung-Lee; Sung, Hyun-Il",
+      shortAuthor: "Paek et al.",
       title: "Gravitational-wave Electromagnetic Counterpart Korean Observatory (GECKO): GECKO Follow-up Observation of GW190425",
-      journal: "ApJ",
+      journal: "ApJ 960, 113",
       date: "Jan. 2024",
       doi: "10.3847/1538-4357/ad0238",
       preprint: "arXiv:2310.19593",
       ref: "2024ApJ...960..113P",
-      shortAuthor: "Paek et al.",
       abstract: "One of the keys to the success of multimessenger astronomy is the rapid identification of the electromagnetic wave counterpart, kilonova (KN), of the gravitational-wave (GW) event. Despite its importance, it is hard to find a KN associated with a GW event, due to a poorly constrained GW localization map and numerous signals that could be confused as a KN. Here, we present the Gravitational-wave Electromagnetic wave Counterpart Korean Observatory (GECKO) project, the GECKO observation of GW190425, and prospects of GECKO in the fourth observing run (O4) of the GW detectors. We outline our follow-up observation strategies during O3. In particular, we describe our galaxy-targeted observation criteria that prioritize based on galaxy properties. Armed with this strategy, we performed an optical and/or near-infrared follow-up observation of GW190425, the first binary neutron star merger event during the O3 run. Despite a vast localization area of 7460 deg2, we observed 621 host galaxy candidates, corresponding to 29.5% of the scores we assigned, with most of them observed within the first 3 days of the GW event. Ten transients were discovered during this search, including a new transient with a host galaxy. No plausible KN was found, but we were still able to constrain the properties of potential KNe using upper limits. The GECKO observation demonstrates that GECKO can possibly uncover a GW170817-like KN at a distance <200 Mpc if the localization area is of the order of hundreds of square degrees, providing a bright prospect for the identification of GW electromagnetic wave counterparts during the O4 run.",
       imgName: "news-2.png",
       webpage: "https://iopscience.iop.org/article/10.3847/1538-4357/ad0238",
@@ -2292,13 +1369,13 @@ var news_default = {
     {
       type: "publication",
       author: "Tak, Donggeun; Uhm, Z. Lucas; Gillanders, James H.",
+      shortAuthor: "Tak et al.",
       title: "Exploring the Impact of the Ejecta Velocity Profile on the Evolution of Kilonova: Diversity of the Kilonova Lightcurves",
-      journal: "ApJ",
+      journal: "ApJ 958, 121",
       date: "Dec. 2023",
       doi: "10.3847/1538-4357/ad06b0",
       preprint: "arXiv:2310.15608",
       ref: "2023ApJ...958..121T",
-      shortAuthor: "Tak et al.",
       abstract: "A kilonova is a short-lived explosive event in the Universe, resulting from the merger of two compact objects. Despite its importance as a primary source of heavy elements through r-process nucleosynthesis, its nature is not well understood due to its rarity. In this work, we introduce a model that determines the density of a radially stratified relativistic ejecta. We apply the model to kilonova ejecta and explore several hypothesized velocity profiles as a function of the merger's ejection time. These velocity profiles result in diverse density profiles of the ejecta, for which we conduct radiative transfer simulations using TARDIS with the solar r-process composition. Consequently, we investigate the impact of the ejecta velocity profile on the resulting evolution of the lightcurve and spectra through the line transitions of heavy elements. The change in the rate at which these elements accumulate in the line-forming region leaves its imprint on the kilonova lightcurve at specific wavelengths, causing the lightcurves to decay at different rates. Furthermore, in several profiles, plateau-like behaviors (slow and/or flat decline) are also observed. In conclusion, this work proposes potential scenarios of the evolution of kilonova due to the ejecta velocity profile.",
       imgName: "news-1.png",
       webpage: "https://iopscience.iop.org/article/10.3847/1538-4357/ad06b0",
@@ -2308,1319 +1385,1182 @@ var news_default = {
 };
 
 // app/routes/publication.list.tsx
-import { Alert } from "flowbite-react";
-import { HiInformationCircle } from "react-icons/hi";
-import { jsxDEV as jsxDEV10 } from "react/jsx-dev-runtime";
-var Index6 = () => {
-  let backgroundImage = {
-    backgroundSize: "cover",
-    backgroundRepeat: "repeat",
-    backgroundImage: 'url("./img/news.png")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px"
-  }, [currentPage, setCurrentPage] = useState3(1), [showAbstract, setShowAbstract] = useState3(!1), pubPerPage = 5, pub = news_default.news.filter((item) => item.type === "publication"), totalPages = Math.ceil(pub.length / pubPerPage), indexOfLastPubs = currentPage * pubPerPage, indexOfFirstPubs = indexOfLastPubs - pubPerPage, currentPub = pub.slice(indexOfFirstPubs, indexOfLastPubs), onPageChange = (page) => setCurrentPage(page);
-  return /* @__PURE__ */ jsxDEV10("div", { style: { background: "#fff" }, children: [
-    /* @__PURE__ */ jsxDEV10(navigate_default, { manu: "manuPaper", fixed: !0 }, void 0, !1, {
-      fileName: "app/routes/publication.list.tsx",
-      lineNumber: 36,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV10("div", { style: { paddingTop: "80px" }, children: /* @__PURE__ */ jsxDEV10(Alert, { color: "warning", icon: HiInformationCircle, className: "p-3", children: [
-      "See our ",
-      /* @__PURE__ */ jsxDEV10("a", { href: "./policy", children: /* @__PURE__ */ jsxDEV10("span", { style: { textDecoration: "underline" }, children: "publication policy" }, void 0, !1, {
-        fileName: "app/routes/publication.list.tsx",
-        lineNumber: 39,
-        columnNumber: 38
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/publication.list.tsx",
-        lineNumber: 39,
-        columnNumber: 19
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/publication.list.tsx",
-      lineNumber: 38,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/publication.list.tsx",
-      lineNumber: 37,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV10("div", { className: "mx-auto w-full main-container", children: /* @__PURE__ */ jsxDEV10("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-      /* @__PURE__ */ jsxDEV10("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-        /* @__PURE__ */ jsxDEV10("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Meet our works" }, void 0, !1, {
-          fileName: "app/routes/publication.list.tsx",
-          lineNumber: 46,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ jsxDEV10("h3", { className: "text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: /* @__PURE__ */ jsxDEV10("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "Publications" }, void 0, !1, {
-          fileName: "app/routes/publication.list.tsx",
-          lineNumber: 50,
-          columnNumber: 15
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/publication.list.tsx",
-          lineNumber: 49,
-          columnNumber: 13
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/publication.list.tsx",
-        lineNumber: 45,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV10("a", { className: "w-full", href: "./policy", children: /* @__PURE__ */ jsxDEV10("button", { style: { textAlign: "right" }, children: "Publication Policy" }, void 0, !1, {
-        fileName: "app/routes/publication.list.tsx",
-        lineNumber: 55,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/publication.list.tsx",
-        lineNumber: 54,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV10("div", { className: "w-full", style: { display: "flex", justifyContent: "flex-end" }, children: /* @__PURE__ */ jsxDEV10("button", { style: { textAlign: "right" }, onClick: () => setShowAbstract(!showAbstract), children: showAbstract ? "Hide Abstract" : "Show Abstract" }, void 0, !1, {
-        fileName: "app/routes/publication.list.tsx",
-        lineNumber: 59,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/publication.list.tsx",
-        lineNumber: 58,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV10("div", { className: "flex flex-wrap items-center justify-center", style: { maxWidth: "1200px", margin: "0 auto", marginBottom: "5rem", textAlign: "center", color: "black" }, children: [
-        pub.map((p, index) => (index = index + 1, /* @__PURE__ */ jsxDEV10("div", { className: "w-full pub-container p-6 m-3", style: { boxShadow: "0px 15px 35px rgba(227, 252, 239, 0.1), 0px 5px 15px rgba(0, 0, 0, 0.07)" }, children: [
-          /* @__PURE__ */ jsxDEV10("div", { className: "pr-5 p-cont-1", children: [
-            /* @__PURE__ */ jsxDEV10("p", { className: "pb-3", style: { fontSize: "24px", lineHeight: "1.2", color: "var(--pickled-bluewood-600)", fontWeight: 500 }, children: /* @__PURE__ */ jsxDEV10("a", { href: p.webpage, target: "_blank", children: p.title }, void 0, !1, {
-              fileName: "app/routes/publication.list.tsx",
-              lineNumber: 68,
-              columnNumber: 140
-            }, this) }, void 0, !1, {
-              fileName: "app/routes/publication.list.tsx",
-              lineNumber: 68,
-              columnNumber: 21
-            }, this),
-            showAbstract && /* @__PURE__ */ jsxDEV10("p", { className: "text-content", style: { fontSize: "12pt" }, children: p.abstract }, void 0, !1, {
-              fileName: "app/routes/publication.list.tsx",
-              lineNumber: 69,
-              columnNumber: 38
-            }, this),
-            !showAbstract && /* @__PURE__ */ jsxDEV10("p", { className: "pb-3", children: [
-              /* @__PURE__ */ jsxDEV10("span", { className: "text-bluewood-900", style: { fontWeight: 700 }, children: "Authors:" }, void 0, !1, {
-                fileName: "app/routes/publication.list.tsx",
-                lineNumber: 70,
-                columnNumber: 59
-              }, this),
-              " ",
-              p.author
-            ] }, void 0, !0, {
-              fileName: "app/routes/publication.list.tsx",
-              lineNumber: 70,
-              columnNumber: 39
-            }, this)
-          ] }, void 0, !0, {
-            fileName: "app/routes/publication.list.tsx",
-            lineNumber: 67,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV10("div", { className: "p-cont-2", style: { textAlign: "left" }, children: [
-            showAbstract && /* @__PURE__ */ jsxDEV10("p", { className: "pb-3", children: [
-              /* @__PURE__ */ jsxDEV10("span", { className: "text-bluewood-900", style: { fontWeight: 700 }, children: "Authors:" }, void 0, !1, {
-                fileName: "app/routes/publication.list.tsx",
-                lineNumber: 73,
-                columnNumber: 58
-              }, this),
-              " ",
-              p.author
-            ] }, void 0, !0, {
-              fileName: "app/routes/publication.list.tsx",
-              lineNumber: 73,
-              columnNumber: 38
-            }, this),
-            /* @__PURE__ */ jsxDEV10("p", { className: "pb-3", children: [
-              /* @__PURE__ */ jsxDEV10("span", { className: "text-bluewood-900", style: { fontWeight: 700 }, children: "Journal:" }, void 0, !1, {
-                fileName: "app/routes/publication.list.tsx",
-                lineNumber: 74,
-                columnNumber: 41
-              }, this),
-              " ",
-              p.journal
-            ] }, void 0, !0, {
-              fileName: "app/routes/publication.list.tsx",
-              lineNumber: 74,
-              columnNumber: 21
-            }, this),
-            /* @__PURE__ */ jsxDEV10("p", { className: "pb-3", children: [
-              /* @__PURE__ */ jsxDEV10("span", { className: "text-bluewood-900", style: { fontWeight: 700 }, children: "Date:" }, void 0, !1, {
-                fileName: "app/routes/publication.list.tsx",
-                lineNumber: 75,
-                columnNumber: 41
-              }, this),
-              " ",
-              p.date
-            ] }, void 0, !0, {
-              fileName: "app/routes/publication.list.tsx",
-              lineNumber: 75,
-              columnNumber: 21
-            }, this),
-            /* @__PURE__ */ jsxDEV10("p", { className: "pb-3", children: [
-              /* @__PURE__ */ jsxDEV10("span", { className: "text-bluewood-900", style: { fontWeight: 700 }, children: "doi:" }, void 0, !1, {
-                fileName: "app/routes/publication.list.tsx",
-                lineNumber: 76,
-                columnNumber: 41
-              }, this),
-              " ",
-              /* @__PURE__ */ jsxDEV10("a", { href: p.webpage, target: "_blank", children: p.doi }, void 0, !1, {
-                fileName: "app/routes/publication.list.tsx",
-                lineNumber: 76,
-                columnNumber: 114
-              }, this)
-            ] }, void 0, !0, {
-              fileName: "app/routes/publication.list.tsx",
-              lineNumber: 76,
-              columnNumber: 21
-            }, this),
-            /* @__PURE__ */ jsxDEV10("p", { className: "pb-3", children: [
-              /* @__PURE__ */ jsxDEV10("span", { className: "text-bluewood-900", style: { fontWeight: 700 }, children: "preprint:" }, void 0, !1, {
-                fileName: "app/routes/publication.list.tsx",
-                lineNumber: 77,
-                columnNumber: 41
-              }, this),
-              " ",
-              /* @__PURE__ */ jsxDEV10("a", { href: p.webpage2, target: "_blank", children: p.preprint }, void 0, !1, {
-                fileName: "app/routes/publication.list.tsx",
-                lineNumber: 77,
-                columnNumber: 119
-              }, this)
-            ] }, void 0, !0, {
-              fileName: "app/routes/publication.list.tsx",
-              lineNumber: 77,
-              columnNumber: 21
-            }, this)
-          ] }, void 0, !0, {
-            fileName: "app/routes/publication.list.tsx",
-            lineNumber: 72,
-            columnNumber: 19
-          }, this)
-        ] }, index, !0, {
-          fileName: "app/routes/publication.list.tsx",
-          lineNumber: 66,
-          columnNumber: 17
-        }, this))),
-        /* @__PURE__ */ jsxDEV10("div", { className: "flex justify-center mt-4", children: /* @__PURE__ */ jsxDEV10(Pagination, { currentPage, totalPages, onPageChange }, void 0, !1, {
-          fileName: "app/routes/publication.list.tsx",
-          lineNumber: 82,
-          columnNumber: 13
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/publication.list.tsx",
-          lineNumber: 81,
-          columnNumber: 11
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/publication.list.tsx",
-        lineNumber: 62,
-        columnNumber: 11
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/publication.list.tsx",
-      lineNumber: 44,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/publication.list.tsx",
-      lineNumber: 43,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV10(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/publication.list.tsx",
-      lineNumber: 87,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/publication.list.tsx",
-    lineNumber: 35,
-    columnNumber: 5
-  }, this);
+import { jsx as jsx11, jsxs as jsxs10 } from "react/jsx-runtime";
+var meta6 = () => [
+  { title: "Publications \xB7 7-Dimensional Telescope" },
+  { name: "description", content: "Refereed papers and conference proceedings from the 7DT collaboration." }
+], PER_PAGE = 6, Index6 = () => {
+  let [currentPage, setCurrentPage] = useState3(1), [showAbstract, setShowAbstract] = useState3(!1), pubs = useMemo(
+    () => news_default.news.filter((item) => item.type === "publication"),
+    []
+  ), totalPages = Math.max(1, Math.ceil(pubs.length / PER_PAGE)), page = Math.min(currentPage, totalPages), shown = pubs.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  return /* @__PURE__ */ jsxs10(PageLayout, { menu: "manuPaper", children: [
+    /* @__PURE__ */ jsx11(
+      PageHero,
+      {
+        eyebrow: "Publications",
+        title: "Papers & proceedings",
+        lede: "Instrument, operations and science papers from the 7DT collaboration.",
+        image: "/img/hero/publications.jpg",
+        meta: [{ value: String(pubs.length), label: "Listed works" }]
+      }
+    ),
+    /* @__PURE__ */ jsxs10("div", { className: "notice", children: [
+      /* @__PURE__ */ jsxs10("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.7", "aria-hidden": "true", children: [
+        /* @__PURE__ */ jsx11("circle", { cx: "12", cy: "12", r: "9" }),
+        /* @__PURE__ */ jsx11("path", { d: "M12 8h.01M11 12h1v5h1", strokeLinecap: "round" })
+      ] }),
+      /* @__PURE__ */ jsxs10("span", { children: [
+        "Publishing with 7DT data? Please read the",
+        " ",
+        /* @__PURE__ */ jsx11("a", { href: "/publication/policy", children: "publication policy" }),
+        " first."
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs10(Section, { eyebrow: "Bibliography", title: "Meet our work", children: [
+      /* @__PURE__ */ jsxs10("div", { className: "toolbar", children: [
+        /* @__PURE__ */ jsxs10("span", { className: "toolbar__label", children: [
+          pubs.length,
+          " publications \xB7 page ",
+          page,
+          " of ",
+          totalPages
+        ] }),
+        /* @__PURE__ */ jsx11(
+          "button",
+          {
+            type: "button",
+            className: "toggle-btn",
+            "aria-pressed": showAbstract,
+            onClick: () => setShowAbstract(!showAbstract),
+            children: showAbstract ? "Hide abstracts" : "Show abstracts"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx11("ul", { className: "pub-list", children: shown.map((pub, index) => /* @__PURE__ */ jsxs10("li", { className: "pub", children: [
+        /* @__PURE__ */ jsx11("h2", { className: "pub__title", children: pub.webpage ? /* @__PURE__ */ jsx11("a", { href: pub.webpage, target: "_blank", rel: "noreferrer", children: pub.title }) : pub.title }),
+        /* @__PURE__ */ jsx11("p", { className: "pub__authors", children: pub.author }),
+        /* @__PURE__ */ jsxs10("div", { className: "pub__meta", children: [
+          pub.journal && /* @__PURE__ */ jsxs10("span", { children: [
+            /* @__PURE__ */ jsx11("b", { children: "Journal" }),
+            pub.journal
+          ] }),
+          pub.date && /* @__PURE__ */ jsxs10("span", { children: [
+            /* @__PURE__ */ jsx11("b", { children: "Date" }),
+            pub.date
+          ] }),
+          pub.doi && /* @__PURE__ */ jsxs10("span", { children: [
+            /* @__PURE__ */ jsx11("b", { children: "doi" }),
+            /* @__PURE__ */ jsx11("a", { href: pub.webpage, target: "_blank", rel: "noreferrer", children: pub.doi })
+          ] }),
+          pub.preprint && /* @__PURE__ */ jsxs10("span", { children: [
+            /* @__PURE__ */ jsx11("b", { children: "Preprint" }),
+            /* @__PURE__ */ jsx11("a", { href: pub.webpage2, target: "_blank", rel: "noreferrer", children: pub.preprint })
+          ] }),
+          !pub.doi && !pub.preprint && pub.ref && /* @__PURE__ */ jsxs10("span", { children: [
+            /* @__PURE__ */ jsx11("b", { children: "Ref" }),
+            pub.ref
+          ] })
+        ] }),
+        showAbstract && pub.abstract && /* @__PURE__ */ jsx11("p", { className: "pub__abstract", children: pub.abstract })
+      ] }, `${pub.title}-${index}`)) }),
+      totalPages > 1 && /* @__PURE__ */ jsx11("div", { className: "pagination-wrap", children: /* @__PURE__ */ jsx11(Pagination, { currentPage: page, totalPages, onPageChange: setCurrentPage }) })
+    ] })
+  ] });
 }, publication_list_default = Index6;
 
 // app/routes/science.overview.tsx
 var science_overview_exports = {};
 __export(science_overview_exports, {
-  default: () => science_overview_default
+  default: () => science_overview_default,
+  meta: () => meta7
 });
-import { jsxDEV as jsxDEV11 } from "react/jsx-dev-runtime";
-var Index7 = () => {
-  let backgroundImageStyle = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("../img/science.jpg")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px",
-    position: "relative"
-    // Add this line
-  }, transparentBoxStyle = {
-    position: "absolute",
-    top: "30%",
-    // Adjust this value as per your requirement
-    left: "50%",
-    // Adjust this value as per your requirement
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "rgba(255, 255, 255, 0.85)",
-    // Adjust the transparency here
-    padding: "50px",
-    borderRadius: "10px",
-    maxWidth: "90%",
-    marginTop: "200px"
-  }, buttonStyle2 = {
-    backgroundColor: "var(--pickled-bluewood-900)",
-    border: "none",
-    color: "white",
-    padding: "15px 32px",
-    textAlign: "center",
-    textDecoration: "none",
-    display: "inline-block",
-    fontSize: "16px",
-    margin: "4px 5px",
-    cursor: "pointer",
-    borderRadius: "10px"
-  }, buttonHoverStyle = {
-    backgroundColor: "var(--pickled-bluewood-600)"
-  }, handleMouseOver = (e) => {
-    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-  }, handleMouseOut = (e) => {
-    e.target.style.backgroundColor = buttonStyle2.backgroundColor;
-  };
-  return /* @__PURE__ */ jsxDEV11("div", { style: { background: "#fff" }, children: [
-    /* @__PURE__ */ jsxDEV11(navigate_default, { manu: "manuScience" }, void 0, !1, {
-      fileName: "app/routes/science.overview.tsx",
-      lineNumber: 58,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV11("div", { style: backgroundImageStyle, children: [
-      /* @__PURE__ */ jsxDEV11("div", { style: { height: "100vh" } }, void 0, !1, {
-        fileName: "app/routes/science.overview.tsx",
-        lineNumber: 61,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV11("div", { style: transparentBoxStyle, children: /* @__PURE__ */ jsxDEV11("div", { className: "mx-auto w-full", children: /* @__PURE__ */ jsxDEV11("div", { className: "max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV11("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-        /* @__PURE__ */ jsxDEV11("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Shed light on the physics of the Universe" }, void 0, !1, {
-          fileName: "app/routes/science.overview.tsx",
-          lineNumber: 66,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV11("h3", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-          "Overview of ",
-          /* @__PURE__ */ jsxDEV11("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "Science" }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 70,
-            columnNumber: 31
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/science.overview.tsx",
-          lineNumber: 69,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV11("p", { className: "text-content", children: overviewText }, void 0, !1, {
-          fileName: "app/routes/science.overview.tsx",
-          lineNumber: 72,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV11("br", {}, void 0, !1, {
-          fileName: "app/routes/science.overview.tsx",
-          lineNumber: 73,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV11("p", { className: "mt-4 text-gray-900 font-regular", children: "To explore further,  " }, void 0, !1, {
-          fileName: "app/routes/science.overview.tsx",
-          lineNumber: 74,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV11("div", { className: "flex justify-center", children: [
-          /* @__PURE__ */ jsxDEV11("a", { href: "/sci", children: /* @__PURE__ */ jsxDEV11("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Multi-Messenger Astronomy" }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 77,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 76,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV11("a", { href: "/sci", children: /* @__PURE__ */ jsxDEV11("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Galaxy Formation Evolution" }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 82,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 81,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV11("a", { href: "/sci", children: /* @__PURE__ */ jsxDEV11("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Cosmology" }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 87,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 86,
-            columnNumber: 19
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/science.overview.tsx",
-          lineNumber: 75,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV11("div", { className: "flex justify-center", children: [
-          /* @__PURE__ */ jsxDEV11("a", { href: "/sci", children: /* @__PURE__ */ jsxDEV11("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Active Galactic Nuclei" }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 95,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 94,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV11("a", { href: "/sci", children: /* @__PURE__ */ jsxDEV11("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Galactic Science" }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 100,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 99,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV11("a", { href: "/sci", children: /* @__PURE__ */ jsxDEV11("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Solar System Objects" }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 105,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 104,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV11("a", { href: "/sci", children: /* @__PURE__ */ jsxDEV11("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Transients" }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 110,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/science.overview.tsx",
-            lineNumber: 109,
-            columnNumber: 19
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/science.overview.tsx",
-          lineNumber: 92,
-          columnNumber: 17
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/science.overview.tsx",
-        lineNumber: 65,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/science.overview.tsx",
-        lineNumber: 64,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/science.overview.tsx",
-        lineNumber: 63,
-        columnNumber: 11
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/science.overview.tsx",
-        lineNumber: 62,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/science.overview.tsx",
-      lineNumber: 60,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV11(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/science.overview.tsx",
-      lineNumber: 120,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/science.overview.tsx",
-    lineNumber: 57,
-    columnNumber: 5
-  }, this);
-}, science_overview_default = Index7;
+
+// app/routes/content/science.json
+var science_default = {
+  note: "Science themes and early results. Source: Kim et al., Proc. SPIE 14147-84, Sec. 3.4 and Sec. 5.",
+  themes: [
+    {
+      id: "mma",
+      n: "01",
+      title: "Multi-messenger Astronomy",
+      summary: "The mission 7DT was built for. A kilonova peaks near absolute magnitude \u221215 to \u221217 and fades by roughly half a magnitude per day, inside a gravitational-wave localization of hundreds to thousands of square degrees \u2014 where even a single 100 deg\xB2 patch is expected to hold of order a hundred unrelated transients over a seven-day window. 7DT answers with wide-field tiling, sub-minute response to an alert, and enough spectral information in a single visit to reject the contaminants without follow-up spectroscopy."
+    },
+    {
+      id: "transients",
+      n: "02",
+      title: "Transients",
+      summary: "Medium-band spectral sampling gives direct colour and continuum information for a transient from one epoch of imaging. A hybrid classification framework built on 7DT spectral energy distributions \u2014 an unsupervised anomaly detector coupled to a supervised multiclass classifier \u2014 reaches macro F1 \u2248 0.80 across eight common transient types and recovers more than 90 per cent of optically detectable kilonovae, including AT2017gfo, without ever being trained on one."
+    },
+    {
+      id: "galaxies",
+      n: "03",
+      title: "Galaxy Formation & Evolution",
+      summary: "Medium-band mapping over 1.25 square degrees is IFU-like data at survey scale. Star-forming clumps are identified through H\u03B1 emission in stellar-continuum-subtracted images, and pilot studies indicate that pixel-based SED fitting of 7DT and SPHEREx data can recover spatially resolved stellar populations approaching the quality of high-resolution IFU spectroscopy \u2014 for galaxies that would otherwise demand dedicated campaigns on much larger telescopes. Both studies are as yet unpublished (Shim et al., submitted; Lee et al., in prep)."
+    },
+    {
+      id: "cosmology",
+      n: "04",
+      title: "Cosmology & Photometric Redshifts",
+      summary: "At R = 30\u201370 across 0.4\u20130.9 \xB5m, 7DT straddles the boundary between broadband photometry and low-resolution spectroscopy, capturing the 4000 \xC5 break and prominent emission lines at a resolution that lifts much of the colour\u2013redshift degeneracy inherent to broadband surveys. Forecasts give \u03C3_NMAD = 0.003\u20130.007 at 19 < m625 < 22 for the five-year stacked WTS, with strong gains when combined with SPHEREx all-sky data."
+    },
+    {
+      id: "agn",
+      n: "05",
+      title: "Active Galactic Nuclei",
+      summary: "Repeated medium-band visits measure how an AGN spectrum changes, not merely how its brightness does. The 10\u201314 day cadence of WTS over five years is matched to reverberation mapping through long-term spectral variability, while the nightly cadence of IMS reaches variability on timescales of a single night."
+    },
+    {
+      id: "galactic",
+      n: "06",
+      title: "Galactic Science",
+      summary: "Two-epoch 7DT photometry with sixteen medium bands across 400\u2013825 nm identified 110 variable young stellar objects in the central region of Orion A \u2014 14 per cent of 769 candidates \u2014 including seven extreme cases varying by more than 0.5 mag. The wavelength dependence of the variability distinguishes extinction-like, gray and spot-like mechanisms on day timescales, which otherwise requires rapid filter cycling or simultaneous multi-band instrumentation."
+    },
+    {
+      id: "solar",
+      n: "07",
+      title: "Solar System Objects",
+      summary: "Medium-band imaging of the main-belt asteroids 13 Egeria and 10 Hygiea targets the 0.7 \xB5m absorption feature characteristic of Ch-type bodies, a tracer of their thermal history. Time-series observations of the third interstellar object, 3I/ATLAS, followed the emergence of extended CN emission as it fell inside 3 au \u2014 behaviour resembling that of 2I/Borisov at comparable heliocentric distance."
+    }
+  ],
+  results: [
+    {
+      title: "Photometric redshifts at survey scale",
+      body: "Forecasts using EAZY on EL-COSMOS mock catalogues give \u03C3_NMAD = 0.003\u20130.007 and catastrophic failure fractions of 0.8\u20138.1 per cent for the five-year stacked WTS with 40 medium bands at 19 < m625 < 22. Combining 7DS with SPHEREx all-sky data reduces the failure fraction to 0.4 per cent for fainter sources by breaking colour\u2013redshift degeneracies with near-infrared coverage. Extending the analysis to six independent methods \u2014 four template-fitting codes and two machine-learning approaches \u2014 gives \u03C3_NMAD \u2272 0.005 for bright GAMA-like galaxies and \u2248 0.01 for fainter COSMOS-like galaxies, with the combined dataset consistently outperforming either survey alone.",
+      tag: "Cosmology"
+    },
+    {
+      title: "Resolved star formation in nearby galaxies",
+      body: "Spatially resolved maps of star formation rate and 3.3 \xB5m PAH emission were constructed for a nearby galaxy from 7DT and SPHEREx data. Dust-corrected star formation rates agree with those derived for H ii regions from higher-resolution spectroscopy, correlate tightly with PAH luminosity, and reveal the inside-out growth of the galactic disk together with the suppression of PAH emission in intensely star-forming regions. A companion study of NGC 3627 used VLT/MUSE observations as reference and found that pixel-wise SED fitting of combined 7DT and SPHEREx data improves stellar-age precision significantly over broadband photometry alone, with global and radial trends agreeing with MUSE apart from a minor metallicity offset in the central region. Both studies are unpublished as yet (Shim et al., submitted; Lee et al., in prep).",
+      tag: "Nearby galaxies"
+    },
+    {
+      title: "Single-epoch transient classification",
+      body: "A framework coupling an Isolation Forest anomaly detector to an XGBoost multiclass classifier, trained on realistically simulated 7DT photometry, achieves macro F1 \u2248 0.80 across eight common transient types while recovering more than 90 per cent of simulated and observed optically detectable kilonovae at low contamination. Feature analysis shows that the top-ranked half of the 40 medium bands combined with a single LSST band reproduces the full-model accuracy to within 1\u20132 per cent, which points directly at practical follow-up strategies for the Rubin alert stream.",
+      tag: "Time domain"
+    },
+    {
+      title: "Follow-up of transient alerts",
+      body: "7DT searched for the optical counterpart of the bright X-ray transient EP240219a and reported upper limits in several medium bands, and covered approximately 170 deg\xB2 in Sloan r and the medium-band suite in follow-up of the LVK gravitational-wave event S240422ed. Since RTCSpy took over nightly operation in August 2024 the array has carried out about 100 follow-up observations and some ten gravitational-wave event campaigns.",
+      tag: "Multi-messenger"
+    }
+  ],
+  verification: [
+    "Main-belt asteroids 13 Egeria and 10 Hygiea, medium-band imaging of the 0.7 \xB5m hydration feature",
+    "Orion Molecular Cloud 2/3 at two epochs on a one-day cadence, and Serpens Main at three epochs",
+    "Nineteen galaxies from the PHANGS sample, compared pixel-by-pixel against PHANGS-MUSE IFU data",
+    "The galaxy cluster PSZ G227.44\u221231.24 and the COSMOS field, for photometric redshift validation to z \u2248 0.5",
+    "The X-ray transient EP240219a and the gravitational-wave event S240422ed, as target-of-opportunity tests"
+  ]
+};
+
+// app/routes/science.overview.tsx
+import { jsx as jsx12, jsxs as jsxs11 } from "react/jsx-runtime";
+var meta7 = () => [
+  { title: "Science \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "From gravitational-wave counterparts to photometric redshifts: the science programme of the 7-Dimensional Telescope."
+  }
+], Index7 = () => /* @__PURE__ */ jsxs11(PageLayout, { menu: "manuScience", children: [
+  /* @__PURE__ */ jsx12(
+    PageHero,
+    {
+      eyebrow: "Science",
+      title: "Shedding light on the physics of the Universe",
+      lede: "A medium-band array turns a single visit into a low-resolution spectrum for every source in the field. That capability starts with kilonovae and reaches across the whole of time-domain and extragalactic astronomy.",
+      image: "/img/hero/science.jpg",
+      meta: [
+        { value: "30\u201370", label: "Spectral resolution R" },
+        { value: "0.4\u20130.9", unit: "\xB5m", label: "Wavelength range" },
+        { value: "7", label: "Science themes" }
+      ]
+    }
+  ),
+  /* @__PURE__ */ jsx12(Section, { eyebrow: "Motivation", title: "Why medium bands", children: /* @__PURE__ */ jsxs11("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsxs11("div", { children: [
+      /* @__PURE__ */ jsx12("p", { className: "prose", children: scienceOverviewText }),
+      /* @__PURE__ */ jsx12("p", { className: "prose", children: scienceOverviewText2 })
+    ] }),
+    /* @__PURE__ */ jsxs11("figure", { className: "figure", children: [
+      /* @__PURE__ */ jsx12("img", { src: "/img/filter.png", alt: "Transmission curves of the 7DT medium-band filter set", loading: "lazy" }),
+      /* @__PURE__ */ jsxs11("figcaption", { children: [
+        /* @__PURE__ */ jsx12("b", { children: "Filter set" }),
+        " Medium bands of 25 nm width spanning 375\u2013875 nm, distributed across the array so the full set is covered in a small number of exposures."
+      ] })
+    ] })
+  ] }) }),
+  /* @__PURE__ */ jsx12(Section, { eyebrow: "Programme", title: "Seven science themes", alt: !0, children: /* @__PURE__ */ jsx12("div", { className: "grid grid-cols-2", children: science_default.themes.map((theme) => /* @__PURE__ */ jsxs11("a", { className: "theme-card", href: `/science/sci#${theme.id}`, children: [
+    /* @__PURE__ */ jsx12("span", { className: "theme-card__index", children: theme.n }),
+    /* @__PURE__ */ jsx12("h3", { className: "theme-card__title", children: theme.title }),
+    /* @__PURE__ */ jsx12("p", { className: "theme-card__body", children: theme.summary })
+  ] }, theme.id)) }) }),
+  /* @__PURE__ */ jsxs11(Section, { eyebrow: "Verification", title: "What commissioning observed", children: [
+    /* @__PURE__ */ jsx12("p", { className: "lede", children: "Science verification ran alongside instrument commissioning from first light, covering the full range of intended use cases." }),
+    /* @__PURE__ */ jsx12("ul", { className: "feature-list", children: science_default.verification.map((item, index) => /* @__PURE__ */ jsxs11("li", { children: [
+      /* @__PURE__ */ jsx12("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
+      /* @__PURE__ */ jsx12("div", { children: /* @__PURE__ */ jsx12("p", { className: "feature-list__body", style: { margin: 0 }, children: item }) })
+    ] }, item)) }),
+    /* @__PURE__ */ jsxs11("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
+      /* @__PURE__ */ jsx12("a", { className: "btn btn--primary", href: "/science/sci", children: "Early science results" }),
+      /* @__PURE__ */ jsx12("a", { className: "btn btn--secondary", href: "/publication/list", children: "Publications" })
+    ] })
+  ] })
+] }), science_overview_default = Index7;
 
 // app/routes/survey.overview.tsx
 var survey_overview_exports = {};
 __export(survey_overview_exports, {
-  default: () => survey_overview_default
+  default: () => survey_overview_default,
+  meta: () => meta8
 });
-import { jsxDEV as jsxDEV12 } from "react/jsx-dev-runtime";
-var Index8 = () => {
-  let backgroundImageStyle = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("../img/survey.jpg")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px",
-    position: "relative"
-    // Add this line
-  }, transparentBoxStyle = {
-    position: "absolute",
-    top: "30%",
-    // Adjust this value as per your requirement
-    left: "50%",
-    // Adjust this value as per your requirement
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "rgba(255, 255, 255, 0.85)",
-    // Adjust the transparency here
-    padding: "50px",
-    borderRadius: "10px",
-    maxWidth: "90%",
-    marginTop: "200px"
-  }, buttonStyle2 = {
-    backgroundColor: "var(--pickled-bluewood-900)",
-    border: "none",
-    color: "white",
-    padding: "15px 32px",
-    textAlign: "center",
-    textDecoration: "none",
-    display: "inline-block",
-    fontSize: "16px",
-    margin: "4px 50px",
-    cursor: "pointer",
-    borderRadius: "10px"
-  }, buttonHoverStyle = {
-    backgroundColor: "var(--pickled-bluewood-600)"
-  }, handleMouseOver = (e) => {
-    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-  }, handleMouseOut = (e) => {
-    e.target.style.backgroundColor = buttonStyle2.backgroundColor;
-  };
-  return /* @__PURE__ */ jsxDEV12("div", { style: { background: "#fff" }, children: [
-    /* @__PURE__ */ jsxDEV12(navigate_default, { manu: "manu7ds" }, void 0, !1, {
-      fileName: "app/routes/survey.overview.tsx",
-      lineNumber: 58,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV12("div", { style: backgroundImageStyle, children: [
-      /* @__PURE__ */ jsxDEV12("div", { style: { height: "100vh" } }, void 0, !1, {
-        fileName: "app/routes/survey.overview.tsx",
-        lineNumber: 61,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV12("div", { style: transparentBoxStyle, children: /* @__PURE__ */ jsxDEV12("div", { className: "mx-auto w-full", children: /* @__PURE__ */ jsxDEV12("div", { className: "max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV12("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-        /* @__PURE__ */ jsxDEV12("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Wide-area and High-cadence Survey" }, void 0, !1, {
-          fileName: "app/routes/survey.overview.tsx",
-          lineNumber: 66,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV12("h3", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-          "Overview of ",
-          /* @__PURE__ */ jsxDEV12("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "7DS" }, void 0, !1, {
-            fileName: "app/routes/survey.overview.tsx",
-            lineNumber: 70,
-            columnNumber: 31
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/survey.overview.tsx",
-          lineNumber: 69,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV12("p", { className: "text-content", children: overviewText }, void 0, !1, {
-          fileName: "app/routes/survey.overview.tsx",
-          lineNumber: 72,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV12("br", {}, void 0, !1, {
-          fileName: "app/routes/survey.overview.tsx",
-          lineNumber: 73,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV12("p", { className: "mt-4 text-gray-900 font-regular", children: "To explore further,  " }, void 0, !1, {
-          fileName: "app/routes/survey.overview.tsx",
-          lineNumber: 74,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV12("div", { className: "flex justify-center", children: [
-          /* @__PURE__ */ jsxDEV12("a", { href: "./design", children: /* @__PURE__ */ jsxDEV12("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Survey" }, void 0, !1, {
-            fileName: "app/routes/survey.overview.tsx",
-            lineNumber: 77,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/survey.overview.tsx",
-            lineNumber: 76,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV12("a", { href: "./status", children: /* @__PURE__ */ jsxDEV12("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Status" }, void 0, !1, {
-            fileName: "app/routes/survey.overview.tsx",
-            lineNumber: 82,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/survey.overview.tsx",
-            lineNumber: 81,
-            columnNumber: 19
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/survey.overview.tsx",
-          lineNumber: 75,
-          columnNumber: 17
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/survey.overview.tsx",
-        lineNumber: 65,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/survey.overview.tsx",
-        lineNumber: 64,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/survey.overview.tsx",
-        lineNumber: 63,
-        columnNumber: 11
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/survey.overview.tsx",
-        lineNumber: 62,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/survey.overview.tsx",
-      lineNumber: 60,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV12(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/survey.overview.tsx",
-      lineNumber: 92,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/survey.overview.tsx",
-    lineNumber: 57,
-    columnNumber: 5
-  }, this);
-}, survey_overview_default = Index8;
+
+// app/routes/content/surveys.json
+var surveys_default = {
+  note: "The three tiers of the 7-Dimensional Sky Survey. Status as of June 2026. Source: Kim et al., Proc. SPIE 14147-84, Sec. 4 and Table 2.",
+  tiers: [
+    {
+      code: "RIS",
+      name: "Reference Imaging Survey",
+      status: "live",
+      statusLabel: "Observing",
+      area: "\u2248 23,000 deg\xB2",
+      region: "Dec < +20\xB0",
+      cadence: "Single visit",
+      depth: "19.1 mag",
+      depthNote: "5\u03C3 point source in m600, single visit (3 \xD7 100 s)",
+      started: "July 2024",
+      progress: 58,
+      progressLabel: "14,866 of 25,472 tiles observed",
+      summary: "The wide-area component of 7DS. Every tile of the southern sky is observed once with the full set of available medium bands, in three consecutive 100-second exposures. RIS images serve two purposes at once: reference frames against which transients are identified by difference imaging, and a homogeneous spectrophotometric map of the southern sky usable for galaxy population studies, photometric redshift catalogues and quasar identification. Full-cycle completion is anticipated by the end of 2027.",
+      depthRange: "5\u03C3 depths range from 19.7 mag at m400 to 17.2 mag at m875."
+    },
+    {
+      code: "WTS",
+      name: "Wide-area Time-domain Survey",
+      status: "planned",
+      statusLabel: "Commencing 2026",
+      area: "800\u20131,200 deg\xB2",
+      region: "Fields with near-infrared ancillary data",
+      cadence: "10\u201314 days",
+      depth: "\u2248 22.2 mag",
+      depthNote: "Cumulative, five-year operation",
+      started: "2026",
+      progress: 0,
+      progressLabel: "Field selection under consideration",
+      summary: "WTS extends 7DS into the time domain over a moderately wide area, sustained over a five-year operational period. Field selection prioritizes regions with existing near-infrared coverage, including the VISTA Kilo-degree Infrared Galaxy (VIKING) survey footprint and the Vera C. Rubin Observatory Deep Drilling Fields, so that 7DT data are complemented at wavelengths the array cannot reach. Roughly 90 to 100 visits per tile accumulate to 22.0\u201322.5 mag in the majority of medium bands.",
+      depthRange: "Science cases include reverberation mapping of AGN, long-period variables and eclipsing systems, and slow-evolving extragalactic transients such as superluminous supernovae and tidal disruption events."
+    },
+    {
+      code: "IMS",
+      name: "Intensive Monitoring Survey",
+      status: "live",
+      statusLabel: "Observing",
+      area: "\u2248 8.5 deg\xB2",
+      region: "AKARI / SPHEREx Deep Field South",
+      cadence: "1 day",
+      depth: "\u2248 23.6 mag",
+      depthNote: "Cumulative, five-year operation",
+      started: "April 2025",
+      progress: 24,
+      progressLabel: "> 260 cycles per tile \xB7 ~1.2 of 5 planned years",
+      summary: "The deep, high-cadence component of 7DS. Seven tiles near the south ecliptic pole are observed every available night with the full medium-band set. The field was deliberately chosen to overlap the SPHEREx Deep Field South, so that 7DT optical medium-band photometry is co-located with SPHEREx near-infrared spectrophotometry within the same survey volume \u2014 a choice that maximizes the synergy between the two surveys for photometric redshifts and for spatially resolved studies of faint sources.",
+      depthRange: "Field centre: RA 05h13m07.36s, Dec \u221260\xB028\u203211.71\u2033. Observing time budget of 20,000 minutes per year."
+    }
+  ],
+  modes: [
+    {
+      name: "Spec",
+      tagline: "Maximum spectral resolution",
+      body: "The default mode. Units rotate through every available medium and broad band, covering the full spectral range in as few exposures as the filter distribution allows. This is the mode that makes 7DT behave like a low-resolution spectrograph over 1.25 square degrees."
+    },
+    {
+      name: "Deep",
+      tagline: "Maximum depth",
+      body: "A selected subset of filters is used, trading spectral sampling for signal-to-noise. Used when the question is whether a source is there at all."
+    },
+    {
+      name: "Color",
+      tagline: "Broadband, fast",
+      body: "Broad-band filters only. Chosen for faint, fast events such as gamma-ray bursts and young supernovae, where detection early on the light curve matters more than spectral detail."
+    },
+    {
+      name: "Search",
+      tagline: "Maximum sky coverage",
+      body: "Each unit points at a different region of sky. The optical counterpart of a gravitational-wave event is reported as a probable region over a wide area, and tiling it quickly is worth more than observing any one field well."
+    }
+  ],
+  dimensions: [
+    { n: "01", label: "Right ascension" },
+    { n: "02", label: "Declination" },
+    { n: "03", label: "Distance" },
+    { n: "04", label: "Radial velocity" },
+    { n: "05", label: "Brightness" },
+    { n: "06", label: "Wavelength" },
+    { n: "07", label: "Time" }
+  ]
+};
+
+// app/routes/survey.overview.tsx
+import { Fragment as Fragment5, jsx as jsx13, jsxs as jsxs12 } from "react/jsx-runtime";
+var meta8 = () => [
+  { title: "7-Dimensional Sky Survey \xB7 7DT" },
+  {
+    name: "description",
+    content: "The 7-Dimensional Sky Survey: a three-tier programme covering the southern sky in medium bands, from a single-visit reference map to nightly deep monitoring."
+  }
+], Index8 = () => /* @__PURE__ */ jsxs12(PageLayout, { menu: "manu7ds", children: [
+  /* @__PURE__ */ jsx13(
+    PageHero,
+    {
+      eyebrow: "Survey",
+      title: /* @__PURE__ */ jsxs12(Fragment5, { children: [
+        "The 7-Dimensional ",
+        /* @__PURE__ */ jsx13("em", { children: "Sky Survey" })
+      ] }),
+      lede: "Wide-area, high-cadence and deep, on one tile grid and one instrument. 7DS trades area against depth across three tiers that share a single observational infrastructure.",
+      image: "/img/hero/survey.jpg",
+      meta: [
+        { value: "23,000", unit: "deg\xB2", label: "RIS footprint" },
+        { value: "10\u201314", unit: "d", label: "WTS cadence" },
+        { value: "1", unit: "d", label: "IMS cadence" },
+        { value: "23.6", unit: "mag", label: "Deepest tier" }
+      ]
+    }
+  ),
+  /* @__PURE__ */ jsxs12(Section, { eyebrow: "Overview", title: "Three tiers, one grid", children: [
+    /* @__PURE__ */ jsx13("p", { className: "prose", children: surveyOverviewText }),
+    /* @__PURE__ */ jsx13("div", { className: "table-wrap", style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsxs12("table", { className: "tier-table", children: [
+      /* @__PURE__ */ jsx13("caption", { children: "Summary of the three components of 7DS \u2014 status June 2026" }),
+      /* @__PURE__ */ jsx13("thead", { children: /* @__PURE__ */ jsxs12("tr", { children: [
+        /* @__PURE__ */ jsx13("th", { scope: "col", children: "Property" }),
+        surveys_default.tiers.map((tier) => /* @__PURE__ */ jsx13("th", { scope: "col", children: tier.code }, tier.code))
+      ] }) }),
+      /* @__PURE__ */ jsxs12("tbody", { children: [
+        /* @__PURE__ */ jsxs12("tr", { children: [
+          /* @__PURE__ */ jsx13("th", { scope: "row", children: "Survey area" }),
+          surveys_default.tiers.map((tier) => /* @__PURE__ */ jsx13("td", { children: tier.area }, tier.code))
+        ] }),
+        /* @__PURE__ */ jsxs12("tr", { children: [
+          /* @__PURE__ */ jsx13("th", { scope: "row", children: "Target region" }),
+          surveys_default.tiers.map((tier) => /* @__PURE__ */ jsx13("td", { children: tier.region }, tier.code))
+        ] }),
+        /* @__PURE__ */ jsxs12("tr", { children: [
+          /* @__PURE__ */ jsx13("th", { scope: "row", children: "Cadence" }),
+          surveys_default.tiers.map((tier) => /* @__PURE__ */ jsx13("td", { children: tier.cadence }, tier.code))
+        ] }),
+        /* @__PURE__ */ jsxs12("tr", { children: [
+          /* @__PURE__ */ jsx13("th", { scope: "row", children: "Depth" }),
+          surveys_default.tiers.map((tier) => /* @__PURE__ */ jsx13("td", { children: tier.depth }, tier.code))
+        ] }),
+        /* @__PURE__ */ jsxs12("tr", { children: [
+          /* @__PURE__ */ jsx13("th", { scope: "row", children: "Status" }),
+          surveys_default.tiers.map((tier) => /* @__PURE__ */ jsx13("td", { children: tier.statusLabel }, tier.code))
+        ] })
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsx13("p", { className: "footnote", style: { marginTop: "0.75rem" }, children: "Depths are 5\u03C3 point-source limits in the m600 band. The RIS figure is a single-visit depth (3 \xD7 100 s); the WTS and IMS figures are expected values from cumulative data after five years of operation." })
+  ] }),
+  /* @__PURE__ */ jsx13(Section, { eyebrow: "Tiers", title: "What each survey is for", alt: !0, children: /* @__PURE__ */ jsx13("div", { className: "stack-lg", children: surveys_default.tiers.map((tier) => /* @__PURE__ */ jsxs12("div", { className: "panel", children: [
+    /* @__PURE__ */ jsxs12(
+      "div",
+      {
+        style: {
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "baseline",
+          gap: "0.75rem",
+          marginBottom: "0.75rem"
+        },
+        children: [
+          /* @__PURE__ */ jsx13("span", { className: "tier-card__code", children: tier.code }),
+          /* @__PURE__ */ jsx13("h3", { style: { margin: 0, fontSize: "1.25rem" }, children: tier.name }),
+          /* @__PURE__ */ jsx13("span", { className: `pill pill--${tier.status}`, children: tier.statusLabel })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx13("p", { className: "prose", style: { fontSize: "1rem" }, children: tier.summary }),
+    /* @__PURE__ */ jsx13("p", { className: "note", style: { marginBottom: 0 }, children: tier.depthRange })
+  ] }, tier.code)) }) }),
+  /* @__PURE__ */ jsx13(Section, { eyebrow: "Continue", title: "Explore the survey", children: /* @__PURE__ */ jsx13(
+    NextLinks,
+    {
+      links: [
+        { label: "Survey design", href: "/survey/design" },
+        { label: "Current status", href: "/survey/status" },
+        { label: "Observing modes", href: "/telescope/mode" },
+        { label: "Science programme", href: "/science/overview" }
+      ]
+    }
+  ) })
+] }), survey_overview_default = Index8;
 
 // app/routes/telescope.mode.tsx
 var telescope_mode_exports = {};
 __export(telescope_mode_exports, {
-  default: () => telescope_mode_default
+  default: () => telescope_mode_default,
+  meta: () => meta9
 });
-import { jsxDEV as jsxDEV13 } from "react/jsx-dev-runtime";
-var Index9 = () => /* @__PURE__ */ jsxDEV13("div", { style: { background: "#fff" }, children: [
-  /* @__PURE__ */ jsxDEV13(navigate_default, { manu: "manu7dt", fixed: !0 }, void 0, !1, {
-    fileName: "app/routes/telescope.mode.tsx",
-    lineNumber: 12,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV13("div", { className: "p-10 max-w-screen-lg mx-auto", style: { paddingTop: "300px", paddingBottom: "100px" }, children: /* @__PURE__ */ jsxDEV13("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-    /* @__PURE__ */ jsxDEV13("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Diverse Strategy, Dynamic Science" }, void 0, !1, {
-      fileName: "app/routes/telescope.mode.tsx",
-      lineNumber: 16,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ jsxDEV13("h3", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-      /* @__PURE__ */ jsxDEV13("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "Observing" }, void 0, !1, {
-        fileName: "app/routes/telescope.mode.tsx",
-        lineNumber: 20,
-        columnNumber: 13
-      }, this),
-      " Mode"
-    ] }, void 0, !0, {
-      fileName: "app/routes/telescope.mode.tsx",
-      lineNumber: 19,
-      columnNumber: 11
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/telescope.mode.tsx",
-    lineNumber: 15,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.mode.tsx",
-    lineNumber: 14,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV13("div", { style: { display: "flex", justifyContent: "center", paddingBottom: "100px" }, children: /* @__PURE__ */ jsxDEV13("img", { width: "50%", src: "../img/overview.png" }, void 0, !1, {
-    fileName: "app/routes/telescope.mode.tsx",
-    lineNumber: 26,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/telescope.mode.tsx",
-    lineNumber: 25,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV13(footer_default, {}, void 0, !1, {
-    fileName: "app/routes/telescope.mode.tsx",
-    lineNumber: 29,
-    columnNumber: 7
-  }, this)
-] }, void 0, !0, {
-  fileName: "app/routes/telescope.mode.tsx",
-  lineNumber: 11,
-  columnNumber: 5
-}, this), telescope_mode_default = Index9;
+import { Fragment as Fragment6, jsx as jsx14, jsxs as jsxs13 } from "react/jsx-runtime";
+var meta9 = () => [
+  { title: "Observing modes \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "Spec, Deep, Color and Search \u2014 the four observing modes of the 7-Dimensional Telescope."
+  }
+], Index9 = () => /* @__PURE__ */ jsxs13(PageLayout, { menu: "manu7dt", children: [
+  /* @__PURE__ */ jsx14(
+    PageHero,
+    {
+      eyebrow: "Telescope",
+      title: /* @__PURE__ */ jsxs13(Fragment6, { children: [
+        /* @__PURE__ */ jsx14("em", { children: "Observing" }),
+        " modes"
+      ] }),
+      lede: "Diverse strategy, dynamic science. Because every unit carries its own filters, the array can be reconfigured for spectral resolution, depth or coverage without touching the hardware.",
+      image: "/img/hero/telescope.jpg"
+    }
+  ),
+  /* @__PURE__ */ jsxs13(Section, { eyebrow: "Principle", title: "One array, four configurations", children: [
+    /* @__PURE__ */ jsx14("p", { className: "prose", children: modeText }),
+    /* @__PURE__ */ jsx14("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: surveys_default.modes.map((mode2, index) => /* @__PURE__ */ jsxs13("li", { children: [
+      /* @__PURE__ */ jsx14("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
+      /* @__PURE__ */ jsxs13("div", { children: [
+        /* @__PURE__ */ jsxs13("h3", { className: "feature-list__title", style: { fontSize: "1.125rem" }, children: [
+          mode2.name,
+          /* @__PURE__ */ jsx14(
+            "span",
+            {
+              style: {
+                marginLeft: "0.75rem",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.6875rem",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "var(--slate-500)",
+                fontWeight: 400
+              },
+              children: mode2.tagline
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsx14("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: mode2.body })
+      ] })
+    ] }, mode2.name)) })
+  ] }),
+  /* @__PURE__ */ jsx14(Section, { eyebrow: "Schematic", title: "Filter assignment across the array", alt: !0, children: /* @__PURE__ */ jsxs13("figure", { className: "figure", style: { maxWidth: "860px", margin: "0 auto" }, children: [
+    /* @__PURE__ */ jsx14("img", { src: "/img/overview.png", alt: "Schematic of 7DT observing modes and filter assignment", loading: "lazy" }),
+    /* @__PURE__ */ jsxs13("figcaption", { children: [
+      /* @__PURE__ */ jsx14("b", { children: "Modes" }),
+      " The full spectral range is covered by giving each unit a unique filter combination and rotating through it during a target observation."
+    ] })
+  ] }) }),
+  /* @__PURE__ */ jsxs13(Section, { eyebrow: "Response", title: "Target of opportunity", children: [
+    /* @__PURE__ */ jsx14("p", { className: "prose", children: "When a transient alert arrives \u2014 a gamma-ray burst, a gravitational-wave candidate \u2014 the scheduler interrupts the observing plan and repoints. Two response modes are available: a regular mode that completes the current exposure block before switching, and a rapid mode that interrupts immediately. Once the ToO observation finishes the array returns to the queue, resuming the interrupted target if it is still observable. Response time from alert ingestion to the start of a follow-up exposure is under one minute." }),
+    /* @__PURE__ */ jsxs13("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
+      /* @__PURE__ */ jsx14("a", { className: "btn btn--primary", href: "/data/software", children: "How ToO data are processed" }),
+      /* @__PURE__ */ jsx14("a", { className: "btn btn--secondary", href: "/survey/design", children: "Survey design" })
+    ] })
+  ] })
+] }), telescope_mode_default = Index9;
 
 // app/routes/about.funding.tsx
 var about_funding_exports = {};
 __export(about_funding_exports, {
-  default: () => about_funding_default
+  default: () => about_funding_default,
+  meta: () => meta10
 });
-import { jsxDEV as jsxDEV14 } from "react/jsx-dev-runtime";
-var Index10 = () => /* @__PURE__ */ jsxDEV14("div", { style: { background: "#fff" }, children: [
-  /* @__PURE__ */ jsxDEV14(navigate_default, { manu: "manuAbout", fixed: !0 }, void 0, !1, {
-    fileName: "app/routes/about.funding.tsx",
-    lineNumber: 16,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV14("div", { className: "mx-auto w-full m,main-container", style: { paddingTop: "100px" }, children: [
-    /* @__PURE__ */ jsxDEV14("div", { className: "p-10 max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV14("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-      /* @__PURE__ */ jsxDEV14("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Gratitude" }, void 0, !1, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 21,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV14("h3", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-        /* @__PURE__ */ jsxDEV14("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "Funding" }, void 0, !1, {
-          fileName: "app/routes/about.funding.tsx",
-          lineNumber: 25,
-          columnNumber: 14
-        }, this),
-        " Sources"
-      ] }, void 0, !0, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 24,
-        columnNumber: 13
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/about.funding.tsx",
-      lineNumber: 20,
-      columnNumber: 11
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/about.funding.tsx",
-      lineNumber: 19,
-      columnNumber: 9
-    }, this),
-    /* @__PURE__ */ jsxDEV14("div", { style: { backgroundColor: "#fff" }, children: /* @__PURE__ */ jsxDEV14("div", { className: "mx-auto w-full", style: { maxWidth: "1440px", margin: "0 auto", padding: "0 10vw 0 10vw" }, children: /* @__PURE__ */ jsxDEV14("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-      /* @__PURE__ */ jsxDEV14("h3", { className: "text-2xl sm:text-3xl leading-normal font-extrabold tracking-tight", style: { fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: "Center for the Gravitational-Wave Universe" }, void 0, !1, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 33,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ jsxDEV14("p", { className: "flex", style: { margin: "0 auto", justifyContent: "center" }, children: /* @__PURE__ */ jsxDEV14("img", { src: "../img/institutes/gwuniv.png", width: "60%", style: { padding: "10px" } }, void 0, !1, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 36,
-        columnNumber: 87
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 36,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ jsxDEV14("p", { className: "text-content", children: overviewText }, void 0, !1, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 37,
-        columnNumber: 15
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/about.funding.tsx",
-      lineNumber: 32,
-      columnNumber: 13
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/about.funding.tsx",
-      lineNumber: 31,
-      columnNumber: 11
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/about.funding.tsx",
-      lineNumber: 30,
-      columnNumber: 9
-    }, this),
-    /* @__PURE__ */ jsxDEV14("div", { style: { backgroundColor: "#fff" }, children: /* @__PURE__ */ jsxDEV14("div", { className: "mx-auto w-full", style: { maxWidth: "1440px", margin: "0 auto", padding: "0 10vw 0 10vw" }, children: /* @__PURE__ */ jsxDEV14("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-      /* @__PURE__ */ jsxDEV14("h3", { className: "text-2xl sm:text-3xl leading-normal font-extrabold tracking-tight", style: { fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: "National Research Foundation of Korea" }, void 0, !1, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 46,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ jsxDEV14("p", { className: "flex", style: { margin: "0 auto", justifyContent: "center" }, children: /* @__PURE__ */ jsxDEV14("img", { src: "../img/institutes/nrf.jpg", width: "50%" }, void 0, !1, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 49,
-        columnNumber: 87
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 49,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ jsxDEV14("p", { className: "text-content", children: overviewText }, void 0, !1, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 50,
-        columnNumber: 15
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/about.funding.tsx",
-      lineNumber: 45,
-      columnNumber: 13
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/about.funding.tsx",
-      lineNumber: 44,
-      columnNumber: 11
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/about.funding.tsx",
-      lineNumber: 43,
-      columnNumber: 9
-    }, this),
-    /* @__PURE__ */ jsxDEV14("div", { style: { backgroundColor: "#fff" }, children: /* @__PURE__ */ jsxDEV14("div", { className: "mx-auto w-full", style: { maxWidth: "1440px", margin: "0 auto", padding: "0 10vw 0 10vw" }, children: /* @__PURE__ */ jsxDEV14("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-      /* @__PURE__ */ jsxDEV14("h3", { className: "text-2xl sm:text-3xl leading-normal font-extrabold tracking-tight", style: { fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: "Consolidator Grants" }, void 0, !1, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 58,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ jsxDEV14("p", { className: "text-content", children: overviewText }, void 0, !1, {
-        fileName: "app/routes/about.funding.tsx",
-        lineNumber: 61,
-        columnNumber: 15
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/about.funding.tsx",
-      lineNumber: 57,
-      columnNumber: 13
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/about.funding.tsx",
-      lineNumber: 56,
-      columnNumber: 11
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/about.funding.tsx",
-      lineNumber: 55,
-      columnNumber: 9
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/about.funding.tsx",
-    lineNumber: 18,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV14(footer_default, {}, void 0, !1, {
-    fileName: "app/routes/about.funding.tsx",
-    lineNumber: 66,
-    columnNumber: 7
-  }, this)
-] }, void 0, !0, {
-  fileName: "app/routes/about.funding.tsx",
-  lineNumber: 15,
-  columnNumber: 5
-}, this), about_funding_default = Index10;
+import { jsx as jsx15, jsxs as jsxs14 } from "react/jsx-runtime";
+var meta10 = () => [
+  { title: "Funding \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "Grants and institutions supporting the 7-Dimensional Telescope and Sky Survey."
+  }
+], PROJECT_GRANTS = [
+  ["NRF 2021M3F7A1084525", "Center for the Gravitational-wave Universe (MSIT)"],
+  ["NRF RS-2026-25490019", "Project support (MSIT)"],
+  ["KASI", "Special funding toward 7DT operations"],
+  ["KREONET / KISTI", "Research network carrying nightly data transfer"]
+], INDIVIDUAL_GRANTS = [
+  ["J. H. Kim", "NRF RS-2026-25487912"],
+  ["S.-W. Chang", "NRF RS-2023-00245013 (MoE); RS-2026-25489059 (MSIT)"],
+  ["D. Tak", "NRF RS-2024-00343729"],
+  ["H. Choi", "NRF RS-2025-00573214"]
+], Index10 = () => /* @__PURE__ */ jsxs14(PageLayout, { menu: "manuAbout", children: [
+  /* @__PURE__ */ jsx15(
+    PageHero,
+    {
+      eyebrow: "About",
+      title: "Funding sources",
+      lede: "7DT exists because of sustained public investment in gravitational-wave astronomy and in the research network that carries its data across the Pacific each night.",
+      image: "/img/hero/about.jpg"
+    }
+  ),
+  /* @__PURE__ */ jsx15(Section, { eyebrow: "Host centre", title: "Center for the Gravitational-wave Universe", children: /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsx15("p", { className: "prose", children: fundingGWText }),
+    /* @__PURE__ */ jsx15("figure", { className: "figure", children: /* @__PURE__ */ jsx15(
+      "img",
+      {
+        src: "/img/institutes/gwuniv.png",
+        alt: "Center for the Gravitational-wave Universe",
+        style: { padding: "2rem", background: "#fff" },
+        loading: "lazy"
+      }
+    ) })
+  ] }) }),
+  /* @__PURE__ */ jsxs14(Section, { eyebrow: "Agencies", title: "Project support", alt: !0, children: [
+    /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsxs14("div", { children: [
+        /* @__PURE__ */ jsx15("p", { className: "prose", children: fundingNRFText }),
+        /* @__PURE__ */ jsx15("p", { className: "prose", children: fundingKASIText })
+      ] }),
+      /* @__PURE__ */ jsx15("figure", { className: "figure", children: /* @__PURE__ */ jsx15(
+        "img",
+        {
+          src: "/img/institutes/nrf.jpg",
+          alt: "National Research Foundation of Korea",
+          style: { padding: "2rem", background: "#fff" },
+          loading: "lazy"
+        }
+      ) })
+    ] }),
+    /* @__PURE__ */ jsxs14("div", { className: "split", style: { marginTop: "2.5rem" }, children: [
+      /* @__PURE__ */ jsx15("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs14("table", { className: "spec-table", children: [
+        /* @__PURE__ */ jsx15("caption", { children: "Project-level support" }),
+        /* @__PURE__ */ jsx15("tbody", { children: PROJECT_GRANTS.map((grant) => /* @__PURE__ */ jsxs14("tr", { children: [
+          /* @__PURE__ */ jsx15("th", { scope: "row", style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children: grant[0] }),
+          /* @__PURE__ */ jsx15("td", { style: { fontFamily: "var(--font-sans)" }, children: grant[1] })
+        ] }, grant[0])) })
+      ] }) }),
+      /* @__PURE__ */ jsx15("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs14("table", { className: "spec-table", children: [
+        /* @__PURE__ */ jsx15("caption", { children: "Individual investigator support" }),
+        /* @__PURE__ */ jsx15("tbody", { children: INDIVIDUAL_GRANTS.map((grant) => /* @__PURE__ */ jsxs14("tr", { children: [
+          /* @__PURE__ */ jsx15("th", { scope: "row", children: grant[0] }),
+          /* @__PURE__ */ jsx15("td", { style: { fontSize: "0.8125rem" }, children: grant[1] })
+        ] }, grant[0])) })
+      ] }) })
+    ] })
+  ] }),
+  /* @__PURE__ */ jsx15(Section, { eyebrow: "Infrastructure", title: "KREONET / KISTI", children: /* @__PURE__ */ jsx15("p", { className: "prose", children: fundingKreonetText }) }),
+  /* @__PURE__ */ jsx15(Section, { eyebrow: "Citation", title: "How to acknowledge 7DT", alt: !0, children: /* @__PURE__ */ jsxs14("p", { className: "prose", children: [
+    "Work using 7DT data should acknowledge the Center for the Gravitational-wave Universe at Seoul National University, National Research Foundation of Korea grants No. 2021M3F7A1084525 and RS-2026-25490019, the special funding of the Korea Astronomy and Space Science Institute, and KREONET/KISTI. The collaboration publication policy sets out the expected wording; see the ",
+    /* @__PURE__ */ jsx15("a", { href: "/publication/policy", children: "publication policy" }),
+    " page."
+  ] }) })
+] }), about_funding_default = Index10;
 
 // app/routes/data.overview.tsx
 var data_overview_exports = {};
 __export(data_overview_exports, {
-  default: () => data_overview_default
+  default: () => data_overview_default,
+  meta: () => meta11
 });
-import { jsxDEV as jsxDEV15 } from "react/jsx-dev-runtime";
-var Index11 = () => {
-  let backgroundImageStyle = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("../img/data.png")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px",
-    position: "relative"
-    // Add this line
-  }, transparentBoxStyle = {
-    position: "absolute",
-    top: "30%",
-    // Adjust this value as per your requirement
-    left: "50%",
-    // Adjust this value as per your requirement
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "rgba(255, 255, 255, 0.85)",
-    // Adjust the transparency here
-    padding: "50px",
-    borderRadius: "10px",
-    maxWidth: "90%",
-    marginTop: "200px"
-  }, buttonStyle2 = {
-    backgroundColor: "var(--pickled-bluewood-900)",
-    border: "none",
-    color: "white",
-    padding: "15px 32px",
-    textAlign: "center",
-    textDecoration: "none",
-    display: "inline-block",
-    fontSize: "16px",
-    margin: "4px 50px",
-    cursor: "pointer",
-    borderRadius: "10px"
-  }, buttonHoverStyle = {
-    backgroundColor: "var(--pickled-bluewood-600)"
-  }, handleMouseOver = (e) => {
-    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-  }, handleMouseOut = (e) => {
-    e.target.style.backgroundColor = buttonStyle2.backgroundColor;
-  };
-  return /* @__PURE__ */ jsxDEV15("div", { style: { background: "#fff" }, children: [
-    /* @__PURE__ */ jsxDEV15(navigate_default, { manu: "manuData" }, void 0, !1, {
-      fileName: "app/routes/data.overview.tsx",
-      lineNumber: 58,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV15("div", { style: backgroundImageStyle, children: [
-      /* @__PURE__ */ jsxDEV15("div", { style: { height: "100vh" } }, void 0, !1, {
-        fileName: "app/routes/data.overview.tsx",
-        lineNumber: 61,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV15("div", { style: transparentBoxStyle, children: /* @__PURE__ */ jsxDEV15("div", { className: "mx-auto w-full", children: /* @__PURE__ */ jsxDEV15("div", { className: "max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV15("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-        /* @__PURE__ */ jsxDEV15("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "7DS data center" }, void 0, !1, {
-          fileName: "app/routes/data.overview.tsx",
-          lineNumber: 66,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV15("h3", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-          "Overview of ",
-          /* @__PURE__ */ jsxDEV15("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "Data" }, void 0, !1, {
-            fileName: "app/routes/data.overview.tsx",
-            lineNumber: 70,
-            columnNumber: 31
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/data.overview.tsx",
-          lineNumber: 69,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV15("p", { className: "text-content", children: overviewText }, void 0, !1, {
-          fileName: "app/routes/data.overview.tsx",
-          lineNumber: 72,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV15("br", {}, void 0, !1, {
-          fileName: "app/routes/data.overview.tsx",
-          lineNumber: 73,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV15("p", { className: "mt-4 text-gray-900 font-regular", children: "To explore further,  " }, void 0, !1, {
-          fileName: "app/routes/data.overview.tsx",
-          lineNumber: 74,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV15("div", { className: "flex justify-center", children: [
-          /* @__PURE__ */ jsxDEV15("a", { href: "./data", children: /* @__PURE__ */ jsxDEV15("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Data" }, void 0, !1, {
-            fileName: "app/routes/data.overview.tsx",
-            lineNumber: 77,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/data.overview.tsx",
-            lineNumber: 76,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV15("a", { href: "./software", children: /* @__PURE__ */ jsxDEV15("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Software" }, void 0, !1, {
-            fileName: "app/routes/data.overview.tsx",
-            lineNumber: 82,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/data.overview.tsx",
-            lineNumber: 81,
-            columnNumber: 19
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/data.overview.tsx",
-          lineNumber: 75,
-          columnNumber: 17
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/data.overview.tsx",
-        lineNumber: 65,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/data.overview.tsx",
-        lineNumber: 64,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/data.overview.tsx",
-        lineNumber: 63,
-        columnNumber: 11
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/data.overview.tsx",
-        lineNumber: 62,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/data.overview.tsx",
-      lineNumber: 60,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV15(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/data.overview.tsx",
-      lineNumber: 92,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/data.overview.tsx",
-    lineNumber: 57,
-    columnNumber: 5
-  }, this);
-}, data_overview_default = Index11;
+
+// app/routes/content/software.json
+var software_default = {
+  note: "Operations and reduction software. Source: Kim et al., Proc. SPIE 14147-84, Sec. 2.4; Hyun et al., Proc. SPIE 14155-12.",
+  systems: [
+    {
+      name: "RTCSpy",
+      expansion: "Robotic Telescope Control System with Python",
+      role: "Array control, scheduling and target-of-opportunity response",
+      since: "Operational since August 2024",
+      body: "The autonomous operations framework that drives the array. Built on the TCSpy control layer, RTCSpy automates the whole night \u2014 startup, target selection, science observation, calibration acquisition, data transfer and shutdown \u2014 while coordinating all sixteen operational units over real-time network communication. A dedicated Target of Opportunity manager watches external alerts and can interrupt an ongoing observation, giving a response time of less than one minute between alert ingestion and the start of a follow-up exposure.",
+      layers: [
+        ["Control layer", "Device interfaces to mounts, cameras, focusers and filter wheels through ASCOM Alpaca and the PWI4 HTTP API."],
+        ["Support layer", "A MySQL dynamic target database holding targets, status and precomputed observability; an observation queue manager that ranks candidates in real time; a data transfer manager; and a weather monitor that suspends and resumes operation."],
+        ["Application layer", "Composes those components into the high-level applications executed during routine nightly operation."]
+      ],
+      stats: [
+        { value: "1.75", unit: "M", label: "Images acquired unattended" },
+        { value: "< 1", unit: "min", label: "Alert to first exposure" },
+        { value: "\u2248 100", unit: "", label: "ToO follow-ups" }
+      ]
+    },
+    {
+      name: "Py7DT",
+      expansion: "7DT data reduction pipeline",
+      role: "Preprocessing through difference imaging, at survey throughput",
+      since: "Sole operational pipeline since January 2026",
+      body: "Py7DT reduces heterogeneous data from many telescope units, filters and observing modes while sustaining nightly survey throughput and minimizing latency for transient events. It succeeds gpPy-GPU, inheriting its scientific routines and choice of external engines but rebuilding the orchestration around them. Images are grouped by their properties into configurations, submitted to an SQLite-backed system queue, and dispatched in parallel according to priority and stage hierarchy \u2014 typically fifteen workers, three of them reserved for preprocessing.",
+      layers: [
+        ["Orchestration", "DataReduction, BluePrint and Scheduler convert observations into executable processing units and track their dependencies."],
+        ["Processing", "Preprocess, Astrometry, Photometry, ImCoadd and ImSubtract run the standard reduction on each group."],
+        ["Management", "Multi-level logging, a composite-error registry for structured exception handling, automatically generated quality-assessment flags carried in FITS headers, and a web-based monitoring interface."]
+      ],
+      stats: [
+        { value: "66 \xB1 24", unit: "GB/hr", label: "Median throughput" },
+        { value: "\u2248 5", unit: "hr", label: "Per 3,000-image night" },
+        { value: "3.3 \xB1 2.0", unit: "s", label: "Preprocessing per image" }
+      ]
+    },
+    {
+      name: "gwportal",
+      expansion: "7DS data and operations database",
+      role: "System of record for observations, processing state and data quality",
+      since: "In operational use",
+      body: "A Django and PostgreSQL database that manages all 7DT data and integrates the operations of RTCSpy and Py7DT. Its survey schema is synchronized in real time and mirrors the operational state of the pipeline: process_status records the progress of every product along with its software version and any error codes, while image_qa holds quality metrics \u2014 seeing, ellipticity, 5\u03C3 depth, astrometric precision \u2014 for every image produced. A companion dependency table traces the provenance of any output back through coadds, processed singles, master frames and raw exposures.",
+      layers: [
+        ["Pipeline status", "Real-time processing progress, QA summaries, logs, check plots and manual reprocessing triggers."],
+        ["ToO page", "Observation requests, the history of past events and the current status of the telescope units."],
+        ["Documentation wiki", "User manuals, event logs and QA criteria for internal team members and external users of 7DT data."]
+      ],
+      stats: [
+        { value: "3.6", unit: "PB", label: "Archive capacity" },
+        { value: "\u2248 3,000", unit: "", label: "Images ingested nightly" },
+        { value: "\u2248 30", unit: "", label: "Tiles observed nightly" }
+      ]
+    }
+  ],
+  stages: [
+    {
+      module: "Preprocess",
+      body: "Bias, dark and flat correction against master frames matched to the science data by camera, gain, binning, unit, night and filter. Raw frames sharing a master set are loaded as a cube and processed by array broadcasting, reducing per-image time to about one second under optimal conditions, and to 3.3 \xB1 2.0 s in routine operation; GPU preprocessing through CuPy is available as an option, though the throughput gain in this deployment is minimal. Master-frame selection quality is recorded as a bitmask in the FITS header so that a compromise is always visible downstream."
+    },
+    {
+      module: "Astrometry",
+      body: "World coordinate solutions against Gaia DR3, pre-cut to RIS tiles and to HEALPix cells for arbitrary pointings. SCAMP is the default engine, with Astrometry.net as a fallback for blind solves. This is also the first stage that extracts sources, so it generates the image-quality metrics: astrometric separation statistics, field vertices and position angle, PSF size and elongation in radial bins, and source counts against a magnitude-limited reference."
+    },
+    {
+      module: "Photometry",
+      body: "Flux-calibrated source catalogues from SExtractor, in fixed apertures and in the AUTO aperture. Zero points come from synthetic photometry integrated from Gaia XP spectra over each 7DT bandpass \u2014 an unusual advantage for an instrument with an unusual filter set. The module runs on single, coadd and difference images alike."
+    },
+    {
+      module: "ImCoadd",
+      body: "Background subtraction, zero-point scaling, weight maps, bad-pixel interpolation, PSF homogenization, reprojection and combination via SWarp with a LANCZOS3 kernel. Flux scaling is defined to put the coadd at a zero point of 23.9 AB, so that pixel values carry units of microjansky."
+    },
+    {
+      module: "ImSubtract",
+      body: "Difference image analysis with HOTPANTS against a reference of the same field. Because of the unusual filter set, 7DT uses homogeneous references from RIS taken with the same instrument; Pan-STARRS templates are available as an option for the broad bands. Difference imaging is skipped where no reference exists yet."
+    }
+  ],
+  external: [
+    ["SExtractor", "Source extraction and photometry"],
+    ["SCAMP", "Astrometric and photometric solution"],
+    ["SWarp", "Reprojection and coaddition"],
+    ["HOTPANTS", "Difference image analysis"],
+    ["Astrometry.net", "Blind astrometric fallback"],
+    ["CuPy", "GPU-accelerated preprocessing"],
+    ["Gaia DR3 / XP", "Astrometric and spectrophotometric reference"]
+  ]
+};
+
+// app/routes/data.overview.tsx
+import { Fragment as Fragment7, jsx as jsx16, jsxs as jsxs15 } from "react/jsx-runtime";
+var meta11 = () => [
+  { title: "Data \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "Data flow, products and quality assurance for the 7-Dimensional Telescope."
+  }
+], FLOW = [
+  ["Acquire", "Sixteen units write exposures to local storage as they complete; \u2248 3,000 images a night."],
+  ["Transfer", "Roughly 350 GB is compressed and sent to Seoul over KREONET by GridFTP at \u2248 80 MB s\u207B\xB9."],
+  ["Reduce", "Py7DT groups, preprocesses, solves, calibrates, coadds and subtracts \u2014 about five hours per night."],
+  ["Record", "Every product, its version, its QA metrics and its provenance are written to the gwportal database."],
+  ["Deliver", "Coadds, difference images and matched source catalogues, with SED plots and magnitude tables for ToO events."]
+], Index11 = () => /* @__PURE__ */ jsxs15(PageLayout, { menu: "manuData", children: [
+  /* @__PURE__ */ jsx16(
+    PageHero,
+    {
+      eyebrow: "Data",
+      title: /* @__PURE__ */ jsxs15(Fragment7, { children: [
+        "The 7DS ",
+        /* @__PURE__ */ jsx16("em", { children: "data centre" })
+      ] }),
+      lede: "Observation, reduction and analysis closed into a single nightly loop between Chile and Seoul.",
+      image: "/img/hero/data.jpg",
+      meta: [
+        { value: "\u2248 350", unit: "GB", label: "Per night" },
+        { value: "3.6", unit: "PB", label: "Archive capacity" },
+        { value: "\u2248 5", unit: "hr", label: "Reduction latency" },
+        { value: "\u2248 1", unit: "hr", label: "ToO, if observable" }
+      ]
+    }
+  ),
+  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Overview", title: "From the mountain to the catalogue", children: [
+    /* @__PURE__ */ jsx16("p", { className: "prose", children: dataOverviewText }),
+    /* @__PURE__ */ jsx16("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: FLOW.map((step, index) => /* @__PURE__ */ jsxs15("li", { children: [
+      /* @__PURE__ */ jsx16("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
+      /* @__PURE__ */ jsxs15("div", { children: [
+        /* @__PURE__ */ jsx16("h3", { className: "feature-list__title", children: step[0] }),
+        /* @__PURE__ */ jsx16("p", { className: "feature-list__body", children: step[1] })
+      ] })
+    ] }, step[0])) })
+  ] }),
+  /* @__PURE__ */ jsx16(Section, { eyebrow: "Products", title: "What comes out", alt: !0, children: /* @__PURE__ */ jsxs15("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsx16("p", { className: "prose", children: dataProductText }),
+    /* @__PURE__ */ jsxs15("div", { className: "panel", children: [
+      /* @__PURE__ */ jsx16("div", { className: "panel__title", children: "Quality assurance" }),
+      /* @__PURE__ */ jsxs15("p", { className: "feature-list__body", children: [
+        "Every image carries a boolean ",
+        /* @__PURE__ */ jsx16("code", { children: "SANITY" }),
+        " flag whose false value means the frame should be rejected rather than processed further, together with the process in which the flag flipped. Alongside it sit the measured seeing, 5\u03C3 depth, ellipticity and astrometric precision \u2014 in the FITS header and in the database, for every image the pipeline produces."
+      ] })
+    ] })
+  ] }) }),
+  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Systems", title: "Three systems, one loop", children: [
+    /* @__PURE__ */ jsx16("div", { className: "grid grid-cols-3", children: software_default.systems.map((system) => /* @__PURE__ */ jsxs15("div", { className: "tier-card", children: [
+      /* @__PURE__ */ jsx16("span", { className: "tier-card__code", children: system.name }),
+      /* @__PURE__ */ jsx16("h3", { className: "tier-card__name", style: { fontSize: "1rem" }, children: system.role }),
+      /* @__PURE__ */ jsx16("p", { className: "tier-card__note", children: system.since })
+    ] }, system.name)) }),
+    /* @__PURE__ */ jsx16("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx16(
+      NextLinks,
+      {
+        title: "Continue",
+        links: [
+          { label: "Data archive", href: "/data/data" },
+          { label: "Software", href: "/data/software" },
+          { label: "Computational resources", href: "/telescope/computer" },
+          { label: "Publication policy", href: "/publication/policy" }
+        ]
+      }
+    ) })
+  ] })
+] }), data_overview_default = Index11;
 
 // app/routes/data.software.tsx
 var data_software_exports = {};
 __export(data_software_exports, {
-  default: () => data_software_default
+  default: () => data_software_default,
+  meta: () => meta12
 });
-import { jsxDEV as jsxDEV16 } from "react/jsx-dev-runtime";
-var Index12 = () => /* @__PURE__ */ jsxDEV16("div", { style: { background: "#fff" }, children: [
-  /* @__PURE__ */ jsxDEV16(navigate_default, { manu: "manuData", fixed: !0 }, void 0, !1, {
-    fileName: "app/routes/data.software.tsx",
-    lineNumber: 9,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV16("div", { className: "mx-auto w-full main-container", style: { paddingTop: "300px" }, children: /* @__PURE__ */ jsxDEV16("div", { className: "p-10 max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV16("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: /* @__PURE__ */ jsxDEV16("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "To be determined." }, void 0, !1, {
-    fileName: "app/routes/data.software.tsx",
-    lineNumber: 14,
-    columnNumber: 13
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/data.software.tsx",
-    lineNumber: 13,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/data.software.tsx",
-    lineNumber: 12,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/data.software.tsx",
-    lineNumber: 11,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV16(footer_default, {}, void 0, !1, {
-    fileName: "app/routes/data.software.tsx",
-    lineNumber: 20,
-    columnNumber: 7
-  }, this)
-] }, void 0, !0, {
-  fileName: "app/routes/data.software.tsx",
-  lineNumber: 8,
-  columnNumber: 5
-}, this), data_software_default = Index12;
+import { jsx as jsx17, jsxs as jsxs16 } from "react/jsx-runtime";
+var meta12 = () => [
+  { title: "Software \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "RTCSpy, Py7DT and gwportal \u2014 the control, reduction and database software behind 7DT operations."
+  }
+], Index12 = () => /* @__PURE__ */ jsxs16(PageLayout, { menu: "manuData", children: [
+  /* @__PURE__ */ jsx17(
+    PageHero,
+    {
+      eyebrow: "Data",
+      title: "Software",
+      lede: "An array of sixteen telescopes producing three thousand images a night is a software problem as much as an optical one. Three systems carry it.",
+      image: "/img/hero/computer.jpg"
+    }
+  ),
+  software_default.systems.map((system, index) => /* @__PURE__ */ jsxs16(
+    Section,
+    {
+      eyebrow: String(index + 1).padStart(2, "0"),
+      title: system.name,
+      alt: index % 2 === 1,
+      id: system.name.toLowerCase(),
+      children: [
+        /* @__PURE__ */ jsxs16("div", { className: "split split--wide-text", children: [
+          /* @__PURE__ */ jsxs16("div", { children: [
+            /* @__PURE__ */ jsx17("p", { className: "eyebrow", style: { marginBottom: "0.5rem" }, children: system.expansion }),
+            /* @__PURE__ */ jsx17("p", { className: "prose", children: system.body }),
+            /* @__PURE__ */ jsx17("p", { className: "note", children: system.since })
+          ] }),
+          /* @__PURE__ */ jsxs16("div", { className: "panel", children: [
+            /* @__PURE__ */ jsx17("div", { className: "panel__title", children: "Structure" }),
+            /* @__PURE__ */ jsx17("ul", { className: "feature-list", style: { borderTop: 0, margin: 0 }, children: system.layers.map((layer) => /* @__PURE__ */ jsx17("li", { style: { gridTemplateColumns: "minmax(0, 1fr)", gap: "0.25rem" }, children: /* @__PURE__ */ jsxs16("div", { children: [
+              /* @__PURE__ */ jsx17("h3", { className: "feature-list__title", style: { fontSize: "0.9375rem" }, children: layer[0] }),
+              /* @__PURE__ */ jsx17("p", { className: "feature-list__body", style: { fontSize: "0.875rem" }, children: layer[1] })
+            ] }) }, layer[0])) })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx17("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx17(StatGrid, { items: system.stats }) })
+      ]
+    },
+    system.name
+  )),
+  /* @__PURE__ */ jsxs16(Section, { eyebrow: "Pipeline", title: "How a night is reduced", children: [
+    /* @__PURE__ */ jsx17("p", { className: "prose", children: pipelineText }),
+    /* @__PURE__ */ jsx17("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: software_default.stages.map((stage, index) => /* @__PURE__ */ jsxs16("li", { children: [
+      /* @__PURE__ */ jsx17("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
+      /* @__PURE__ */ jsxs16("div", { children: [
+        /* @__PURE__ */ jsx17("h3", { className: "feature-list__title", style: { fontFamily: "var(--font-mono)", fontSize: "1rem" }, children: stage.module }),
+        /* @__PURE__ */ jsx17("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: stage.body })
+      ] })
+    ] }, stage.module)) })
+  ] }),
+  /* @__PURE__ */ jsx17(Section, { eyebrow: "Priority", title: "Target-of-opportunity handling", alt: !0, children: /* @__PURE__ */ jsx17("p", { className: "prose", children: pipelineToOText }) }),
+  /* @__PURE__ */ jsxs16(Section, { eyebrow: "Reuse", title: "Running the pipeline yourself", children: [
+    /* @__PURE__ */ jsxs16("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsxs16("div", { children: [
+        /* @__PURE__ */ jsx17("p", { className: "prose", children: softwareReuseText }),
+        /* @__PURE__ */ jsx17("p", { className: "note", children: "Py7DT adopts a rolling-release version scheme in which the last digit is incremented whenever a scientific decision changes how data are processed. That version is recorded in every configuration file and in the process status database, so any product can be traced to the code that made it \u2014 and reprocessed in bulk when the code changes." })
+      ] }),
+      /* @__PURE__ */ jsxs16("div", { className: "panel panel--alt", children: [
+        /* @__PURE__ */ jsx17("div", { className: "panel__title", children: "External engines" }),
+        /* @__PURE__ */ jsx17("div", { className: "table-wrap", style: { border: 0 }, children: /* @__PURE__ */ jsx17("table", { className: "spec-table", children: /* @__PURE__ */ jsx17("tbody", { children: software_default.external.map((tool) => /* @__PURE__ */ jsxs16("tr", { children: [
+          /* @__PURE__ */ jsx17("th", { scope: "row", style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children: tool[0] }),
+          /* @__PURE__ */ jsx17("td", { style: { fontFamily: "var(--font-sans)" }, children: tool[1] })
+        ] }, tool[0])) }) }) })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs16("p", { className: "note", style: { marginTop: "2rem" }, children: [
+      "Full technical descriptions are given in Hyun et al., ",
+      /* @__PURE__ */ jsx17("i", { children: "Py7DT: Data Reduction Pipeline of the 7-Dimensional Telescope" }),
+      " (Proc. SPIE 14155-12), and in Choi et al., Proc. SPIE 14151-12, which covers RTCSpy in full. See",
+      " ",
+      /* @__PURE__ */ jsx17("a", { href: "/publication/list", children: "Publications" }),
+      "."
+    ] })
+  ] })
+] }), data_software_default = Index12;
 
 // app/routes/survey.design.tsx
 var survey_design_exports = {};
 __export(survey_design_exports, {
-  default: () => survey_design_default
+  default: () => survey_design_default,
+  meta: () => meta13
 });
-import { jsxDEV as jsxDEV17 } from "react/jsx-dev-runtime";
-var Index13 = () => /* @__PURE__ */ jsxDEV17("div", { style: { background: "#fff" }, children: [
-  /* @__PURE__ */ jsxDEV17(navigate_default, { manu: "manu7ds", fixed: !0 }, void 0, !1, {
-    fileName: "app/routes/survey.design.tsx",
-    lineNumber: 10,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV17("div", { className: "mx-auto w-full main-container", style: { paddingTop: "300px" }, children: /* @__PURE__ */ jsxDEV17("div", { className: "p-10 max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV17("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-    /* @__PURE__ */ jsxDEV17("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "....?" }, void 0, !1, {
-      fileName: "app/routes/survey.design.tsx",
-      lineNumber: 15,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV17("h3", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-      "Design of ",
-      /* @__PURE__ */ jsxDEV17("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "7DS" }, void 0, !1, {
-        fileName: "app/routes/survey.design.tsx",
-        lineNumber: 19,
-        columnNumber: 25
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/survey.design.tsx",
-      lineNumber: 18,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV17("p", { className: "text-content", children: overviewText }, void 0, !1, {
-      fileName: "app/routes/survey.design.tsx",
-      lineNumber: 21,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/survey.design.tsx",
-    lineNumber: 14,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/survey.design.tsx",
-    lineNumber: 13,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/survey.design.tsx",
-    lineNumber: 12,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV17(footer_default, {}, void 0, !1, {
-    fileName: "app/routes/survey.design.tsx",
-    lineNumber: 25,
-    columnNumber: 7
-  }, this)
-] }, void 0, !0, {
-  fileName: "app/routes/survey.design.tsx",
-  lineNumber: 9,
-  columnNumber: 5
-}, this), survey_design_default = Index13;
+import { jsx as jsx18, jsxs as jsxs17 } from "react/jsx-runtime";
+var meta13 = () => [
+  { title: "Survey design \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "Tiling, exposure strategy and observing modes of the 7-Dimensional Sky Survey."
+  }
+], TILING = [
+  ["Tile centres", "HEALPix pixelization of the celestial sphere"],
+  ["Tile range", "T00000 \u2013 T28519, increasing declination"],
+  ["Sky coverage", "South pole to +30\xB0"],
+  ["Overlap near equator", "\u2248 5\u2032 in R.A., 4\u2032 in Dec."],
+  ["Standard visit", "3 \xD7 100 s, coadded to 300 s"],
+  ["Typical night", "\u2248 30 tiles, \u2248 3,000 exposures"]
+], Index13 = () => /* @__PURE__ */ jsxs17(PageLayout, { menu: "manu7ds", children: [
+  /* @__PURE__ */ jsx18(
+    PageHero,
+    {
+      eyebrow: "Survey",
+      title: "Design",
+      lede: "One tile grid underlies everything the array does \u2014 survey tiers, target-of-opportunity pointings and difference imaging alike.",
+      image: "/img/hero/survey.jpg"
+    }
+  ),
+  /* @__PURE__ */ jsx18(Section, { eyebrow: "Tiling", title: "A single grid for the whole programme", children: /* @__PURE__ */ jsxs17("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsxs17("div", { children: [
+      /* @__PURE__ */ jsx18("p", { className: "prose", children: surveyDesignText }),
+      /* @__PURE__ */ jsx18("p", { className: "prose", children: surveyDesignText2 })
+    ] }),
+    /* @__PURE__ */ jsx18("div", { children: /* @__PURE__ */ jsx18("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs17("table", { className: "spec-table", children: [
+      /* @__PURE__ */ jsx18("caption", { children: "Tiling and exposure" }),
+      /* @__PURE__ */ jsx18("tbody", { children: TILING.map((row) => /* @__PURE__ */ jsxs17("tr", { children: [
+        /* @__PURE__ */ jsx18("th", { scope: "row", children: row[0] }),
+        /* @__PURE__ */ jsx18("td", { children: row[1] })
+      ] }, row[0])) })
+    ] }) }) })
+  ] }) }),
+  /* @__PURE__ */ jsxs17(Section, { eyebrow: "Observing modes", title: "Four ways to spend a night", alt: !0, children: [
+    /* @__PURE__ */ jsx18("p", { className: "prose", children: modeText }),
+    /* @__PURE__ */ jsx18("div", { className: "grid grid-cols-2", style: { marginTop: "2rem" }, children: surveys_default.modes.map((mode2) => /* @__PURE__ */ jsxs17("div", { className: "panel", children: [
+      /* @__PURE__ */ jsx18("div", { className: "panel__title", children: mode2.tagline }),
+      /* @__PURE__ */ jsx18("h3", { style: { fontSize: "1.125rem" }, children: mode2.name }),
+      /* @__PURE__ */ jsx18("p", { className: "feature-list__body", style: { margin: 0 }, children: mode2.body })
+    ] }, mode2.name)) }),
+    /* @__PURE__ */ jsxs17("figure", { className: "figure", style: { marginTop: "2rem", maxWidth: "760px" }, children: [
+      /* @__PURE__ */ jsx18("img", { src: "/img/overview.png", alt: "Schematic of the 7DT observing modes", loading: "lazy" }),
+      /* @__PURE__ */ jsxs17("figcaption", { children: [
+        /* @__PURE__ */ jsx18("b", { children: "Modes" }),
+        " Filter assignment across the array determines whether a night favours spectral resolution, depth, colour or sky coverage."
+      ] })
+    ] })
+  ] }),
+  /* @__PURE__ */ jsxs17(Section, { eyebrow: "Tiers", title: "Cadence and depth by tier", children: [
+    /* @__PURE__ */ jsx18("div", { className: "grid grid-cols-3", children: surveys_default.tiers.map((tier) => /* @__PURE__ */ jsxs17("div", { className: "tier-card", children: [
+      /* @__PURE__ */ jsx18("span", { className: "tier-card__code", children: tier.code }),
+      /* @__PURE__ */ jsx18("h3", { className: "tier-card__name", children: tier.name }),
+      /* @__PURE__ */ jsxs17("dl", { children: [
+        /* @__PURE__ */ jsxs17("div", { children: [
+          /* @__PURE__ */ jsx18("dt", { children: "Area" }),
+          /* @__PURE__ */ jsx18("dd", { children: tier.area })
+        ] }),
+        /* @__PURE__ */ jsxs17("div", { children: [
+          /* @__PURE__ */ jsx18("dt", { children: "Cadence" }),
+          /* @__PURE__ */ jsx18("dd", { children: tier.cadence })
+        ] }),
+        /* @__PURE__ */ jsxs17("div", { children: [
+          /* @__PURE__ */ jsx18("dt", { children: "Depth" }),
+          /* @__PURE__ */ jsx18("dd", { children: tier.depth })
+        ] }),
+        /* @__PURE__ */ jsxs17("div", { children: [
+          /* @__PURE__ */ jsx18("dt", { children: "Started" }),
+          /* @__PURE__ */ jsx18("dd", { children: tier.started })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx18("p", { className: "tier-card__note", children: tier.depthNote })
+    ] }, tier.code)) }),
+    /* @__PURE__ */ jsxs17("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
+      /* @__PURE__ */ jsx18("a", { className: "btn btn--primary", href: "/survey/status", children: "Current status" }),
+      /* @__PURE__ */ jsx18("a", { className: "btn btn--secondary", href: "/survey/overview", children: "Survey overview" })
+    ] })
+  ] })
+] }), survey_design_default = Index13;
 
 // app/routes/survey.status.tsx
 var survey_status_exports = {};
 __export(survey_status_exports, {
-  default: () => survey_status_default
+  default: () => survey_status_default,
+  meta: () => meta14
 });
-import { jsxDEV as jsxDEV18 } from "react/jsx-dev-runtime";
-var Index14 = () => /* @__PURE__ */ jsxDEV18("div", { style: { background: "#fff" }, children: [
-  /* @__PURE__ */ jsxDEV18(navigate_default, { manu: "manu7ds", fixed: !0 }, void 0, !1, {
-    fileName: "app/routes/survey.status.tsx",
-    lineNumber: 16,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV18("div", { className: "mx-auto w-full main-container", style: { paddingTop: "300px" }, children: /* @__PURE__ */ jsxDEV18("div", { className: "p-10 max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV18("div", { className: "justify-between", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-    /* @__PURE__ */ jsxDEV18("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Observational Conditions" }, void 0, !1, {
-      fileName: "app/routes/survey.status.tsx",
-      lineNumber: 21,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ jsxDEV18("h3", { className: "text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-      "7DT ",
-      /* @__PURE__ */ jsxDEV18("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "Status" }, void 0, !1, {
-        fileName: "app/routes/survey.status.tsx",
-        lineNumber: 25,
-        columnNumber: 19
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/survey.status.tsx",
-      lineNumber: 24,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/survey.status.tsx",
-    lineNumber: 20,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/survey.status.tsx",
-    lineNumber: 19,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/survey.status.tsx",
-    lineNumber: 18,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV18(footer_default, {}, void 0, !1, {
-    fileName: "app/routes/survey.status.tsx",
-    lineNumber: 30,
-    columnNumber: 7
-  }, this)
-] }, void 0, !0, {
-  fileName: "app/routes/survey.status.tsx",
-  lineNumber: 15,
-  columnNumber: 5
-}, this), survey_status_default = Index14;
+import { jsx as jsx19, jsxs as jsxs18 } from "react/jsx-runtime";
+var meta14 = () => [
+  { title: "Survey status \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "Current progress of the Reference Imaging, Wide-area Time-domain and Intensive Monitoring surveys."
+  }
+], MILESTONES = [
+  ["Oct. 2023", "First light"],
+  ["Jul. 2024", "Reference Imaging Survey commences"],
+  ["Aug. 2024", "RTCSpy takes over nightly operation"],
+  ["Dec. 2024", "Array grows to 16 units; automated ToO response"],
+  ["Apr. 2025", "Intensive Monitoring Survey commences"],
+  ["Late 2025", "15 additional medium-band filters installed"],
+  ["Jan. 2026", "Py7DT becomes the sole operational pipeline"],
+  ["2026", "Wide-area Time-domain Survey to commence"],
+  ["End 2027", "Full RIS cycle anticipated"]
+], Index14 = () => /* @__PURE__ */ jsxs18(PageLayout, { menu: "manu7ds", children: [
+  /* @__PURE__ */ jsx19(
+    PageHero,
+    {
+      eyebrow: "Survey",
+      title: "Status",
+      lede: "Where the three tiers stand as of June 2026.",
+      image: "/img/hero/status.jpg",
+      meta: [
+        { value: "58", unit: "%", label: "RIS complete" },
+        { value: "260", unit: "+", label: "IMS cycles" },
+        { value: "1.75", unit: "M", label: "Images acquired" },
+        { value: "16", unit: "/ 20", label: "Units operating" }
+      ]
+    }
+  ),
+  /* @__PURE__ */ jsxs18(Section, { eyebrow: "Operations", title: "Nightly operation", children: [
+    /* @__PURE__ */ jsx19("p", { className: "prose", children: surveyStatusText }),
+    /* @__PURE__ */ jsx19("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx19(
+      StatGrid,
+      {
+        items: [
+          { value: "\u2248 30", label: "Tiles per night" },
+          { value: "\u2248 3,000", label: "Exposures per night" },
+          { value: "\u2248 350", unit: "GB", label: "Raw data per night" },
+          { value: "\u2248 100", label: "ToO follow-ups" },
+          { value: "\u2248 10", label: "GW campaigns" }
+        ]
+      }
+    ) })
+  ] }),
+  /* @__PURE__ */ jsx19(Section, { eyebrow: "Progress", title: "Tier by tier", alt: !0, children: /* @__PURE__ */ jsx19("div", { className: "stack-lg", children: surveys_default.tiers.map((tier) => /* @__PURE__ */ jsxs18("div", { className: "panel", children: [
+    /* @__PURE__ */ jsxs18(
+      "div",
+      {
+        style: {
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "baseline",
+          justifyContent: "space-between",
+          gap: "0.75rem",
+          marginBottom: "1rem"
+        },
+        children: [
+          /* @__PURE__ */ jsxs18("div", { style: { display: "flex", alignItems: "baseline", gap: "0.75rem", flexWrap: "wrap" }, children: [
+            /* @__PURE__ */ jsx19("span", { className: "tier-card__code", children: tier.code }),
+            /* @__PURE__ */ jsx19("h3", { style: { margin: 0, fontSize: "1.125rem" }, children: tier.name })
+          ] }),
+          /* @__PURE__ */ jsx19("span", { className: `pill pill--${tier.status}`, children: tier.statusLabel })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx19("div", { className: "meter", "aria-hidden": "true", children: /* @__PURE__ */ jsx19("span", { className: "meter__fill meter__fill--spectrum", style: { width: `${tier.progress}%` } }) }),
+    /* @__PURE__ */ jsxs18("p", { className: "note", style: { marginTop: "0.75rem", marginBottom: 0 }, children: [
+      tier.progressLabel,
+      " \xB7 started ",
+      tier.started,
+      " \xB7 ",
+      tier.depthNote.toLowerCase()
+    ] })
+  ] }, tier.code)) }) }),
+  /* @__PURE__ */ jsxs18(Section, { eyebrow: "Timeline", title: "Milestones", children: [
+    /* @__PURE__ */ jsx19("ul", { className: "feature-list", children: MILESTONES.map((milestone) => /* @__PURE__ */ jsxs18("li", { children: [
+      /* @__PURE__ */ jsx19("span", { className: "feature-list__key", children: milestone[0] }),
+      /* @__PURE__ */ jsx19("div", { children: /* @__PURE__ */ jsx19("p", { className: "feature-list__body", style: { margin: 0, color: "var(--slate-700)" }, children: milestone[1] }) })
+    ] }, milestone[0] + milestone[1])) }),
+    /* @__PURE__ */ jsxs18("p", { className: "note", style: { marginTop: "1.5rem" }, children: [
+      "Status figures are those reported in the June 2026 7DT status report. See",
+      " ",
+      /* @__PURE__ */ jsx19("a", { href: "/news", children: "News" }),
+      " for updates as the surveys progress."
+    ] })
+  ] })
+] }), survey_status_default = Index14;
 
 // app/routes/about.intro.tsx
 var about_intro_exports = {};
 __export(about_intro_exports, {
-  default: () => about_intro_default
+  default: () => about_intro_default,
+  meta: () => meta15
 });
-import { jsxDEV as jsxDEV19 } from "react/jsx-dev-runtime";
-var Index15 = () => {
-  let backgroundImageStyle = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("../img/about.png")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px",
-    position: "relative"
-    // Add this line
-  }, transparentBoxStyle = {
-    position: "absolute",
-    top: "30%",
-    // Adjust this value as per your requirement
-    left: "50%",
-    // Adjust this value as per your requirement
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "rgba(255, 255, 255, 0.85)",
-    // Adjust the transparency here
-    padding: "50px",
-    borderRadius: "10px",
-    maxWidth: "90%",
-    marginTop: "200px"
-  }, buttonStyle2 = {
-    backgroundColor: "var(--pickled-bluewood-900)",
-    border: "none",
-    color: "white",
-    padding: "15px 32px",
-    textAlign: "center",
-    textDecoration: "none",
-    display: "inline-block",
-    fontSize: "16px",
-    margin: "4px 50px",
-    cursor: "pointer",
-    borderRadius: "10px"
-  }, buttonHoverStyle = {
-    backgroundColor: "var(--pickled-bluewood-600)"
-  }, handleMouseOver = (e) => {
-    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-  }, handleMouseOut = (e) => {
-    e.target.style.backgroundColor = buttonStyle2.backgroundColor;
-  };
-  return /* @__PURE__ */ jsxDEV19("div", { style: { background: "#fff" }, children: [
-    /* @__PURE__ */ jsxDEV19(navigate_default, { manu: "manuAbout" }, void 0, !1, {
-      fileName: "app/routes/about.intro.tsx",
-      lineNumber: 58,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV19("div", { style: backgroundImageStyle, children: [
-      /* @__PURE__ */ jsxDEV19("div", { style: { height: "100vh" } }, void 0, !1, {
-        fileName: "app/routes/about.intro.tsx",
-        lineNumber: 61,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ jsxDEV19("div", { style: transparentBoxStyle, children: /* @__PURE__ */ jsxDEV19("div", { className: "mx-auto w-full", children: /* @__PURE__ */ jsxDEV19("div", { className: "max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV19("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-        /* @__PURE__ */ jsxDEV19("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Welcome" }, void 0, !1, {
-          fileName: "app/routes/about.intro.tsx",
-          lineNumber: 66,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV19("h3", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-          "What is ",
-          /* @__PURE__ */ jsxDEV19("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "7DS" }, void 0, !1, {
-            fileName: "app/routes/about.intro.tsx",
-            lineNumber: 70,
-            columnNumber: 27
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/about.intro.tsx",
-          lineNumber: 69,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV19("p", { className: "text-content", children: overviewText }, void 0, !1, {
-          fileName: "app/routes/about.intro.tsx",
-          lineNumber: 72,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV19("br", {}, void 0, !1, {
-          fileName: "app/routes/about.intro.tsx",
-          lineNumber: 73,
-          columnNumber: 17
-        }, this),
-        /* @__PURE__ */ jsxDEV19("div", { className: "flex justify-center", children: [
-          /* @__PURE__ */ jsxDEV19("a", { href: "./team", children: /* @__PURE__ */ jsxDEV19("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Meet our Team" }, void 0, !1, {
-            fileName: "app/routes/about.intro.tsx",
-            lineNumber: 76,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/about.intro.tsx",
-            lineNumber: 75,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV19("a", { href: "./funding", children: /* @__PURE__ */ jsxDEV19("button", { style: buttonStyle2, onMouseOver: handleMouseOver, onMouseOut: handleMouseOut, children: "Funding Sources" }, void 0, !1, {
-            fileName: "app/routes/about.intro.tsx",
-            lineNumber: 81,
-            columnNumber: 21
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/about.intro.tsx",
-            lineNumber: 80,
-            columnNumber: 19
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/about.intro.tsx",
-          lineNumber: 74,
-          columnNumber: 17
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/about.intro.tsx",
-        lineNumber: 65,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/about.intro.tsx",
-        lineNumber: 64,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/about.intro.tsx",
-        lineNumber: 63,
-        columnNumber: 11
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/about.intro.tsx",
-        lineNumber: 62,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/about.intro.tsx",
-      lineNumber: 60,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV19(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/about.intro.tsx",
-      lineNumber: 92,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/about.intro.tsx",
-    lineNumber: 57,
-    columnNumber: 5
-  }, this);
-}, about_intro_default = Index15;
+import { Fragment as Fragment8, jsx as jsx20, jsxs as jsxs19 } from "react/jsx-runtime";
+var meta15 = () => [
+  { title: "What is 7DS \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "The 7-Dimensional Telescope and the 7-Dimensional Sky Survey: a twenty-unit medium-band array in Chile and the survey it carries out."
+  }
+], Index15 = () => /* @__PURE__ */ jsxs19(PageLayout, { menu: "manuAbout", children: [
+  /* @__PURE__ */ jsx20(
+    PageHero,
+    {
+      eyebrow: "About",
+      title: /* @__PURE__ */ jsxs19(Fragment8, { children: [
+        "What is ",
+        /* @__PURE__ */ jsx20("em", { children: "7DS" }),
+        "?"
+      ] }),
+      lede: "A multi-telescope array built to find the optical counterparts of gravitational-wave events \u2014 and, in the process, to map the southern sky in forty colours.",
+      image: "/img/hero/about.jpg",
+      meta: [
+        { value: "16", unit: "/ 20", label: "Units on sky" },
+        { value: "35", unit: "/ 40", label: "Medium bands" },
+        { value: "2023", label: "First light" },
+        { value: "Chile", label: "El Sauce Obs." }
+      ]
+    }
+  ),
+  /* @__PURE__ */ jsx20(Section, { eyebrow: "Overview", title: "Imaging that behaves like spectroscopy", children: /* @__PURE__ */ jsxs19("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsxs19("div", { children: [
+      /* @__PURE__ */ jsx20("p", { className: "prose", children: overviewText }),
+      /* @__PURE__ */ jsx20("p", { className: "prose", children: aboutText2 })
+    ] }),
+    /* @__PURE__ */ jsxs19("figure", { className: "figure", children: [
+      /* @__PURE__ */ jsx20(
+        "img",
+        {
+          src: "/img/images/Figure1_7DT.jpeg",
+          alt: "The 7-Dimensional Telescope array at El Sauce Observatory",
+          loading: "lazy"
+        }
+      ),
+      /* @__PURE__ */ jsxs19("figcaption", { children: [
+        /* @__PURE__ */ jsx20("b", { children: "The array" }),
+        " DeltaRho 500 units installed at El Sauce Observatory, R\xEDo Hurtado Valley, Chile."
+      ] })
+    ] })
+  ] }) }),
+  /* @__PURE__ */ jsx20(Section, { eyebrow: "The name", title: "Seven dimensions", alt: !0, children: /* @__PURE__ */ jsxs19("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsx20("p", { className: "prose", children: aboutText3 }),
+    /* @__PURE__ */ jsx20("ul", { className: "feature-list", style: { margin: 0 }, children: surveys_default.dimensions.map((dim) => /* @__PURE__ */ jsxs19("li", { style: { padding: "0.6rem 0" }, children: [
+      /* @__PURE__ */ jsx20("span", { className: "feature-list__key", children: dim.n }),
+      /* @__PURE__ */ jsx20("div", { children: /* @__PURE__ */ jsx20("h3", { className: "feature-list__title", style: { margin: 0, fontSize: "1rem" }, children: dim.label }) })
+    ] }, dim.n)) })
+  ] }) }),
+  /* @__PURE__ */ jsxs19(Section, { eyebrow: "Programme", title: "What the survey delivers", children: [
+    /* @__PURE__ */ jsx20("div", { className: "grid grid-cols-3", children: surveys_default.tiers.map((tier) => /* @__PURE__ */ jsxs19("div", { className: "tier-card", children: [
+      /* @__PURE__ */ jsx20("span", { className: "tier-card__code", children: tier.code }),
+      /* @__PURE__ */ jsx20("h3", { className: "tier-card__name", children: tier.name }),
+      /* @__PURE__ */ jsxs19("dl", { children: [
+        /* @__PURE__ */ jsxs19("div", { children: [
+          /* @__PURE__ */ jsx20("dt", { children: "Area" }),
+          /* @__PURE__ */ jsx20("dd", { children: tier.area })
+        ] }),
+        /* @__PURE__ */ jsxs19("div", { children: [
+          /* @__PURE__ */ jsx20("dt", { children: "Cadence" }),
+          /* @__PURE__ */ jsx20("dd", { children: tier.cadence })
+        ] }),
+        /* @__PURE__ */ jsxs19("div", { children: [
+          /* @__PURE__ */ jsx20("dt", { children: "Depth" }),
+          /* @__PURE__ */ jsx20("dd", { children: tier.depth })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx20("span", { className: `pill pill--${tier.status}`, children: tier.statusLabel })
+    ] }, tier.code)) }),
+    /* @__PURE__ */ jsx20("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx20(
+      NextLinks,
+      {
+        title: "Continue",
+        links: [
+          { label: "Meet the team", href: "/about/team" },
+          { label: "Funding sources", href: "/about/funding" },
+          { label: "Survey design", href: "/survey/design" },
+          { label: "The telescope", href: "/telescope/overview" }
+        ]
+      }
+    ) })
+  ] })
+] }), about_intro_default = Index15;
 
 // app/routes/science.sci.tsx
 var science_sci_exports = {};
 __export(science_sci_exports, {
-  default: () => science_sci_default
+  default: () => science_sci_default,
+  meta: () => meta16
 });
-import { useState as useState4, useEffect as useEffect4 } from "react";
-import { jsxDEV as jsxDEV20 } from "react/jsx-dev-runtime";
-var Index16 = () => {
-  let backgroundImage = {
-    backgroundSize: "cover",
-    backgroundRepeat: "repeat",
-    backgroundImage: 'url("./img/science.jpg")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px"
-  }, [submenuTop, setSubmenuTop] = useState4("750px"), [smallWindow, setSmallWindow] = useState4(!0);
-  return useEffect4(() => {
-    let updateWindow = () => {
-      window.innerWidth < 1500 ? setSmallWindow(!1) : setSmallWindow(!0);
-    };
-    return updateWindow(), window.addEventListener("resize", updateWindow), () => {
-      window.removeEventListener("resize", updateWindow);
-    };
-  }, []), useEffect4(() => {
-    let handleScroll = () => {
-      let scrollPosition = window.scrollY, windowHeight = window.innerHeight, newTop = `calc(750px - ${scrollPosition * 0.5 / windowHeight * 100}%)`;
-      setSubmenuTop(newTop);
-    };
-    return window.addEventListener("scroll", handleScroll), () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []), /* @__PURE__ */ jsxDEV20("div", { style: { background: "#fff" }, children: [
-    /* @__PURE__ */ jsxDEV20(navigate_default, { manu: "manuScience", fixed: !0 }, void 0, !1, {
-      fileName: "app/routes/science.sci.tsx",
-      lineNumber: 62,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV20("div", { className: "mx-auto w-full main-container", style: { paddingTop: "100px" }, children: /* @__PURE__ */ jsxDEV20("div", { className: "p-10 max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV20("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-      /* @__PURE__ */ jsxDEV20("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "questions" }, void 0, !1, {
-        fileName: "app/routes/science.sci.tsx",
-        lineNumber: 67,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ jsxDEV20("h3", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-        "Templates ",
-        /* @__PURE__ */ jsxDEV20("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "ASD" }, void 0, !1, {
-          fileName: "app/routes/science.sci.tsx",
-          lineNumber: 71,
-          columnNumber: 25
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/science.sci.tsx",
-        lineNumber: 70,
-        columnNumber: 13
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/science.sci.tsx",
-      lineNumber: 66,
-      columnNumber: 11
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/science.sci.tsx",
-      lineNumber: 65,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/science.sci.tsx",
-      lineNumber: 64,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV20(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/science.sci.tsx",
-      lineNumber: 76,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/science.sci.tsx",
-    lineNumber: 61,
-    columnNumber: 5
-  }, this);
-}, science_sci_default = Index16;
+import { jsx as jsx21, jsxs as jsxs20 } from "react/jsx-runtime";
+var meta16 = () => [
+  { title: "Science themes \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "Science themes and early results from the 7-Dimensional Telescope: multi-messenger astronomy, transients, galaxies, cosmology, AGN, Galactic and solar-system science."
+  }
+], Index16 = () => /* @__PURE__ */ jsxs20(PageLayout, { menu: "manuScience", children: [
+  /* @__PURE__ */ jsx21(
+    PageHero,
+    {
+      eyebrow: "Science",
+      title: "Themes & early results",
+      lede: "Each theme below draws on the same data product \u2014 a medium-band spectral energy distribution for every source in a 1.25 square degree field.",
+      image: "/img/hero/sci.jpg"
+    }
+  ),
+  /* @__PURE__ */ jsx21(Section, { eyebrow: "Themes", title: "The 7DS science programme", children: /* @__PURE__ */ jsx21("ul", { className: "feature-list", children: science_default.themes.map((theme) => /* @__PURE__ */ jsxs20("li", { id: theme.id, style: { scrollMarginTop: "6rem" }, children: [
+    /* @__PURE__ */ jsx21("span", { className: "feature-list__key", children: theme.n }),
+    /* @__PURE__ */ jsxs20("div", { children: [
+      /* @__PURE__ */ jsx21("h2", { className: "feature-list__title", style: { fontSize: "1.25rem" }, children: theme.title }),
+      /* @__PURE__ */ jsx21("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: theme.summary })
+    ] })
+  ] }, theme.id)) }) }),
+  /* @__PURE__ */ jsxs20(Section, { eyebrow: "Early science", title: "Results from commissioning and first survey data", alt: !0, children: [
+    /* @__PURE__ */ jsx21("div", { className: "grid grid-cols-2", children: science_default.results.map((result) => /* @__PURE__ */ jsxs20("div", { className: "panel", children: [
+      /* @__PURE__ */ jsx21("div", { className: "panel__title", children: result.tag }),
+      /* @__PURE__ */ jsx21("h3", { style: { fontSize: "1.0625rem" }, children: result.title }),
+      /* @__PURE__ */ jsx21("p", { className: "feature-list__body", style: { margin: 0 }, children: result.body })
+    ] }, result.title)) }),
+    /* @__PURE__ */ jsxs20("p", { className: "note", style: { marginTop: "1.5rem" }, children: [
+      "Figures quoted above are drawn from the 7DT status report and the associated early science papers. See ",
+      /* @__PURE__ */ jsx21("a", { href: "/publication/list", children: "Publications" }),
+      " for the full list."
+    ] })
+  ] }),
+  /* @__PURE__ */ jsx21(Section, { eyebrow: "Data", title: "Working with 7DT data", children: /* @__PURE__ */ jsxs20("div", { className: "split", children: [
+    /* @__PURE__ */ jsxs20("div", { children: [
+      /* @__PURE__ */ jsx21("p", { className: "prose", children: "7DT data products are medium-band images and matched source catalogues on a fixed tile grid, calibrated against Gaia DR3 synthetic photometry and flux-scaled so that pixel values carry units of microjansky. That makes them directly usable for pixel-based SED fitting without further conversion." }),
+      /* @__PURE__ */ jsxs20("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
+        /* @__PURE__ */ jsx21("a", { className: "btn btn--primary", href: "/data/overview", children: "Data & products" }),
+        /* @__PURE__ */ jsx21("a", { className: "btn btn--secondary", href: "/data/software", children: "Reduction software" })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs20("figure", { className: "figure", children: [
+      /* @__PURE__ */ jsx21(
+        "img",
+        {
+          src: "/img/images/Figure8a(lowres)_u-500-650_asinh.png",
+          alt: "Pseudo-colour image of the Helix Nebula from Sloan u and the m500 and m650 medium bands",
+          loading: "lazy"
+        }
+      ),
+      /* @__PURE__ */ jsxs20("figcaption", { children: [
+        /* @__PURE__ */ jsx21("b", { children: "Helix Nebula" }),
+        " Pseudo-colour composite from Sloan u and the m500 and m650 medium bands, mapped to blue, green and red."
+      ] })
+    ] })
+  ] }) })
+] }), science_sci_default = Index16;
 
 // app/routes/about.team.tsx
 var about_team_exports = {};
 __export(about_team_exports, {
-  default: () => about_team_default
+  default: () => about_team_default,
+  meta: () => meta17
 });
 
 // app/routes/content/team.json
@@ -3636,7 +2576,15 @@ var team_default = {
       imgName: "ImMS.jpeg"
     },
     {
-      name: "Dr. Jihoon Kim",
+      name: "Prof. Hyung Mok Lee",
+      role: "Co-Investigator",
+      title: "Professor",
+      affiliation: "Seoul National University",
+      email: "",
+      imgName: ""
+    },
+    {
+      name: "Dr. Ji Hoon Kim",
       role: "Project Manager",
       title: "Associate Research Professor",
       affiliation: "Seoul National University",
@@ -3652,614 +2600,247 @@ var team_default = {
       imgName: "ChangSW.jpeg"
     },
     {
+      name: "Dr. Donggeun Tak",
+      role: "Multi-messenger & Transients",
+      title: "",
+      affiliation: "Kyung Hee University",
+      email: "donggeun.tak@gmail.com",
+      imgName: ""
+    },
+    {
       name: "Gregory S.H. Paek",
-      role: "Data Reduction Pipeline",
-      title: "PhD Candidate",
-      affiliation: "Seoul National University",
+      role: "Photometric Calibration",
+      title: "",
+      affiliation: "Institute for Astronomy, University of Hawaii",
       email: "gregorypaek94@gmail.com",
       imgName: "PaekG.jpeg"
     },
     {
       name: "Hyeonho Choi",
-      role: "Science Operation Development",
+      role: "Telescope Control & Scheduling",
       title: "PhD Student",
       affiliation: "Seoul National University",
       email: "hhchoi1022@gmail.com",
       imgName: "ChoiHH.jpeg"
+    },
+    {
+      name: "Donghwan Hyun",
+      role: "Data Reduction Pipeline",
+      title: "",
+      affiliation: "Seoul National University",
+      email: "",
+      imgName: ""
     }
   ]
 };
-
-// app/routes/about.team.tsx
-import { DataGrid } from "@mui/x-data-grid";
 
 // app/routes/content/collabs.json
 var collabs_default = {
   collabs: [
-    {
-      id: 1,
-      firstName: "Donggeun",
-      lastName: "Tak",
-      affiliation: "Seoul National University",
-      workingGroup: "MMA, Transients",
-      email: "donggeun.tak@gmail.com"
-    }
+    { id: 1, firstName: "Myungshin", lastName: "Im", affiliation: "Seoul National University", workingGroup: "Science, Multi-messenger", email: "myungshin.im@gmail.com" },
+    { id: 2, firstName: "Ji Hoon", lastName: "Kim", affiliation: "Seoul National University", workingGroup: "Operations", email: "jhkim.astrosnu@gmail.com" },
+    { id: 3, firstName: "Hyung Mok", lastName: "Lee", affiliation: "Seoul National University", workingGroup: "Science", email: "" },
+    { id: 4, firstName: "Seo-Won", lastName: "Chang", affiliation: "Seoul National University", workingGroup: "Database", email: "seowon.chang@snu.ac.kr" },
+    { id: 5, firstName: "Donggeun", lastName: "Tak", affiliation: "Kyung Hee University", workingGroup: "MMA, Transients", email: "donggeun.tak@gmail.com" },
+    { id: 6, firstName: "Gregory S. H.", lastName: "Paek", affiliation: "University of Hawaii", workingGroup: "Photometric Calibration", email: "gregorypaek94@gmail.com" },
+    { id: 7, firstName: "Hyeonho", lastName: "Choi", affiliation: "Seoul National University", workingGroup: "Telescope Control", email: "hhchoi1022@gmail.com" },
+    { id: 8, firstName: "Donghwan", lastName: "Hyun", affiliation: "Seoul National University", workingGroup: "Data Pipeline", email: "" },
+    { id: 9, firstName: "Chang-wan", lastName: "Kim", affiliation: "Seoul National University", workingGroup: "Operations", email: "" },
+    { id: 10, firstName: "Won-Hyeong", lastName: "Lee", affiliation: "Seoul National University", workingGroup: "Data Pipeline", email: "" },
+    { id: 11, firstName: "Danhyeuk", lastName: "Seol", affiliation: "Seoul National University", workingGroup: "Data Pipeline", email: "" },
+    { id: 12, firstName: "Jangho", lastName: "Bae", affiliation: "Seoul National University", workingGroup: "Data Pipeline", email: "" }
   ]
 };
 
 // app/routes/about.team.tsx
-import { jsxDEV as jsxDEV21 } from "react/jsx-dev-runtime";
-var Index17 = () => {
-  let backgroundImage = {
-    backgroundSize: "cover",
-    backgroundRepeat: "repeat",
-    backgroundImage: 'url("./img/team.jpeg")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px"
-  }, columns = [
-    { field: "firstName", headerName: "First Name", flex: 1 },
-    { field: "lastName", headerName: "Last Name", flex: 1 },
-    { field: "affiliation", headerName: "Affiliation", flex: 1 },
-    { field: "workingGroup", headerName: "Working Group", flex: 1 },
-    { field: "email", headerName: "Email", flex: 1 }
-  ];
-  return /* @__PURE__ */ jsxDEV21("div", { style: { background: "#fff" }, children: [
-    /* @__PURE__ */ jsxDEV21(navigate_default, { manu: "manuAbout", fixed: !0 }, void 0, !1, {
-      fileName: "app/routes/about.team.tsx",
-      lineNumber: 32,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV21("div", { className: "mx-auto w-full m,main-container", style: { paddingTop: "100px" }, children: /* @__PURE__ */ jsxDEV21("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-      /* @__PURE__ */ jsxDEV21("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-        /* @__PURE__ */ jsxDEV21("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Introducing" }, void 0, !1, {
-          fileName: "app/routes/about.team.tsx",
-          lineNumber: 37,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ jsxDEV21("h3", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-          "Our ",
-          /* @__PURE__ */ jsxDEV21("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "Team" }, void 0, !1, {
-            fileName: "app/routes/about.team.tsx",
-            lineNumber: 41,
-            columnNumber: 19
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/about.team.tsx",
-          lineNumber: 40,
-          columnNumber: 13
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/about.team.tsx",
-        lineNumber: 36,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV21("div", { className: "sm:grid grid-cols-2 gap-6 my-10", children: team_default.members.map((member, index) => /* @__PURE__ */ jsxDEV21("div", { className: "max-w-sm w-full lg:max-w-full lg:flex mx-auto my-10", children: [
-        /* @__PURE__ */ jsxDEV21(
-          "div",
+import { Fragment as Fragment9, jsx as jsx22, jsxs as jsxs21 } from "react/jsx-runtime";
+var meta17 = () => [
+  { title: "Team \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "The people who build, operate and analyse 7DT and the 7-Dimensional Sky Survey."
+  }
+], initials = (name) => name.replace(/^(Prof\.|Dr\.)\s+/, "").split(/\s+/).map((part) => part[0]).slice(0, 2).join(""), Index17 = () => /* @__PURE__ */ jsxs21(PageLayout, { menu: "manuAbout", children: [
+  /* @__PURE__ */ jsx22(
+    PageHero,
+    {
+      eyebrow: "About",
+      title: "The team",
+      lede: "7DT is designed, built and operated by the Center for the Gravitational-wave Universe at Seoul National University, with collaborators across Korea and abroad.",
+      image: "/img/hero/team.jpg",
+      meta: [
+        { value: String(team_default.members.length), label: "Core team" },
+        { value: String(collabs_default.collabs.length), label: "Collaborators" },
+        { value: "SNU", label: "Host institution" }
+      ]
+    }
+  ),
+  /* @__PURE__ */ jsx22(Section, { eyebrow: "Core team", title: "Who does what", children: /* @__PURE__ */ jsx22("div", { className: "people-grid", children: team_default.members.map((member) => /* @__PURE__ */ jsxs21("div", { className: "person", children: [
+    /* @__PURE__ */ jsx22(
+      "div",
+      {
+        className: "person__portrait",
+        style: member.imgName ? { backgroundImage: `url(/img/team/${member.imgName})` } : void 0,
+        children: !member.imgName && initials(member.name)
+      }
+    ),
+    /* @__PURE__ */ jsxs21("div", { children: [
+      /* @__PURE__ */ jsx22("h3", { className: "person__name", children: member.name }),
+      /* @__PURE__ */ jsx22("p", { className: "person__role", children: member.role }),
+      /* @__PURE__ */ jsxs21("p", { className: "person__meta", children: [
+        member.title && /* @__PURE__ */ jsxs21(Fragment9, { children: [
+          member.title,
+          /* @__PURE__ */ jsx22("br", {})
+        ] }),
+        member.affiliation
+      ] }),
+      /* @__PURE__ */ jsxs21("div", { className: "person__links", children: [
+        member.webpage && /* @__PURE__ */ jsx22("a", { href: member.webpage, title: "Homepage", target: "_blank", rel: "noreferrer", children: /* @__PURE__ */ jsx22("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx22(
+          "path",
           {
-            className: "h-96 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden",
-            style: { backgroundImage: `url(../img/team/${member.imgName})`, backgroundPosition: "center" }
-          },
-          void 0,
-          !1,
+            fillRule: "evenodd",
+            d: "M11.3 3.3a1 1 0 0 1 1.4 0l6 6 2 2a1 1 0 0 1-1.4 1.4l-.3-.3V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3c0 .6-.4 1-1 1H7a2 2 0 0 1-2-2v-6.6l-.3.3a1 1 0 0 1-1.4-1.4l2-2 6-6Z",
+            clipRule: "evenodd"
+          }
+        ) }) }),
+        member.email && /* @__PURE__ */ jsx22("a", { href: `mailto:${member.email}`, title: member.email, children: /* @__PURE__ */ jsxs21(
+          "svg",
           {
-            fileName: "app/routes/about.team.tsx",
-            lineNumber: 48,
-            columnNumber: 15
-          },
-          this
-        ),
-        /* @__PURE__ */ jsxDEV21("div", { className: "border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4", children: /* @__PURE__ */ jsxDEV21("div", { children: [
-          /* @__PURE__ */ jsxDEV21(
-            "a",
-            {
-              href: "mailto:" + member.email,
-              className: "text-gray-900 font-bold text-xl mb-2 hover:text-bluewood-600 transition duration-500 ease-in-out",
-              children: member.name
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/about.team.tsx",
-              lineNumber: 53,
-              columnNumber: 19
-            },
-            this
-          ),
-          /* @__PURE__ */ jsxDEV21("p", { className: "text-sm text-gray-600", children: member.title }, void 0, !1, {
-            fileName: "app/routes/about.team.tsx",
-            lineNumber: 56,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV21("p", { className: "text-gray-900 font-bold text-base mt-4", children: member.role }, void 0, !1, {
-            fileName: "app/routes/about.team.tsx",
-            lineNumber: 59,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV21("p", { className: "text-gray-900 font-bold text-base mt-4", children: "Affiliation" }, void 0, !1, {
-            fileName: "app/routes/about.team.tsx",
-            lineNumber: 62,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV21("p", { className: "text-sm text-gray-600", children: member.affiliation }, void 0, !1, {
-            fileName: "app/routes/about.team.tsx",
-            lineNumber: 65,
-            columnNumber: 19
-          }, this),
-          /* @__PURE__ */ jsxDEV21("div", { className: "my-4 flex", children: [
-            member.webpage && /* @__PURE__ */ jsxDEV21("a", { className: "mr-3", href: member.webpage, children: /* @__PURE__ */ jsxDEV21("svg", { className: "w-6 h-6 text-gray-800 dark:text-white", "aria-hidden": "true", xmlns: "http://www.w3.org/2000/svg", fill: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsxDEV21("path", { fillRule: "evenodd", d: "M11.3 3.3a1 1 0 0 1 1.4 0l6 6 2 2a1 1 0 0 1-1.4 1.4l-.3-.3V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3c0 .6-.4 1-1 1H7a2 2 0 0 1-2-2v-6.6l-.3.3a1 1 0 0 1-1.4-1.4l2-2 6-6Z", clipRule: "evenodd" }, void 0, !1, {
-              fileName: "app/routes/about.team.tsx",
-              lineNumber: 72,
-              columnNumber: 27
-            }, this) }, void 0, !1, {
-              fileName: "app/routes/about.team.tsx",
-              lineNumber: 71,
-              columnNumber: 25
-            }, this) }, void 0, !1, {
-              fileName: "app/routes/about.team.tsx",
-              lineNumber: 70,
-              columnNumber: 41
-            }, this),
-            /* @__PURE__ */ jsxDEV21("a", { className: "mr-3", href: "mailto:" + member.email, children: /* @__PURE__ */ jsxDEV21("i", { className: "fa fa-envelope" }, void 0, !1, {
-              fileName: "app/routes/about.team.tsx",
-              lineNumber: 77,
-              columnNumber: 23
-            }, this) }, void 0, !1, {
-              fileName: "app/routes/about.team.tsx",
-              lineNumber: 76,
-              columnNumber: 21
-            }, this),
-            member.orcid && /* @__PURE__ */ jsxDEV21("a", { className: "mr-3 flex items-center", href: member.orcid, children: /* @__PURE__ */ jsxDEV21("img", { alt: "ORCID logo", src: "https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png", width: "16px", height: "16px" }, void 0, !1, {
-              fileName: "app/routes/about.team.tsx",
-              lineNumber: 81,
-              columnNumber: 25
-            }, this) }, void 0, !1, {
-              fileName: "app/routes/about.team.tsx",
-              lineNumber: 80,
-              columnNumber: 39
-            }, this)
-          ] }, void 0, !0, {
-            fileName: "app/routes/about.team.tsx",
-            lineNumber: 68,
-            columnNumber: 19
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/about.team.tsx",
-          lineNumber: 52,
-          columnNumber: 17
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/about.team.tsx",
-          lineNumber: 51,
-          columnNumber: 15
-        }, this)
-      ] }, index, !0, {
-        fileName: "app/routes/about.team.tsx",
-        lineNumber: 47,
-        columnNumber: 17
-      }, this)) }, void 0, !1, {
-        fileName: "app/routes/about.team.tsx",
-        lineNumber: 44,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV21("h3", { className: "mb-10 sm:text-2xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", color: "var(--pickled-bluewood-900)" }, children: "List of Fine Collaborators" }, void 0, !1, {
-        fileName: "app/routes/about.team.tsx",
-        lineNumber: 90,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV21("section", { id: "DataGrid", style: { height: 350, width: "100%", marginLeft: "auto", marginRight: "auto" }, children: /* @__PURE__ */ jsxDEV21(DataGrid, { rows: collabs_default.collabs, columns, sx: { backgroundColor: "white" } }, void 0, !1, {
-        fileName: "app/routes/about.team.tsx",
-        lineNumber: 94,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/about.team.tsx",
-        lineNumber: 93,
-        columnNumber: 11
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/about.team.tsx",
-      lineNumber: 35,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/about.team.tsx",
-      lineNumber: 34,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV21(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/about.team.tsx",
-      lineNumber: 98,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/about.team.tsx",
-    lineNumber: 31,
-    columnNumber: 5
-  }, this);
-}, about_team_default = Index17;
+            width: "16",
+            height: "16",
+            viewBox: "0 0 24 24",
+            fill: "none",
+            stroke: "currentColor",
+            strokeWidth: "1.7",
+            "aria-hidden": "true",
+            children: [
+              /* @__PURE__ */ jsx22("rect", { x: "3", y: "5", width: "18", height: "14", rx: "2" }),
+              /* @__PURE__ */ jsx22("path", { d: "m3 7 9 6 9-6" })
+            ]
+          }
+        ) })
+      ] })
+    ] })
+  ] }, member.name)) }) }),
+  /* @__PURE__ */ jsxs21(Section, { eyebrow: "Collaboration", title: "Collaborators", alt: !0, wide: !0, children: [
+    /* @__PURE__ */ jsx22("p", { className: "lede", children: "Members of the 7DT collaboration contributing to the instrument, operations, pipeline and science working groups." }),
+    /* @__PURE__ */ jsx22("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs21("table", { className: "tier-table", children: [
+      /* @__PURE__ */ jsxs21("caption", { children: [
+        "7DT collaboration \u2014 ",
+        collabs_default.collabs.length,
+        " members"
+      ] }),
+      /* @__PURE__ */ jsx22("thead", { children: /* @__PURE__ */ jsxs21("tr", { children: [
+        /* @__PURE__ */ jsx22("th", { scope: "col", children: "Name" }),
+        /* @__PURE__ */ jsx22("th", { scope: "col", children: "Affiliation" }),
+        /* @__PURE__ */ jsx22("th", { scope: "col", children: "Working group" }),
+        /* @__PURE__ */ jsx22("th", { scope: "col", children: "Contact" })
+      ] }) }),
+      /* @__PURE__ */ jsx22("tbody", { children: collabs_default.collabs.map((person) => /* @__PURE__ */ jsxs21("tr", { children: [
+        /* @__PURE__ */ jsxs21("th", { scope: "row", style: { fontWeight: 600, color: "var(--ink-900)" }, children: [
+          person.firstName,
+          " ",
+          person.lastName
+        ] }),
+        /* @__PURE__ */ jsx22("td", { style: { fontFamily: "var(--font-sans)" }, children: person.affiliation }),
+        /* @__PURE__ */ jsx22("td", { style: { fontFamily: "var(--font-sans)" }, children: person.workingGroup }),
+        /* @__PURE__ */ jsx22("td", { children: person.email ? /* @__PURE__ */ jsx22("a", { href: `mailto:${person.email}`, children: person.email }) : /* @__PURE__ */ jsx22("span", { style: { color: "var(--slate-400)" }, children: "\u2014" }) })
+      ] }, person.id)) })
+    ] }) }),
+    /* @__PURE__ */ jsxs21("p", { className: "note", style: { marginTop: "1rem" }, children: [
+      "To join a working group or propose a collaboration, contact the principal investigator at ",
+      /* @__PURE__ */ jsx22("a", { href: "mailto:mim@astro.snu.ac.kr", children: "mim@astro.snu.ac.kr" }),
+      "."
+    ] })
+  ] })
+] }), about_team_default = Index17;
 
 // app/routes/data.data.tsx
 var data_data_exports = {};
 __export(data_data_exports, {
-  default: () => data_data_default
+  default: () => data_data_default,
+  meta: () => meta18
 });
-import { useState as useState5 } from "react";
-import { Table } from "flowbite-react";
-import { Pagination as Pagination2 } from "flowbite-react";
-
-// app/routes/plot.tsx
-var plot_exports = {};
-__export(plot_exports, {
-  default: () => plot_default
-});
-import { useRef, useEffect as useEffect5 } from "react";
-import * as d3 from "d3";
-import { geoAitoff } from "d3-geo-projection";
-import { jsxDEV as jsxDEV22 } from "react/jsx-dev-runtime";
-var ScatterGeoPlot = ({ data, width, height }) => {
-  let svgRef = useRef();
-  return useEffect5(() => {
-    let svg = d3.select(svgRef.current), projection = geoAitoff().scale(100).translate([width / 2, height / 2]), graticule = d3.geoGraticule();
-    svg.append("path").datum(graticule).attr("class", "graticule").attr("d", d3.geoPath().projection(projection)).attr("fill", "none").attr("stroke", "#ccc").attr("stroke-width", 0.5).attr("stroke-opacity", 0.5);
-    let circles = svg.selectAll("circle").data(data.filter((d) => typeof d.ra == "number" && typeof d.dec == "number")).enter().append("circle").attr("cx", (d) => projection([parseFloat(d.ra), parseFloat(d.dec)])[0]).attr("cy", (d) => projection([parseFloat(d.ra), parseFloat(d.dec)])[1]).attr("r", 5).attr("fill", "blue").attr("stroke", "black").attr("stroke-width", 1), tooltip = d3.select(svgRef.current.parentNode).append("div").style("position", "absolute").style("background-color", "white").style("border", "1px solid black").style("padding", "5px").style("visibility", "hidden");
-    return circles.on("mouseover", (event, d) => {
-      tooltip.html(`
-        <strong>Name:</strong> ${d.name}<br>
-        <strong>Exposure:</strong> ${d.exposure}<br>
-        <strong>Sigma:</strong> ${d.sigma}
-      `).style`
-          visibility: visible;
-          left: ${event.pageX + 10}px;
-          top: ${event.pageY - 30}px;
-        `;
-    }), circles.on("mouseout", () => {
-      tooltip.style`
-        visibility: hidden;
-      `;
-    }), () => {
-      tooltip.remove();
-    };
-  }, [data, height, width]), /* @__PURE__ */ jsxDEV22("svg", { ref: svgRef, width, height }, void 0, !1, {
-    fileName: "app/routes/plot.tsx",
-    lineNumber: 70,
-    columnNumber: 10
-  }, this);
-}, plot_default = ScatterGeoPlot;
-
-// app/routes/content/data.json
-var data_default = [
+import { Fragment as Fragment10, jsx as jsx23, jsxs as jsxs22 } from "react/jsx-runtime";
+var meta18 = () => [
+  { title: "Data archive \xB7 7-Dimensional Telescope" },
   {
-    name: "Crab Nebula",
-    ra: 83.633208,
-    dec: 22.014472,
-    exposure: 0.333,
-    sigma: 7.8,
-    ref: !1
-  },
-  {
-    name: "Andromeda Galaxy",
-    ra: 10.685542,
-    dec: 41.269278,
-    exposure: 0.5,
-    sigma: 6.5,
-    ref: !1
-  },
-  {
-    name: "Orion Nebula",
-    ra: 83.82208,
-    dec: -5.391111,
-    exposure: 0.25,
-    sigma: 8.2,
-    ref: !1
-  },
-  {
-    name: "Whirlpool Galaxy",
-    ra: 197.470375,
-    dec: 47.195278,
-    exposure: 0.41666667,
-    sigma: 6.9,
-    ref: !1
-  },
-  {
-    name: "Pleiades Cluster",
-    ra: 56.85,
-    dec: 24.116667,
-    exposure: 0.16666667,
-    sigma: 9.1,
-    ref: !1
-  },
-  {
-    name: "Eagle Nebula",
-    ra: 274.8,
-    dec: -13.783333,
-    exposure: 0.27777778,
-    sigma: 7.3,
-    ref: !1
-  },
-  {
-    name: "Horsehead Nebula",
-    ra: 85.246875,
-    dec: -2.458333,
-    exposure: 0.22222222,
-    sigma: 8.5,
-    ref: !1
-  },
-  {
-    name: "Ring Nebula",
-    ra: 283.39775,
-    dec: 33.029167,
-    exposure: 0.30555556,
-    sigma: 7.2,
-    ref: !1
-  },
-  {
-    name: "Sombrero Galaxy",
-    ra: 185.728708,
-    dec: -11.629167,
-    exposure: 0.36111111,
-    sigma: 6.7,
-    ref: !1
-  },
-  {
-    name: "Lagoon Nebula",
-    ra: 271.57125,
-    dec: -24.386667,
-    exposure: 0.26388889,
-    sigma: 8,
-    ref: !1
-  },
-  {
-    name: "Helix Nebula",
-    ra: 337.410375,
-    dec: -20.836667,
-    exposure: 0.23611111,
-    sigma: 8.7,
-    ref: !1
-  },
-  {
-    name: "Antennae Galaxies",
-    ra: 180.471167,
-    dec: -18.869528,
-    exposure: 0.47222222,
-    sigma: 7.1,
-    ref: !1
-  },
-  {
-    name: "Boomerang Nebula",
-    ra: 191.20625,
-    dec: -54.517222,
-    exposure: 0.33333333,
-    sigma: 9.3,
-    ref: !1
-  },
-  {
-    name: "Omega Nebula",
-    ra: 271.57125,
-    dec: -24.386667,
-    exposure: 0.26388889,
-    sigma: 8,
-    ref: !1
-  },
-  {
-    name: "Tarantula Nebula",
-    ra: 89.658675,
-    dec: -69.085,
-    exposure: 0.38888889,
-    sigma: 7.4,
-    ref: !1
-  },
-  {
-    name: "Cat's Eye Nebula",
-    ra: 137.389583,
-    dec: 13.226667,
-    exposure: 0.27777778,
-    sigma: 8.4,
-    ref: !1
-  },
-  {
-    name: "Veil Nebula",
-    ra: 311.40925,
-    dec: 30.721389,
-    exposure: 0.23611111,
-    sigma: 7.6,
-    ref: !1
-  },
-  {
-    name: "North America Nebula",
-    ra: 344.48875,
-    dec: 44.51,
-    exposure: 0.26388889,
-    sigma: 7.9,
-    ref: !1
-  },
-  {
-    name: "Trifid Nebula",
-    ra: 270.59125,
-    dec: -23.03,
-    exposure: 0.33333333,
-    sigma: 7,
-    ref: !1
-  },
-  {
-    name: "Andromeda Galaxy",
-    ra: 10.685542,
-    dec: 41.269278,
-    exposure: 0.5,
-    sigma: 6.5,
-    ref: !1
+    name: "description",
+    content: "What 7DT produces, how it is catalogued, and how to request data before the public release."
   }
-];
-
-// app/routes/data.data.tsx
-import { jsxDEV as jsxDEV23 } from "react/jsx-dev-runtime";
-var Index18 = () => {
-  let [currentPage, setCurrentPage] = useState5(1), rowsPerPage = 10, totalRows = data_default.length, totalPages = Math.ceil(totalRows / rowsPerPage), onPageChange = (page) => {
-    setCurrentPage(page);
-  }, paginatedData = data_default.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
-  return /* @__PURE__ */ jsxDEV23("div", { style: { background: "#fff" }, children: [
-    /* @__PURE__ */ jsxDEV23(navigate_default, { manu: "manuData", fixed: !0 }, void 0, !1, {
-      fileName: "app/routes/data.data.tsx",
-      lineNumber: 30,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV23("div", { className: "mx-auto w-full main-container", style: { paddingTop: "200px" }, children: /* @__PURE__ */ jsxDEV23("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-      /* @__PURE__ */ jsxDEV23("div", { className: "justify-between", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-        /* @__PURE__ */ jsxDEV23("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Invaluable Observations" }, void 0, !1, {
-          fileName: "app/routes/data.data.tsx",
-          lineNumber: 35,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ jsxDEV23("h3", { className: "text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-          /* @__PURE__ */ jsxDEV23("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "Data" }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 39,
-            columnNumber: 15
-          }, this),
-          " Archive"
-        ] }, void 0, !0, {
-          fileName: "app/routes/data.data.tsx",
-          lineNumber: 38,
-          columnNumber: 13
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/data.data.tsx",
-        lineNumber: 34,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV23("div", { className: "flex w-full justify-center", children: /* @__PURE__ */ jsxDEV23(plot_default, { data: data_default, height: "400", width: "800" }, void 0, !1, {
-        fileName: "app/routes/data.data.tsx",
-        lineNumber: 43,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/data.data.tsx",
-        lineNumber: 42,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV23(Table, { striped: !0, children: [
-        /* @__PURE__ */ jsxDEV23(Table.Head, { children: [
-          /* @__PURE__ */ jsxDEV23(Table.HeadCell, { children: "Target" }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 48,
-            columnNumber: 15
-          }, this),
-          /* @__PURE__ */ jsxDEV23(Table.HeadCell, { children: "R.A." }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 49,
-            columnNumber: 15
-          }, this),
-          /* @__PURE__ */ jsxDEV23(Table.HeadCell, { children: "Dec." }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 50,
-            columnNumber: 15
-          }, this),
-          /* @__PURE__ */ jsxDEV23(Table.HeadCell, { children: "Exposure" }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 51,
-            columnNumber: 15
-          }, this),
-          /* @__PURE__ */ jsxDEV23(Table.HeadCell, { children: "Significance" }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 52,
-            columnNumber: 15
-          }, this),
-          /* @__PURE__ */ jsxDEV23(Table.HeadCell, { children: "Details" }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 53,
-            columnNumber: 15
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/data.data.tsx",
-          lineNumber: 47,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ jsxDEV23(Table.Body, { className: "divide-y", children: paginatedData.map((d, index) => /* @__PURE__ */ jsxDEV23(Table.Row, { className: "bg-white dark:border-gray-700 dark:bg-gray-800", children: [
-          /* @__PURE__ */ jsxDEV23(Table.Cell, { className: "whitespace-nowrap font-medium text-gray-900 dark:text-white", children: d.name }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 59,
-            columnNumber: 21
-          }, this),
-          /* @__PURE__ */ jsxDEV23(Table.Cell, { children: d.ra }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 62,
-            columnNumber: 21
-          }, this),
-          /* @__PURE__ */ jsxDEV23(Table.Cell, { children: d.dec }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 63,
-            columnNumber: 21
-          }, this),
-          /* @__PURE__ */ jsxDEV23(Table.Cell, { children: d.exposure }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 64,
-            columnNumber: 21
-          }, this),
-          /* @__PURE__ */ jsxDEV23(Table.Cell, { children: d.sigma }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 65,
-            columnNumber: 21
-          }, this),
-          /* @__PURE__ */ jsxDEV23(Table.Cell, { children: d.ref === !1 ? /* @__PURE__ */ jsxDEV23("a", { href: "mailto:mim@astro.snu.ac.kr", className: "font-medium text-cyan-600 hover:underline dark:text-cyan-500", children: "Contact" }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 68,
-            columnNumber: 25
-          }, this) : /* @__PURE__ */ jsxDEV23("a", { href: d.ref, className: "font-medium text-cyan-600 hover:underline dark:text-cyan-500", children: "Link" }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 71,
-            columnNumber: 25
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/data.data.tsx",
-            lineNumber: 66,
-            columnNumber: 21
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/data.data.tsx",
-          lineNumber: 58,
-          columnNumber: 19
-        }, this)) }, void 0, !1, {
-          fileName: "app/routes/data.data.tsx",
-          lineNumber: 55,
-          columnNumber: 13
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/data.data.tsx",
-        lineNumber: 46,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV23("div", { className: "flex justify-center mt-4", children: /* @__PURE__ */ jsxDEV23(Pagination2, { currentPage, totalPages, onPageChange }, void 0, !1, {
-        fileName: "app/routes/data.data.tsx",
-        lineNumber: 82,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/data.data.tsx",
-        lineNumber: 81,
-        columnNumber: 11
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/data.data.tsx",
-      lineNumber: 33,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/data.data.tsx",
-      lineNumber: 32,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV23(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/data.data.tsx",
-      lineNumber: 86,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/data.data.tsx",
-    lineNumber: 29,
-    columnNumber: 5
-  }, this);
-}, data_data_default = Index18;
+], PRODUCTS = [
+  ["single", "A calibrated individual exposure, 100 s, with WCS and a source catalogue"],
+  ["coadd", "Three singles combined to a 300 s frame \u2014 the basic survey product"],
+  ["difference", "A coadd minus its RIS reference, for transient detection"],
+  ["catalogue", "A flux-calibrated source list attached to every image above"],
+  ["master frame", "Bias, dark and flat, generated nightly and matched by group key"]
+], CONVENTIONS = [
+  ["Photometric system", "AB magnitudes"],
+  ["Coadd zero point", "23.9 AB \u2014 pixel values in \xB5Jy"],
+  ["Astrometric reference", "Gaia DR3"],
+  ["Flux calibration", "Synthetic photometry from Gaia XP spectra"],
+  ["Tiling", "HEALPix-derived RIS grid, T00000 \u2013 T28519"],
+  ["File format", "FITS, with QA metrics in the header"]
+], QA_KEYS = [
+  ["SANITY", "Boolean; false means the image should not be used for science"],
+  ["REJ_PROC", "The processing stage at which SANITY was set false"],
+  ["SEEING", "Measured PSF FWHM"],
+  ["UL5_5", "5\u03C3 limiting magnitude"],
+  ["ELLIP", "Point-source elongation"],
+  ["PPFLAG", "Bitmask recording compromises in master-frame selection"]
+], Index18 = () => /* @__PURE__ */ jsxs22(PageLayout, { menu: "manuData", children: [
+  /* @__PURE__ */ jsx23(
+    PageHero,
+    {
+      eyebrow: "Data",
+      title: /* @__PURE__ */ jsxs22(Fragment10, { children: [
+        "Data ",
+        /* @__PURE__ */ jsx23("em", { children: "products" })
+      ] }),
+      lede: "What the array produces each night, how it is calibrated and catalogued, and how to reach the data before the public release.",
+      image: "/img/hero/data.jpg",
+      meta: [
+        { value: "1.75", unit: "M", label: "Images acquired" },
+        { value: "3.6", unit: "PB", label: "Archive capacity" },
+        { value: "25,472", label: "RIS tiles" }
+      ]
+    }
+  ),
+  /* @__PURE__ */ jsxs22(Section, { eyebrow: "Access", title: "Status of the archive", children: [
+    /* @__PURE__ */ jsx23("p", { className: "prose", children: archiveText }),
+    /* @__PURE__ */ jsxs22("div", { className: "panel", style: { marginTop: "2rem", maxWidth: "68ch" }, children: [
+      /* @__PURE__ */ jsx23("div", { className: "panel__title", children: "Requesting data" }),
+      /* @__PURE__ */ jsx23("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: "Until the public release, requests for 7DT imaging, catalogues or target-of-opportunity products are handled by the project directly. Please include the field or coordinates, the filters and the epoch range you need." }),
+      /* @__PURE__ */ jsx23("a", { className: "btn btn--primary", href: "mailto:mim@astro.snu.ac.kr?subject=7DT%20data%20request", children: "Contact the project" })
+    ] })
+  ] }),
+  /* @__PURE__ */ jsx23(Section, { eyebrow: "Products", title: "What the pipeline produces", alt: !0, children: /* @__PURE__ */ jsxs22("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsx23("ul", { className: "feature-list", style: { margin: 0 }, children: PRODUCTS.map((product) => /* @__PURE__ */ jsxs22("li", { children: [
+      /* @__PURE__ */ jsx23("span", { className: "feature-list__key", style: { fontFamily: "var(--font-mono)" }, children: product[0] }),
+      /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsx23("p", { className: "feature-list__body", style: { margin: 0 }, children: product[1] }) })
+    ] }, product[0])) }),
+    /* @__PURE__ */ jsx23(SimpleTable, { caption: "Conventions", rows: CONVENTIONS })
+  ] }) }),
+  /* @__PURE__ */ jsxs22(Section, { eyebrow: "Quality", title: "What every image carries", children: [
+    /* @__PURE__ */ jsxs22("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsx23("p", { className: "prose", children: "Quality-assurance metrics are written into the FITS header of every product and ingested into the operations database, so the state of any image can be inspected without opening it. A companion dependency table traces each output back through the coadds, processed singles and master frames it was built from." }),
+      /* @__PURE__ */ jsx23(SimpleTable, { caption: "Selected header keywords", rows: QA_KEYS })
+    ] }),
+    /* @__PURE__ */ jsxs22("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
+      /* @__PURE__ */ jsx23("a", { className: "btn btn--secondary", href: "/data/software", children: "How the pipeline works" }),
+      /* @__PURE__ */ jsx23("a", { className: "btn btn--secondary", href: "/publication/policy", children: "Publication policy" })
+    ] })
+  ] })
+] }), data_data_default = Index18;
 
 // app/routes/gallery.tsx
 var gallery_exports = {};
 __export(gallery_exports, {
-  default: () => gallery_default
+  default: () => gallery_default,
+  meta: () => meta19
 });
-import { useState as useState6, useEffect as useEffect7 } from "react";
-import { Pagination as Pagination3 } from "flowbite-react";
+import { useState as useState4 } from "react";
+import { Pagination as Pagination2 } from "flowbite-react";
 
 // app/routes/content/images.json
 var images_default = [
@@ -4288,7 +2869,7 @@ var images_default = [
     file: "Figure7_Helix_Nebula_Zoomin.jpeg"
   },
   {
-    name: "Pseudo-color Images of the Helix Nebula taken at wavelengths of 370 nm, 500 nm, and 650 nm, corresponding to blue, green, and red.",
+    name: "Pseudo-colour image of the Helix Nebula from Sloan u and the m500 and m650 medium bands, mapped to blue, green and red.",
     file: "Figure8a(lowres)_u-500-650_asinh.png"
   },
   {
@@ -4298,883 +2879,544 @@ var images_default = [
 ];
 
 // app/routes/gallery.tsx
-import { jsxDEV as jsxDEV24 } from "react/jsx-dev-runtime";
-var Index19 = () => {
-  let backgroundImage = {
-    backgroundSize: "cover",
-    backgroundRepeat: "repeat",
-    backgroundImage: 'url("./img/data.jpg")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px"
-  }, [submenuTop, setSubmenuTop] = useState6("200px"), [smallWindow, setSmallWindow] = useState6(!0), [currentPage, setCurrentPage] = useState6(1), imagesPerPage = 6, totalPages = Math.ceil(images_default.length / imagesPerPage), paginatedImages = images_default.slice((currentPage - 1) * imagesPerPage, currentPage * imagesPerPage), onPageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
-  return useEffect7(() => {
-    let updateWindow = () => {
-      window.innerWidth < 1500 ? setSmallWindow(!1) : setSmallWindow(!0);
-    };
-    return updateWindow(), window.addEventListener("resize", updateWindow), () => {
-      window.removeEventListener("resize", updateWindow);
-    };
-  }, []), useEffect7(() => {
-    let handleScroll = () => {
-      let scrollPosition = window.scrollY, windowHeight = window.innerHeight, newTop = `calc(200px - ${scrollPosition * -0.1 / windowHeight * 100}%)`;
-      setSubmenuTop(newTop);
-    };
-    return window.addEventListener("scroll", handleScroll), () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []), /* @__PURE__ */ jsxDEV24("div", { style: { background: "#fff" }, children: [
-    /* @__PURE__ */ jsxDEV24(navigate_default, { manu: "manuGallery", fixed: !0 }, void 0, !1, {
-      fileName: "app/routes/gallery.tsx",
-      lineNumber: 70,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV24("div", { className: "mx-auto w-full main-container", style: { paddingTop: "150px" }, children: /* @__PURE__ */ jsxDEV24("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-      /* @__PURE__ */ jsxDEV24("div", { className: "justify-between", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-        /* @__PURE__ */ jsxDEV24("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "Pictures of our Universe from 7DS" }, void 0, !1, {
-          fileName: "app/routes/gallery.tsx",
-          lineNumber: 75,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ jsxDEV24("h3", { className: "text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: /* @__PURE__ */ jsxDEV24("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "Gallery" }, void 0, !1, {
-          fileName: "app/routes/gallery.tsx",
-          lineNumber: 79,
-          columnNumber: 15
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/gallery.tsx",
-          lineNumber: 78,
-          columnNumber: 13
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 74,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV24("div", { className: "gallery", style: { paddingTop: "100px" }, children: /* @__PURE__ */ jsxDEV24("ul", { children: paginatedImages.map((img, index) => /* @__PURE__ */ jsxDEV24("li", { children: /* @__PURE__ */ jsxDEV24("a", { href: `./img/images/${img.file}`, children: /* @__PURE__ */ jsxDEV24("figure", { children: [
-        /* @__PURE__ */ jsxDEV24("img", { src: `./img/images/${img.file}` }, void 0, !1, {
-          fileName: "app/routes/gallery.tsx",
-          lineNumber: 90,
-          columnNumber: 21
-        }, this),
-        /* @__PURE__ */ jsxDEV24("figcaption", { children: img.name }, void 0, !1, {
-          fileName: "app/routes/gallery.tsx",
-          lineNumber: 91,
-          columnNumber: 21
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 89,
-        columnNumber: 19
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 88,
-        columnNumber: 17
-      }, this) }, index, !1, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 87,
-        columnNumber: 15
-      }, this)) }, void 0, !1, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 84,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 83,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV24("div", { className: "flex justify-center mt-4", children: /* @__PURE__ */ jsxDEV24(Pagination3, { currentPage, totalPages, onPageChange }, void 0, !1, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 99,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 98,
-        columnNumber: 11
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/gallery.tsx",
-      lineNumber: 73,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/gallery.tsx",
-      lineNumber: 72,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV24(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/gallery.tsx",
-      lineNumber: 103,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/gallery.tsx",
-    lineNumber: 69,
-    columnNumber: 5
-  }, this);
+import { jsx as jsx24, jsxs as jsxs23 } from "react/jsx-runtime";
+var meta19 = () => [
+  { title: "Gallery \xB7 7-Dimensional Telescope" },
+  { name: "description", content: "Images of the 7-Dimensional Telescope and of the sky it observes." }
+], PER_PAGE2 = 6, Index19 = () => {
+  let [currentPage, setCurrentPage] = useState4(1), totalPages = Math.max(1, Math.ceil(images_default.length / PER_PAGE2)), page = Math.min(currentPage, totalPages), shown = images_default.slice((page - 1) * PER_PAGE2, page * PER_PAGE2);
+  return /* @__PURE__ */ jsxs23(PageLayout, { menu: "manuGallery", children: [
+    /* @__PURE__ */ jsx24(
+      PageHero,
+      {
+        eyebrow: "Gallery",
+        title: "Our Universe, seen in seven dimensions",
+        lede: "Pictures of the array, and of what it returns.",
+        image: "/img/hero/gallery.jpg"
+      }
+    ),
+    /* @__PURE__ */ jsxs23(Section, { eyebrow: "Images", title: "Gallery", wide: !0, children: [
+      /* @__PURE__ */ jsx24("div", { className: "gallery", children: /* @__PURE__ */ jsx24("ul", { children: shown.map((img) => /* @__PURE__ */ jsx24("li", { children: /* @__PURE__ */ jsxs23("a", { href: `/img/images/${img.file}`, target: "_blank", rel: "noreferrer", children: [
+        /* @__PURE__ */ jsxs23("figure", { children: [
+          /* @__PURE__ */ jsx24(
+            "img",
+            {
+              src: `/img/thumbs/${img.file.replace(/\.[^.]+$/, ".jpg")}`,
+              alt: img.name,
+              width: 900,
+              height: 675,
+              loading: "lazy",
+              decoding: "async"
+            }
+          ),
+          /* @__PURE__ */ jsx24("figcaption", { children: img.name })
+        ] }),
+        /* @__PURE__ */ jsx24("span", { className: "sr-only", children: " (opens the full-resolution image in a new tab)" })
+      ] }) }, img.file)) }) }),
+      totalPages > 1 && /* @__PURE__ */ jsx24("div", { className: "pagination-wrap", children: /* @__PURE__ */ jsx24(Pagination2, { currentPage: page, totalPages, onPageChange: setCurrentPage }) })
+    ] })
+  ] });
 }, gallery_default = Index19;
 
 // app/routes/_index.tsx
 var index_exports = {};
 __export(index_exports, {
   default: () => index_default,
-  meta: () => meta
+  meta: () => meta20
 });
 
 // app/routes/main.tsx
-var main_exports = {};
-__export(main_exports, {
-  default: () => main_default
-});
-import { useEffect as useEffect8, useState as useState7, useRef as useRef2 } from "react";
-import { jsxDEV as jsxDEV25 } from "react/jsx-dev-runtime";
-var MainPage = () => {
-  let [smallWindow, setSmallWindow] = useState7(!0), [backgroudImageSet, setBackgroudImageSet] = useState7("fixed"), [scrollPos, setScrollPos] = useState7(0), rulerImageRef = useRef2(!1), rulerImageRefFixed = useRef2(!1), [hovered, setHovered] = useState7(0), handleHover = (val) => {
-    setHovered(val);
-  };
-  useEffect8(() => {
-    let updateWindow = () => {
-      window.innerWidth < 1200 ? setSmallWindow(!1) : setSmallWindow(!0);
-    }, handleScroll = () => {
-      let scrollY = window.scrollY;
-      setScrollPos(scrollY);
-    };
-    return updateWindow(), window.addEventListener("scroll", handleScroll), window.addEventListener("resize", updateWindow), () => {
-      window.removeEventListener("resize", updateWindow), window.removeEventListener("scroll", handleScroll);
-    };
-  }, []), useEffect8(() => {
-    let handleScroll = () => {
-      if (rulerImageRef.current) {
-        let scrollX = window.scrollY || window.pageYOffset;
-        rulerImageRef.current.style.backgroundPositionX = `-${scrollX}px`;
-      }
-      if (rulerImageRefFixed.current) {
-        let scrollX = window.scrollY || window.pageYOffset;
-        rulerImageRefFixed.current.style.backgroundPositionX = `-${scrollX}px`;
-      }
-    };
-    return window.addEventListener("scroll", handleScroll), () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+import { useEffect as useEffect3, useState as useState5, useRef as useRef2, useCallback } from "react";
+import { jsx as jsx25, jsxs as jsxs24 } from "react/jsx-runtime";
+var SECTION_IS_DARK = [!0, !1, !0, !0, !1, !1, !0], SECTION_COUNT = SECTION_IS_DARK.length, SECTION_NAMES = [
+  "Introduction",
+  "About 7DT",
+  "Science",
+  "Sky survey",
+  "Telescope",
+  "News",
+  "Contact and partners"
+], MainPage = () => {
+  let [current, setCurrent] = useState5(0), [showTop, setShowTop] = useState5(!1), wrapperRef = useRef2(null), sectionsRef = useRef2([]), ticking = useRef2(!1), frame = useRef2(0), scrollToSection = useCallback((index) => {
+    let target = sectionsRef.current[index];
+    if (!target)
+      return;
+    let reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
   }, []);
-  let backgroundImage = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("./img/main.jpg")',
-    backgroundAttachment: backgroudImageSet,
-    backgroundPosition: "50% 0px"
-  }, backgroundImage2 = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("./img/science.jpg")',
-    backgroundAttachment: backgroudImageSet,
-    backgroundPosition: "50% 0px"
-  }, backgroundImage3 = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("./img/survey.jpg")',
-    backgroundAttachment: backgroudImageSet,
-    backgroundPosition: "50% 0px"
-  }, backgroundImage4 = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("./img/telescope.jpg")',
-    backgroundAttachment: backgroudImageSet,
-    backgroundPosition: "50% 0px"
-  }, rulerImage = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("./img/ruler.jpg")',
-    backgroundRepeat: "none repeat-x",
-    backgroundPosition: "50% 0px",
-    width: "100%",
-    height: "40px",
-    zIndex: 200
-  };
-  return useEffect8(() => {
-    window.innerWidth < 768 && setBackgroudImageSet("scroll");
-  }, []), /* @__PURE__ */ jsxDEV25("div", { children: [
-    /* @__PURE__ */ jsxDEV25("div", { style: backgroundImage, children: /* @__PURE__ */ jsxDEV25("div", { className: "w-full", style: { height: "100vh" }, children: /* @__PURE__ */ jsxDEV25("img", { src: "./img/title.png", style: { width: "max(1000px, 70%)", paddingTop: "120px", paddingLeft: "15%" }, alt: "7DT telescope" }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 118,
-      columnNumber: 11
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 117,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 116,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV25("div", { style: { backgroundColor: "#fff" }, children: /* @__PURE__ */ jsxDEV25("a", { href: "./about/intro", children: /* @__PURE__ */ jsxDEV25("div", { className: "main w-full", children: /* @__PURE__ */ jsxDEV25("div", { className: "w-full mx-auto", children: /* @__PURE__ */ jsxDEV25("p", { style: { maxWidth: "1440px" }, children: [
-      /* @__PURE__ */ jsxDEV25("h2", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700" }, children: "Introduction" }, void 0, !1, {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 128,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ jsxDEV25("img", { className: "inline-flex", src: "/img/NGC0253.gif", width: "40%" }, void 0, !1, {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 131,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ jsxDEV25("h4", { style: { paddingTop: "20px" }, children: mainText1 }, void 0, !1, {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 133,
-        columnNumber: 15
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 127,
-      columnNumber: 13
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 126,
-      columnNumber: 11
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 125,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 124,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 123,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV25("div", { style: { backgroundColor: "#f9f9f9" }, children: /* @__PURE__ */ jsxDEV25("a", { href: "./science/overview", children: /* @__PURE__ */ jsxDEV25("div", { className: "main w-full main-style", children: /* @__PURE__ */ jsxDEV25(
-      "div",
+  useEffect3(() => {
+    let wrapper = wrapperRef.current;
+    if (!wrapper)
+      return;
+    sectionsRef.current = Array.from(
+      wrapper.querySelectorAll(".fullpage-section")
+    ), document.body.classList.add("fullpage-active"), document.documentElement.classList.add("fullpage-active"), document.documentElement.classList.add("reveal-ready");
+    let progressBar = document.querySelector(".fullpage-progress"), measure = () => {
+      ticking.current = !1;
+      let scrollTop = wrapper.scrollTop, viewport = wrapper.clientHeight, midpoint = viewport * 0.5, index = 0;
+      if (sectionsRef.current.forEach((section, i) => {
+        let rect = section.getBoundingClientRect();
+        rect.top <= midpoint && rect.bottom > midpoint && (index = i);
+      }), setCurrent(index), setShowTop(scrollTop > viewport * 0.75), progressBar) {
+        let span = wrapper.scrollHeight - viewport;
+        progressBar.style.width = `${span > 0 ? scrollTop / span * 100 : 0}%`;
+      }
+      sectionsRef.current.forEach((section, i) => {
+        section.classList.toggle("is-active", i === index);
+      });
+    }, onScroll = () => {
+      ticking.current || (ticking.current = !0, frame.current = window.requestAnimationFrame(measure));
+    };
+    return measure(), wrapper.addEventListener("scroll", onScroll, { passive: !0 }), window.addEventListener("resize", onScroll, { passive: !0 }), () => {
+      window.cancelAnimationFrame(frame.current), wrapper.removeEventListener("scroll", onScroll), window.removeEventListener("resize", onScroll), document.body.classList.remove("fullpage-active"), document.documentElement.classList.remove("fullpage-active"), document.documentElement.classList.remove("reveal-ready");
+    };
+  }, []), useEffect3(() => {
+    let onKey = (e) => {
+      if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey || e.target?.closest("input, textarea, select, [contenteditable]") || !["ArrowDown", "PageDown", "ArrowUp", "PageUp", "Home", "End"].includes(e.key))
+        return;
+      let wrapper = wrapperRef.current, section = sectionsRef.current[current];
+      wrapper && section && section.getBoundingClientRect().height > wrapper.clientHeight + 2 && (e.key === "ArrowDown" || e.key === "ArrowUp") || (e.preventDefault(), e.key === "ArrowDown" || e.key === "PageDown" ? scrollToSection(Math.min(current + 1, SECTION_COUNT - 1)) : e.key === "ArrowUp" || e.key === "PageUp" ? scrollToSection(Math.max(current - 1, 0)) : e.key === "Home" ? scrollToSection(0) : scrollToSection(SECTION_COUNT - 1));
+    };
+    return window.addEventListener("keydown", onKey), () => window.removeEventListener("keydown", onKey);
+  }, [current, scrollToSection]);
+  let onLight = !SECTION_IS_DARK[current], latest = news_default.news.filter((item) => item.type !== "update").slice(0, 3);
+  return /* @__PURE__ */ jsxs24("div", { className: "fullpage-container", children: [
+    /* @__PURE__ */ jsx25("div", { className: "fullpage-progress" }),
+    /* @__PURE__ */ jsx25("div", { className: `fullpage-nav${onLight ? " fullpage-nav--on-light" : ""}`, children: Array.from({ length: SECTION_COUNT }).map((_, index) => /* @__PURE__ */ jsx25(
+      "button",
       {
-        className: "w-full mx-auto",
-        onMouseEnter: () => handleHover(1),
-        onMouseLeave: () => handleHover(0),
-        style: hovered === 1 ? backgroundImage2 : { backgroundColor: "#f9f9f9" },
-        children: /* @__PURE__ */ jsxDEV25("p", { style: { maxWidth: "1440px" }, children: [
-          /* @__PURE__ */ jsxDEV25("h2", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700" }, children: /* @__PURE__ */ jsxDEV25("span", { children: "7 Scientific Goals" }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 151,
-            columnNumber: 17
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 150,
-            columnNumber: 15
-          }, this),
-          hovered != 1 ? /* @__PURE__ */ jsxDEV25("img", { className: "inline-flex", src: "/img/science.jpg", style: { height: "350px", width: "600px" } }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 153,
-            columnNumber: 29
-          }, this) : "",
-          /* @__PURE__ */ jsxDEV25("h4", { style: hovered === 1 ? { paddingTop: "400px" } : { paddingTop: "50px" }, children: mainText2 }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 154,
-            columnNumber: 15
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 149,
-          columnNumber: 13
-        }, this)
+        type: "button",
+        className: `fullpage-dot${current === index ? " active" : ""}`,
+        onClick: () => scrollToSection(index),
+        "aria-label": SECTION_NAMES[index],
+        "aria-current": current === index
       },
-      void 0,
-      !1,
+      index
+    )) }),
+    /* @__PURE__ */ jsx25(
+      "button",
       {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 145,
-        columnNumber: 11
-      },
-      this
-    ) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 144,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 143,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 142,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV25("div", { style: { backgroundColor: "#fff" }, children: /* @__PURE__ */ jsxDEV25("a", { href: "./survey/overview", children: /* @__PURE__ */ jsxDEV25("div", { className: "main w-full main-style", children: /* @__PURE__ */ jsxDEV25(
-      "div",
-      {
-        className: "w-full mx-auto",
-        onMouseEnter: () => handleHover(2),
-        onMouseLeave: () => handleHover(0),
-        style: hovered === 2 ? backgroundImage3 : {},
-        children: /* @__PURE__ */ jsxDEV25("p", { style: { maxWidth: "1440px" }, children: [
-          /* @__PURE__ */ jsxDEV25("h2", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700" }, children: /* @__PURE__ */ jsxDEV25("span", { children: "7 Dimensional Sky Survey" }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 172,
-            columnNumber: 17
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 171,
-            columnNumber: 15
-          }, this),
-          hovered != 2 ? /* @__PURE__ */ jsxDEV25("img", { className: "inline-flex", src: "/img/survey.jpg", style: { height: "350px", width: "600px" } }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 174,
-            columnNumber: 29
-          }, this) : "",
-          /* @__PURE__ */ jsxDEV25("h4", { style: hovered === 2 ? { paddingTop: "400px" } : { paddingTop: "50px" }, children: mainText3 }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 175,
-            columnNumber: 15
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 170,
-          columnNumber: 13
-        }, this)
-      },
-      void 0,
-      !1,
-      {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 166,
-        columnNumber: 11
-      },
-      this
-    ) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 165,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 164,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 163,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV25("div", { style: { backgroundColor: "#f9f9f9" }, children: /* @__PURE__ */ jsxDEV25("a", { href: "./telescope/overview", children: /* @__PURE__ */ jsxDEV25("div", { className: "main w-full main-style", children: /* @__PURE__ */ jsxDEV25(
-      "div",
-      {
-        className: "w-full mx-auto",
-        onMouseEnter: () => handleHover(3),
-        onMouseLeave: () => handleHover(0),
-        style: hovered === 3 ? backgroundImage4 : { backgroundColor: "#f9f9f9" },
-        children: /* @__PURE__ */ jsxDEV25("p", { style: { maxWidth: "1440px" }, children: [
-          /* @__PURE__ */ jsxDEV25("h2", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700" }, children: /* @__PURE__ */ jsxDEV25("span", { children: "7 Dimensional Telescope" }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 193,
-            columnNumber: 17
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 192,
-            columnNumber: 15
-          }, this),
-          hovered != 3 ? /* @__PURE__ */ jsxDEV25("img", { className: "inline-flex", src: "/img/telescope.jpg", style: { height: "350px", width: "600px" } }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 195,
-            columnNumber: 29
-          }, this) : "",
-          /* @__PURE__ */ jsxDEV25("h4", { style: hovered === 3 ? { paddingTop: "400px" } : { paddingTop: "50px" }, children: mainText4 }, void 0, !1, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 196,
-            columnNumber: 15
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 191,
-          columnNumber: 13
-        }, this)
-      },
-      void 0,
-      !1,
-      {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 187,
-        columnNumber: 11
-      },
-      this
-    ) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 186,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 185,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 184,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV25("div", { style: { backgroundColor: "#fff", paddingTop: "100px" }, children: /* @__PURE__ */ jsxDEV25("div", { className: "mx-auto w-full", style: { maxWidth: "1440px" }, children: [
-      /* @__PURE__ */ jsxDEV25("div", { className: "justify-center mb-5", style: { maxWidth: "1200px", margin: "0 auto", color: "--pickled-bluewood-900" }, children: /* @__PURE__ */ jsxDEV25("p", { children: /* @__PURE__ */ jsxDEV25("h2", { className: "mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700" }, children: "Meet Our Latest News" }, void 0, !1, {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 209,
-        columnNumber: 15
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 208,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 207,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV25("div", { className: "flex flex-wrap items-center justify-center", style: { maxWidth: "1200px", margin: "0 auto", marginBottom: "5rem", textAlign: "center" }, children: news_default.news.map((news, index) => {
-        if (index = index + 1, index <= 3)
-          return /* @__PURE__ */ jsxDEV25("div", { className: `card card-${index}`, children: [
-            /* @__PURE__ */ jsxDEV25("img", { src: `./img/news/${news.imgName}` }, void 0, !1, {
-              fileName: "app/routes/main.tsx",
-              lineNumber: 220,
-              columnNumber: 19
-            }, this),
-            /* @__PURE__ */ jsxDEV25("a", { href: news.webpage, target: "_blank", children: /* @__PURE__ */ jsxDEV25("div", { className: "card-img-hovered", style: { backgroundImage: `var(--card-img-hovered-overlay), url(./img/news/${news.imgName})` } }, void 0, !1, {
-              fileName: "app/routes/main.tsx",
-              lineNumber: 222,
-              columnNumber: 21
-            }, this) }, void 0, !1, {
-              fileName: "app/routes/main.tsx",
-              lineNumber: 221,
-              columnNumber: 19
-            }, this),
-            /* @__PURE__ */ jsxDEV25("div", { className: "card-info", children: [
-              /* @__PURE__ */ jsxDEV25("div", { className: "card-about", children: [
-                /* @__PURE__ */ jsxDEV25("a", { className: `card-tag ${news.type === "meeting" ? "tag-news" : news.type === "publication" ? "tag-publication" : news.type === "press" ? "tag-press" : null}`, children: news.type }, void 0, !1, {
-                  fileName: "app/routes/main.tsx",
-                  lineNumber: 226,
-                  columnNumber: 23
-                }, this),
-                /* @__PURE__ */ jsxDEV25("div", { className: "card-time", children: news.date }, void 0, !1, {
-                  fileName: "app/routes/main.tsx",
-                  lineNumber: 227,
-                  columnNumber: 21
-                }, this)
-              ] }, void 0, !0, {
-                fileName: "app/routes/main.tsx",
-                lineNumber: 225,
-                columnNumber: 21
-              }, this),
-              /* @__PURE__ */ jsxDEV25("h1", { className: "card-title", children: news.title }, void 0, !1, {
-                fileName: "app/routes/main.tsx",
-                lineNumber: 229,
-                columnNumber: 21
-              }, this),
-              news.type === "meeting" ? /* @__PURE__ */ jsxDEV25("div", { className: "card-creator", children: [
-                "in ",
-                /* @__PURE__ */ jsxDEV25("a", { href: "", children: news.place }, void 0, !1, {
-                  fileName: "app/routes/main.tsx",
-                  lineNumber: 231,
-                  columnNumber: 56
-                }, this)
-              ] }, void 0, !0, {
-                fileName: "app/routes/main.tsx",
-                lineNumber: 231,
-                columnNumber: 23
-              }, this) : news.type === "publication" ? /* @__PURE__ */ jsxDEV25("div", { className: "card-creator", children: [
-                "by ",
-                /* @__PURE__ */ jsxDEV25("a", { href: "", children: news.shortAuthor }, void 0, !1, {
-                  fileName: "app/routes/main.tsx",
-                  lineNumber: 233,
-                  columnNumber: 56
-                }, this)
-              ] }, void 0, !0, {
-                fileName: "app/routes/main.tsx",
-                lineNumber: 233,
-                columnNumber: 23
-              }, this) : /* @__PURE__ */ jsxDEV25("div", { className: "card-creator", children: [
-                "by ",
-                /* @__PURE__ */ jsxDEV25("a", { href: "", children: news.source }, void 0, !1, {
-                  fileName: "app/routes/main.tsx",
-                  lineNumber: 234,
-                  columnNumber: 56
-                }, this)
-              ] }, void 0, !0, {
-                fileName: "app/routes/main.tsx",
-                lineNumber: 234,
-                columnNumber: 23
-              }, this)
-            ] }, void 0, !0, {
-              fileName: "app/routes/main.tsx",
-              lineNumber: 224,
-              columnNumber: 19
-            }, this)
-          ] }, `card-${index}`, !0, {
-            fileName: "app/routes/main.tsx",
-            lineNumber: 219,
-            columnNumber: 17
-          }, this);
-      }) }, void 0, !1, {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 214,
-        columnNumber: 11
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 206,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 205,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV25("div", { style: { backgroundColor: "#fff" }, children: /* @__PURE__ */ jsxDEV25("div", { className: "mx-auto w-full", style: { maxWidth: "1200px" }, children: [
-      /* @__PURE__ */ jsxDEV25("div", { className: "flex flex-wrap justify-between", children: [
-        /* @__PURE__ */ jsxDEV25("a", { href: "https://www.nrf.re.kr/eng/index", target: "_blank", children: /* @__PURE__ */ jsxDEV25("img", { src: "./img/institutes/nrf.jpg", style: { height: "100px", padding: "20px" } }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 245,
-          columnNumber: 71
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 245,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ jsxDEV25("a", { href: "https://gwuniverse.snu.ac.kr/", target: "_blank", children: /* @__PURE__ */ jsxDEV25("img", { src: "./img/institutes/gwuniv.png", style: { height: "100px", padding: "20px" } }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 246,
-          columnNumber: 69
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 246,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ jsxDEV25("a", { href: "https://en.snu.ac.kr/", target: "_blank", children: /* @__PURE__ */ jsxDEV25("img", { src: "./img/institutes/snu.jpeg", style: { height: "100px", padding: "20px" } }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 247,
-          columnNumber: 61
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 247,
-          columnNumber: 13
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 244,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV25("div", { className: "flex flex-wrap justify-between", children: [
-        /* @__PURE__ */ jsxDEV25("a", { href: "https://www.kasi.re.kr/eng/index", target: "_blank", children: /* @__PURE__ */ jsxDEV25("img", { src: "./img/institutes/kasi.gif", style: { height: "100px", padding: "20px" } }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 250,
-          columnNumber: 72
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 250,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ jsxDEV25("a", { href: "https://www.ewha.ac.kr/ewhaen/index.do", target: "_blank", children: /* @__PURE__ */ jsxDEV25("img", { src: "./img/institutes/ewha.png", style: { height: "100px", padding: "20px" } }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 251,
-          columnNumber: 78
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 251,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ jsxDEV25("a", { href: "https://www.postech.ac.kr/eng/", target: "_blank", children: /* @__PURE__ */ jsxDEV25("img", { src: "./img/institutes/postech.png", style: { height: "100px", padding: "20px" } }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 252,
-          columnNumber: 70
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/main.tsx",
-          lineNumber: 252,
-          columnNumber: 13
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/main.tsx",
-        lineNumber: 249,
-        columnNumber: 11
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 243,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 242,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV25("div", { ref: rulerImageRef, style: { ...rulerImage, position: "fixed", bottom: "0" } }, void 0, !1, {
-      fileName: "app/routes/main.tsx",
-      lineNumber: 256,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/main.tsx",
-    lineNumber: 115,
-    columnNumber: 5
-  }, this);
+        type: "button",
+        className: `scroll-to-top${showTop ? " visible" : ""}`,
+        onClick: () => scrollToSection(0),
+        "aria-label": "Back to top",
+        children: "\u2191"
+      }
+    ),
+    /* @__PURE__ */ jsxs24("div", { className: "fullpage-wrapper", ref: wrapperRef, children: [
+      /* @__PURE__ */ jsxs24(
+        "section",
+        {
+          className: "fullpage-section fullpage-section--dark fullpage-hero",
+          style: { backgroundImage: "url('/img/hero/home.jpg')", backgroundSize: "cover", backgroundPosition: "center" },
+          children: [
+            /* @__PURE__ */ jsx25("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs24("div", { className: "reveal", children: [
+              /* @__PURE__ */ jsx25("p", { className: "fullpage-hero__eyebrow", children: "Center for the Gravitational-wave Universe \xB7 Seoul National University" }),
+              /* @__PURE__ */ jsx25("h1", { children: "7-Dimensional Telescope" }),
+              /* @__PURE__ */ jsx25("p", { className: "fullpage-hero__lede", children: "Twenty 50-cm telescopes on one mountain in Chile, carrying forty medium-band filters between them. Imaging that reads like spectroscopy, over a field no spectrograph can cover." }),
+              /* @__PURE__ */ jsxs24("div", { className: "stat-grid stat-grid--on-dark", children: [
+                /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
+                  /* @__PURE__ */ jsxs24("span", { className: "stat__value", children: [
+                    "16",
+                    /* @__PURE__ */ jsx25("span", { className: "stat__unit", children: "/ 20" })
+                  ] }),
+                  /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Units on sky" })
+                ] }),
+                /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
+                  /* @__PURE__ */ jsxs24("span", { className: "stat__value", children: [
+                    "35",
+                    /* @__PURE__ */ jsx25("span", { className: "stat__unit", children: "/ 40" })
+                  ] }),
+                  /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Medium bands" })
+                ] }),
+                /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
+                  /* @__PURE__ */ jsxs24("span", { className: "stat__value", children: [
+                    "375\u2013875",
+                    /* @__PURE__ */ jsx25("span", { className: "stat__unit", children: "nm" })
+                  ] }),
+                  /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Coverage" })
+                ] }),
+                /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
+                  /* @__PURE__ */ jsxs24("span", { className: "stat__value", children: [
+                    "1.25",
+                    /* @__PURE__ */ jsx25("span", { className: "stat__unit", children: "deg\xB2" })
+                  ] }),
+                  /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Per pointing" })
+                ] })
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsxs24("button", { type: "button", className: "scroll-cue", onClick: () => scrollToSection(1), children: [
+              /* @__PURE__ */ jsx25("span", { children: "Scroll" }),
+              /* @__PURE__ */ jsx25("span", { className: "scroll-cue__line" })
+            ] })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsx25("section", { className: "fullpage-section", children: /* @__PURE__ */ jsx25("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs24("div", { className: "split split--wide-text split--middle reveal", children: [
+        /* @__PURE__ */ jsxs24("div", { children: [
+          /* @__PURE__ */ jsx25("span", { className: "eyebrow", children: "Introduction" }),
+          /* @__PURE__ */ jsx25("h2", { children: "An array that observes in seven dimensions" }),
+          /* @__PURE__ */ jsx25("p", { className: "prose", children: mainText1 }),
+          /* @__PURE__ */ jsx25("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx25("a", { className: "link-arrow", href: "/about/intro", children: "What is 7DS" }) })
+        ] }),
+        /* @__PURE__ */ jsxs24("figure", { className: "figure", children: [
+          /* @__PURE__ */ jsx25(
+            "img",
+            {
+              src: "/img/NGC0253.gif",
+              alt: "The Sculptor Galaxy, NGC 253, scanned through the 7DT medium-band filter set",
+              width: 900,
+              height: 929,
+              loading: "lazy",
+              decoding: "async"
+            }
+          ),
+          /* @__PURE__ */ jsxs24("figcaption", { children: [
+            /* @__PURE__ */ jsx25("b", { children: "NGC 253" }),
+            " The Sculptor Galaxy seen through successive medium bands from 400 to 875 nm \u2014 each frame a different slice of the spectrum."
+          ] })
+        ] })
+      ] }) }) }),
+      /* @__PURE__ */ jsx25(
+        "section",
+        {
+          className: "fullpage-section fullpage-section--dark",
+          style: { backgroundImage: "url('/img/hero/science.jpg')", backgroundSize: "cover", backgroundPosition: "center" },
+          children: /* @__PURE__ */ jsx25("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs24("div", { className: "split split--middle reveal", children: [
+            /* @__PURE__ */ jsxs24("div", { children: [
+              /* @__PURE__ */ jsx25("span", { className: "eyebrow eyebrow--on-dark", children: "Science" }),
+              /* @__PURE__ */ jsx25("h2", { children: "Spectra without a spectrograph" }),
+              /* @__PURE__ */ jsx25("p", { className: "prose", style: { color: "rgba(255,255,255,.78)" }, children: mainText2 }),
+              /* @__PURE__ */ jsx25("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx25("a", { className: "link-arrow", href: "/science/overview", style: { color: "var(--accent-on-dark)" }, children: "Science programme" }) })
+            ] }),
+            /* @__PURE__ */ jsxs24("div", { className: "stat-grid stat-grid--on-dark", style: { gridTemplateColumns: "1fr 1fr" }, children: [
+              /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
+                /* @__PURE__ */ jsx25("span", { className: "stat__value", children: "30\u201370" }),
+                /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Spectral resolution R" })
+              ] }),
+              /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
+                /* @__PURE__ */ jsxs24("span", { className: "stat__value", children: [
+                  "< 1",
+                  /* @__PURE__ */ jsx25("span", { className: "stat__unit", children: "min" })
+                ] }),
+                /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Alert to exposure start" })
+              ] }),
+              /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
+                /* @__PURE__ */ jsxs24("span", { className: "stat__value", children: [
+                  "1.75",
+                  /* @__PURE__ */ jsx25("span", { className: "stat__unit", children: "M" })
+                ] }),
+                /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Images, unattended" })
+              ] }),
+              /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
+                /* @__PURE__ */ jsx25("span", { className: "stat__value", children: "\u2248 100" }),
+                /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "ToO follow-ups" })
+              ] })
+            ] })
+          ] }) })
+        }
+      ),
+      /* @__PURE__ */ jsx25(
+        "section",
+        {
+          className: "fullpage-section fullpage-section--dark",
+          style: { backgroundImage: "url('/img/hero/survey.jpg')", backgroundSize: "cover", backgroundPosition: "center" },
+          children: /* @__PURE__ */ jsx25("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs24("div", { className: "reveal", children: [
+            /* @__PURE__ */ jsx25("span", { className: "eyebrow eyebrow--on-dark", children: "7-Dimensional Sky Survey" }),
+            /* @__PURE__ */ jsx25("h2", { children: "Three tiers over the southern sky" }),
+            /* @__PURE__ */ jsx25("p", { className: "prose", style: { color: "rgba(255,255,255,.78)", maxWidth: "60ch" }, children: mainText3 }),
+            /* @__PURE__ */ jsx25("div", { className: "grid grid-cols-3", style: { marginTop: "2rem" }, children: surveys_default.tiers.map((tier) => /* @__PURE__ */ jsxs24("div", { className: "tier-card", style: { background: "rgba(255,255,255,.04)", borderColor: "rgba(255,255,255,.16)" }, children: [
+              /* @__PURE__ */ jsx25("span", { className: "tier-card__code", style: { color: "var(--accent-on-dark)" }, children: tier.code }),
+              /* @__PURE__ */ jsx25("h3", { className: "tier-card__name", style: { color: "#fff" }, children: tier.name }),
+              /* @__PURE__ */ jsxs24("dl", { style: { borderTopColor: "rgba(255,255,255,.16)" }, children: [
+                /* @__PURE__ */ jsxs24("div", { style: { borderBottomColor: "rgba(255,255,255,.1)" }, children: [
+                  /* @__PURE__ */ jsx25("dt", { style: { color: "rgba(255,255,255,.55)" }, children: "Area" }),
+                  /* @__PURE__ */ jsx25("dd", { style: { color: "#fff" }, children: tier.area })
+                ] }),
+                /* @__PURE__ */ jsxs24("div", { style: { borderBottomColor: "rgba(255,255,255,.1)" }, children: [
+                  /* @__PURE__ */ jsx25("dt", { style: { color: "rgba(255,255,255,.55)" }, children: "Cadence" }),
+                  /* @__PURE__ */ jsx25("dd", { style: { color: "#fff" }, children: tier.cadence })
+                ] }),
+                /* @__PURE__ */ jsxs24("div", { style: { borderBottomColor: "rgba(255,255,255,.1)" }, children: [
+                  /* @__PURE__ */ jsx25("dt", { style: { color: "rgba(255,255,255,.55)" }, children: "Depth" }),
+                  /* @__PURE__ */ jsx25("dd", { style: { color: "#fff" }, children: tier.depth })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx25("span", { className: `pill pill--${tier.status}`, style: tier.status === "planned" ? { color: "rgba(255,255,255,.6)" } : void 0, children: tier.statusLabel })
+            ] }, tier.code)) }),
+            /* @__PURE__ */ jsx25("div", { className: "dimension-row", style: { marginTop: "2rem" }, children: surveys_default.dimensions.map((dim) => /* @__PURE__ */ jsxs24("span", { className: "dimension-item", children: [
+              /* @__PURE__ */ jsx25("span", { className: "dimension-item__n", children: dim.n }),
+              dim.label
+            ] }, dim.n)) })
+          ] }) })
+        }
+      ),
+      /* @__PURE__ */ jsx25("section", { className: "fullpage-section", children: /* @__PURE__ */ jsx25("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs24("div", { className: "split split--middle reveal", children: [
+        /* @__PURE__ */ jsxs24("div", { children: [
+          /* @__PURE__ */ jsx25("span", { className: "eyebrow", children: "The instrument" }),
+          /* @__PURE__ */ jsx25("h2", { children: "Twenty telescopes, one instrument" }),
+          /* @__PURE__ */ jsx25("p", { className: "prose", children: mainText4 }),
+          /* @__PURE__ */ jsx25("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx25("a", { className: "link-arrow", href: "/telescope/overview", children: "Telescope & site" }) })
+        ] }),
+        /* @__PURE__ */ jsxs24("ul", { className: "feature-list", children: [
+          /* @__PURE__ */ jsxs24("li", { children: [
+            /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: "OTA" }),
+            /* @__PURE__ */ jsxs24("div", { children: [
+              /* @__PURE__ */ jsx25("h3", { className: "feature-list__title", children: "PlaneWave DeltaRho 500" }),
+              /* @__PURE__ */ jsx25("p", { className: "feature-list__body", children: "508 mm corrected Cassegrain at f/3.0, covering 1.34\xB0 \xD7 0.90\xB0 at 0.5\u2033 per pixel." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs24("li", { children: [
+            /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: "Site" }),
+            /* @__PURE__ */ jsxs24("div", { children: [
+              /* @__PURE__ */ jsx25("h3", { className: "feature-list__title", children: "El Sauce Observatory, Chile" }),
+              /* @__PURE__ */ jsx25("p", { className: "feature-list__body", children: "1.5\u2033 median seeing, over 300 clear nights a year, next to Rubin and CTIO." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs24("li", { children: [
+            /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: "Ops" }),
+            /* @__PURE__ */ jsxs24("div", { children: [
+              /* @__PURE__ */ jsx25("h3", { className: "feature-list__title", children: "Robotic, unattended" }),
+              /* @__PURE__ */ jsx25("p", { className: "feature-list__body", children: "RTCSpy runs the night end to end and interrupts it for an alert in under a minute." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs24("li", { children: [
+            /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: "Data" }),
+            /* @__PURE__ */ jsxs24("div", { children: [
+              /* @__PURE__ */ jsx25("h3", { className: "feature-list__title", children: "Same-night reduction" }),
+              /* @__PURE__ */ jsx25("p", { className: "feature-list__body", children: "Py7DT clears a 3,000-image night in about five hours on 128 cores and two A100s." })
+            ] })
+          ] })
+        ] })
+      ] }) }) }),
+      /* @__PURE__ */ jsx25("section", { className: "fullpage-section section--alt", children: /* @__PURE__ */ jsx25("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs24("div", { className: "reveal", children: [
+        /* @__PURE__ */ jsxs24("div", { className: "section-title", children: [
+          /* @__PURE__ */ jsx25("span", { className: "eyebrow", children: "Latest" }),
+          /* @__PURE__ */ jsx25("h2", { children: "News & publications" })
+        ] }),
+        /* @__PURE__ */ jsx25("div", { className: "grid grid-cols-3", children: latest.map((item, index) => /* @__PURE__ */ jsxs24("article", { className: "card", children: [
+          /* @__PURE__ */ jsx25("img", { src: `/img/news/${item.imgName}`, alt: "", loading: "lazy" }),
+          /* @__PURE__ */ jsxs24("div", { className: "card-info", children: [
+            /* @__PURE__ */ jsxs24("div", { className: "card-about", children: [
+              /* @__PURE__ */ jsx25(
+                "span",
+                {
+                  className: `card-tag ${item.type === "meeting" ? "tag-news" : item.type === "publication" ? "tag-publication" : item.type === "press" ? "tag-press" : "tag-update"}`,
+                  children: item.type
+                }
+              ),
+              /* @__PURE__ */ jsx25("span", { className: "card-time", children: item.date })
+            ] }),
+            /* @__PURE__ */ jsx25("h3", { className: "card-title", children: item.title }),
+            /* @__PURE__ */ jsx25("div", { className: "card-creator", children: item.type === "meeting" ? item.place : item.type === "publication" ? item.shortAuthor : item.source })
+          ] })
+        ] }, index)) }),
+        /* @__PURE__ */ jsxs24("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
+          /* @__PURE__ */ jsx25("a", { className: "btn btn--secondary", href: "/news", children: "All news" }),
+          /* @__PURE__ */ jsx25("a", { className: "btn btn--secondary", href: "/publication/list", children: "Publications" })
+        ] })
+      ] }) }) }),
+      /* @__PURE__ */ jsx25(
+        "div",
+        {
+          className: "fullpage-section",
+          style: {
+            display: "block",
+            height: "auto",
+            minHeight: "100vh",
+            alignItems: "stretch",
+            overflow: "visible"
+          },
+          children: /* @__PURE__ */ jsx25(footer_default, {})
+        }
+      )
+    ] })
+  ] });
 }, main_default = MainPage;
 
 // app/routes/_index.tsx
-import { jsxDEV as jsxDEV26 } from "react/jsx-dev-runtime";
-var meta = () => [
-  { title: "7-dimensional telescope" },
-  { name: "description", content: "7-dimensional telescope" }
-], Index20 = () => /* @__PURE__ */ jsxDEV26("div", { style: { background: "#fff" }, children: [
-  /* @__PURE__ */ jsxDEV26(navigate_default, { manu: "manuHome" }, void 0, !1, {
-    fileName: "app/routes/_index.tsx",
-    lineNumber: 18,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV26(main_default, {}, void 0, !1, {
-    fileName: "app/routes/_index.tsx",
-    lineNumber: 19,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV26(footer_default, {}, void 0, !1, {
-    fileName: "app/routes/_index.tsx",
-    lineNumber: 20,
-    columnNumber: 7
-  }, this)
-] }, void 0, !0, {
-  fileName: "app/routes/_index.tsx",
-  lineNumber: 17,
-  columnNumber: 5
-}, this), index_default = Index20;
+import { jsx as jsx26, jsxs as jsxs25 } from "react/jsx-runtime";
+var meta20 = () => [
+  { title: "7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "The 7-Dimensional Telescope: a twenty-unit medium-band array at El Sauce Observatory, Chile, and the 7-Dimensional Sky Survey of the southern sky."
+  }
+], Index20 = () => /* @__PURE__ */ jsxs25("div", { className: "page", children: [
+  /* @__PURE__ */ jsx26("a", { className: "skip-link", href: "#content", children: "Skip to content" }),
+  /* @__PURE__ */ jsx26(navigate_default, { manu: "manuHome" }),
+  /* @__PURE__ */ jsx26("main", { id: "content", style: { height: "100%" }, children: /* @__PURE__ */ jsx26(main_default, {}) })
+] }), index_default = Index20;
 
 // app/routes/links.tsx
 var links_exports = {};
 __export(links_exports, {
-  default: () => links_default
+  default: () => links_default2,
+  meta: () => meta21
 });
-import { jsxDEV as jsxDEV27 } from "react/jsx-dev-runtime";
-var Index21 = () => /* @__PURE__ */ jsxDEV27("div", { style: { background: "#fff" }, children: [
-  /* @__PURE__ */ jsxDEV27(navigate_default, { manu: "manuLinks", fixed: !0 }, void 0, !1, {
-    fileName: "app/routes/links.tsx",
-    lineNumber: 9,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV27("div", { className: "mx-auto w-full main-container", style: { paddingTop: "300px" }, children: /* @__PURE__ */ jsxDEV27("div", { className: "p-10 max-w-screen-lg mx-auto", children: /* @__PURE__ */ jsxDEV27("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: /* @__PURE__ */ jsxDEV27("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "To be determined." }, void 0, !1, {
-    fileName: "app/routes/links.tsx",
-    lineNumber: 14,
-    columnNumber: 13
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/links.tsx",
-    lineNumber: 13,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/links.tsx",
-    lineNumber: 12,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/links.tsx",
-    lineNumber: 11,
-    columnNumber: 7
-  }, this),
-  /* @__PURE__ */ jsxDEV27(footer_default, {}, void 0, !1, {
-    fileName: "app/routes/links.tsx",
-    lineNumber: 20,
-    columnNumber: 7
-  }, this)
-] }, void 0, !0, {
-  fileName: "app/routes/links.tsx",
-  lineNumber: 8,
-  columnNumber: 5
-}, this), links_default = Index21;
+
+// app/routes/content/links.json
+var links_default = {
+  groups: [
+    {
+      title: "Site & host",
+      items: [
+        { name: "El Sauce Observatory / ObsTech", url: "https://www.obstech.cl", note: "Host of the 7DT array, R\xEDo Hurtado Valley, Chile" },
+        { name: "KREONET", url: "https://www.kreonet.net", note: "Research network carrying nightly data from Chile to Seoul" },
+        { name: "KISTI", url: "https://www.kisti.re.kr/eng", note: "Korea Institute of Science and Technology Information" }
+      ]
+    },
+    {
+      title: "Partner surveys & facilities",
+      items: [
+        { name: "SPHEREx", url: "https://spherex.caltech.edu", note: "All-sky near-infrared spectral survey; its Deep Field South overlaps the 7DS IMS field" },
+        { name: "Vera C. Rubin Observatory", url: "https://rubinobservatory.org", note: "Neighbouring site; Deep Drilling Fields inform WTS field selection" },
+        { name: "VISTA / VIKING survey", url: "https://www.eso.org/public/teles-instr/paranal-observatory/surveytelescopes/vista/surveys", note: "Near-infrared ancillary coverage for the time-domain survey" },
+        { name: "PHANGS", url: "https://sites.google.com/view/phangs/home", note: "Nearby-galaxy sample used for 7DT science verification" },
+        { name: "Gaia mission", url: "https://www.cosmos.esa.int/web/gaia", note: "DR3 astrometry and XP spectra underpin 7DT calibration" }
+      ]
+    },
+    {
+      title: "Gravitational-wave network",
+      items: [
+        { name: "LIGO", url: "https://www.ligo.caltech.edu", note: "Advanced Laser Interferometer Gravitational-wave Observatory" },
+        { name: "Virgo", url: "https://www.virgo-gw.eu", note: "Advanced Virgo interferometer" },
+        { name: "KAGRA", url: "https://gwcenter.icrr.u-tokyo.ac.jp/en", note: "Kamioka Gravitational Wave Detector" },
+        { name: "GraceDB", url: "https://gracedb.ligo.org", note: "Gravitational-wave candidate event database" }
+      ]
+    },
+    {
+      title: "Instrument vendors",
+      items: [
+        { name: "PlaneWave Instruments", url: "https://planewave.com", note: "DeltaRho 500 optical tube assemblies and L-500 mounts" },
+        { name: "Moravian Instruments", url: "https://www.gxccd.com", note: "C3-61000 PRO CMOS cameras" },
+        { name: "Edmund Optics", url: "https://www.edmundoptics.com", note: "Medium-band filters" },
+        { name: "Chroma Technology", url: "https://www.chroma.com", note: "Sloan broad-band filters" },
+        { name: "ASCOM Alpaca", url: "https://www.ascom-alpaca.org", note: "Device control standard used by the 7DT control layer" }
+      ]
+    },
+    {
+      title: "Institutions",
+      items: [
+        { name: "Center for the Gravitational-wave Universe", url: "http://gwuniverse.snu.ac.kr", note: "Designs, builds and operates 7DT" },
+        { name: "SNU Astronomy Program", url: "http://astro.snu.ac.kr", note: "Department of Physics and Astronomy, Seoul National University" },
+        { name: "National Research Foundation of Korea", url: "https://www.nrf.re.kr/eng", note: "Principal funding agency" }
+      ]
+    }
+  ]
+};
+
+// app/routes/links.tsx
+import { jsx as jsx27, jsxs as jsxs26 } from "react/jsx-runtime";
+var meta21 = () => [
+  { title: "Links \xB7 7-Dimensional Telescope" },
+  { name: "description", content: "Partner surveys, facilities, vendors and institutions related to 7DT." }
+], Index21 = () => /* @__PURE__ */ jsxs26(PageLayout, { menu: "manuLinks", children: [
+  /* @__PURE__ */ jsx27(
+    PageHero,
+    {
+      eyebrow: "Resources",
+      title: "Links",
+      lede: "The surveys, facilities, networks and suppliers that 7DT depends on or works alongside.",
+      image: "/img/hero/links.jpg"
+    }
+  ),
+  links_default.groups.map((group, index) => /* @__PURE__ */ jsx27(Section, { eyebrow: String(index + 1).padStart(2, "0"), title: group.title, alt: index % 2 === 1, children: /* @__PURE__ */ jsx27("ul", { className: "feature-list", children: group.items.map((item) => /* @__PURE__ */ jsxs26("li", { children: [
+    /* @__PURE__ */ jsx27("span", { className: "feature-list__key", children: "\u2197" }),
+    /* @__PURE__ */ jsxs26("div", { children: [
+      /* @__PURE__ */ jsx27("h3", { className: "feature-list__title", children: /* @__PURE__ */ jsx27("a", { href: item.url, target: "_blank", rel: "noreferrer", children: item.name }) }),
+      /* @__PURE__ */ jsx27("p", { className: "feature-list__body", children: item.note })
+    ] })
+  ] }, item.name)) }) }, group.title))
+] }), links_default2 = Index21;
 
 // app/routes/news.tsx
 var news_exports = {};
 __export(news_exports, {
-  default: () => news_default2
+  default: () => news_default2,
+  meta: () => meta22
 });
-import { useState as useState8 } from "react";
-import { Pagination as Pagination4 } from "flowbite-react";
-import { jsxDEV as jsxDEV28 } from "react/jsx-dev-runtime";
-var Index22 = () => {
-  let backgroundImage = {
-    backgroundSize: "cover",
-    backgroundRepeat: "repeat",
-    backgroundImage: 'url("./img/news.png")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px"
-  }, [currentPage, setCurrentPage] = useState8(1), [selectedTypes, setSelectedTypes] = useState8(["press", "publication", "meeting", "update"]), newsPerPage = 3, toggleType = (type) => {
-    selectedTypes.includes(type) ? setSelectedTypes(selectedTypes.filter((t) => t !== type)) : setSelectedTypes([...selectedTypes, type]);
-  }, filteredNews = selectedTypes.length > 0 ? news_default.news.filter((item) => selectedTypes.includes(item.type)) : news_default.news, totalPages = Math.ceil(filteredNews.length / newsPerPage), indexOfLastNews = currentPage * newsPerPage, indexOfFirstNews = indexOfLastNews - newsPerPage, currentNews = filteredNews.slice(indexOfFirstNews, indexOfLastNews), onPageChange = (page) => setCurrentPage(page);
-  return /* @__PURE__ */ jsxDEV28("div", { style: { background: "#fff" }, children: [
-    /* @__PURE__ */ jsxDEV28(navigate_default, { manu: "manuNews", fixed: !0 }, void 0, !1, {
-      fileName: "app/routes/news.tsx",
-      lineNumber: 43,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV28("div", { className: "mx-auto w-full main-container", style: { paddingTop: "150px" }, children: /* @__PURE__ */ jsxDEV28("div", { className: "p-10 max-w-screen-lg mx-auto", children: [
-      /* @__PURE__ */ jsxDEV28("div", { className: "justify-between mb-5", style: { maxWidth: "1200px", margin: "0 auto" }, children: [
-        /* @__PURE__ */ jsxDEV28("p", { className: "mt-4 text-sm leading-7 text-gray-500 font-regular", style: { textAlign: "center" }, children: "A Bunch of Intriguing Updates" }, void 0, !1, {
-          fileName: "app/routes/news.tsx",
-          lineNumber: 48,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ jsxDEV28("h3", { className: "text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900", style: { textAlign: "center", fontWeight: "700", color: "var(--pickled-bluewood-900)" }, children: [
-          "Latest ",
-          /* @__PURE__ */ jsxDEV28("span", { style: { color: "var(--pickled-bluewood-600)" }, children: "News" }, void 0, !1, {
-            fileName: "app/routes/news.tsx",
-            lineNumber: 52,
-            columnNumber: 22
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/news.tsx",
-          lineNumber: 51,
-          columnNumber: 13
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/news.tsx",
-        lineNumber: 47,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV28("div", { className: "flex justify-center mr-7 ml-7", children: /* @__PURE__ */ jsxDEV28("ul", { className: "items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex ", children: ["press", "publication", "meeting", "update"].map((type, index) => /* @__PURE__ */ jsxDEV28("li", { className: "w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600", children: /* @__PURE__ */ jsxDEV28("div", { className: "flex items-center ps-3", children: [
-        /* @__PURE__ */ jsxDEV28("input", { id: `${type}-checkbox-list`, type: "checkbox", value: "1", className: `w-4 h-4 text-${type}-color bg-gray-100 border-gray-300 rounded focus:ring-blue-500`, checked: selectedTypes.includes(type), onChange: () => toggleType(type) }, void 0, !1, {
-          fileName: "app/routes/news.tsx",
-          lineNumber: 60,
-          columnNumber: 19
-        }, this),
-        /* @__PURE__ */ jsxDEV28("label", { htmlFor: `${type}-checkbox-list`, className: "w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300", style: { textTransform: "uppercase" }, children: type }, void 0, !1, {
-          fileName: "app/routes/news.tsx",
-          lineNumber: 61,
-          columnNumber: 19
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/news.tsx",
-        lineNumber: 59,
-        columnNumber: 17
-      }, this) }, index, !1, {
-        fileName: "app/routes/news.tsx",
-        lineNumber: 58,
-        columnNumber: 15
-      }, this)) }, void 0, !1, {
-        fileName: "app/routes/news.tsx",
-        lineNumber: 56,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/news.tsx",
-        lineNumber: 55,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ jsxDEV28("div", { className: "flex flex-wrap items-center justify-center", style: { maxWidth: "1200px", margin: "0 auto", marginBottom: "5rem", textAlign: "center" }, children: [
-        currentNews.map((news, index) => (index = index + 1, /* @__PURE__ */ jsxDEV28("div", { className: `news news-${index}`, children: /* @__PURE__ */ jsxDEV28("div", { className: "news-content", children: [
-          /* @__PURE__ */ jsxDEV28("div", { className: "news-img-container", children: [
-            /* @__PURE__ */ jsxDEV28("img", { src: `./img/news/${news.imgName}`, alt: "News Image" }, void 0, !1, {
-              fileName: "app/routes/news.tsx",
-              lineNumber: 75,
-              columnNumber: 23
-            }, this),
-            /* @__PURE__ */ jsxDEV28("a", { href: "", className: "news-img-hovered", style: { backgroundImage: `var(--news-img-hovered-overlay), url(./img/news/${news.imgName})` } }, void 0, !1, {
-              fileName: "app/routes/news.tsx",
-              lineNumber: 76,
-              columnNumber: 23
-            }, this)
-          ] }, void 0, !0, {
-            fileName: "app/routes/news.tsx",
-            lineNumber: 74,
-            columnNumber: 21
-          }, this),
-          /* @__PURE__ */ jsxDEV28("div", { className: "news-info", children: [
-            /* @__PURE__ */ jsxDEV28("div", { className: "news-about", children: [
-              /* @__PURE__ */ jsxDEV28("a", { className: `news-tag ${news.type === "meeting" ? "tag-news" : news.type === "publication" ? "tag-publication" : news.type === "press" ? "tag-press" : null}`, children: news.type }, void 0, !1, {
-                fileName: "app/routes/news.tsx",
-                lineNumber: 80,
-                columnNumber: 25
-              }, this),
-              /* @__PURE__ */ jsxDEV28("div", { className: "news-time", children: news.date }, void 0, !1, {
-                fileName: "app/routes/news.tsx",
-                lineNumber: 81,
-                columnNumber: 25
-              }, this)
-            ] }, void 0, !0, {
-              fileName: "app/routes/news.tsx",
-              lineNumber: 79,
-              columnNumber: 23
-            }, this),
-            /* @__PURE__ */ jsxDEV28("h1", { className: "news-title", children: news.title }, void 0, !1, {
-              fileName: "app/routes/news.tsx",
-              lineNumber: 83,
-              columnNumber: 23
-            }, this),
-            news.type === "meeting" ? /* @__PURE__ */ jsxDEV28("div", { className: "news-creator", children: [
-              "in ",
-              /* @__PURE__ */ jsxDEV28("a", { href: "", children: news.place }, void 0, !1, {
-                fileName: "app/routes/news.tsx",
-                lineNumber: 85,
-                columnNumber: 58
-              }, this)
-            ] }, void 0, !0, {
-              fileName: "app/routes/news.tsx",
-              lineNumber: 85,
-              columnNumber: 25
-            }, this) : news.type === "publication" ? /* @__PURE__ */ jsxDEV28("div", { className: "news-creator", children: [
-              "by ",
-              /* @__PURE__ */ jsxDEV28("a", { href: "", children: news.shortAuthor }, void 0, !1, {
-                fileName: "app/routes/news.tsx",
-                lineNumber: 87,
-                columnNumber: 58
-              }, this)
-            ] }, void 0, !0, {
-              fileName: "app/routes/news.tsx",
-              lineNumber: 87,
-              columnNumber: 25
-            }, this) : /* @__PURE__ */ jsxDEV28("div", { className: "news-creator", children: [
-              "by ",
-              /* @__PURE__ */ jsxDEV28("a", { href: "", children: news.source }, void 0, !1, {
-                fileName: "app/routes/news.tsx",
-                lineNumber: 88,
-                columnNumber: 58
-              }, this)
-            ] }, void 0, !0, {
-              fileName: "app/routes/news.tsx",
-              lineNumber: 88,
-              columnNumber: 25
-            }, this),
-            news.webpage ? /* @__PURE__ */ jsxDEV28("a", { href: news.webpage, className: "details-button", target: "_blank", children: "Details \u25B6" }, void 0, !1, {
-              fileName: "app/routes/news.tsx",
-              lineNumber: 90,
-              columnNumber: 39
-            }, this) : null
-          ] }, void 0, !0, {
-            fileName: "app/routes/news.tsx",
-            lineNumber: 78,
-            columnNumber: 21
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/news.tsx",
-          lineNumber: 73,
-          columnNumber: 19
-        }, this) }, `news-${index}`, !1, {
-          fileName: "app/routes/news.tsx",
-          lineNumber: 72,
-          columnNumber: 17
-        }, this))),
-        /* @__PURE__ */ jsxDEV28("div", { className: "flex justify-center mt-4", children: /* @__PURE__ */ jsxDEV28(Pagination4, { currentPage, totalPages, onPageChange }, void 0, !1, {
-          fileName: "app/routes/news.tsx",
-          lineNumber: 96,
-          columnNumber: 13
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/news.tsx",
-          lineNumber: 95,
-          columnNumber: 11
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/news.tsx",
-        lineNumber: 68,
-        columnNumber: 11
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/news.tsx",
-      lineNumber: 46,
-      columnNumber: 9
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/news.tsx",
-      lineNumber: 45,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV28(footer_default, {}, void 0, !1, {
-      fileName: "app/routes/news.tsx",
-      lineNumber: 101,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/news.tsx",
-    lineNumber: 42,
-    columnNumber: 5
-  }, this);
+import { useMemo as useMemo2, useState as useState6 } from "react";
+import { Pagination as Pagination3 } from "flowbite-react";
+import { jsx as jsx28, jsxs as jsxs27 } from "react/jsx-runtime";
+var meta22 = () => [
+  { title: "News \xB7 7-Dimensional Telescope" },
+  { name: "description", content: "Updates, publications, meetings and press from the 7DT project." }
+], TYPES = ["press", "publication", "meeting", "update"], PER_PAGE3 = 6, tagClass = (type) => type === "meeting" ? "tag-news" : type === "publication" ? "tag-publication" : type === "press" ? "tag-press" : "tag-update", Index22 = () => {
+  let [currentPage, setCurrentPage] = useState6(1), [selected, setSelected] = useState6([...TYPES]), toggle = (type) => {
+    setSelected(
+      (prev) => prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+    ), setCurrentPage(1);
+  }, items = news_default.news, filtered = useMemo2(
+    () => items.filter((item) => selected.includes(item.type)),
+    [items, selected]
+  ), totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE3)), page = Math.min(currentPage, totalPages), shown = filtered.slice((page - 1) * PER_PAGE3, page * PER_PAGE3);
+  return /* @__PURE__ */ jsxs27(PageLayout, { menu: "manuNews", children: [
+    /* @__PURE__ */ jsx28(
+      PageHero,
+      {
+        eyebrow: "News",
+        title: "Latest from 7DT",
+        lede: "Survey milestones, instrument changes, publications and meetings.",
+        image: "/img/hero/news.jpg"
+      }
+    ),
+    /* @__PURE__ */ jsxs27(Section, { eyebrow: "Updates", title: "A bunch of intriguing updates", children: [
+      /* @__PURE__ */ jsxs27("div", { className: "toolbar", children: [
+        /* @__PURE__ */ jsxs27("div", { className: "toolbar__group", children: [
+          /* @__PURE__ */ jsx28("span", { className: "toolbar__label", children: "Filter" }),
+          TYPES.map((type) => /* @__PURE__ */ jsxs27("label", { className: "checkbox", htmlFor: `filter-${type}`, children: [
+            /* @__PURE__ */ jsx28(
+              "input",
+              {
+                id: `filter-${type}`,
+                type: "checkbox",
+                checked: selected.includes(type),
+                onChange: () => toggle(type)
+              }
+            ),
+            /* @__PURE__ */ jsx28("span", { style: { textTransform: "capitalize" }, children: type })
+          ] }, type))
+        ] }),
+        /* @__PURE__ */ jsxs27("span", { className: "toolbar__label", role: "status", "aria-live": "polite", children: [
+          filtered.length,
+          " item",
+          filtered.length === 1 ? "" : "s"
+        ] })
+      ] }),
+      filtered.length === 0 && /* @__PURE__ */ jsx28("p", { className: "note", style: { padding: "2rem 0" }, children: "No items match the selected categories. Tick a category above to see updates." }),
+      /* @__PURE__ */ jsx28("div", { className: "news-list", children: shown.map((item, index) => /* @__PURE__ */ jsx28("article", { className: "news", children: /* @__PURE__ */ jsxs27("div", { className: "news-content", children: [
+        /* @__PURE__ */ jsx28("div", { className: "news-img-container", children: /* @__PURE__ */ jsx28("img", { src: `/img/news/${item.imgName}`, alt: "", loading: "lazy", width: 640, height: 480 }) }),
+        /* @__PURE__ */ jsxs27("div", { className: "news-info", children: [
+          /* @__PURE__ */ jsxs27("div", { className: "news-about", children: [
+            /* @__PURE__ */ jsx28("span", { className: `news-tag ${tagClass(item.type)}`, children: item.type }),
+            /* @__PURE__ */ jsx28("span", { className: "news-time", children: item.date })
+          ] }),
+          /* @__PURE__ */ jsx28("h2", { className: "news-title", children: item.title }),
+          /* @__PURE__ */ jsx28("div", { className: "news-creator", children: item.type === "meeting" ? item.place : item.type === "publication" ? item.shortAuthor : item.source }),
+          item.content && /* @__PURE__ */ jsx28("p", { className: "feature-list__body", style: { marginTop: "0.75rem", maxWidth: "64ch" }, children: item.content }),
+          item.webpage && /* @__PURE__ */ jsx28(
+            "a",
+            {
+              className: "details-button",
+              href: item.webpage,
+              target: item.webpage.startsWith("http") ? "_blank" : void 0,
+              rel: "noreferrer",
+              children: "Details \u2192"
+            }
+          )
+        ] })
+      ] }) }, `${item.title}-${index}`)) }),
+      totalPages > 1 && /* @__PURE__ */ jsx28("div", { className: "pagination-wrap", children: /* @__PURE__ */ jsx28(Pagination3, { currentPage: page, totalPages, onPageChange: setCurrentPage }) })
+    ] })
+  ] });
 }, news_default2 = Index22;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-MCGG2PRW.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-SYCA6SCI.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-IFJMOQTG.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-654ZYIML.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-MTQMKAL5.js", imports: ["/build/_shared/chunk-JBQD3T7G.js", "/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-G7TFR7IJ.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-TRDHTZDK.js", imports: ["/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-SHRJC36C.js", imports: ["/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-LGCS2JUW.js", imports: ["/build/_shared/chunk-MHLBSK2Z.js", "/build/_shared/chunk-NMZL6IDN.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-JOIW7ZWY.js", imports: ["/build/_shared/chunk-QKLUKKVU.js", "/build/_shared/chunk-Z2BYYI2L.js", "/build/_shared/chunk-NMZL6IDN.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-EWFDQOZ7.js", imports: ["/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-SFH35YOO.js", imports: ["/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/footer": { id: "routes/footer", parentId: "root", path: "footer", index: void 0, caseSensitive: void 0, module: "/build/routes/footer-MIS6JXLK.js", imports: ["/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-4F65DZTH.js", imports: ["/build/_shared/chunk-Z2BYYI2L.js", "/build/_shared/chunk-NMZL6IDN.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-AAX5TRPK.js", imports: ["/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/main": { id: "routes/main", parentId: "root", path: "main", index: void 0, caseSensitive: void 0, module: "/build/routes/main-DHMV5NYP.js", imports: ["/build/_shared/chunk-JBQD3T7G.js", "/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-G7TFR7IJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/navigate": { id: "routes/navigate", parentId: "root", path: "navigate", index: void 0, caseSensitive: void 0, module: "/build/routes/navigate-RRK2TAJQ.js", imports: ["/build/_shared/chunk-3GTQRJLG.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-DQ7QHLMM.js", imports: ["/build/_shared/chunk-Z2BYYI2L.js", "/build/_shared/chunk-G7TFR7IJ.js", "/build/_shared/chunk-NMZL6IDN.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/plot": { id: "routes/plot", parentId: "root", path: "plot", index: void 0, caseSensitive: void 0, module: "/build/routes/plot-ANXUG3QZ.js", imports: ["/build/_shared/chunk-QKLUKKVU.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-5R5FSABS.js", imports: ["/build/_shared/chunk-Z2BYYI2L.js", "/build/_shared/chunk-G7TFR7IJ.js", "/build/_shared/chunk-NMZL6IDN.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-LNMDK627.js", imports: ["/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-ECG3BR7O.js", imports: ["/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HTLCGIGB.js", imports: ["/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-J2CFJTIZ.js", imports: ["/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-PUOE5JNV.js", imports: ["/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-25ZOGSSJ.js", imports: ["/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-CC3M4AN3.js", imports: ["/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-VQFYDFXK.js", imports: ["/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-LPGDIBJK.js", imports: ["/build/_shared/chunk-MHLBSK2Z.js", "/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-NMZL6IDN.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-FP5CULDG.js", imports: ["/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-XT5RR3CK.js", imports: ["/build/_shared/chunk-FYOAFX4F.js", "/build/_shared/chunk-3GTQRJLG.js", "/build/_shared/chunk-ES5GI7YV.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "d7bb51d0", hmr: { runtime: "/build/_shared/chunk-IFJMOQTG.js", timestamp: 1714626927166 }, url: "/build/manifest-D7BB51D0.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-WORRRC5Y.js", imports: ["/build/_shared/chunk-Y5RKXR26.js", "/build/_shared/chunk-3RVWVZ2O.js", "/build/_shared/chunk-DWFMXSZ6.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-HGERJUKU.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-XW2PMB5X.js", imports: ["/build/_shared/chunk-U2FKKBJ3.js", "/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-I7ROYTVM.js", imports: ["/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-JOZ2VZ3J.js", imports: ["/build/_shared/chunk-U2FKKBJ3.js", "/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-26KYSF5D.js", imports: ["/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-ZSTA5YCI.js", imports: ["/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-DSDEZR66.js", imports: ["/build/_shared/chunk-4CNFZB4X.js", "/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-77NZJII5.js", imports: ["/build/_shared/chunk-4CNFZB4X.js", "/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-LALQI5JB.js", imports: ["/build/_shared/chunk-AJW6MVIV.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-J2GKJNT6.js", imports: ["/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-XR7F55XV.js", imports: ["/build/_shared/chunk-AJW6MVIV.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-AB3RUQES.js", imports: ["/build/_shared/chunk-AJW6MVIV.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-C4PCDGUB.js", imports: ["/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-CQ6AE3PW.js", imports: ["/build/_shared/chunk-LPYEFCDX.js", "/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-QWKMGYYD.js", imports: ["/build/_shared/chunk-LPYEFCDX.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-2SRQ6CKJ.js", imports: ["/build/_shared/chunk-U2FKKBJ3.js", "/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-ZII6424Z.js", imports: ["/build/_shared/chunk-U2FKKBJ3.js", "/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-QEO55TD5.js", imports: ["/build/_shared/chunk-U2FKKBJ3.js", "/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-GGPMZVT2.js", imports: ["/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-JMD4BUVL.js", imports: ["/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-YEA6AUJK.js", imports: ["/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-6GVEDVAF.js", imports: ["/build/_shared/chunk-U2FKKBJ3.js", "/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-JVNC33EN.js", imports: ["/build/_shared/chunk-YTOQ7DPQ.js", "/build/_shared/chunk-75Q5OPZR.js", "/build/_shared/chunk-QH76WIOS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "68e97423", hmr: void 0, url: "/build/manifest-68E97423.js" };
 
 // server-entry-module:@remix-run/dev/server-build
-var mode = "development", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
+var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
   root: {
     id: "root",
     parentId: void 0,
@@ -5327,14 +3569,6 @@ var mode = "development", assetsBuildDirectory = "public/build", future = { v3_f
     caseSensitive: void 0,
     module: data_data_exports
   },
-  "routes/navigate": {
-    id: "routes/navigate",
-    parentId: "root",
-    path: "navigate",
-    index: void 0,
-    caseSensitive: void 0,
-    module: navigate_exports
-  },
   "routes/gallery": {
     id: "routes/gallery",
     parentId: "root",
@@ -5351,14 +3585,6 @@ var mode = "development", assetsBuildDirectory = "public/build", future = { v3_f
     caseSensitive: void 0,
     module: index_exports
   },
-  "routes/footer": {
-    id: "routes/footer",
-    parentId: "root",
-    path: "footer",
-    index: void 0,
-    caseSensitive: void 0,
-    module: footer_exports
-  },
   "routes/links": {
     id: "routes/links",
     parentId: "root",
@@ -5367,14 +3593,6 @@ var mode = "development", assetsBuildDirectory = "public/build", future = { v3_f
     caseSensitive: void 0,
     module: links_exports
   },
-  "routes/main": {
-    id: "routes/main",
-    parentId: "root",
-    path: "main",
-    index: void 0,
-    caseSensitive: void 0,
-    module: main_exports
-  },
   "routes/news": {
     id: "routes/news",
     parentId: "root",
@@ -5382,14 +3600,6 @@ var mode = "development", assetsBuildDirectory = "public/build", future = { v3_f
     index: void 0,
     caseSensitive: void 0,
     module: news_exports
-  },
-  "routes/plot": {
-    id: "routes/plot",
-    parentId: "root",
-    path: "plot",
-    index: void 0,
-    caseSensitive: void 0,
-    module: plot_exports
   }
 };
 export {
@@ -5401,4 +3611,3 @@ export {
   publicPath,
   routes
 };
-//# sourceMappingURL=index.js.map

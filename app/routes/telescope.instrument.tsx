@@ -1,81 +1,139 @@
-import React, {useState, useEffect} from "react"
+import React from 'react';
+import type { MetaFunction } from '@remix-run/node';
+import { PageLayout, PageHero, Section, SimpleTable } from '../components/site';
+import {
+  opticText,
+  mountText,
+  cameraText,
+  filterText,
+  filterCaveatText,
+  photometryText,
+} from './content/text';
 
-import NavBar from './navigate';
-import FooterBar from "./footer"
+export const meta: MetaFunction = () => [
+  { title: 'Instrument · 7-Dimensional Telescope' },
+  {
+    name: 'description',
+    content:
+      'Optics, mount, camera and the 35-filter medium-band set of the 7-Dimensional Telescope.',
+  },
+];
 
-import { opticText, mountText, filterText } from './content/text'
+const OPTICS = [
+  ['Model', 'PlaneWave DeltaRho 500'],
+  ['Design', 'Corrected Cassegrain'],
+  ['Primary diameter', '50.8 cm'],
+  ['Focal length', '1537 mm'],
+  ['Focal ratio', 'f/3.0'],
+  ['Image circle', '70 mm (≈ 2.6°)'],
+];
 
-const Index=() => {
+const MOUNT = [
+  ['Model', 'PlaneWave L-500'],
+  ['Drive', 'Direct drive, equatorial'],
+  ['Slew rate', '20 deg s⁻¹'],
+  ['Unguided tracking', '> 100 s'],
+  ['Pointing model', 'PWI4, 40–50 sky points'],
+];
 
+const CAMERA = [
+  ['Model', 'Moravian C3-61000 PRO'],
+  ['Sensor', 'SONY IMX455 back-illuminated CMOS'],
+  ['Sensor size', '36 × 24 mm'],
+  ['Dimension', '9576 × 6388 pixels'],
+  ['Pixel size', '3.76 µm'],
+  ['Pixel scale', '0.5 arcsec'],
+  ['Field of view', '1.34° × 0.90°'],
+  ['Operating temperature', '−10 °C'],
+];
 
+const FILTERS = [
+  ['Filter wheel', '9 slots per unit'],
+  ['Sloan g, r, i', 'Every unit'],
+  ['Sloan u', '1 unit'],
+  ['Sloan z', '3 units'],
+  ['Medium bands installed', '35 of 40 planned'],
+  ['Wavelength coverage', '375–875 nm'],
+  ['FWHM', '14–41 nm (typ. 25–30)'],
+  ['Manufacturers', 'Chroma (broad), Edmund Optics (medium)'],
+];
+
+const Index = () => {
   return (
-    <div>
-      <NavBar manu="manu7dt" fixed={true} />
+    <PageLayout menu="manu7dt">
+      <PageHero
+        eyebrow="Telescope"
+        title={
+          <>
+            Instrument <em>specification</em>
+          </>
+        }
+        lede="Each of the sixteen operational units is identical: the same optics, the same mount, the same camera. What differs between them is the filters they carry — and that is the whole design."
+        image="/img/hero/instrument.jpg"
+      />
 
-      <div className="p-10 max-w-screen-lg mx-auto" style={{paddingTop: "150px", paddingBottom: "100px"}}>
-        <div className="p-10 max-w-screen-lg mx-auto">
-          <div className="justify-between"  style={{maxWidth: "1200px", margin: "0 auto"}}>
-            <p className="mt-4 text-sm leading-7 text-gray-500 font-regular" style={{textAlign:"center"}}>
-              The Biggest Ground-based Multi-telescope System
-            </p>
-            <h3 className="text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight" style={{textAlign:"center", fontWeight: "700", color:"var(--pickled-bluewood-900)"}}>
-              Specifcation of <span style={{color:"var(--pickled-bluewood-600)"}}>7DT</span>
-            </h3>
-          </div>
+      <Section eyebrow="01" title="Optical tube assembly">
+        <div className="split split--wide-text">
+          <p className="prose">{opticText}</p>
+          <SimpleTable caption="DeltaRho 500" rows={OPTICS} />
         </div>
-      </div>
-      
-      
+      </Section>
 
-      <div style={{backgroundColor:"#f9f9f9"}}>
-        <div className="mx-auto w-full" style={{maxWidth: "1440px", margin:"0 auto", padding: "0 10vw 0 10vw"}}>
-          <div className="p-10 max-w-screen-lg mx-auto">
-            <h3 className="text-2xl sm:text-3xl leading-normal font-extrabold tracking-tight" style={{fontWeight: "700", color:"var(--pickled-bluewood-900)"}}>
-              Optical Tube Assembly
-            </h3>
-            <p className="text-content">{opticText}</p>
-          </div>
+      <Section eyebrow="02" title="Mount" alt>
+        <div className="split split--wide-text">
+          <p className="prose">{mountText}</p>
+          <SimpleTable caption="L-500 mount" rows={MOUNT} />
         </div>
-      </div>
+      </Section>
 
-      <div style={{backgroundColor:"#fff"}}>
-        <div className="mx-auto w-full" style={{maxWidth: "1440px", margin:"0 auto", padding: "0 10vw 0 10vw"}}>
-          <div className="p-10 max-w-screen-lg mx-auto">
-            <h3 className="text-2xl sm:text-3xl leading-normal font-extrabold tracking-tight" style={{fontWeight: "700", color:"var(--pickled-bluewood-900)"}}>
-              Mount
-            </h3>
-            <p className="text-content">{mountText}</p>
-          </div>
+      <Section eyebrow="03" title="Camera">
+        <div className="split split--wide-text">
+          <p className="prose">{cameraText}</p>
+          <SimpleTable caption="C3-61000 PRO" rows={CAMERA} />
         </div>
-      </div>
+      </Section>
 
-      <div style={{backgroundColor:"#f9f9f9"}}>
-
-        <div className="mx-auto w-full" style={{maxWidth: "1440px", margin:"0 auto", padding: "0 10vw 0 10vw"}}>
-          <div className="p-10 max-w-screen-lg mx-auto">
-            <h3 className="mb-3 text-2xl sm:text-3xl leading-normal font-extrabold tracking-tight" style={{fontWeight: "700", color:"var(--pickled-bluewood-900)"}}>
-              Filter
-            </h3>
-
-            <p className="text-content">{filterText}</p>
-
-            <img className="p-6" src="/img/filter.png" />
-
-            <p className="text-content">Here are two examples: NGC7293(left) and NGC0253(right)</p>
-            
-            <div className="flex flex-wrap justify-between p-10" style={{textAlign:"center"}}>
-              <img src="/img/NGC7293.gif" width="40%"/>
-              <img src="/img/NGC0253.gif" width="40%"/>
-            </div>
-
+      <Section eyebrow="04" title="Filters" alt>
+        <div className="split split--wide-text">
+          <div>
+            <p className="prose">{filterText}</p>
+            <p className="prose">{filterCaveatText}</p>
           </div>
+          <SimpleTable caption="Filter complement" rows={FILTERS} />
         </div>
-      </div>
-      
-      <FooterBar />
-    </div>
+
+        <figure className="figure" style={{ marginTop: '2.5rem' }}>
+          <img src="/img/filter.png" alt="Transmission curves of the 7DT medium-band filter set" loading="lazy" />
+          <figcaption>
+            <b>System response</b> Filter response curves incorporating detector quantum
+            efficiency, sky transmission, telescope optics and filter throughput. Filters are
+            designated by central wavelength in nanometres — m400 is the band centred at 400 nm.
+          </figcaption>
+        </figure>
+      </Section>
+
+      <Section eyebrow="05" title="Calibration">
+        <p className="prose">{photometryText}</p>
+      </Section>
+
+      <Section eyebrow="On sky" title="What the filter set looks like" alt>
+        <div className="split">
+          <figure className="figure">
+            <img src="/img/NGC7293.gif" alt="The Helix Nebula through successive 7DT medium bands" loading="lazy" />
+            <figcaption>
+              <b>NGC 7293</b> The Helix Nebula, band by band across the medium-band set.
+            </figcaption>
+          </figure>
+          <figure className="figure">
+            <img src="/img/NGC0253.gif" alt="The Sculptor Galaxy through successive 7DT medium bands" loading="lazy" />
+            <figcaption>
+              <b>NGC 253</b> The Sculptor Galaxy, band by band across the medium-band set.
+            </figcaption>
+          </figure>
+        </div>
+      </Section>
+    </PageLayout>
   );
-}
-
+};
 
 export default Index;

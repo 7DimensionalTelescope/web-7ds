@@ -1,97 +1,115 @@
-import React, { useState, useEffect } from "react";
-import NavBar from './navigate';
-import FooterBar from "./footer";
-import { overviewText } from './content/text';
+import React from 'react';
+import type { MetaFunction } from '@remix-run/node';
+import { PageLayout, PageHero, Section, NextLinks } from '../components/site';
+import { overviewText, aboutText2, aboutText3 } from './content/text';
+import surveys from './content/surveys.json';
+
+export const meta: MetaFunction = () => [
+  { title: 'What is 7DS · 7-Dimensional Telescope' },
+  {
+    name: 'description',
+    content:
+      'The 7-Dimensional Telescope and the 7-Dimensional Sky Survey: a twenty-unit medium-band array in Chile and the survey it carries out.',
+  },
+];
 
 const Index = () => {
-  const backgroundImageStyle = {
-    backgroundSize: "cover",
-    backgroundImage: 'url("../img/about.png")',
-    backgroundAttachment: "fixed",
-    backgroundPosition: "50% 0px",
-    position: "relative", // Add this line
-  };
-
-  const transparentBoxStyle = {
-    position: "absolute",
-    top: "30%", // Adjust this value as per your requirement
-    left: "50%", // Adjust this value as per your requirement
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "rgba(255, 255, 255, 0.85)", // Adjust the transparency here
-    padding: "50px",
-    borderRadius: "10px",
-    maxWidth: "90%",
-    marginTop:"200px",
-
-  };
-
-  const buttonStyle = {
-    backgroundColor: "var(--pickled-bluewood-900)",
-    border: "none",
-    color: "white",
-    padding: "15px 32px",
-    textAlign: "center",
-    textDecoration: "none",
-    display: "inline-block",
-    fontSize: "16px",
-    margin: "4px 50px",
-    cursor: "pointer",
-    borderRadius: "10px",
-
-  };
-
-  const buttonHoverStyle = {
-    backgroundColor: "var(--pickled-bluewood-600)",
-  };
-
-  const handleMouseOver = (e) => {
-    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-  };
-
-  const handleMouseOut = (e) => {
-    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-  };
-
-
   return (
-    <div style={{background: "#fff"}}>
-      <NavBar manu="manuAbout"/>
-      
-      <div style={backgroundImageStyle}>
-        <div style={{height:"100vh"}}></div>
-        <div style={transparentBoxStyle}>
-          <div className="mx-auto w-full">
-            <div className="max-w-screen-lg mx-auto">
-              <div className="justify-between mb-5" style={{maxWidth: "1200px", margin: "0 auto"}}>
-                <p className="mt-4 text-sm leading-7 text-gray-500 font-regular" style={{textAlign:"center"}}>
-                  Welcome
-                </p>
-                <h3 className="mb-10 text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900" style={{textAlign:"center", fontWeight: "700", color:"var(--pickled-bluewood-900)"}}>
-                  What is <span style={{color:"var(--pickled-bluewood-600)"}}>7DS</span>
-                </h3>
-                <p className="text-content">{overviewText}</p>
-                <br/>
-                <div className="flex justify-center" >
-                  <a href='./team'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Meet our Team
-                    </button>
-                  </a>
-                  <a href='./funding'>
-                    <button style={buttonStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                      Funding Sources
-                    </button>
-                  </a>
+    <PageLayout menu="manuAbout">
+      <PageHero
+        eyebrow="About"
+        title={
+          <>
+            What is <em>7DS</em>?
+          </>
+        }
+        lede="A multi-telescope array built to find the optical counterparts of gravitational-wave events — and, in the process, to map the southern sky in forty colours."
+        image="/img/hero/about.jpg"
+        meta={[
+          { value: '16', unit: '/ 20', label: 'Units on sky' },
+          { value: '35', unit: '/ 40', label: 'Medium bands' },
+          { value: '2023', label: 'First light' },
+          { value: 'Chile', label: 'El Sauce Obs.' },
+        ]}
+      />
 
-                </div>
-              </div>
-            </div>
+      <Section eyebrow="Overview" title="Imaging that behaves like spectroscopy">
+        <div className="split split--wide-text">
+          <div>
+            <p className="prose">{overviewText}</p>
+            <p className="prose">{aboutText2}</p>
           </div>
+          <figure className="figure">
+            <img
+              src="/img/images/Figure1_7DT.jpeg"
+              alt="The 7-Dimensional Telescope array at El Sauce Observatory"
+              loading="lazy"
+            />
+            <figcaption>
+              <b>The array</b> DeltaRho 500 units installed at El Sauce Observatory, Río
+              Hurtado Valley, Chile.
+            </figcaption>
+          </figure>
         </div>
-      </div>
-      <FooterBar />
-    </div>
+      </Section>
+
+      <Section eyebrow="The name" title="Seven dimensions" alt>
+        <div className="split split--wide-text">
+          <p className="prose">{aboutText3}</p>
+          <ul className="feature-list" style={{ margin: 0 }}>
+            {surveys.dimensions.map((dim) => (
+              <li key={dim.n} style={{ padding: '0.6rem 0' }}>
+                <span className="feature-list__key">{dim.n}</span>
+                <div>
+                  <h3 className="feature-list__title" style={{ margin: 0, fontSize: '1rem' }}>
+                    {dim.label}
+                  </h3>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      <Section eyebrow="Programme" title="What the survey delivers">
+        <div className="grid grid-cols-3">
+          {surveys.tiers.map((tier) => (
+            <div className="tier-card" key={tier.code}>
+              <span className="tier-card__code">{tier.code}</span>
+              <h3 className="tier-card__name">{tier.name}</h3>
+              <dl>
+                <div>
+                  <dt>Area</dt>
+                  <dd>{tier.area}</dd>
+                </div>
+                <div>
+                  <dt>Cadence</dt>
+                  <dd>{tier.cadence}</dd>
+                </div>
+                <div>
+                  <dt>Depth</dt>
+                  <dd>{tier.depth}</dd>
+                </div>
+              </dl>
+              <span className={`pill pill--${tier.status}`}>{tier.statusLabel}</span>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ marginTop: '2.5rem' }}>
+          <NextLinks
+            title="Continue"
+            links={[
+              { label: 'Meet the team', href: '/about/team' },
+              { label: 'Funding sources', href: '/about/funding' },
+              { label: 'Survey design', href: '/survey/design' },
+              { label: 'The telescope', href: '/telescope/overview' },
+            ]}
+          />
+        </div>
+      </Section>
+    </PageLayout>
   );
-}
+};
 
 export default Index;

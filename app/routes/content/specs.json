@@ -1,0 +1,85 @@
+{
+  "note": "7DT system specifications as of June 2026. Source: Kim et al., Proc. SPIE 14147-84, Table 1; Hyun et al., Proc. SPIE 14155-12, Sec. 2.",
+  "groups": [
+    {
+      "group": "Array",
+      "rows": [
+        ["Number of units (planned)", "20"],
+        ["Number of units (operational)", "16"],
+        ["Field of view per pointing", "≈ 1.2 deg²"],
+        ["Spectral resolution", "R = 30–70"]
+      ]
+    },
+    {
+      "group": "Unit telescope",
+      "rows": [
+        ["OTA", "PlaneWave DeltaRho 500"],
+        ["Optical design", "Corrected Cassegrain"],
+        ["Primary diameter", "50.8 cm"],
+        ["Focal length", "1537 mm"],
+        ["Focal ratio", "f/3.0"],
+        ["Image circle", "70 mm (≈ 2.6°)"],
+        ["Mount", "PlaneWave L-500, direct drive"],
+        ["Mount slew rate", "20 deg s⁻¹"]
+      ]
+    },
+    {
+      "group": "Camera & filters",
+      "rows": [
+        ["Camera", "Moravian C3-61000 PRO"],
+        ["Sensor", "SONY IMX455 back-illuminated CMOS"],
+        ["Sensor size", "36 × 24 mm"],
+        ["Sensor dimension", "9576 × 6388 pixels"],
+        ["Pixel size", "3.76 µm"],
+        ["Pixel scale", "0.5 arcsec"],
+        ["Field of view per unit", "1.34° × 0.90°"],
+        ["Filter wheel", "9 slots per unit"],
+        ["Broad bands", "Sloan u, g, r, i, z"],
+        ["Medium bands installed", "35"],
+        ["Medium bands planned", "40"],
+        ["Wavelength coverage", "375–875 nm"],
+        ["Medium-band FWHM", "14–41 nm (typ. 25–30)"]
+      ]
+    },
+    {
+      "group": "Site",
+      "rows": [
+        ["Observatory", "El Sauce, Río Hurtado Valley, Chile"],
+        ["Coordinates", "30°28′16″ S, 70°45′47″ W"],
+        ["Altitude", "1600 m"],
+        ["Median seeing", "≈ 1.5 arcsec"],
+        ["Clear nights", "> 300 per year"],
+        ["Zenith sky brightness", "21.97 mag arcsec⁻²"]
+      ]
+    },
+    {
+      "group": "Computing & storage",
+      "rows": [
+        ["Processing server", "Proton — 2 × AMD EPYC 7513"],
+        ["CPU / memory", "128 cores @ 2.6 GHz / 512 GB"],
+        ["GPU", "2 × NVIDIA A100, 82 GB (NVLink)"],
+        ["Storage", "Lyman 2 × 1.2 PB, Balmer 1.2 PB"],
+        ["Total capacity", "≈ 3.6 PB"],
+        ["Data link", "KREONET, GridFTP ≈ 80 MB s⁻¹"]
+      ]
+    }
+  ],
+  "depths": {
+    "caption": "5σ point-source depth, single 100 s exposure, nominal conditions",
+    "rows": [
+      ["m400 (bluest medium band)", "19.06 mag"],
+      ["m475 (peak throughput)", "19.61 mag"],
+      ["m875 (reddest medium band)", "16.60 mag"],
+      ["Sloan g", "20.59 mag"],
+      ["Sloan r", "20.25 mag"],
+      ["Sloan i", "19.17 mag"]
+    ]
+  },
+  "performance": [
+    { "value": "1.4–2.2", "unit": "″", "label": "PSF FWHM at centre" },
+    { "value": "2.0", "unit": "″", "label": "Array median FWHM" },
+    { "value": "0.2", "unit": "″", "label": "Unit-to-unit scatter" },
+    { "value": "< 0.1", "unit": "", "label": "PSF ellipticity" },
+    { "value": "15–25", "unit": "mmag", "label": "Zero-point uncertainty" }
+  ]
+}

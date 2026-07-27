@@ -1,0 +1,49 @@
+{
+  "groups": [
+    {
+      "title": "Site & host",
+      "items": [
+        { "name": "El Sauce Observatory / ObsTech", "url": "https://www.obstech.cl", "note": "Host of the 7DT array, Río Hurtado Valley, Chile" },
+        { "name": "KREONET", "url": "https://www.kreonet.net", "note": "Research network carrying nightly data from Chile to Seoul" },
+        { "name": "KISTI", "url": "https://www.kisti.re.kr/eng", "note": "Korea Institute of Science and Technology Information" }
+      ]
+    },
+    {
+      "title": "Partner surveys & facilities",
+      "items": [
+        { "name": "SPHEREx", "url": "https://spherex.caltech.edu", "note": "All-sky near-infrared spectral survey; its Deep Field South overlaps the 7DS IMS field" },
+        { "name": "Vera C. Rubin Observatory", "url": "https://rubinobservatory.org", "note": "Neighbouring site; Deep Drilling Fields inform WTS field selection" },
+        { "name": "VISTA / VIKING survey", "url": "https://www.eso.org/public/teles-instr/paranal-observatory/surveytelescopes/vista/surveys", "note": "Near-infrared ancillary coverage for the time-domain survey" },
+        { "name": "PHANGS", "url": "https://sites.google.com/view/phangs/home", "note": "Nearby-galaxy sample used for 7DT science verification" },
+        { "name": "Gaia mission", "url": "https://www.cosmos.esa.int/web/gaia", "note": "DR3 astrometry and XP spectra underpin 7DT calibration" }
+      ]
+    },
+    {
+      "title": "Gravitational-wave network",
+      "items": [
+        { "name": "LIGO", "url": "https://www.ligo.caltech.edu", "note": "Advanced Laser Interferometer Gravitational-wave Observatory" },
+        { "name": "Virgo", "url": "https://www.virgo-gw.eu", "note": "Advanced Virgo interferometer" },
+        { "name": "KAGRA", "url": "https://gwcenter.icrr.u-tokyo.ac.jp/en", "note": "Kamioka Gravitational Wave Detector" },
+        { "name": "GraceDB", "url": "https://gracedb.ligo.org", "note": "Gravitational-wave candidate event database" }
+      ]
+    },
+    {
+      "title": "Instrument vendors",
+      "items": [
+        { "name": "PlaneWave Instruments", "url": "https://planewave.com", "note": "DeltaRho 500 optical tube assemblies and L-500 mounts" },
+        { "name": "Moravian Instruments", "url": "https://www.gxccd.com", "note": "C3-61000 PRO CMOS cameras" },
+        { "name": "Edmund Optics", "url": "https://www.edmundoptics.com", "note": "Medium-band filters" },
+        { "name": "Chroma Technology", "url": "https://www.chroma.com", "note": "Sloan broad-band filters" },
+        { "name": "ASCOM Alpaca", "url": "https://www.ascom-alpaca.org", "note": "Device control standard used by the 7DT control layer" }
+      ]
+    },
+    {
+      "title": "Institutions",
+      "items": [
+        { "name": "Center for the Gravitational-wave Universe", "url": "http://gwuniverse.snu.ac.kr", "note": "Designs, builds and operates 7DT" },
+        { "name": "SNU Astronomy Program", "url": "http://astro.snu.ac.kr", "note": "Department of Physics and Astronomy, Seoul National University" },
+        { "name": "National Research Foundation of Korea", "url": "https://www.nrf.re.kr/eng", "note": "Principal funding agency" }
+      ]
+    }
+  ]
+}

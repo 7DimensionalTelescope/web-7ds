@@ -1,10 +1,16 @@
 {
-  "collabs":[
-      { "id": 1, 
-      "firstName": "Donggeun", 
-      "lastName": "Tak", 
-      "affiliation": "Seoul National University", 
-      "workingGroup": "MMA, Transients", 
-      "email": "donggeun.tak@gmail.com" }
+  "collabs": [
+    { "id": 1, "firstName": "Myungshin", "lastName": "Im", "affiliation": "Seoul National University", "workingGroup": "Science, Multi-messenger", "email": "myungshin.im@gmail.com" },
+    { "id": 2, "firstName": "Ji Hoon", "lastName": "Kim", "affiliation": "Seoul National University", "workingGroup": "Operations", "email": "jhkim.astrosnu@gmail.com" },
+    { "id": 3, "firstName": "Hyung Mok", "lastName": "Lee", "affiliation": "Seoul National University", "workingGroup": "Science", "email": "" },
+    { "id": 4, "firstName": "Seo-Won", "lastName": "Chang", "affiliation": "Seoul National University", "workingGroup": "Database", "email": "seowon.chang@snu.ac.kr" },
+    { "id": 5, "firstName": "Donggeun", "lastName": "Tak", "affiliation": "Kyung Hee University", "workingGroup": "MMA, Transients", "email": "donggeun.tak@gmail.com" },
+    { "id": 6, "firstName": "Gregory S. H.", "lastName": "Paek", "affiliation": "University of Hawaii", "workingGroup": "Photometric Calibration", "email": "gregorypaek94@gmail.com" },
+    { "id": 7, "firstName": "Hyeonho", "lastName": "Choi", "affiliation": "Seoul National University", "workingGroup": "Telescope Control", "email": "hhchoi1022@gmail.com" },
+    { "id": 8, "firstName": "Donghwan", "lastName": "Hyun", "affiliation": "Seoul National University", "workingGroup": "Data Pipeline", "email": "" },
+    { "id": 9, "firstName": "Chang-wan", "lastName": "Kim", "affiliation": "Seoul National University", "workingGroup": "Operations", "email": "" },
+    { "id": 10, "firstName": "Won-Hyeong", "lastName": "Lee", "affiliation": "Seoul National University", "workingGroup": "Data Pipeline", "email": "" },
+    { "id": 11, "firstName": "Danhyeuk", "lastName": "Seol", "affiliation": "Seoul National University", "workingGroup": "Data Pipeline", "email": "" },
+    { "id": 12, "firstName": "Jangho", "lastName": "Bae", "affiliation": "Seoul National University", "workingGroup": "Data Pipeline", "email": "" }
   ]
 }

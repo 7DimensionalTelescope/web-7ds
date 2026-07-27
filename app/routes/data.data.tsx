@@ -1,93 +1,125 @@
-import React, {useState, useEffect} from "react"
-import { Table } from 'flowbite-react';
-import { Pagination } from 'flowbite-react';
+import React from 'react';
+import type { MetaFunction } from '@remix-run/node';
 
-import NavBar from './navigate';
-import FooterBar from "./footer"
+import { PageLayout, PageHero, Section, SimpleTable } from '../components/site';
+import { archiveText } from './content/text';
 
-import ScatterGeoPlot from './plot'
+export const meta: MetaFunction = () => [
+  { title: 'Data archive · 7-Dimensional Telescope' },
+  {
+    name: 'description',
+    content: 'What 7DT produces, how it is catalogued, and how to request data before the public release.',
+  },
+];
 
-import data from './content/data'
+/* Data product definitions come from the pipeline paper (Hyun et al.,
+   Proc. SPIE 14155-12). There is deliberately no observation listing here:
+   the public archive interface does not exist yet, and a placeholder table
+   of invented observations would misrepresent the survey. */
 
+const PRODUCTS = [
+  ['single', 'A calibrated individual exposure, 100 s, with WCS and a source catalogue'],
+  ['coadd', 'Three singles combined to a 300 s frame — the basic survey product'],
+  ['difference', 'A coadd minus its RIS reference, for transient detection'],
+  ['catalogue', 'A flux-calibrated source list attached to every image above'],
+  ['master frame', 'Bias, dark and flat, generated nightly and matched by group key'],
+];
 
-const Index=() => {
+const CONVENTIONS = [
+  ['Photometric system', 'AB magnitudes'],
+  ['Coadd zero point', '23.9 AB — pixel values in µJy'],
+  ['Astrometric reference', 'Gaia DR3'],
+  ['Flux calibration', 'Synthetic photometry from Gaia XP spectra'],
+  ['Tiling', 'HEALPix-derived RIS grid, T00000 – T28519'],
+  ['File format', 'FITS, with QA metrics in the header'],
+];
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10;
+const QA_KEYS = [
+  ['SANITY', 'Boolean; false means the image should not be used for science'],
+  ['REJ_PROC', 'The processing stage at which SANITY was set false'],
+  ['SEEING', 'Measured PSF FWHM'],
+  ['UL5_5', '5σ limiting magnitude'],
+  ['ELLIP', 'Point-source elongation'],
+  ['PPFLAG', 'Bitmask recording compromises in master-frame selection'],
+];
 
-  const totalRows = data.length;
-  const totalPages = Math.ceil(totalRows / rowsPerPage);
-
-  const onPageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const paginatedData = data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
-
-
+const Index = () => {
   return (
-    <div style={{background: "#fff"}}>
-      <NavBar manu="manuData" fixed={true}/>
+    <PageLayout menu="manuData">
+      <PageHero
+        eyebrow="Data"
+        title={
+          <>
+            Data <em>products</em>
+          </>
+        }
+        lede="What the array produces each night, how it is calibrated and catalogued, and how to reach the data before the public release."
+        image="/img/hero/data.jpg"
+        meta={[
+          { value: '1.75', unit: 'M', label: 'Images acquired' },
+          { value: '3.6', unit: 'PB', label: 'Archive capacity' },
+          { value: '25,472', label: 'RIS tiles' },
+        ]}
+      />
 
-      <div className="mx-auto w-full main-container" style={{paddingTop: "200px"}}>
-        <div className="p-10 max-w-screen-lg mx-auto">
-          <div className="justify-between"  style={{maxWidth: "1200px", margin: "0 auto"}}>
-            <p className="mt-4 text-sm leading-7 text-gray-500 font-regular" style={{textAlign:"center"}}>
-              Invaluable Observations
-            </p>
-            <h3 className="text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900" style={{textAlign:"center", fontWeight: "700", color:"var(--pickled-bluewood-900)"}}>
-              <span style={{color:"var(--pickled-bluewood-600)"}}>Data</span> Archive 
-            </h3>
-          </div>
-          <div className="flex w-full justify-center">
-            <ScatterGeoPlot data={data} height="400" width="800" />
-          </div>
+      <Section eyebrow="Access" title="Status of the archive">
+        <p className="prose">{archiveText}</p>
 
-          <Table striped>
-            <Table.Head>
-              <Table.HeadCell>Target</Table.HeadCell>
-              <Table.HeadCell>R.A.</Table.HeadCell>
-              <Table.HeadCell>Dec.</Table.HeadCell>
-              <Table.HeadCell>Exposure</Table.HeadCell>
-              <Table.HeadCell>Significance</Table.HeadCell>
-              <Table.HeadCell>Details</Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y">
-              {paginatedData.map((d, index) => {
-                return(
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                      {d.name}
-                    </Table.Cell>
-                    <Table.Cell>{d.ra}</Table.Cell>
-                    <Table.Cell>{d.dec}</Table.Cell>
-                    <Table.Cell>{d.exposure}</Table.Cell>
-                    <Table.Cell>{d.sigma}</Table.Cell>
-                    <Table.Cell>
-                      {(d.ref===false)?
-                        <a href="mailto:mim@astro.snu.ac.kr" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                          Contact
-                        </a>:
-                        <a href={d.ref} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                          Link
-                        </a>
-                      }
-                      
-                    </Table.Cell>
-                  </Table.Row>
-              )})}
-            </Table.Body>
-          </Table>
-          <div className="flex justify-center mt-4">
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
-          </div>
+        <div className="panel" style={{ marginTop: '2rem', maxWidth: '68ch' }}>
+          <div className="panel__title">Requesting data</div>
+          <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
+            Until the public release, requests for 7DT imaging, catalogues or
+            target-of-opportunity products are handled by the project directly. Please include the
+            field or coordinates, the filters and the epoch range you need.
+          </p>
+          <a className="btn btn--primary" href="mailto:mim@astro.snu.ac.kr?subject=7DT%20data%20request">
+            Contact the project
+          </a>
         </div>
-      </div>
-      <FooterBar />
-    </div>
-  );
-}
+      </Section>
 
+      <Section eyebrow="Products" title="What the pipeline produces" alt>
+        <div className="split split--wide-text">
+          <ul className="feature-list" style={{ margin: 0 }}>
+            {PRODUCTS.map((product) => (
+              <li key={product[0]}>
+                <span className="feature-list__key" style={{ fontFamily: 'var(--font-mono)' }}>
+                  {product[0]}
+                </span>
+                <div>
+                  <p className="feature-list__body" style={{ margin: 0 }}>
+                    {product[1]}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <SimpleTable caption="Conventions" rows={CONVENTIONS} />
+        </div>
+      </Section>
+
+      <Section eyebrow="Quality" title="What every image carries">
+        <div className="split split--wide-text">
+          <p className="prose">
+            Quality-assurance metrics are written into the FITS header of every product and
+            ingested into the operations database, so the state of any image can be inspected
+            without opening it. A companion dependency table traces each output back through the
+            coadds, processed singles and master frames it was built from.
+          </p>
+          <SimpleTable caption="Selected header keywords" rows={QA_KEYS} />
+        </div>
+
+        <div className="btn-row" style={{ marginTop: '2rem' }}>
+          <a className="btn btn--secondary" href="/data/software">
+            How the pipeline works
+          </a>
+          <a className="btn btn--secondary" href="/publication/policy">
+            Publication policy
+          </a>
+        </div>
+      </Section>
+    </PageLayout>
+  );
+};
 
 export default Index;
-      
