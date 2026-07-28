@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from '@remix-run/react';
 import news from './content/news.json';
 import surveys from './content/surveys.json';
+import science from './content/science.json';
 import { mainText1, mainText2, mainText3, mainText4 } from './content/text';
 import FooterBar from './footer';
 
@@ -195,32 +196,19 @@ const MainPage = () => {
               <p className="fullpage-hero__eyebrow">
                 Center for the Gravitational-wave Universe · Seoul National University
               </p>
-              <h1>7-Dimensional Telescope</h1>
+              <h1>7-Dimensional Sky Survey</h1>
               <p className="fullpage-hero__lede">
-An array of twenty 50-cm telescopes in the Río Hurtado Valley, Chile,
-                carrying forty medium-band filters between them. Imaging that reads like
-                spectroscopy, over a field no spectrograph can cover.
+              A multi-telescope array, 7 Dimensional Telescope, built to find the optical counterparts of gravitational-wave events — and, in the process, to map the southern sky in forty colors.
               </p>
-              <div className="stat-grid stat-grid--on-dark">
-                <div className="stat">
-                  <span className="stat__value">20</span>
-                  <span className="stat__label">Telescopes in the array</span>
-                  <span className="stat__note stat__note--live">16 online</span>
-                </div>
-                <div className="stat">
-                  <span className="stat__value">40</span>
-                  <span className="stat__label">Medium-band filters</span>
-                  <span className="stat__note">35 installed</span>
-                </div>
-                <div className="stat">
-                  <span className="stat__value">30–70</span>
-                  <span className="stat__label">Spectral resolution R</span>
-                </div>
-                <div className="stat">
-                  <span className="stat__value">1.2<span className="stat__unit">deg²</span></span>
-                  <span className="stat__label">Per pointing</span>
-                </div>
+              <div className="dimension-row" style={{ marginTop: '2rem' }}>
+                {surveys.dimensions.map((dim) => (
+                  <span className="dimension-item" key={dim.n}>
+                    <span className="dimension-item__n">{dim.n}</span>
+                    {dim.label}
+                  </span>
+                ))}
               </div>
+              
             </div>
           </div>
 
@@ -280,30 +268,41 @@ An array of twenty 50-cm telescopes in the Río Hurtado Valley, Chile,
             <div className="split split--middle reveal">
               <div>
                 <span className="eyebrow eyebrow--on-dark">Science</span>
-                <h2>Spectra without a spectrograph</h2>
+                <h2>One survey, seven fields</h2>
                 <p className="prose" style={{ color: 'rgba(255,255,255,.78)' }}>
                   {mainText2}
                 </p>
+                {/* The themes are listed rather than described: the point of this
+                    section is the breadth, not any one result. */}
+                <ul className="theme-chips">
+                  {science.themes.map((theme) => (
+                    <li key={theme.id}>
+                      <Link to={`/science/sci#${theme.id}`}>{theme.title}</Link>
+                    </li>
+                  ))}
+                </ul>
                 <p style={{ marginTop: '1.5rem' }}>
-                  <Link className="link-arrow" to="/science/overview" style={{ color: 'var(--accent-on-dark)' }}>Science programme</Link>
+                  <Link className="link-arrow" to="/science/overview" style={{ color: 'var(--accent-on-dark)' }}>Science program</Link>
                 </p>
               </div>
-              <div className="stat-grid stat-grid--on-dark" style={{ gridTemplateColumns: '1fr 1fr' }}>
+              <div className="stat-grid stat-grid--on-dark">
+                <div className="stat">
+                  <span className="stat__value">20</span>
+                  <span className="stat__label">Telescopes in the array</span>
+                  <span className="stat__note stat__note--live">16 online</span>
+                </div>
+                <div className="stat">
+                  <span className="stat__value">40</span>
+                  <span className="stat__label">Medium-band filters</span>
+                  <span className="stat__note">35 installed</span>
+                </div>
                 <div className="stat">
                   <span className="stat__value">30–70</span>
                   <span className="stat__label">Spectral resolution R</span>
                 </div>
                 <div className="stat">
-                  <span className="stat__value">&lt; 1<span className="stat__unit">min</span></span>
-                  <span className="stat__label">Alert to exposure start</span>
-                </div>
-                <div className="stat">
-                  <span className="stat__value">1.75<span className="stat__unit">M</span></span>
-                  <span className="stat__label">Images, unattended</span>
-                </div>
-                <div className="stat">
-                  <span className="stat__value">≈ 100</span>
-                  <span className="stat__label">ToO follow-ups</span>
+                  <span className="stat__value">1.25<span className="stat__unit">deg²</span></span>
+                  <span className="stat__label">Per pointing</span>
                 </div>
               </div>
             </div>
@@ -351,14 +350,7 @@ An array of twenty 50-cm telescopes in the Río Hurtado Valley, Chile,
                 ))}
               </div>
 
-              <div className="dimension-row" style={{ marginTop: '2rem' }}>
-                {surveys.dimensions.map((dim) => (
-                  <span className="dimension-item" key={dim.n}>
-                    <span className="dimension-item__n">{dim.n}</span>
-                    {dim.label}
-                  </span>
-                ))}
-              </div>
+              <p className="footnote footnote--on-dark">{surveys.depthFootnote}</p>
             </div>
           </div>
         </section>
@@ -368,8 +360,8 @@ An array of twenty 50-cm telescopes in the Río Hurtado Valley, Chile,
           <div className="container container--wide">
             <div className="split split--middle reveal">
               <div>
-                <span className="eyebrow">The instrument</span>
-                <h2>Twenty telescopes, one instrument</h2>
+                <span className="eyebrow">The facility</span>
+                <h2>Twenty telescopes, one system</h2>
                 <p className="prose">{mainText4}</p>
                 <p style={{ marginTop: '1.5rem' }}>
                   <Link className="link-arrow" to="/telescope/overview">Telescope &amp; site</Link>
@@ -377,11 +369,13 @@ An array of twenty 50-cm telescopes in the Río Hurtado Valley, Chile,
               </div>
               <ul className="feature-list">
                 <li>
-                  <span className="feature-list__key">OTA</span>
+                  <span className="feature-list__key">Hardware</span>
                   <div>
-                    <h3 className="feature-list__title">PlaneWave DeltaRho 500</h3>
+                    <h3 className="feature-list__title">PlaneWave DeltaRho 500 × 20</h3>
                     <p className="feature-list__body">
-                      508 mm corrected Cassegrain at f/3.0, covering 1.34° × 0.90° at 0.5″ per pixel.
+                      A 508 mm corrected Cassegrain at f/3.0 on an L-500 direct-drive mount, with a
+                      Moravian C3-61000 PRO CMOS camera and a nine-slot filter wheel — 1.34° × 0.90°
+                      at 0.5″ per pixel, 1.25 deg² per unit.
                     </p>
                   </div>
                 </li>
@@ -390,12 +384,12 @@ An array of twenty 50-cm telescopes in the Río Hurtado Valley, Chile,
                   <div>
                     <h3 className="feature-list__title">El Sauce Observatory, Chile</h3>
                     <p className="feature-list__body">
-                      1.5″ median seeing, over 300 clear nights a year, next to Rubin and CTIO.
+                      1.5″ median seeing, over 300 clear nights a year, next to Rubin and Gemini-South.
                     </p>
                   </div>
                 </li>
                 <li>
-                  <span className="feature-list__key">Ops</span>
+                  <span className="feature-list__key">Operation</span>
                   <div>
                     <h3 className="feature-list__title">Robotic, unattended</h3>
                     <p className="feature-list__body">
@@ -404,7 +398,7 @@ An array of twenty 50-cm telescopes in the Río Hurtado Valley, Chile,
                   </div>
                 </li>
                 <li>
-                  <span className="feature-list__key">Data</span>
+                  <span className="feature-list__key">Pipeline</span>
                   <div>
                     <h3 className="feature-list__title">Same-night reduction</h3>
                     <p className="feature-list__body">
@@ -468,17 +462,11 @@ An array of twenty 50-cm telescopes in the Río Hurtado Valley, Chile,
           </div>
         </section>
 
-        {/* 07 — Footer ----------------------------------------------------- */}
-        <div
-          className="fullpage-section"
-          style={{
-            display: 'block',
-            height: 'auto',
-            minHeight: '100vh',
-            alignItems: 'stretch',
-            overflow: 'visible',
-          }}
-        >
+        {/* 07 — Footer -----------------------------------------------------
+            Sized to its content and snapped to the bottom of the viewport. A
+            fixed 100vh here left a strip of page background below the footer
+            whenever the footer was shorter than the window. */}
+        <div className="fullpage-section fullpage-section--footer">
           <FooterBar />
         </div>
       </div>

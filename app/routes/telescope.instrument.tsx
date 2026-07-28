@@ -107,7 +107,7 @@ const Index = () => {
           <figcaption>
             <b>System response</b> Filter response curves incorporating detector quantum
             efficiency, sky transmission, telescope optics and filter throughput. Filters are
-            designated by central wavelength in nanometres — m400 is the band centred at 400 nm.
+            designated by central wavelength in nanometers — m400 is the band centered at 400 nm.
           </figcaption>
         </figure>
       </Section>

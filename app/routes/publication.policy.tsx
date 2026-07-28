@@ -5,7 +5,7 @@ import { publicationPolicyText } from './content/text';
 
 export const meta: MetaFunction = () => [
   { title: 'Publication policy · 7-Dimensional Telescope' },
-  { name: 'description', content: 'Authorship, data rights and acknowledgement for work using 7DT data.' },
+  { name: 'description', content: 'Authorship, data rights and acknowledgment for work using 7DT data.' },
 ];
 
 const Index = () => {
@@ -14,7 +14,7 @@ const Index = () => {
       <PageHero
         eyebrow="Publications"
         title="Publication policy"
-        lede="How authorship, data rights and acknowledgement are handled for work based on 7DT observations."
+        lede="How authorship, data rights and acknowledgment are handled for work based on 7DT observations."
         image="/img/hero/policy.jpg"
       />
 
@@ -30,7 +30,7 @@ const Index = () => {
             </li>
             <li>
               Acknowledge the Center for the Gravitational-wave Universe at Seoul National
-              University and the NRF grants listed on the{' '}
+              University and the funding bodies set out on the{' '}
               <a href="/about/funding">funding</a> page.
             </li>
             <li>

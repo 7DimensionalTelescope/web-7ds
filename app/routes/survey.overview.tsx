@@ -9,7 +9,7 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'The 7-Dimensional Sky Survey: a three-tier programme covering the southern sky in medium bands, from a single-visit reference map to nightly deep monitoring.',
+      'The 7-Dimensional Sky Survey: a three-tier program covering the southern sky in medium bands, from a single-visit reference map to nightly deep monitoring.',
   },
 ];
 
@@ -26,10 +26,12 @@ const Index = () => {
         lede="Wide-area, high-cadence and deep, on one tile grid and one instrument. 7DS trades area against depth across three tiers that share a single observational infrastructure."
         image="/img/hero/survey.jpg"
         meta={[
-          { value: '23,000', unit: 'deg²', label: 'RIS footprint' },
+          { value: '23,000', unit: 'deg²', label: 'RIS area' },
+          { value: 'Single-visit', unit: '', label: 'RIS cadence' },
           { value: '10–14', unit: 'd', label: 'WTS cadence' },
+          { value: '800-1200', unit: 'deg²', label: 'WTS area' },
           { value: '1', unit: 'd', label: 'IMS cadence' },
-          { value: '23.6', unit: 'mag', label: 'Deepest tier' },
+          { value: '8.5', unit: 'deg²', label: 'IMS area' },
         ]}
       />
 
@@ -124,7 +126,7 @@ const Index = () => {
             { label: 'Survey design', href: '/survey/design' },
             { label: 'Current status', href: '/survey/status' },
             { label: 'Observing modes', href: '/telescope/mode' },
-            { label: 'Science programme', href: '/science/overview' },
+            { label: 'Science program', href: '/science/overview' },
           ]}
         />
       </Section>

@@ -10,40 +10,33 @@
 			"imgName": "ImMS.jpeg"
 		},
 		{
-			"name": "Prof. Hyung Mok Lee",
-			"role": "Co-Investigator",
-			"title": "Professor",
-			"affiliation": "Seoul National University",
-			"email": "",
-			"imgName": ""
-		},
-		{
 			"name": "Dr. Ji Hoon Kim",
 			"role": "Project Manager",
-			"title": "Associate Research Professor",
+			"title": "Principal Researcher",
 			"affiliation": "Seoul National University",
 			"email": "jhkim.astrosnu@gmail.com",
 			"imgName": "KimJH.jpeg"
 		},
 		{
 			"name": "Dr. Seo-won Chang",
-			"role": "Database Manager",
+			"role": "Database Management",
 			"title": "Associate Research Professor",
 			"affiliation": "Seoul National University",
 			"email": "seowon.chang@snu.ac.kr",
 			"imgName": "ChangSW.jpeg"
 		},
 		{
-			"name": "Dr. Donggeun Tak",
-			"role": "Multi-messenger & Transients",
-			"title": "",
+			"name": "Prof. Donggeun Tak",
+			"role": "Software Management",
+			"title": "Assistant Professor",
 			"affiliation": "Kyung Hee University",
 			"email": "donggeun.tak@gmail.com",
+			"webpage": "https://sites.google.com/view/khu-mma/",
 			"imgName": ""
 		},
 		{
-			"name": "Gregory S.H. Paek",
-			"role": "Photometric Calibration",
+			"name": "Dr. Gregory S.H. Paek",
+			"role": "Software Development",
 			"title": "",
 			"affiliation": "Institute for Astronomy, University of Hawaii",
 			"email": "gregorypaek94@gmail.com",
@@ -51,7 +44,7 @@
 		},
 		{
 			"name": "Hyeonho Choi",
-			"role": "Telescope Control & Scheduling",
+			"role": "Control System Development",
 			"title": "PhD Student",
 			"affiliation": "Seoul National University",
 			"email": "hhchoi1022@gmail.com",
@@ -59,8 +52,8 @@
 		},
 		{
 			"name": "Donghwan Hyun",
-			"role": "Data Reduction Pipeline",
-			"title": "",
+			"role": "Data Pipeline Development",
+			"title": "PhD Student",
 			"affiliation": "Seoul National University",
 			"email": "",
 			"imgName": ""

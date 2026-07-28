@@ -9,7 +9,7 @@ export const meta: MetaFunction = () => [
   { title: 'Data archive · 7-Dimensional Telescope' },
   {
     name: 'description',
-    content: 'What 7DT produces, how it is catalogued, and how to request data before the public release.',
+    content: 'What 7DT produces, how it is cataloged, and how to request data before the public release.',
   },
 ];
 
@@ -19,10 +19,10 @@ export const meta: MetaFunction = () => [
    of invented observations would misrepresent the survey. */
 
 const PRODUCTS = [
-  ['single', 'A calibrated individual exposure, 100 s, with WCS and a source catalogue'],
+  ['single', 'A calibrated individual exposure, 100 s, with WCS and a source catalog'],
   ['coadd', 'Three singles combined to a 300 s frame — the basic survey product'],
   ['difference', 'A coadd minus its RIS reference, for transient detection'],
-  ['catalogue', 'A flux-calibrated source list attached to every image above'],
+  ['catalog', 'A flux-calibrated source list attached to every image above'],
   ['master frame', 'Bias, dark and flat, generated nightly and matched by group key'],
 ];
 
@@ -54,7 +54,7 @@ const Index = () => {
             Data <em>products</em>
           </>
         }
-        lede="What the array produces each night, how it is calibrated and catalogued, and how to reach the data before the public release."
+        lede="What the array produces each night, how it is calibrated and cataloged, and how to reach the data before the public release."
         image="/img/hero/data.jpg"
         meta={[
           { value: '1.75', unit: 'M', label: 'Images acquired' },
@@ -69,7 +69,7 @@ const Index = () => {
         <div className="panel" style={{ marginTop: '2rem', maxWidth: '68ch' }}>
           <div className="panel__title">Requesting data</div>
           <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
-            Until the public release, requests for 7DT imaging, catalogues or
+            Until the public release, requests for 7DT imaging, catalogs or
             target-of-opportunity products are handled by the project directly. Please include the
             field or coordinates, the filters and the epoch range you need.
           </p>

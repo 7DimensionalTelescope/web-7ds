@@ -118,7 +118,7 @@ import {
 var app_default = "/build/_assets/app-7VOXCDPI.css";
 
 // app/css/custom.css
-var custom_default = "/build/_assets/custom-4CYPCYKE.css";
+var custom_default = "/build/_assets/custom-IV6ZNRF4.css";
 
 // app/root.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
@@ -630,7 +630,7 @@ function NextLinks({
 }
 
 // app/routes/content/text.tsx
-var mainText1 = "The 7-Dimensional Telescope (7DT) is an array of twenty 50-cm telescopes at El Sauce Observatory in Chile, built and operated by the Center for the Gravitational-wave Universe at Seoul National University. Each unit carries a share of a forty-filter medium-band set, and together they turn imaging into low-resolution spectroscopy across 1.2 square degrees at a time. Sixteen units and thirty-five filters are in routine operation today; the remainder complete the designed array.", mainText2 = "A resolution of R = 30-70 across 400-900 nm captures the 4000 A break, strong emission lines and broad continuum shape for every source in the field. That is enough to tell a kilonova from the hundred other transients in a gravitational-wave localization, to place galaxies in redshift without a spectrograph, and to follow colour changes on timescales of a single night.", mainText3 = "The 7-Dimensional Sky Survey (7DS) runs on three tiers that trade area against depth and cadence: a single-visit reference map of the southern sky, a wide time-domain survey on a 10-14 day cadence, and nightly monitoring of a deep field at the south ecliptic pole. All three observe the same tile grid, so their data coadd without compromise.", mainText4 = "Twenty DeltaRho 500 units on direct-drive mounts, sixteen of them observing tonight, one control computer per operational telescope, a robotic scheduler that can interrupt the night and start a follow-up exposure in under a minute, and a pipeline that reduces a 3,000-image night within the daily budget. 7DT is built to be pointed at a transient while it is still bright.", overviewText = "The 7-Dimensional Telescope (7DT) is a multi-telescope array of twenty 50-cm commercial off-the-shelf telescopes at El Sauce Observatory, Chile, designed to identify the electromagnetic counterparts of gravitational-wave events. Its defining feature is a set of 40 medium-band filters of 25 nm width spanning 400 to 900 nm, distributed across the array so that the full set is covered in a small number of exposures. This yields IFU-like data at low spectral resolution (R = 30-70) over approximately 1.2 square degrees per pointing \u2014 imaging that behaves like spectroscopy, over an area no spectrograph can reach.", aboutText2 = "Since first light in October 2023 the array has grown from twelve to sixteen operational units, and from twenty to thirty-five installed medium-band filters, against a design of twenty telescopes and forty filters. Commissioning has reached closure, robotic operation runs unattended, and the science programme \u2014 the 7-Dimensional Sky Survey (7DS) \u2014 is under way on two of its three tiers.", aboutText3 = "The name counts the axes of the data. Two of position on the sky, one of brightness, one of wavelength and one of time come directly from the observations; distance and radial velocity follow from the medium-band spectral energy distribution. A single visit therefore records not just where a source is and how bright it is, but what it is made of and how it is moving.", scienceOverviewText = "The primary mission of 7DT is the rapid identification of electromagnetic counterparts to gravitational-wave events. A typical kilonova peaks near an absolute magnitude of \u221215 to \u221217 and fades by roughly 0.5 mag per day, inside a localization region of hundreds to thousands of square degrees \u2014 where even a single 100 deg\xB2 patch is expected to hold of order a hundred unrelated transients over a seven-day window. Finding one demands wide-area coverage, fast response, and spectral information good enough to reject the contaminants, which is precisely what a medium-band array delivers.", scienceOverviewText2 = "The same data serve a much broader programme. Low-resolution spectral mapping of the southern sky supports photometric redshift catalogues, resolved stellar populations in nearby galaxies, active galactic nuclei, variable stars, and the time-domain study of solar-system bodies. Several of the science verification observations taken during commissioning have since matured into refereed or near-complete analyses.", surveyOverviewText = "7DS is the science programme of 7DT. It is structured as three complementary surveys distinguished by area, cadence and depth: the Reference Imaging Survey (RIS), the Wide-area Time-domain Survey (WTS), and the Intensive Monitoring Survey (IMS). Across the three tiers sky coverage decreases and depth increases, spanning the range from a single-visit all-southern-sky reference map to daily monitoring of a small field, while sharing a single observational infrastructure.", surveyDesignText = "All 7DS observations follow a common tile pattern generated from a HEALPix pixelization of the celestial sphere, with adjacent pointings overlapping by about 5 arcminutes in right ascension and 4 arcminutes in declination near the celestial equator and by more toward the poles. Tiles are numbered T00000 to T28519 in order of increasing declination, covering everything accessible to the array from the south pole to +30 degrees.", surveyDesignText2 = "The RIS tile grid is the operational reference for the entire programme: WTS and IMS point at the same tile centres, and target-of-opportunity observations use them wherever the field allows. Because every survey shares the grid, data from any tier coadd homogeneously with data from the others, and difference imaging always runs against a consistent reference. A visit is three consecutive 100-second exposures, coadded to a 300-second frame - a number set by the unguided tracking capability of the mount and the read noise of the detector.", surveyStatusText = "RIS began routine operation in July 2024 and IMS in April 2025; WTS is scheduled to commence in 2026. In a typical night the array observes about 30 tiles, including the seven IMS tiles, for roughly 3,000 individual exposures. Since RTCSpy took over nightly operation in August 2024 the array has acquired approximately 1.75 million images under fully unattended operation, alongside about 100 target-of-opportunity follow-ups and some ten gravitational-wave event campaigns.", telescopeOverviewText = "7DT is an array of twenty 50-cm commercial off-the-shelf telescopes. Each unit is a PlaneWave DeltaRho 500 optical tube assembly on an L-500 direct-drive mount operated in equatorial configuration, paired with a Moravian Instruments C3-61000 PRO CMOS camera \u2014 every unit identical but for the filters it carries. Sixteen of the twenty are deployed and operational as of June 2026, and the four remaining units complete the array. All operational units share a common configuration and show consistent optical performance in routine use.", locationText = "El Sauce Observatory sits in the Rio Hurtado Valley of Chile at 30 deg 28 min 16 sec South, 70 deg 45 min 47 sec West, 1,600 m above sea level. It neighbours the sites of Cerro Tololo Inter-American Observatory, Gemini South, the Southern Astrophysical Research Telescope and the Vera C. Rubin Observatory, and shares their sky conditions: typical seeing of about 1.5 arcseconds, more than 300 clear nights a year, and a mean zenith sky brightness of 21.97 mag per square arcsecond. Site infrastructure and maintenance are provided by ObsTech, a Chilean telescope hosting company.", opticText = "Each unit is a PlaneWave DeltaRho 500, a corrected Cassegrain of 508 mm aperture with a focal length of 1,537 mm and a focal ratio of f/3.0. The design delivers a 70 mm image circle covering approximately 2.6 degrees - fast optics over a field far wider than a conventional research telescope of the same aperture. Optomechanical alignment of all sixteen operational units is complete, and image quality is monitored continuously through routine survey operations rather than in scheduled campaigns.", mountText = "The DeltaRho 500 rides on a PlaneWave L-500 mount operated in equatorial configuration. Its direct-drive motors reach a slew rate of 20 degrees per second and sustain unguided tracking longer than the 100-second exposure used for survey work. Polar alignment is maintained through pointing models built by PWI4 from 40 to 50 sky points, and pointing and tracking accuracies are monitored continuously, with models refreshed when required.", cameraText = "Each unit carries a Moravian Instruments C3-61000 PRO. Its back-illuminated SONY IMX455 CMOS sensor measures 36 by 24 mm with 9,576 by 6,388 pixels of 3.76 micron pitch. At the DeltaRho focal plane this gives a field of view of 1.34 by 0.90 degrees at a pixel scale of 0.5 arcseconds - about 1.2 square degrees of spectral mapping per pointing. Bias levels are consistent with the manufacturer specification of roughly 3.5 electrons RMS, and the horizontal pattern characteristic of CMOS detectors is present but stable.", filterText = "Every unit carries a nine-slot filter wheel. Three slots in each wheel hold Sloan g, r and i; one unit adds u and three units add z. The remaining slots hold medium-band filters, distributed across the array so that the full set is covered in a small number of exposures. The original twenty medium bands are spaced regularly at 25 nm from 400 to 875 nm with 25 nm FWHM. Fifteen more, procured from Edmund Optics and installed in late 2025, fill the gaps between them with central wavelengths from 412 to 832 nm and bandwidths of 14 to 41 nm. The current suite of 35 filters covers 375 to 875 nm, advancing toward the designed complement of 40 medium bands at 12.5 nm spacing.", filterCaveatText = "The additional fifteen filters depart from the regularity of the original set: their central wavelengths are not precisely aligned to the 12.5 nm grid, their bandwidths vary, and no filter between 700 and 800 nm is included in the second batch. These departures reflect availability and will be addressed as the remaining five filters become available. Their spectrophotometric calibration is in preparation; the original twenty remain the calibrated set in operational use.", performanceText = "Across the sixteen operational units the point-spread function measured at field centre on good nights ranges from 1.4 to 2.2 arcseconds FWHM, with an array median of 2.0 arcseconds closely tracking the median site seeing. Unit-to-unit scatter in delivered FWHM is 0.2 arcseconds, and the PSF grows by 0.3 arcseconds from field centre to corner while ellipticity stays below 0.1 over the central 80 per cent of the field. The array behaves as a coherent set of instruments rather than sixteen independent telescopes. Median delivered FWHM has held stable to within 0.3 arcseconds since routine survey operations began in July 2024.", photometryText = "Photometric calibration runs against synthetic photometry derived from Gaia DR3 BP/RP spectra, homogenized to correct the colour- and magnitude-dependent residuals reported by the Gaia collaboration. The procedure was established during commissioning on 68 spectrophotometric standard stars, including CALSPEC sources, with non-variable point sources selected following criteria adapted from SkyMapper DR4. Zero-point uncertainty across the twenty medium bands in operational use is 15 to 25 mmag, with the larger values redward of 775 nm where detector quantum efficiency falls and signal-to-noise drops accordingly.", depthText = "For the canonical 100-second exposure the 5-sigma point-source depth reaches 19.06 mag in the bluest medium band (m400) and 16.60 mag at the longest wavelength (m875), peaking at 19.61 mag in m475 near maximum system throughput. The Sloan broad bands reach 20.59, 20.25 and 19.17 mag in g, r and i. These are nominal-condition figures: seeing better than 2.0 arcseconds, airmass below 1.5, and non-bright nights.", modeText = "Because each unit carries its own filter complement, the array can be reconfigured between science goals without changing hardware. The full spectral range is covered by assigning unique filter combinations to individual units and rotating through them during an observation. Four modes are in routine use, and the choice between them is the choice of what to spend the night on: spectral resolution, depth, or sky coverage.", computingText = "On-site computing consists of sixteen Telescope Control Computers, one per operational unit, and a single Main Control Computer that coordinates the array. Each TCC drives its own mount, camera, focuser and filter wheel and writes exposures to local storage as they complete. The MCC dispatches observation commands through RTCSpy, aggregates data from every TCC, and manages transfer to the processing facility at Seoul National University over KREONET.", storageText = "A typical night yields about 3,000 raw frames of roughly 117 MiB each, some 350 GB before compression. Raw data are compressed on site and transferred by GridFTP at a typical 80 MB/s, a procedure that usually completes in under twelve hours; target-of-opportunity data skip the compression and the wait for sunrise, cutting latency to tens of minutes. Storage is provided by two servers named for the hydrogen transition series: Lyman, with two 1.2 PB volumes, and Balmer, with one, for a combined capacity of approximately 3.6 PB. Both are attached to the compute server as NFS mounts over a 10 Gbps class network, so that I/O buffering does not burden processing.", protonText = "All 7DT data are reduced on Proton, a dedicated server with dual AMD EPYC 7513 processors providing 128 cores at up to 2.6 GHz, 512 GB of memory, and two NVIDIA A100 GPUs sharing memory over NVLink. A nightly volume of roughly 3,000 raw images requires an effective per-image processing time of about 30 seconds to complete within the daily budget; the current pipeline sustains a median end-to-end throughput of 66 \xB1 24 GB per hour and clears a typical survey night in about five hours of wall-clock time after transfer completes. GPU acceleration is available for preprocessing, though in this deployment the throughput gain over the CPU path is minimal \u2014 the pipeline is bound by I/O rather than by computation.", dataOverviewText = "Data flow from Chile to Seoul every night. Observation, reduction and analysis are closed into a single loop by three software systems: RTCSpy drives the array and schedules what it observes, Py7DT reduces what it acquires, and gwportal records the state of both. Three web interfaces expose that state to the team - a pipeline status page with real-time progress and quality-assurance summaries, a target-of-opportunity page carrying observation requests and event history, and a wiki hosting user manuals and QA criteria for internal and external users of 7DT data.", dataProductText = "The basic data product of the survey is a 300-second coadd of three 100-second exposures, with a source catalogue attached to every processed single, coadd and difference image. Coadds are flux-scaled to a zero point of 23.9 AB magnitudes, which puts each pixel directly in units of microjansky - a convenient convention for the pixel-based, IFU-like analysis that medium-band data invite. Quality-assurance metrics including seeing, ellipticity, 5-sigma depth and astrometric precision are written to FITS headers and ingested into the database for every image produced.", pipelineText = "Py7DT is the operational data reduction pipeline. It addresses the reduction challenge specific to 7DT: heterogeneous data from many telescope units, filters and observing modes, reduced at survey throughput while keeping latency low for transient events. Orchestration modules group images by their properties into configurations backed by YAML files and submit them to an SQLite-based system queue, which dispatches them in parallel by priority and stage. Processing modules then run the standard sequence on each group, wrapping established astronomical software behind Python interfaces rather than reimplementing it.", pipelineToOText = "Target-of-opportunity data are handled in the same framework at elevated priority. A ToO configuration is placed ahead of routine survey work in the queue, and for the highest-priority cases - typically broadband frames, where a rapid community report is valuable - all other processing pauses to dedicate the full system to the job. Users receive notification when raw data arrive, again as each filter set completes, and once more on full completion with an SED plot and magnitude table attached. Every ToO event is tracked in a dedicated database recording timestamps, progress and output products, and all ToO data are reprocessed alongside routine data in the next daily run to produce the deepest possible coadds.", softwareReuseText = "Beyond its pipeline role, Py7DT is structured for offline reuse. Researchers inside and outside the 7DT team can run the same codebase to reprocess data with custom configurations, resuming from any stage of the reduction, and choose for themselves how far to trust the standard products. Images are passed through the pipeline as string paths with metadata in FITS headers and YAML files, rather than wrapped in a bespoke data model - a deliberate choice that keeps products inspectable outside the pipeline and keeps the learning cost of processing 7DT data low.", fundingGWText = "The 7-Dimensional Telescope is designed, built and operated by the Center for the Gravitational-wave Universe at Seoul National University. The Center is supported by National Research Foundation of Korea grant No. 2021M3F7A1084525, funded by the Korean government (MSIT).", fundingNRFText = "Further project support is provided by the National Research Foundation of Korea under grant No. RS-2026-25490019, funded by the Korean government (MSIT). Several members of the collaboration are additionally supported by individual NRF awards, listed separately below; those grants support the researchers rather than the facility.", fundingKASIText = "7DT is operated in part with support from special funding of the Korea Astronomy and Space Science Institute (KASI).", fundingKreonetText = "Nightly transfer of roughly 350 GB of raw data from Chile to the processing facility in Seoul is carried by KREONET, the Korea Research Environment Open NETwork, operated by KISTI, the Korea Institute of Science and Technology Information. The 7DT project gratefully acknowledges this support, without which same-day reduction of survey and target-of-opportunity data would not be possible.", publicationPolicyText = "The 7DS publication policy governs authorship, data rights and the acknowledgement of 7DT observations in refereed work. It is being prepared by the collaboration and will be posted here once ratified. In the meantime, anyone intending to publish results based on 7DT data is asked to contact the principal investigator so that the appropriate collaboration authors and funding acknowledgements can be agreed in advance.", archiveText = "A complete record of 7DT data \u2014 every image type and source catalogue \u2014 is maintained internally in the gwportal database, with the provenance of any product traceable back to the raw frames it was built from. There is no public archive interface yet: a public release of survey products is being prepared alongside the completion of the Reference Imaging Survey. Until then, data requests are handled directly by the project.";
+var mainText1 = "The 7-Dimensional Telescope (7DT) is an array of twenty 50-cm telescopes at El Sauce Observatory in Chile, built and operated by the Center for the Gravitational-wave Universe at Seoul National University. Each unit carries a share of a forty-filter medium-band set, and together they turn imaging into low-resolution spectroscopy across 1.25 square degrees at a time. Sixteen units and thirty-five filters are in routine operation today; the remainder complete the designed array.", mainText2 = "Every source in the field arrives with a low-resolution spectrum already attached. That single data product carries across most of the questions optical astronomy is asking: how galaxies assemble and stop forming stars, where the heavy elements are made, how fast the Universe is expanding, how black holes feed, what young stars do from one night to the next, and what the small bodies of our own solar system are made of. 7DS was designed for gravitational-wave counterparts; the same nightly images serve all of it.", mainText3 = "The 7-Dimensional Sky Survey (7DS) runs on three tiers that trade area against depth and cadence: a single-visit reference map of the southern sky, a wide time-domain survey on a 10-14 day cadence, and nightly monitoring of a deep field at the south ecliptic pole. All three observe the same tile grid, so their data coadd without compromise.", mainText4 = "Twenty DeltaRho 500 units on direct-drive mounts, sixteen of them observing tonight, one control computer per operational telescope, a robotic scheduler that can interrupt the night and start a follow-up exposure in under a minute, and a pipeline that reduces a 3,000-image night within the daily budget. 7DT is built to be pointed at a transient while it is still bright.", overviewText = "The 7-Dimensional Telescope (7DT) is a multi-telescope array of twenty 50-cm commercial off-the-shelf telescopes at El Sauce Observatory, Chile, designed to identify the electromagnetic counterparts of gravitational-wave events. Its defining feature is a set of 40 medium-band filters of 25 nm width spanning 400 to 900 nm, distributed across the array so that the full set is covered in a small number of exposures. This yields IFU-like data at low spectral resolution (R = 30-70) over approximately 1.25 square degrees per pointing \u2014 imaging that behaves like spectroscopy, over an area no spectrograph can reach.", aboutText2 = "Since first light in October 2023 the array has grown from twelve to sixteen operational units, and from twenty to thirty-five installed medium-band filters, against a design of twenty telescopes and forty filters. Commissioning has reached closure, robotic operation runs unattended, and the science program \u2014 the 7-Dimensional Sky Survey (7DS) \u2014 is under way on two of its three tiers.", aboutMotivationText = "On 17 August 2017 the merger of two neutron stars, GW170817, was seen in gravitational waves and then found in light. It remains the only gravitational-wave event with a confirmed electromagnetic counterpart. The reason is not that such mergers are rare but that their counterparts are hard to catch: a kilonova peaks near absolute magnitude \u221215 to \u221217 and fades by about half a magnitude a day, and the sky region a detector network reports for it covers hundreds to thousands of square degrees. Only about a dozen gravitational-wave sources have ever been localized to better than 100 square degrees \u2014 and a patch that size is expected to contain of order a hundred unrelated transients over a week.", aboutMotivationText2 = "That is the problem 7DT was built to solve. Searching an area that large quickly requires a wide field and fast slewing; separating a kilonova from the supernovae, novae and detector artifacts inside it requires spectral information. Conventional practice is to image first and follow up spectroscopically, which costs nights on large telescopes and time the source does not have. 7DT collapses the two steps into one: every exposure already carries a low-resolution spectrum of every source in the field.", aboutApproachText = "The design answer is an array rather than a single large telescope. Twenty commercial off-the-shelf 50-cm units, each carrying a different share of a forty-filter medium-band set, cost a fraction of a purpose-built instrument, can be brought on line in stages, and can be reconfigured between science goals without touching hardware. Pointed together they build a spectrum; pointed apart they tile 25 square degrees at once. Other multi-telescope arrays \u2014 GOTO, BlackGEM, LAST \u2014 made the same bet on off-the-shelf optics; 7DT is distinguished by what it puts in front of them.", aboutOriginText = "7DT is designed, built and operated by the Center for the Gravitational-wave Universe at Seoul National University, with support from the National Research Foundation of Korea, funded by the Korean government (MSIT). The Center came to the project through GECKO, the Gravitational-wave Electromagnetic Counterpart Korean Observatory \u2014 a network of existing Korean-accessible telescopes that followed up gravitational-wave alerts during the O3 observing run. Its campaign on GW190425, the first binary neutron star merger of that run, covered 621 candidate host galaxies inside a 7,460 square-degree localization and found no kilonova. The limits of working with borrowed time on telescopes not designed for the task were the direct argument for building one that was.", aboutText3 = "The name counts the axes of the data. Two of position on the sky, one of brightness, one of wavelength and one of time come directly from the observations; distance and radial velocity follow from the medium-band spectral energy distribution. A single visit therefore records not just where a source is and how bright it is, but what it is made of and how it is moving.", scienceOverviewText = "The primary mission of 7DT is the rapid identification of electromagnetic counterparts to gravitational-wave events. A typical kilonova peaks near an absolute magnitude of \u221215 to \u221217 and fades by roughly 0.5 mag per day, inside a localization region of hundreds to thousands of square degrees \u2014 where even a single 100 deg\xB2 patch is expected to hold of order a hundred unrelated transients over a seven-day window. Finding one demands wide-area coverage, fast response, and spectral information good enough to reject the contaminants, which is precisely what a medium-band array delivers.", scienceOverviewText2 = "The same data serve a much broader program. Low-resolution spectral mapping of the southern sky supports photometric redshift catalogs, resolved stellar populations in nearby galaxies, active galactic nuclei, variable stars, and the time-domain study of solar-system bodies. Several of the science verification observations taken during commissioning have since matured into refereed or near-complete analyzes.", surveyOverviewText = "7DS is the science program of 7DT. It is structured as three complementary surveys distinguished by area, cadence and depth: the Reference Imaging Survey (RIS), the Wide-area Time-domain Survey (WTS), and the Intensive Monitoring Survey (IMS). Across the three tiers sky coverage decreases and depth increases, spanning the range from a single-visit all-southern-sky reference map to daily monitoring of a small field, while sharing a single observational infrastructure.", surveyDesignText = "All 7DS observations follow a common tile pattern generated from a HEALPix pixelization of the celestial sphere, with adjacent pointings overlapping by about 5 arcminutes in right ascension and 4 arcminutes in declination near the celestial equator and by more toward the poles. Tiles are numbered T00000 to T28519 in order of increasing declination, covering everything accessible to the array from the south pole to +30 degrees.", surveyDesignText2 = "The RIS tile grid is the operational reference for the entire program: WTS and IMS point at the same tile centers, and target-of-opportunity observations use them wherever the field allows. Because every survey shares the grid, data from any tier coadd homogeneously with data from the others, and difference imaging always runs against a consistent reference. A visit is three consecutive 100-second exposures, coadded to a 300-second frame - a number set by the unguided tracking capability of the mount and the read noise of the detector.", surveyStatusText = "RIS began routine operation in July 2024 and IMS in April 2025; WTS is scheduled to commence in 2026. In a typical night the array observes about 30 tiles, including the seven IMS tiles, for roughly 3,000 individual exposures. Since RTCSpy took over nightly operation in August 2024 the array has acquired approximately 1.75 million images under fully unattended operation, alongside about 100 target-of-opportunity follow-ups and some ten gravitational-wave event campaigns.", telescopeOverviewText = "7DT is an array of twenty 50-cm commercial off-the-shelf telescopes. Each unit is a PlaneWave DeltaRho 500 optical tube assembly on an L-500 direct-drive mount operated in equatorial configuration, paired with a Moravian Instruments C3-61000 PRO CMOS camera \u2014 every unit identical but for the filters it carries. Sixteen of the twenty are deployed and operational as of June 2026, and the four remaining units complete the array. All operational units share a common configuration and show consistent optical performance in routine use.", locationText = "El Sauce Observatory sits in the Rio Hurtado Valley of Chile at 30 deg 28 min 16 sec South, 70 deg 45 min 47 sec West, 1,600 m above sea level. It neighbors the sites of Cerro Tololo Inter-American Observatory, Gemini South, the Southern Astrophysical Research Telescope and the Vera C. Rubin Observatory, and shares their sky conditions: typical seeing of about 1.5 arcseconds, more than 300 clear nights a year, and a mean zenith sky brightness of 21.97 mag per square arcsecond. Site infrastructure and maintenance are provided by ObsTech, a Chilean telescope hosting company.", opticText = "Each unit is a PlaneWave DeltaRho 500, a corrected Cassegrain of 508 mm aperture with a focal length of 1,537 mm and a focal ratio of f/3.0. The design delivers a 70 mm image circle covering approximately 2.6 degrees - fast optics over a field far wider than a conventional research telescope of the same aperture. Optomechanical alignment of all sixteen operational units is complete, and image quality is monitored continuously through routine survey operations rather than in scheduled campaigns.", mountText = "The DeltaRho 500 rides on a PlaneWave L-500 mount operated in equatorial configuration. Its direct-drive motors reach a slew rate of 20 degrees per second and sustain unguided tracking longer than the 100-second exposure used for survey work. Polar alignment is maintained through pointing models built by PWI4 from 40 to 50 sky points, and pointing and tracking accuracies are monitored continuously, with models refreshed when required.", cameraText = "Each unit carries a Moravian Instruments C3-61000 PRO. Its back-illuminated SONY IMX455 CMOS sensor measures 36 by 24 mm with 9,576 by 6,388 pixels of 3.76 micron pitch. At the DeltaRho focal plane this gives a field of view of 1.34 by 0.90 degrees at a pixel scale of 0.5 arcseconds - about 1.25 square degrees of spectral mapping per pointing. Bias levels are consistent with the manufacturer specification of roughly 3.5 electrons RMS, and the horizontal pattern characteristic of CMOS detectors is present but stable.", filterText = "Every unit carries a nine-slot filter wheel. Three slots in each wheel hold Sloan g, r and i; one unit adds u and three units add z. The remaining slots hold medium-band filters, distributed across the array so that the full set is covered in a small number of exposures. The original twenty medium bands are spaced regularly at 25 nm from 400 to 875 nm with 25 nm FWHM. Fifteen more, procured from Edmund Optics and installed in late 2025, fill the gaps between them with central wavelengths from 412 to 832 nm and bandwidths of 14 to 41 nm. The current suite of 35 filters covers 375 to 875 nm, advancing toward the designed complement of 40 medium bands at 12.5 nm spacing.", filterCaveatText = "The additional fifteen filters depart from the regularity of the original set: their central wavelengths are not precisely aligned to the 12.5 nm grid, their bandwidths vary, and no filter between 700 and 800 nm is included in the second batch. These departures reflect availability and will be addressed as the remaining five filters become available. Their spectrophotometric calibration is in preparation; the original twenty remain the calibrated set in operational use.", performanceText = "Across the sixteen operational units the point-spread function measured at field center on good nights ranges from 1.4 to 2.2 arcseconds FWHM, with an array median of 2.0 arcseconds closely tracking the median site seeing. Unit-to-unit scatter in delivered FWHM is 0.2 arcseconds, and the PSF grows by 0.3 arcseconds from field center to corner while ellipticity stays below 0.1 over the central 80 percent of the field. The array behaves as a coherent set of instruments rather than sixteen independent telescopes. Median delivered FWHM has held stable to within 0.3 arcseconds since routine survey operations began in July 2024.", photometryText = "Photometric calibration runs against synthetic photometry derived from Gaia DR3 BP/RP spectra, homogenized to correct the color- and magnitude-dependent residuals reported by the Gaia collaboration. The procedure was established during commissioning on 68 spectrophotometric standard stars, including CALSPEC sources, with non-variable point sources selected following criteria adapted from SkyMapper DR4. Zero-point uncertainty across the twenty medium bands in operational use is 15 to 25 mmag, with the larger values redward of 775 nm where detector quantum efficiency falls and signal-to-noise drops accordingly.", depthText = "For the canonical 100-second exposure the 5-sigma point-source depth reaches 19.06 mag in the bluest medium band (m400) and 16.60 mag at the longest wavelength (m875), peaking at 19.61 mag in m475 near maximum system throughput. The Sloan broad bands reach 20.59, 20.25 and 19.17 mag in g, r and i. These are nominal-condition figures: seeing better than 2.0 arcseconds, airmass below 1.5, and non-bright nights.", modeText = "Because each unit carries its own filter complement, the array can be reconfigured between science goals without changing hardware. The full spectral range is covered by assigning unique filter combinations to individual units and rotating through them during an observation. Four modes are in routine use, and the choice between them is the choice of what to spend the night on: spectral resolution, depth, or sky coverage.", computingText = "On-site computing consists of sixteen Telescope Control Computers, one per operational unit, and a single Main Control Computer that coordinates the array. Each TCC drives its own mount, camera, focuser and filter wheel and writes exposures to local storage as they complete. The MCC dispatches observation commands through RTCSpy, aggregates data from every TCC, and manages transfer to the processing facility at Seoul National University over KREONET.", storageText = "A typical night yields about 3,000 raw frames of roughly 117 MiB each, some 350 GB before compression. Raw data are compressed on site and transferred by GridFTP at a typical 80 MB/s, a procedure that usually completes in under twelve hours; target-of-opportunity data skip the compression and the wait for sunrise, cutting latency to tens of minutes. Storage is provided by two servers named for the hydrogen transition series: Lyman, with two 1.2 PB volumes, and Balmer, with one, for a combined capacity of approximately 3.6 PB. Both are attached to the compute server as NFS mounts over a 10 Gbps class network, so that I/O buffering does not burden processing.", protonText = "All 7DT data are reduced on Proton, a dedicated server with dual AMD EPYC 7513 processors providing 128 cores at up to 2.6 GHz, 512 GB of memory, and two NVIDIA A100 GPUs sharing memory over NVLink. A nightly volume of roughly 3,000 raw images requires an effective per-image processing time of about 30 seconds to complete within the daily budget; the current pipeline sustains a median end-to-end throughput of 66 \xB1 24 GB per hour and clears a typical survey night in about five hours of wall-clock time after transfer completes. GPU acceleration is available for preprocessing, though in this deployment the throughput gain over the CPU path is minimal \u2014 the pipeline is bound by I/O rather than by computation.", dataOverviewText = "Data flow from Chile to Seoul every night. Observation, reduction and analysis are closed into a single loop by three software systems: RTCSpy drives the array and schedules what it observes, Py7DT reduces what it acquires, and gwportal records the state of both. Three web interfaces expose that state to the team - a pipeline status page with real-time progress and quality-assurance summaries, a target-of-opportunity page carrying observation requests and event history, and a wiki hosting user manuals and QA criteria for internal and external users of 7DT data.", dataProductText = "The basic data product of the survey is a 300-second coadd of three 100-second exposures, with a source catalog attached to every processed single, coadd and difference image. Coadds are flux-scaled to a zero point of 23.9 AB magnitudes, which puts each pixel directly in units of microjansky - a convenient convention for the pixel-based, IFU-like analysis that medium-band data invite. Quality-assurance metrics including seeing, ellipticity, 5-sigma depth and astrometric precision are written to FITS headers and ingested into the database for every image produced.", pipelineText = "Py7DT is the operational data reduction pipeline. It addresses the reduction challenge specific to 7DT: heterogeneous data from many telescope units, filters and observing modes, reduced at survey throughput while keeping latency low for transient events. Orchestration modules group images by their properties into configurations backed by YAML files and submit them to an SQLite-based system queue, which dispatches them in parallel by priority and stage. Processing modules then run the standard sequence on each group, wrapping established astronomical software behind Python interfaces rather than reimplementing it.", pipelineToOText = "Target-of-opportunity data are handled in the same framework at elevated priority. A ToO configuration is placed ahead of routine survey work in the queue, and for the highest-priority cases - typically broadband frames, where a rapid community report is valuable - all other processing pauses to dedicate the full system to the job. Users receive notification when raw data arrive, again as each filter set completes, and once more on full completion with an SED plot and magnitude table attached. Every ToO event is tracked in a dedicated database recording timestamps, progress and output products, and all ToO data are reprocessed alongside routine data in the next daily run to produce the deepest possible coadds.", softwareReuseText = "Beyond its pipeline role, Py7DT is structured for offline reuse. Researchers inside and outside the 7DT team can run the same codebase to reprocess data with custom configurations, resuming from any stage of the reduction, and choose for themselves how far to trust the standard products. Images are passed through the pipeline as string paths with metadata in FITS headers and YAML files, rather than wrapped in a bespoke data model - a deliberate choice that keeps products inspectable outside the pipeline and keeps the learning cost of processing 7DT data low.", fundingGWText = "The 7-Dimensional Telescope is designed, built and operated by the Center for the Gravitational-wave Universe at Seoul National University. The Center is supported by National Research Foundation of Korea (MSIT).", fundingNRFText = "Further project support is provided by the National Research Foundation of Korea (MSIT). Several members of the collaboration are additionally supported by individual NRF awards; those grants support the researchers rather than the facility, and are acknowledged in their own papers.", fundingKASIText = "7DT is operated in part with support from special funding of the Korea Astronomy and Space Science Institute (KASI).", fundingKreonetText = "Nightly transfer of roughly 350 GB of raw data from Chile to the processing facility in Seoul is carried by KREONET, the Korea Research Environment Open NETwork, operated by KISTI, the Korea Institute of Science and Technology Information. The 7DT project gratefully acknowledges this support, without which same-day reduction of survey and target-of-opportunity data would not be possible.", publicationPolicyText = "The 7DS publication policy governs authorship, data rights and the acknowledgment of 7DT observations in refereed work. It is being prepared by the collaboration and will be posted here once ratified. In the meantime, anyone intending to publish results based on 7DT data is asked to contact the principal investigator so that the appropriate collaboration authors and funding acknowledgments can be agreed in advance.", archiveText = "A complete record of 7DT data \u2014 every image type and source catalog \u2014 is maintained internally in the gwportal database, with the provenance of any product traceable back to the raw frames it was built from. There is no public archive interface yet: a public release of survey products is being prepared alongside the completion of the Reference Imaging Survey. Until then, data requests are handled directly by the project.";
 
 // app/routes/telescope.instrument.tsx
 import { Fragment, jsx as jsx6, jsxs as jsxs5 } from "react/jsx-runtime";
@@ -708,7 +708,7 @@ var meta = () => [
       /* @__PURE__ */ jsx6("img", { src: "/img/filter.png", alt: "Transmission curves of the 7DT medium-band filter set", loading: "lazy" }),
       /* @__PURE__ */ jsxs5("figcaption", { children: [
         /* @__PURE__ */ jsx6("b", { children: "System response" }),
-        " Filter response curves incorporating detector quantum efficiency, sky transmission, telescope optics and filter throughput. Filters are designated by central wavelength in nanometres \u2014 m400 is the band centred at 400 nm."
+        " Filter response curves incorporating detector quantum efficiency, sky transmission, telescope optics and filter throughput. Filters are designated by central wavelength in nanometers \u2014 m400 is the band centered at 400 nm."
       ] })
     ] })
   ] }),
@@ -740,14 +740,14 @@ __export(publication_policy_exports, {
 import { jsx as jsx7, jsxs as jsxs6 } from "react/jsx-runtime";
 var meta2 = () => [
   { title: "Publication policy \xB7 7-Dimensional Telescope" },
-  { name: "description", content: "Authorship, data rights and acknowledgement for work using 7DT data." }
+  { name: "description", content: "Authorship, data rights and acknowledgment for work using 7DT data." }
 ], Index2 = () => /* @__PURE__ */ jsxs6(PageLayout, { menu: "manuPaper", children: [
   /* @__PURE__ */ jsx7(
     PageHero,
     {
       eyebrow: "Publications",
       title: "Publication policy",
-      lede: "How authorship, data rights and acknowledgement are handled for work based on 7DT observations.",
+      lede: "How authorship, data rights and acknowledgment are handled for work based on 7DT observations.",
       image: "/img/hero/policy.jpg"
     }
   ),
@@ -763,7 +763,7 @@ var meta2 = () => [
           " before submitting."
         ] }),
         /* @__PURE__ */ jsxs6("li", { children: [
-          "Acknowledge the Center for the Gravitational-wave Universe at Seoul National University and the NRF grants listed on the",
+          "Acknowledge the Center for the Gravitational-wave Universe at Seoul National University and the funding bodies set out on the",
           " ",
           /* @__PURE__ */ jsx7("a", { href: "/about/funding", children: "funding" }),
           " page."
@@ -857,7 +857,7 @@ var meta3 = () => [
       }
     ) })
   ] }),
-  /* @__PURE__ */ jsxs7(Section, { eyebrow: "Facility", title: "The processing centre", alt: !0, children: [
+  /* @__PURE__ */ jsxs7(Section, { eyebrow: "Facility", title: "The processing center", alt: !0, children: [
     /* @__PURE__ */ jsxs7("figure", { className: "figure", style: { maxWidth: "760px" }, children: [
       /* @__PURE__ */ jsx8("img", { src: "/img/computer.jpeg", alt: "The 7DT data processing facility at Seoul National University", loading: "lazy" }),
       /* @__PURE__ */ jsxs7("figcaption", { children: [
@@ -1010,7 +1010,7 @@ var specs_default = {
       rows: [
         ["Telescopes in the array", "20"],
         ["Currently operational", "16 (as of June 2026)"],
-        ["Field of view per pointing", "\u2248 1.2 deg\xB2"],
+        ["Field of view per pointing", "\u2248 1.25 deg\xB2"],
         ["Spectral resolution", "R = 30\u201370"]
       ]
     },
@@ -1080,7 +1080,7 @@ var specs_default = {
     ]
   },
   performance: [
-    { value: "1.4\u20132.2", unit: "\u2033", label: "PSF FWHM at centre" },
+    { value: "1.4\u20132.2", unit: "\u2033", label: "PSF FWHM at center" },
     { value: "2.0", unit: "\u2033", label: "Array median FWHM" },
     { value: "0.2", unit: "\u2033", label: "Unit-to-unit scatter" },
     { value: "< 0.1", unit: "", label: "PSF ellipticity" },
@@ -1175,12 +1175,12 @@ import { Pagination } from "flowbite-react";
 
 // app/routes/content/news.json
 var news_default = {
-  _note: "Publication entries: 'abstract' holds the author's published abstract, quoted verbatim. 'summary' holds a site-written description and is labelled as such where no published abstract is available. Never put a paraphrase in 'abstract'.",
+  _note: "Publication entries: 'abstract' holds the author's published abstract, quoted verbatim. 'summary' holds a site-written description and is labelled as such where no published abstract is available. Never put a paraphrase in 'abstract'. 'imgName' for a publication should be a figure from that publication (pub-*.jpg, see public/img/news). Three entries have no obtainable paper figure \u2014 Chang et al., Ko et al. and Lim et al. \u2014 and fall back to a 7DT project figure instead; do not describe those as figures from the paper.",
   news: [
     {
       type: "publication",
       author: "Kim, M.-R.; Lee, J.-E.; Im, M.; Lee, J.; Kim, J. H.; Chang, S.-W.; Paek, G. S. H.; Choi, H.; Tak, D.; Hyun, D.; Lee, W.-H.; Lee, H.; Kim, S.; Megeath, S. T.",
-      shortAuthor: "Kim et al.",
+      shortAuthor: "Kim, M.-R. et al.",
       title: "7DT Insight: Variability in Young Stellar Objects",
       journal: "The Astronomical Journal 172, 22",
       date: "Jul. 2026",
@@ -1188,14 +1188,14 @@ var news_default = {
       preprint: "",
       ref: "2026AJ....172...22K",
       summary: "Two-epoch 7DT photometry in sixteen medium bands across 400-825 nm identifies 110 variable young stellar objects in the central region of Orion A, and uses the wavelength dependence of the variability to discriminate between extinction-like, gray and spot-like mechanisms on day timescales.",
-      imgName: "news-9.jpg",
+      imgName: "pub-yso-orion.jpg",
       webpage: "",
       webpage2: ""
     },
     {
       type: "publication",
       author: "Kim, Ji Hoon; Im, Myungshin; Lee, Hyung Mok; Chang, Seo-Won; Tak, Donggeun; Paek, Gregory S. H.; Choi, Hyeonho; Hyun, Donghwan; Kim, Chang-wan; Lee, Won-Hyeong",
-      shortAuthor: "Kim et al.",
+      shortAuthor: "Kim, J. H. et al.",
       title: "The 7-Dimensional Telescope and the 7-Dimensional Sky Survey: Status Report on Final Commissioning and Survey Operation",
       journal: "Proc. SPIE 14147, Ground-based and Airborne Telescopes",
       date: "Jun. 2026",
@@ -1203,14 +1203,14 @@ var news_default = {
       preprint: "",
       ref: "SPIE 14147-84",
       abstract: "The 7-Dimensional Telescope (7DT), developed by Center for the Gravitational-Wave Universe at Seoul National University, is a multi-telescope array designed to identify the electromagnetic counterparts of gravitational-wave events. 7DT consists of twenty 50-cm telescopes equipped with CMOS cameras, each providing a 1.25 deg\xB2 field of view. This provides IFU-like data with low spectral resolution (R = 30-70) by utilizing 40 medium-band filters of 25 nm width spanning from 400 to 900 nm, distributed across the array. Since achieving first light in October 2023, comprehensive commissioning has been carried out to evaluate instrument functionality and verify science procedures. These activities included optomechanical alignment, focus measurement, optical assessment, the generation of master calibration frames, spectrophotometric calibration, and evaluation of astrometry and image depth. To verify the science capabilities of the 7-Dimensional Sky Survey (7DS), observations were conducted on a wide range of astronomical targets, including nearby galaxies (e.g., PHANGS sample), extragalactic fields (e.g., UDS for photometric redshift tests), Galactic objects, and solar system objects. 7DS comprises three tiered surveys: the Reference Imaging Survey (RIS), which covers over 20,000 deg\xB2 of the Southern Hemisphere sky and aims to provide reference images for image subtraction analysis for gravitational-wave counterparts and other transient objects with a single 5-minute exposure visit, the Wide-area Time-domain Survey (WTS), which will cover 800-1,200 deg\xB2 with a 10-14 day cadence, prioritizing areas with ancillary near-infrared data, such as VIKING or the LSST Deep Drilling Fields, and the Intensive Monitoring Survey (IMS), which focuses on the SPHEREx Deep Field South, near the ecliptic south pole, with a 1-day cadence. RIS commenced in July 2024, and IMS began in April 2025. WTS will commence in 2026. This presentation summarizes the 7DT commissioning status, the early science results derived from the commissioning data, and the current operational status of the 7DS.",
-      imgName: "news-6.jpg",
+      imgName: "pub-7ds-status.jpg",
       webpage: "",
       webpage2: ""
     },
     {
       type: "publication",
       author: "Hyun, Donghwan; Tak, Donggeun; Paek, Gregory S. H.; Im, Myungshin; Kim, Ji Hoon; Chang, Seo-Won; Choi, Hyeonho; Lee, Won-Hyeong; Seol, Danhyeuk; Bae, Jangho",
-      shortAuthor: "Hyun et al.",
+      shortAuthor: "Hyun, D. et al.",
       title: "Py7DT: Data Reduction Pipeline of the 7-Dimensional Telescope",
       journal: "Proc. SPIE 14155, Software and Cyberinfrastructure for Astronomy",
       date: "Jun. 2026",
@@ -1218,13 +1218,13 @@ var news_default = {
       preprint: "",
       ref: "SPIE 14155-12",
       abstract: "We present Py7DT, the operational data reduction pipeline for the 7-Dimensional Telescope (7DT), a medium-band optical telescope array in Chile designed for rapid target-of-opportunity follow-up and the 7-Dimensional Sky Survey of the entire southern sky. Py7DT addresses the main reduction challenge of 7DT: reducing heterogeneous data from many telescope units, filters, and observing modes while sustaining nightly survey throughput and minimizing latency for transient events. The pipeline orchestrates the processing flow by wrapping established astronomical software behind Python interfaces, using a stage-dependent image-grouping scheme, centralized path handling, and priority-aware scheduling. The code is modular and portable, serving as a standard tool for end users to reprocess 7DT data with custom configurations, and supports the diverse scientific goals of 7DT from transient object search to pixel-based analysis of spatially resolved galaxies while remaining flexible and easy to maintain. The pipeline also features multi-level logging, automatically generated quality-assessment statistics and flags, and web-based real-time status monitoring to reduce the management load on the small developer team. Current operational tests show that Py7DT can process a typical nightly survey volume within the daily time budget while producing prompt ToO products on an approximately one-hour end-to-end timescale when the target is immediately observable.",
-      imgName: "news-8.jpg",
+      imgName: "pub-py7dt-arch.jpg",
       webpage: "",
       webpage2: ""
     },
     {
       type: "update",
-      title: "Reference Imaging Survey passes 58 per cent of the southern sky",
+      title: "Reference Imaging Survey passes 58 percent of the southern sky",
       source: "7DS Survey Operations",
       date: "Jun. 2026",
       content: "14,866 of 25,472 RIS tiles have been fully observed since the survey began in July 2024. Completion of the full cycle is anticipated by the end of 2027.",
@@ -1234,22 +1234,22 @@ var news_default = {
     {
       type: "publication",
       author: "Paek, Gregory S. H.; Im, Myungshin; Chang, Seo-Won; Choi, Hyeonho; Kim, Ji Hoon",
-      shortAuthor: "Paek et al.",
+      shortAuthor: "Paek, G. S. H. et al.",
       title: "A Hybrid Framework for Kilonova Anomaly Detection Using Single-epoch SEDs from the 7-Dimensional Telescope",
       journal: "The Astrophysical Journal 1001, 198",
       date: "Apr. 2026",
       doi: "",
       preprint: "",
       ref: "2026ApJ..1001..198P",
-      summary: "An unsupervised anomaly detector coupled to a supervised multiclass classifier, trained on simulated 7DT photometry, reaches macro F1 \u2248 0.80 across eight common transient types while recovering more than 90 per cent of optically detectable kilonovae \u2014 including AT2017gfo \u2014 without direct training on kilonovae.",
-      imgName: "news-1.png",
+      summary: "An unsupervised anomaly detector coupled to a supervised multiclass classifier, trained on simulated 7DT photometry, reaches macro F1 \u2248 0.80 across eight common transient types while recovering more than 90 percent of optically detectable kilonovae \u2014 including AT2017gfo \u2014 without direct training on kilonovae.",
+      imgName: "pub-kn-anomaly.jpg",
       webpage: "",
       webpage2: ""
     },
     {
       type: "publication",
       author: "Paek, Gregory S. H.; Im, Myungshin; Jeong, M.; Choi, Hyeonho; Bach, Y. P.; Ishiguro, M.; Lim, B.; Chang, Seo-Won; Kim, Ji Hoon; Geem, J.; Hoogendam, W. B.",
-      shortAuthor: "Paek et al.",
+      shortAuthor: "Paek, G. S. H. et al.",
       title: "Pre-perihelion Emergence of the CN Gas Coma in 3I/ATLAS Temporally and Spatially Resolved by the 7-dimensional Telescope",
       journal: "The Astrophysical Journal 1000, 53",
       date: "Mar. 2026",
@@ -1257,29 +1257,29 @@ var news_default = {
       preprint: "",
       ref: "2026ApJ..1000...53P",
       summary: "Time-series m400-band imaging of the third interstellar object, 3I/ATLAS (C/2025 N1), between July and September 2025 tracks the emergence of pronounced, spatially extended CN emission as the object fell inside 3 au, with the coma half-light radius growing from \u2248 11,000 to \u2248 19,000 km.",
-      imgName: "news-5.jpg",
+      imgName: "pub-3iatlas.jpg",
       webpage: "",
       webpage2: ""
     },
     {
       type: "publication",
       author: "Bae, J.; Lee, B.; Im, M.; Bahk, H.; Dachan, K.; Hwang, H. S.; Hong, S.; Kim, S.; Kim, M.; Kim, T.; Lee, J.; Sohn, J.; Song, H.; Chang, S.-W.; Cheng, Y.-T.; Faisst, A. L.; Huai, Z.; Jeong, W.-S.; Kim, J. H.; Kim, D.; Kim, Y.; Lee, S.-K.; Masters, D. C.; Ko, E.",
-      shortAuthor: "Bae et al.",
+      shortAuthor: "Bae, J. et al.",
       title: "The redshifts from 122 bands: Comparative redshift forecast for low-resolution spectra from SPHEREx and the 7-Dimensional Sky Survey (7DS)",
       journal: "Astronomy & Astrophysics 706, A347",
       date: "Feb. 2026",
       doi: "",
       preprint: "",
       ref: "2026A&A...706A.347B",
-      summary: "Six photometric-redshift methods \u2014 four template-fitting codes and two machine-learning approaches \u2014 applied to combined 7DS and SPHEREx mock catalogues. All deliver \u03C3_NMAD \u2272 0.005 for bright GAMA-like galaxies and \u2248 0.01 for fainter COSMOS-like galaxies, with the combined dataset consistently outperforming either survey alone.",
-      imgName: "news-2.png",
+      summary: "Six photometric-redshift methods \u2014 four template-fitting codes and two machine-learning approaches \u2014 applied to combined 7DS and SPHEREx mock catalogs. All deliver \u03C3_NMAD \u2272 0.005 for bright GAMA-like galaxies and \u2248 0.01 for fainter COSMOS-like galaxies, with the combined dataset consistently outperforming either survey alone.",
+      imgName: "pub-photoz-122.jpg",
       webpage: "",
       webpage2: ""
     },
     {
       type: "publication",
       author: "Chang, Seo-Won; Im, Myungshin; Kim, Ji Hoon; Tak, Donggeun; Paek, Gregory S.-H.; Choi, Hyeonho; Hyun, Donghwan; 7DS Team",
-      shortAuthor: "Chang et al.",
+      shortAuthor: "Chang, S.-W. et al.",
       title: "7DT database for survey management",
       journal: "The Bulletin of the Korean Astronomical Society 51(1), 108",
       date: "2026",
@@ -1287,7 +1287,7 @@ var news_default = {
       preprint: "",
       ref: "Poster P7DT-01",
       summary: "Presents gwportal, the database that manages all 7DT data and integrates the operations of the telescope control system and the reduction pipeline.",
-      imgName: "news-3.png",
+      imgName: "news-8.jpg",
       webpage: "",
       webpage2: ""
     },
@@ -1303,15 +1303,15 @@ var news_default = {
     {
       type: "publication",
       author: "Ko, E.; Im, M.; Yang, Y.; Kim, J. H.; Lee, S.-K.; Paek, G. S.-H.",
-      shortAuthor: "Ko et al.",
+      shortAuthor: "Ko, E. et al.",
       title: "Photometric Redshift Forecast for the 7-Dimensional Sky Survey",
       journal: "The Astrophysical Journal 994, 224",
       date: "Dec. 2025",
       doi: "",
       preprint: "",
       ref: "2025ApJ...994..224K",
-      summary: "Forecasts the photometric-redshift performance of the three 7DS tiers using EAZY on EL-COSMOS mock catalogues, reporting \u03C3_NMAD = 0.003-0.007 and catastrophic failure fractions of 0.8-8.1 per cent at 19 < m625 < 22 for the five-year stacked WTS with 40 medium bands.",
-      imgName: "news-2.png",
+      summary: "Forecasts the photometric-redshift performance of the three 7DS tiers using EAZY on EL-COSMOS mock catalogs, reporting \u03C3_NMAD = 0.003-0.007 and catastrophic failure fractions of 0.8-8.1 percent at 19 < m625 < 22 for the five-year stacked WTS with 40 medium bands.",
+      imgName: "news-7.png",
       webpage: "",
       webpage2: ""
     },
@@ -1336,7 +1336,7 @@ var news_default = {
     {
       type: "publication",
       author: "Lim, H.; Shim, H.; Im, M.; Kim, J. H.; Lee, S.-K.; Paek, G. S. H.; Ko, E.; Kim, D.",
-      shortAuthor: "Lim et al.",
+      shortAuthor: "Lim, H. et al.",
       title: "Prospect of Deriving Galaxy Properties through Machine Learning: Application to Medium-Band Data from the 7DT",
       journal: "Journal of the Korean Astronomical Society 58, 43-53",
       date: "Feb. 2025",
@@ -1344,7 +1344,7 @@ var news_default = {
       preprint: "",
       ref: "2025JKAS...58...43L",
       summary: "Machine-learning models trained on 7DT-like medium-band photometry recover not only redshifts but derived galaxy properties, reaching \u03C3_\u0394z/(1+z) = 0.008 and gas-phase metallicity to \u03C3_NMAD = 0.081 dex at z < 0.4.",
-      imgName: "news-2.png",
+      imgName: "news-7.png",
       webpage: "",
       webpage2: ""
     },
@@ -1360,7 +1360,7 @@ var news_default = {
     {
       type: "publication",
       author: "Kim, Ji Hoon; Im, Myungshin; Lee, Hyung Mok; Chang, Seo-Won; Choi, Hyeonho; Paek, Gregory S. H.",
-      shortAuthor: "Kim et al.",
+      shortAuthor: "Kim, J. H. et al.",
       title: "Introduction to the 7-Dimensional Telescope: commissioning procedures and data characteristics",
       journal: "Proc. SPIE 13094, Ground-based and Airborne Telescopes X, 130940X",
       date: "Aug. 2024",
@@ -1368,14 +1368,14 @@ var news_default = {
       preprint: "",
       ref: "2024SPIE13094E..0XK",
       summary: "The first full description of the 7DT system \u2014 optical tube assemblies, mounts, cameras and site infrastructure \u2014 together with the commissioning procedures established while twelve of the twenty planned units were on sky, and the resulting data characteristics.",
-      imgName: "news-5.jpg",
+      imgName: "pub-dr500.jpg",
       webpage: "",
       webpage2: ""
     },
     {
       type: "publication",
       author: "Choi, Hyeonho; Im, Myungshin; Kim, Ji Hoon",
-      shortAuthor: "Choi et al.",
+      shortAuthor: "Choi, H. et al.",
       title: "TCSpy: Multitelescope array control software for 7-Dimensional Telescope (7DT)",
       journal: "Proc. SPIE 13101, Software and Cyberinfrastructure for Astronomy VIII, 131012V",
       date: "Jul. 2024",
@@ -1383,7 +1383,7 @@ var news_default = {
       preprint: "",
       ref: "2024SPIE13101E..2VC",
       summary: "TCSpy is the device control layer beneath 7DT array operations, providing interfaces to mounts, cameras, focusers and filter wheels, and forming the foundation on which the autonomous RTCSpy operations framework is built.",
-      imgName: "news-3.png",
+      imgName: "pub-array-deck.jpg",
       webpage: "",
       webpage2: ""
     },
@@ -1417,7 +1417,7 @@ var news_default = {
     {
       type: "publication",
       author: "Paek, Gregory S. H.; Im, Myungshin; Kim, Joonho; Lim, Gu; Park, Bomi; Choi, Changsu; Kim, Sophia; Barbieri, Claudio; Salafia, Om Sharan; Paek, Insu; Shin, Suhyun; Seo, Jinguk; Lee, Hyung Mok; Lee, Chung-Uk; Kim, Seung-Lee; Sung, Hyun-Il",
-      shortAuthor: "Paek et al.",
+      shortAuthor: "Paek, G. S. H. et al.",
       title: "Gravitational-wave Electromagnetic Counterpart Korean Observatory (GECKO): GECKO Follow-up Observation of GW190425",
       journal: "ApJ 960, 113",
       date: "Jan. 2024",
@@ -1432,7 +1432,7 @@ var news_default = {
     {
       type: "publication",
       author: "Tak, Donggeun; Uhm, Z. Lucas; Gillanders, James H.",
-      shortAuthor: "Tak et al.",
+      shortAuthor: "Tak, D. et al.",
       title: "Exploring the Impact of the Ejecta Velocity Profile on the Evolution of Kilonova: Diversity of the Kilonova Lightcurves",
       journal: "ApJ 958, 121",
       date: "Dec. 2023",
@@ -1554,19 +1554,19 @@ var science_default = {
       id: "transients",
       n: "02",
       title: "Transients",
-      summary: "Medium-band spectral sampling gives direct colour and continuum information for a transient from one epoch of imaging. A hybrid classification framework built on 7DT spectral energy distributions \u2014 an unsupervised anomaly detector coupled to a supervised multiclass classifier \u2014 reaches macro F1 \u2248 0.80 across eight common transient types and recovers more than 90 per cent of optically detectable kilonovae, including AT2017gfo, without ever being trained on one."
+      summary: "Medium-band spectral sampling gives direct color and continuum information for a transient from one epoch of imaging. A hybrid classification framework built on 7DT spectral energy distributions \u2014 an unsupervised anomaly detector coupled to a supervised multiclass classifier \u2014 reaches macro F1 \u2248 0.80 across eight common transient types and recovers more than 90 percent of optically detectable kilonovae, including AT2017gfo, without ever being trained on one."
     },
     {
       id: "galaxies",
       n: "03",
       title: "Galaxy Formation & Evolution",
-      summary: "Medium-band mapping over 1.2 square degrees is IFU-like data at survey scale. Star-forming clumps are identified through H\u03B1 emission in stellar-continuum-subtracted images, and pilot studies indicate that pixel-based SED fitting of 7DT and SPHEREx data can recover spatially resolved stellar populations approaching the quality of high-resolution IFU spectroscopy \u2014 for galaxies that would otherwise demand dedicated campaigns on much larger telescopes. Both studies are as yet unpublished (Shim et al., submitted; Lee et al., in prep)."
+      summary: "Medium-band mapping over 1.25 square degrees is IFU-like data at survey scale. Star-forming clumps are identified through H\u03B1 emission in stellar-continuum-subtracted images, and pilot studies indicate that pixel-based SED fitting of 7DT and SPHEREx data can recover spatially resolved stellar populations approaching the quality of high-resolution IFU spectroscopy \u2014 for galaxies that would otherwise demand dedicated campaigns on much larger telescopes. Both studies are as yet unpublished (Shim et al., submitted; Lee et al., in prep)."
     },
     {
       id: "cosmology",
       n: "04",
       title: "Cosmology & Photometric Redshifts",
-      summary: "At R = 30\u201370 across 0.4\u20130.9 \xB5m, 7DT straddles the boundary between broadband photometry and low-resolution spectroscopy, capturing the 4000 \xC5 break and prominent emission lines at a resolution that lifts much of the colour\u2013redshift degeneracy inherent to broadband surveys. Forecasts give \u03C3_NMAD = 0.003\u20130.007 at 19 < m625 < 22 for the five-year stacked WTS, with strong gains when combined with SPHEREx all-sky data."
+      summary: "At R = 30\u201370 across 0.4\u20130.9 \xB5m, 7DT straddles the boundary between broadband photometry and low-resolution spectroscopy, capturing the 4000 \xC5 break and prominent emission lines at a resolution that lifts much of the color\u2013redshift degeneracy inherent to broadband surveys. Forecasts give \u03C3_NMAD = 0.003\u20130.007 at 19 < m625 < 22 for the five-year stacked WTS, with strong gains when combined with SPHEREx all-sky data."
     },
     {
       id: "agn",
@@ -1578,19 +1578,19 @@ var science_default = {
       id: "galactic",
       n: "06",
       title: "Galactic Science",
-      summary: "Two-epoch 7DT photometry with sixteen medium bands across 400\u2013825 nm identified 110 variable young stellar objects in the central region of Orion A \u2014 14 per cent of 769 candidates \u2014 including seven extreme cases varying by more than 0.5 mag. The wavelength dependence of the variability distinguishes extinction-like, gray and spot-like mechanisms on day timescales, which otherwise requires rapid filter cycling or simultaneous multi-band instrumentation."
+      summary: "Two-epoch 7DT photometry with sixteen medium bands across 400\u2013825 nm identified 110 variable young stellar objects in the central region of Orion A \u2014 14 percent of 769 candidates \u2014 including seven extreme cases varying by more than 0.5 mag. The wavelength dependence of the variability distinguishes extinction-like, gray and spot-like mechanisms on day timescales, which otherwise requires rapid filter cycling or simultaneous multi-band instrumentation."
     },
     {
       id: "solar",
       n: "07",
       title: "Solar System Objects",
-      summary: "Medium-band imaging of the main-belt asteroids 13 Egeria and 10 Hygiea targets the 0.7 \xB5m absorption feature characteristic of Ch-type bodies, a tracer of their thermal history. Time-series observations of the third interstellar object, 3I/ATLAS, followed the emergence of extended CN emission as it fell inside 3 au \u2014 behaviour resembling that of 2I/Borisov at comparable heliocentric distance."
+      summary: "Medium-band imaging of the main-belt asteroids 13 Egeria and 10 Hygiea targets the 0.7 \xB5m absorption feature characteristic of Ch-type bodies, a tracer of their thermal history. Time-series observations of the third interstellar object, 3I/ATLAS, followed the emergence of extended CN emission as it fell inside 3 au \u2014 behavior resembling that of 2I/Borisov at comparable heliocentric distance."
     }
   ],
   results: [
     {
       title: "Photometric redshifts at survey scale",
-      body: "Forecasts using EAZY on EL-COSMOS mock catalogues give \u03C3_NMAD = 0.003\u20130.007 and catastrophic failure fractions of 0.8\u20138.1 per cent for the five-year stacked WTS with 40 medium bands at 19 < m625 < 22. Combining 7DS with SPHEREx all-sky data reduces the failure fraction to 0.4 per cent for fainter sources by breaking colour\u2013redshift degeneracies with near-infrared coverage. Extending the analysis to six independent methods \u2014 four template-fitting codes and two machine-learning approaches \u2014 gives \u03C3_NMAD \u2272 0.005 for bright GAMA-like galaxies and \u2248 0.01 for fainter COSMOS-like galaxies, with the combined dataset consistently outperforming either survey alone.",
+      body: "Forecasts using EAZY on EL-COSMOS mock catalogs give \u03C3_NMAD = 0.003\u20130.007 and catastrophic failure fractions of 0.8\u20138.1 percent for the five-year stacked WTS with 40 medium bands at 19 < m625 < 22. Combining 7DS with SPHEREx all-sky data reduces the failure fraction to 0.4 percent for fainter sources by breaking color\u2013redshift degeneracies with near-infrared coverage. Extending the analysis to six independent methods \u2014 four template-fitting codes and two machine-learning approaches \u2014 gives \u03C3_NMAD \u2272 0.005 for bright GAMA-like galaxies and \u2248 0.01 for fainter COSMOS-like galaxies, with the combined dataset consistently outperforming either survey alone.",
       tag: "Cosmology"
     },
     {
@@ -1600,7 +1600,7 @@ var science_default = {
     },
     {
       title: "Single-epoch transient classification",
-      body: "A framework coupling an Isolation Forest anomaly detector to an XGBoost multiclass classifier, trained on realistically simulated 7DT photometry, achieves macro F1 \u2248 0.80 across eight common transient types while recovering more than 90 per cent of simulated and observed optically detectable kilonovae at low contamination. Feature analysis shows that the top-ranked half of the 40 medium bands combined with a single LSST band reproduces the full-model accuracy to within 1\u20132 per cent, which points directly at practical follow-up strategies for the Rubin alert stream.",
+      body: "A framework coupling an Isolation Forest anomaly detector to an XGBoost multiclass classifier, trained on realistically simulated 7DT photometry, achieves macro F1 \u2248 0.80 across eight common transient types while recovering more than 90 percent of simulated and observed optically detectable kilonovae at low contamination. Feature analysis shows that the top-ranked half of the 40 medium bands combined with a single LSST band reproduces the full-model accuracy to within 1\u20132 percent, which points directly at practical follow-up strategies for the Rubin alert stream.",
       tag: "Time domain"
     },
     {
@@ -1624,7 +1624,7 @@ var meta7 = () => [
   { title: "Science \xB7 7-Dimensional Telescope" },
   {
     name: "description",
-    content: "From gravitational-wave counterparts to photometric redshifts: the science programme of the 7-Dimensional Telescope."
+    content: "From gravitational-wave counterparts to photometric redshifts: the science program of the 7-Dimensional Telescope."
   }
 ], Index7 = () => /* @__PURE__ */ jsxs11(PageLayout, { menu: "manuScience", children: [
   /* @__PURE__ */ jsx12(
@@ -1654,7 +1654,7 @@ var meta7 = () => [
       ] })
     ] })
   ] }) }),
-  /* @__PURE__ */ jsx12(Section, { eyebrow: "Programme", title: "Seven science themes", alt: !0, children: /* @__PURE__ */ jsx12("div", { className: "grid grid-cols-2", children: science_default.themes.map((theme) => /* @__PURE__ */ jsxs11("a", { className: "theme-card", href: `/science/sci#${theme.id}`, children: [
+  /* @__PURE__ */ jsx12(Section, { eyebrow: "Program", title: "Seven science themes", alt: !0, children: /* @__PURE__ */ jsx12("div", { className: "grid grid-cols-2", children: science_default.themes.map((theme) => /* @__PURE__ */ jsxs11("a", { className: "theme-card", href: `/science/sci#${theme.id}`, children: [
     /* @__PURE__ */ jsx12("span", { className: "theme-card__index", children: theme.n }),
     /* @__PURE__ */ jsx12("h3", { className: "theme-card__title", children: theme.title }),
     /* @__PURE__ */ jsx12("p", { className: "theme-card__body", children: theme.summary })
@@ -1682,13 +1682,14 @@ __export(survey_overview_exports, {
 // app/routes/content/surveys.json
 var surveys_default = {
   note: "The three tiers of the 7-Dimensional Sky Survey. Status as of June 2026. Source: Kim et al., Proc. SPIE 14147-84, Sec. 4 and Table 2.",
+  depthFootnote: "*WTS and IMS depths are cumulative over the planned five-year operation, not the depth of a single visit. RIS depth is that of one visit.",
   tiers: [
     {
       code: "RIS",
       name: "Reference Imaging Survey",
       status: "live",
       statusLabel: "Observing",
-      area: "\u2248 23,000 deg\xB2",
+      area: "23,000 deg\xB2",
       region: "Dec < +20\xB0",
       cadence: "Single visit",
       depth: "19.1 mag",
@@ -1696,7 +1697,7 @@ var surveys_default = {
       started: "July 2024",
       progress: 58,
       progressLabel: "14,866 of 25,472 tiles observed",
-      summary: "The wide-area component of 7DS. Every tile of the southern sky is observed once with the full set of available medium bands, in three consecutive 100-second exposures. RIS images serve two purposes at once: reference frames against which transients are identified by difference imaging, and a homogeneous spectrophotometric map of the southern sky usable for galaxy population studies, photometric redshift catalogues and quasar identification. Full-cycle completion is anticipated by the end of 2027.",
+      summary: "The wide-area component of 7DS. Every tile of the southern sky is observed once with the full set of available medium bands, in three consecutive 100-second exposures. RIS images serve two purposes at once: reference frames against which transients are identified by difference imaging, and a homogeneous spectrophotometric map of the southern sky usable for galaxy population studies, photometric redshift catalogs and quasar identification. Full-cycle completion is anticipated by the end of 2027.",
       depthRange: "5\u03C3 depths range from 19.7 mag at m400 to 17.2 mag at m875."
     },
     {
@@ -1707,8 +1708,8 @@ var surveys_default = {
       area: "800\u20131,200 deg\xB2",
       region: "Fields with near-infrared ancillary data",
       cadence: "10\u201314 days",
-      depth: "\u2248 22.2 mag",
-      depthNote: "Cumulative, five-year operation",
+      depth: "22.2 mag*",
+      depthNote: "*Cumulative over the planned five-year operation",
       started: "2026",
       progress: 0,
       progressLabel: "Field selection under consideration",
@@ -1720,23 +1721,23 @@ var surveys_default = {
       name: "Intensive Monitoring Survey",
       status: "live",
       statusLabel: "Observing",
-      area: "\u2248 8.5 deg\xB2",
+      area: "8.5 deg\xB2",
       region: "AKARI / SPHEREx Deep Field South",
       cadence: "1 day",
-      depth: "\u2248 23.6 mag",
-      depthNote: "Cumulative, five-year operation",
+      depth: "23.6 mag*",
+      depthNote: "*Cumulative over the planned five-year operation",
       started: "April 2025",
       progress: 24,
       progressLabel: "> 260 cycles per tile \xB7 ~1.2 of 5 planned years",
       summary: "The deep, high-cadence component of 7DS. Seven tiles near the south ecliptic pole are observed every available night with the full medium-band set. The field was deliberately chosen to overlap the SPHEREx Deep Field South, so that 7DT optical medium-band photometry is co-located with SPHEREx near-infrared spectrophotometry within the same survey volume \u2014 a choice that maximizes the synergy between the two surveys for photometric redshifts and for spatially resolved studies of faint sources.",
-      depthRange: "Field centre: RA 05h13m07.36s, Dec \u221260\xB028\u203211.71\u2033. Observing time budget of 20,000 minutes per year."
+      depthRange: "Field center: RA 05h13m07.36s, Dec \u221260\xB028\u203211.71\u2033. Observing time budget of 20,000 minutes per year."
     }
   ],
   modes: [
     {
       name: "Spec",
       tagline: "Maximum spectral resolution",
-      body: "The default mode. Units rotate through every available medium and broad band, covering the full spectral range in as few exposures as the filter distribution allows. This is the mode that makes 7DT behave like a low-resolution spectrograph over 1.2 square degrees."
+      body: "The default mode. Units rotate through every available medium and broad band, covering the full spectral range in as few exposures as the filter distribution allows. This is the mode that makes 7DT behave like a low-resolution spectrograph over 1.25 square degrees."
     },
     {
       name: "Deep",
@@ -1771,7 +1772,7 @@ var meta8 = () => [
   { title: "7-Dimensional Sky Survey \xB7 7DT" },
   {
     name: "description",
-    content: "The 7-Dimensional Sky Survey: a three-tier programme covering the southern sky in medium bands, from a single-visit reference map to nightly deep monitoring."
+    content: "The 7-Dimensional Sky Survey: a three-tier program covering the southern sky in medium bands, from a single-visit reference map to nightly deep monitoring."
   }
 ], Index8 = () => /* @__PURE__ */ jsxs12(PageLayout, { menu: "manu7ds", children: [
   /* @__PURE__ */ jsx13(
@@ -1785,10 +1786,12 @@ var meta8 = () => [
       lede: "Wide-area, high-cadence and deep, on one tile grid and one instrument. 7DS trades area against depth across three tiers that share a single observational infrastructure.",
       image: "/img/hero/survey.jpg",
       meta: [
-        { value: "23,000", unit: "deg\xB2", label: "RIS footprint" },
+        { value: "23,000", unit: "deg\xB2", label: "RIS area" },
+        { value: "Single-visit", unit: "", label: "RIS cadence" },
         { value: "10\u201314", unit: "d", label: "WTS cadence" },
+        { value: "800-1200", unit: "deg\xB2", label: "WTS area" },
         { value: "1", unit: "d", label: "IMS cadence" },
-        { value: "23.6", unit: "mag", label: "Deepest tier" }
+        { value: "8.5", unit: "deg\xB2", label: "IMS area" }
       ]
     }
   ),
@@ -1853,7 +1856,7 @@ var meta8 = () => [
         { label: "Survey design", href: "/survey/design" },
         { label: "Current status", href: "/survey/status" },
         { label: "Observing modes", href: "/telescope/mode" },
-        { label: "Science programme", href: "/science/overview" }
+        { label: "Science program", href: "/science/overview" }
       ]
     }
   ) })
@@ -1942,16 +1945,6 @@ var meta10 = () => [
     name: "description",
     content: "Grants and institutions supporting the 7-Dimensional Telescope and Sky Survey."
   }
-], PROJECT_GRANTS = [
-  ["NRF 2021M3F7A1084525", "Center for the Gravitational-wave Universe (MSIT)"],
-  ["NRF RS-2026-25490019", "Project support (MSIT)"],
-  ["KASI", "Special funding toward 7DT operations"],
-  ["KREONET / KISTI", "Research network carrying nightly data transfer"]
-], INDIVIDUAL_GRANTS = [
-  ["J. H. Kim", "NRF RS-2026-25487912"],
-  ["S.-W. Chang", "NRF RS-2023-00245013 (MoE); RS-2026-25489059 (MSIT)"],
-  ["D. Tak", "NRF RS-2024-00343729"],
-  ["H. Choi", "NRF RS-2025-00573214"]
 ], Index10 = () => /* @__PURE__ */ jsxs14(PageLayout, { menu: "manuAbout", children: [
   /* @__PURE__ */ jsx15(
     PageHero,
@@ -1962,7 +1955,7 @@ var meta10 = () => [
       image: "/img/hero/about.jpg"
     }
   ),
-  /* @__PURE__ */ jsx15(Section, { eyebrow: "Host centre", title: "Center for the Gravitational-wave Universe", children: /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", children: [
+  /* @__PURE__ */ jsx15(Section, { eyebrow: "Host center", title: "Center for the Gravitational-wave Universe", children: /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", children: [
     /* @__PURE__ */ jsx15("p", { className: "prose", children: fundingGWText }),
     /* @__PURE__ */ jsx15("figure", { className: "figure", children: /* @__PURE__ */ jsx15(
       "img",
@@ -1974,45 +1967,22 @@ var meta10 = () => [
       }
     ) })
   ] }) }),
-  /* @__PURE__ */ jsxs14(Section, { eyebrow: "Agencies", title: "Project support", alt: !0, children: [
-    /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsxs14("div", { children: [
-        /* @__PURE__ */ jsx15("p", { className: "prose", children: fundingNRFText }),
-        /* @__PURE__ */ jsx15("p", { className: "prose", children: fundingKASIText })
-      ] }),
-      /* @__PURE__ */ jsx15("figure", { className: "figure", children: /* @__PURE__ */ jsx15(
-        "img",
-        {
-          src: "/img/institutes/nrf.jpg",
-          alt: "National Research Foundation of Korea",
-          style: { padding: "2rem", background: "#fff" },
-          loading: "lazy"
-        }
-      ) })
+  /* @__PURE__ */ jsx15(Section, { eyebrow: "Agencies", title: "Project support", alt: !0, children: /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsxs14("div", { children: [
+      /* @__PURE__ */ jsx15("p", { className: "prose", children: fundingNRFText }),
+      /* @__PURE__ */ jsx15("p", { className: "prose", children: fundingKASIText })
     ] }),
-    /* @__PURE__ */ jsxs14("div", { className: "split", style: { marginTop: "2.5rem" }, children: [
-      /* @__PURE__ */ jsx15("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs14("table", { className: "spec-table", children: [
-        /* @__PURE__ */ jsx15("caption", { children: "Project-level support" }),
-        /* @__PURE__ */ jsx15("tbody", { children: PROJECT_GRANTS.map((grant) => /* @__PURE__ */ jsxs14("tr", { children: [
-          /* @__PURE__ */ jsx15("th", { scope: "row", style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children: grant[0] }),
-          /* @__PURE__ */ jsx15("td", { style: { fontFamily: "var(--font-sans)" }, children: grant[1] })
-        ] }, grant[0])) })
-      ] }) }),
-      /* @__PURE__ */ jsx15("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs14("table", { className: "spec-table", children: [
-        /* @__PURE__ */ jsx15("caption", { children: "Individual investigator support" }),
-        /* @__PURE__ */ jsx15("tbody", { children: INDIVIDUAL_GRANTS.map((grant) => /* @__PURE__ */ jsxs14("tr", { children: [
-          /* @__PURE__ */ jsx15("th", { scope: "row", children: grant[0] }),
-          /* @__PURE__ */ jsx15("td", { style: { fontSize: "0.8125rem" }, children: grant[1] })
-        ] }, grant[0])) })
-      ] }) })
-    ] })
-  ] }),
-  /* @__PURE__ */ jsx15(Section, { eyebrow: "Infrastructure", title: "KREONET / KISTI", children: /* @__PURE__ */ jsx15("p", { className: "prose", children: fundingKreonetText }) }),
-  /* @__PURE__ */ jsx15(Section, { eyebrow: "Citation", title: "How to acknowledge 7DT", alt: !0, children: /* @__PURE__ */ jsxs14("p", { className: "prose", children: [
-    "Work using 7DT data should acknowledge the Center for the Gravitational-wave Universe at Seoul National University, National Research Foundation of Korea grants No. 2021M3F7A1084525 and RS-2026-25490019, the special funding of the Korea Astronomy and Space Science Institute, and KREONET/KISTI. The collaboration publication policy sets out the expected wording; see the ",
-    /* @__PURE__ */ jsx15("a", { href: "/publication/policy", children: "publication policy" }),
-    " page."
-  ] }) })
+    /* @__PURE__ */ jsx15("figure", { className: "figure", children: /* @__PURE__ */ jsx15(
+      "img",
+      {
+        src: "/img/institutes/nrf.jpg",
+        alt: "National Research Foundation of Korea",
+        style: { padding: "2rem", background: "#fff" },
+        loading: "lazy"
+      }
+    ) })
+  ] }) }),
+  /* @__PURE__ */ jsx15(Section, { eyebrow: "Infrastructure", title: "KREONET / KISTI", children: /* @__PURE__ */ jsx15("p", { className: "prose", children: fundingKreonetText }) })
 ] }), about_funding_default = Index10;
 
 // app/routes/data.overview.tsx
@@ -2089,7 +2059,7 @@ var software_default = {
     },
     {
       module: "Photometry",
-      body: "Flux-calibrated source catalogues from SExtractor, in fixed apertures and in the AUTO aperture. Zero points come from synthetic photometry integrated from Gaia XP spectra over each 7DT bandpass \u2014 an unusual advantage for an instrument with an unusual filter set. The module runs on single, coadd and difference images alike."
+      body: "Flux-calibrated source catalogs from SExtractor, in fixed apertures and in the AUTO aperture. Zero points come from synthetic photometry integrated from Gaia XP spectra over each 7DT bandpass \u2014 an unusual advantage for an instrument with an unusual filter set. The module runs on single, coadd and difference images alike."
     },
     {
       module: "ImCoadd",
@@ -2124,7 +2094,7 @@ var meta11 = () => [
   ["Transfer", "Roughly 350 GB is compressed and sent to Seoul over KREONET by GridFTP at \u2248 80 MB s\u207B\xB9."],
   ["Reduce", "Py7DT groups, preprocesses, solves, calibrates, coadds and subtracts \u2014 about five hours per night."],
   ["Record", "Every product, its version, its QA metrics and its provenance are written to the gwportal database."],
-  ["Deliver", "Coadds, difference images and matched source catalogues, with SED plots and magnitude tables for ToO events."]
+  ["Deliver", "Coadds, difference images and matched source catalogs, with SED plots and magnitude tables for ToO events."]
 ], Index11 = () => /* @__PURE__ */ jsxs15(PageLayout, { menu: "manuData", children: [
   /* @__PURE__ */ jsx16(
     PageHero,
@@ -2132,7 +2102,7 @@ var meta11 = () => [
       eyebrow: "Data",
       title: /* @__PURE__ */ jsxs15(Fragment7, { children: [
         "The 7DS ",
-        /* @__PURE__ */ jsx16("em", { children: "data centre" })
+        /* @__PURE__ */ jsx16("em", { children: "data center" })
       ] }),
       lede: "Observation, reduction and analysis closed into a single nightly loop between Chile and Seoul.",
       image: "/img/hero/data.jpg",
@@ -2144,7 +2114,7 @@ var meta11 = () => [
       ]
     }
   ),
-  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Overview", title: "From the mountain to the catalogue", children: [
+  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Overview", title: "From the mountain to the catalog", children: [
     /* @__PURE__ */ jsx16("p", { className: "prose", children: dataOverviewText }),
     /* @__PURE__ */ jsx16("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: FLOW.map((step, index) => /* @__PURE__ */ jsxs15("li", { children: [
       /* @__PURE__ */ jsx16("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
@@ -2287,7 +2257,7 @@ var meta13 = () => [
     content: "Tiling, exposure strategy and observing modes of the 7-Dimensional Sky Survey."
   }
 ], TILING = [
-  ["Tile centres", "HEALPix pixelization of the celestial sphere"],
+  ["Tile centers", "HEALPix pixelization of the celestial sphere"],
   ["Tile range", "T00000 \u2013 T28519, increasing declination"],
   ["Sky coverage", "South pole to +30\xB0"],
   ["Overlap near equator", "\u2248 5\u2032 in R.A., 4\u2032 in Dec."],
@@ -2303,7 +2273,7 @@ var meta13 = () => [
       image: "/img/hero/survey.jpg"
     }
   ),
-  /* @__PURE__ */ jsx18(Section, { eyebrow: "Tiling", title: "A single grid for the whole programme", children: /* @__PURE__ */ jsxs17("div", { className: "split split--wide-text", children: [
+  /* @__PURE__ */ jsx18(Section, { eyebrow: "Tiling", title: "A single grid for the whole program", children: /* @__PURE__ */ jsxs17("div", { className: "split split--wide-text", children: [
     /* @__PURE__ */ jsxs17("div", { children: [
       /* @__PURE__ */ jsx18("p", { className: "prose", children: surveyDesignText }),
       /* @__PURE__ */ jsx18("p", { className: "prose", children: surveyDesignText2 })
@@ -2316,7 +2286,7 @@ var meta13 = () => [
       ] }, row[0])) })
     ] }) }) })
   ] }) }),
-  /* @__PURE__ */ jsxs17(Section, { eyebrow: "Observing modes", title: "Four ways to spend a night", alt: !0, children: [
+  /* @__PURE__ */ jsxs17(Section, { eyebrow: "Observing modes", title: "Four ways to acquire images", alt: !0, children: [
     /* @__PURE__ */ jsx18("p", { className: "prose", children: modeText }),
     /* @__PURE__ */ jsx18("div", { className: "grid grid-cols-2", style: { marginTop: "2rem" }, children: surveys_default.modes.map((mode2) => /* @__PURE__ */ jsxs17("div", { className: "panel", children: [
       /* @__PURE__ */ jsx18("div", { className: "panel__title", children: mode2.tagline }),
@@ -2327,7 +2297,7 @@ var meta13 = () => [
       /* @__PURE__ */ jsx18("img", { src: "/img/overview.png", alt: "Schematic of the 7DT observing modes", loading: "lazy" }),
       /* @__PURE__ */ jsxs17("figcaption", { children: [
         /* @__PURE__ */ jsx18("b", { children: "Modes" }),
-        " Filter assignment across the array determines whether a night favours spectral resolution, depth, colour or sky coverage."
+        " Filter assignment across the array determines whether a night favors spectral resolution, depth, color or sky coverage."
       ] })
     ] })
   ] }),
@@ -2471,7 +2441,58 @@ var meta15 = () => [
   { title: "What is 7DS \xB7 7-Dimensional Telescope" },
   {
     name: "description",
-    content: "The 7-Dimensional Telescope and the 7-Dimensional Sky Survey: a twenty-unit medium-band array in Chile and the survey it carries out."
+    content: "Why the 7-Dimensional Telescope was built, who built it, and how the array and the 7-Dimensional Sky Survey have developed since first light in October 2023."
+  }
+], MILESTONES2 = [
+  {
+    when: "2019\u20132020",
+    what: "Before 7DT",
+    body: "GECKO, the Gravitational-wave Electromagnetic Counterpart Korean Observatory, follows up gravitational-wave alerts during the O3 run with existing telescopes. Its campaign on GW190425 covers 621 candidate host galaxies inside a 7,460 deg\xB2 localization and finds no kilonova."
+  },
+  {
+    when: "Oct 2023",
+    what: "First light",
+    body: "The first units see the sky at El Sauce Observatory in the R\xEDo Hurtado Valley, Chile. Commissioning begins with twelve of the twenty planned telescopes on sky."
+  },
+  {
+    when: "Feb 2024",
+    what: "First images released",
+    body: "The Center for the Gravitational-wave Universe publishes the first public set of 7DT images."
+  },
+  {
+    when: "Jul 2024",
+    what: "Reference Imaging Survey begins",
+    body: "Routine survey operation starts on the wide-area tier of 7DS, covering roughly 23,000 deg\xB2 south of Dec +20\xB0 with a single visit per tile."
+  },
+  {
+    when: "Aug 2024",
+    what: "The array runs itself",
+    body: "RTCSpy takes over nightly operation. Since then the array has acquired some 1.75 million images under fully unattended operation."
+  },
+  {
+    when: "Dec 2024",
+    what: "Sixteen units, automated response",
+    body: "Four more DeltaRho 500 units enter routine operation, and automated target-of-opportunity ingestion goes live \u2014 the scheduler can now interrupt the night and begin a follow-up exposure in under a minute."
+  },
+  {
+    when: "Apr 2025",
+    what: "Intensive Monitoring Survey begins",
+    body: "Seven tiles at the south ecliptic pole, chosen to overlap the SPHEREx Deep Field South, are observed every available night."
+  },
+  {
+    when: "Late 2025",
+    what: "Thirty-five medium bands",
+    body: "Fifteen further medium-band filters are installed, extending coverage to 375\u2013875 nm and advancing toward the designed complement of forty."
+  },
+  {
+    when: "Jun 2026",
+    what: "A working observatory",
+    body: "Final commissioning closes. The facility is reported as an operating observatory rather than a project under commissioning, with two of the three 7DS tiers under way."
+  },
+  {
+    when: "Ahead",
+    what: "Completing the array",
+    body: "The Wide-area Time-domain Survey commences in 2026. Four remaining units and five remaining filters complete the design, and the first full cycle of the Reference Imaging Survey is anticipated by the end of 2027."
   }
 ], Index15 = () => /* @__PURE__ */ jsxs19(PageLayout, { menu: "manuAbout", children: [
   /* @__PURE__ */ jsx20(
@@ -2483,7 +2504,7 @@ var meta15 = () => [
         /* @__PURE__ */ jsx20("em", { children: "7DS" }),
         "?"
       ] }),
-      lede: "A multi-telescope array built to find the optical counterparts of gravitational-wave events \u2014 and, in the process, to map the southern sky in forty colours.",
+      lede: "A multi-telescope array built to find the optical counterparts of gravitational-wave events \u2014 and, in the process, to map the southern sky in forty colors.",
       image: "/img/hero/about.jpg",
       meta: [
         { value: "20", label: "Telescopes", note: "16 online", live: !0 },
@@ -2493,10 +2514,30 @@ var meta15 = () => [
       ]
     }
   ),
-  /* @__PURE__ */ jsx20(Section, { eyebrow: "Overview", title: "Imaging that behaves like spectroscopy", children: /* @__PURE__ */ jsxs19("div", { className: "split split--wide-text", children: [
+  /* @__PURE__ */ jsx20(Section, { id: "motivation", eyebrow: "Motivation", title: "One counterpart in nine years", children: /* @__PURE__ */ jsxs19("div", { className: "split split--wide-text", children: [
     /* @__PURE__ */ jsxs19("div", { children: [
-      /* @__PURE__ */ jsx20("p", { className: "prose", children: overviewText }),
-      /* @__PURE__ */ jsx20("p", { className: "prose", children: aboutText2 })
+      /* @__PURE__ */ jsx20("p", { className: "prose", children: aboutMotivationText }),
+      /* @__PURE__ */ jsx20("p", { className: "prose", children: aboutMotivationText2 })
+    ] }),
+    /* @__PURE__ */ jsxs19("figure", { className: "figure", children: [
+      /* @__PURE__ */ jsx20(
+        "img",
+        {
+          src: "/img/overview.png",
+          alt: "Sky areas compared: a GW170817-sized localization region set against the fields of view of 7DT, ZTF, SkyMapper and LSST",
+          loading: "lazy"
+        }
+      ),
+      /* @__PURE__ */ jsxs19("figcaption", { children: [
+        /* @__PURE__ */ jsx20("b", { children: "The problem, to scale" }),
+        " A gravitational-wave localization set against the field of view of 7DT and of other survey telescopes."
+      ] })
+    ] })
+  ] }) }),
+  /* @__PURE__ */ jsx20(Section, { eyebrow: "Approach", title: "Twenty small telescopes instead of one large one", alt: !0, children: /* @__PURE__ */ jsxs19("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsxs19("div", { children: [
+      /* @__PURE__ */ jsx20("p", { className: "prose", children: aboutApproachText }),
+      /* @__PURE__ */ jsx20("p", { className: "prose", children: overviewText })
     ] }),
     /* @__PURE__ */ jsxs19("figure", { className: "figure", children: [
       /* @__PURE__ */ jsx20(
@@ -2513,14 +2554,48 @@ var meta15 = () => [
       ] })
     ] })
   ] }) }),
-  /* @__PURE__ */ jsx20(Section, { eyebrow: "The name", title: "Seven dimensions", alt: !0, children: /* @__PURE__ */ jsxs19("div", { className: "split split--wide-text", children: [
+  /* @__PURE__ */ jsxs19(Section, { id: "origins", eyebrow: "Origins", title: "Where the project came from", children: [
+    /* @__PURE__ */ jsxs19("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsxs19("div", { children: [
+        /* @__PURE__ */ jsx20("p", { className: "prose", children: aboutOriginText }),
+        /* @__PURE__ */ jsx20("p", { className: "prose", children: aboutText2 })
+      ] }),
+      /* @__PURE__ */ jsxs19("figure", { className: "figure", children: [
+        /* @__PURE__ */ jsx20(
+          "img",
+          {
+            src: "/img/carousel/c1.jpg",
+            alt: "Site preparation and pier foundations above the R\xEDo Hurtado Valley",
+            loading: "lazy"
+          }
+        ),
+        /* @__PURE__ */ jsxs19("figcaption", { children: [
+          /* @__PURE__ */ jsx20("b", { children: "Before the telescopes" }),
+          " Pier foundations above the R\xEDo Hurtado Valley, before the enclosure was erected."
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs19("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: [
+      "Funding sources are set out in full on the ",
+      /* @__PURE__ */ jsx20("a", { href: "/about/funding", children: "funding page" }),
+      "."
+    ] })
+  ] }),
+  /* @__PURE__ */ jsx20(Section, { id: "history", eyebrow: "History", title: "From first light to survey operation", alt: !0, children: /* @__PURE__ */ jsx20("ol", { className: "timeline", children: MILESTONES2.map((item) => /* @__PURE__ */ jsxs19("li", { children: [
+    /* @__PURE__ */ jsx20("span", { className: "timeline__when", children: item.when }),
+    /* @__PURE__ */ jsxs19("div", { className: "timeline__body", children: [
+      /* @__PURE__ */ jsx20("h3", { children: item.what }),
+      /* @__PURE__ */ jsx20("p", { children: item.body })
+    ] })
+  ] }, item.when)) }) }),
+  /* @__PURE__ */ jsx20(Section, { eyebrow: "The name", title: "Seven dimensions", children: /* @__PURE__ */ jsxs19("div", { className: "split split--wide-text", children: [
     /* @__PURE__ */ jsx20("p", { className: "prose", children: aboutText3 }),
     /* @__PURE__ */ jsx20("ul", { className: "feature-list", style: { margin: 0 }, children: surveys_default.dimensions.map((dim) => /* @__PURE__ */ jsxs19("li", { style: { padding: "0.6rem 0" }, children: [
       /* @__PURE__ */ jsx20("span", { className: "feature-list__key", children: dim.n }),
       /* @__PURE__ */ jsx20("div", { children: /* @__PURE__ */ jsx20("h3", { className: "feature-list__title", style: { margin: 0, fontSize: "1rem" }, children: dim.label }) })
     ] }, dim.n)) })
   ] }) }),
-  /* @__PURE__ */ jsxs19(Section, { eyebrow: "Programme", title: "What the survey delivers", children: [
+  /* @__PURE__ */ jsxs19(Section, { eyebrow: "Program", title: "What the survey delivers", alt: !0, children: [
     /* @__PURE__ */ jsx20("div", { className: "grid grid-cols-3", children: surveys_default.tiers.map((tier) => /* @__PURE__ */ jsxs19("div", { className: "tier-card", children: [
       /* @__PURE__ */ jsx20("span", { className: "tier-card__code", children: tier.code }),
       /* @__PURE__ */ jsx20("h3", { className: "tier-card__name", children: tier.name }),
@@ -2540,6 +2615,7 @@ var meta15 = () => [
       ] }),
       /* @__PURE__ */ jsx20("span", { className: `pill pill--${tier.status}`, children: tier.statusLabel })
     ] }, tier.code)) }),
+    /* @__PURE__ */ jsx20("p", { className: "footnote", style: { marginTop: "1rem" }, children: surveys_default.depthFootnote }),
     /* @__PURE__ */ jsx20("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx20(
       NextLinks,
       {
@@ -2575,11 +2651,11 @@ var meta16 = () => [
     {
       eyebrow: "Science",
       title: "Themes & early results",
-      lede: "Each theme below draws on the same data product \u2014 a medium-band spectral energy distribution for every source in a 1.2 square degree field.",
+      lede: "Each theme below draws on the same data product \u2014 a medium-band spectral energy distribution for every source in a 1.25 square degree field.",
       image: "/img/hero/sci.jpg"
     }
   ),
-  /* @__PURE__ */ jsx21(Section, { eyebrow: "Themes", title: "The 7DS science programme", children: /* @__PURE__ */ jsx21("ul", { className: "feature-list", children: science_default.themes.map((theme) => /* @__PURE__ */ jsxs20("li", { id: theme.id, style: { scrollMarginTop: "6rem" }, children: [
+  /* @__PURE__ */ jsx21(Section, { eyebrow: "Themes", title: "The 7DS science program", children: /* @__PURE__ */ jsx21("ul", { className: "feature-list", children: science_default.themes.map((theme) => /* @__PURE__ */ jsxs20("li", { id: theme.id, style: { scrollMarginTop: "6rem" }, children: [
     /* @__PURE__ */ jsx21("span", { className: "feature-list__key", children: theme.n }),
     /* @__PURE__ */ jsxs20("div", { children: [
       /* @__PURE__ */ jsx21("h2", { className: "feature-list__title", style: { fontSize: "1.25rem" }, children: theme.title }),
@@ -2600,7 +2676,7 @@ var meta16 = () => [
   ] }),
   /* @__PURE__ */ jsx21(Section, { eyebrow: "Data", title: "Working with 7DT data", children: /* @__PURE__ */ jsxs20("div", { className: "split", children: [
     /* @__PURE__ */ jsxs20("div", { children: [
-      /* @__PURE__ */ jsx21("p", { className: "prose", children: "7DT data products are medium-band images and matched source catalogues on a fixed tile grid, calibrated against Gaia DR3 synthetic photometry and flux-scaled so that pixel values carry units of microjansky. That makes them directly usable for pixel-based SED fitting without further conversion." }),
+      /* @__PURE__ */ jsx21("p", { className: "prose", children: "7DT data products are medium-band images and matched source catalogs on a fixed tile grid, calibrated against Gaia DR3 synthetic photometry and flux-scaled so that pixel values carry units of microjansky. That makes them directly usable for pixel-based SED fitting without further conversion." }),
       /* @__PURE__ */ jsxs20("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
         /* @__PURE__ */ jsx21(Link9, { className: "btn btn--primary", to: "/data/overview", children: "Data & products" }),
         /* @__PURE__ */ jsx21(Link9, { className: "btn btn--secondary", to: "/data/software", children: "Reduction software" })
@@ -2611,13 +2687,13 @@ var meta16 = () => [
         "img",
         {
           src: "/img/images/Figure8a(lowres)_u-500-650_asinh.png",
-          alt: "Pseudo-colour image of the Helix Nebula from Sloan u and the m500 and m650 medium bands",
+          alt: "Pseudo-color image of the Helix Nebula from Sloan u and the m500 and m650 medium bands",
           loading: "lazy"
         }
       ),
       /* @__PURE__ */ jsxs20("figcaption", { children: [
         /* @__PURE__ */ jsx21("b", { children: "Helix Nebula" }),
-        " Pseudo-colour composite from Sloan u and the m500 and m650 medium bands, mapped to blue, green and red."
+        " Pseudo-color composite from Sloan u and the m500 and m650 medium bands, mapped to blue, green and red."
       ] })
     ] })
   ] }) })
@@ -2643,40 +2719,33 @@ var team_default = {
       imgName: "ImMS.jpeg"
     },
     {
-      name: "Prof. Hyung Mok Lee",
-      role: "Co-Investigator",
-      title: "Professor",
-      affiliation: "Seoul National University",
-      email: "",
-      imgName: ""
-    },
-    {
       name: "Dr. Ji Hoon Kim",
       role: "Project Manager",
-      title: "Associate Research Professor",
+      title: "Principal Researcher",
       affiliation: "Seoul National University",
       email: "jhkim.astrosnu@gmail.com",
       imgName: "KimJH.jpeg"
     },
     {
       name: "Dr. Seo-won Chang",
-      role: "Database Manager",
+      role: "Database Management",
       title: "Associate Research Professor",
       affiliation: "Seoul National University",
       email: "seowon.chang@snu.ac.kr",
       imgName: "ChangSW.jpeg"
     },
     {
-      name: "Dr. Donggeun Tak",
-      role: "Multi-messenger & Transients",
-      title: "",
+      name: "Prof. Donggeun Tak",
+      role: "Software Management",
+      title: "Assistant Professor",
       affiliation: "Kyung Hee University",
       email: "donggeun.tak@gmail.com",
+      webpage: "https://sites.google.com/view/khu-mma/",
       imgName: ""
     },
     {
-      name: "Gregory S.H. Paek",
-      role: "Photometric Calibration",
+      name: "Dr. Gregory S.H. Paek",
+      role: "Software Development",
       title: "",
       affiliation: "Institute for Astronomy, University of Hawaii",
       email: "gregorypaek94@gmail.com",
@@ -2684,7 +2753,7 @@ var team_default = {
     },
     {
       name: "Hyeonho Choi",
-      role: "Telescope Control & Scheduling",
+      role: "Control System Development",
       title: "PhD Student",
       affiliation: "Seoul National University",
       email: "hhchoi1022@gmail.com",
@@ -2692,8 +2761,8 @@ var team_default = {
     },
     {
       name: "Donghwan Hyun",
-      role: "Data Reduction Pipeline",
-      title: "",
+      role: "Data Pipeline Development",
+      title: "PhD Student",
       affiliation: "Seoul National University",
       email: "",
       imgName: ""
@@ -2725,7 +2794,7 @@ var meta17 = () => [
   { title: "Team \xB7 7-Dimensional Telescope" },
   {
     name: "description",
-    content: "The people who build, operate and analyse 7DT and the 7-Dimensional Sky Survey."
+    content: "The people who build, operate and analyze 7DT and the 7-Dimensional Sky Survey."
   }
 ], initials = (name) => name.replace(/^(Prof\.|Dr\.)\s+/, "").split(/\s+/).map((part) => part[0]).slice(0, 2).join(""), Index17 = () => /* @__PURE__ */ jsxs21(PageLayout, { menu: "manuAbout", children: [
   /* @__PURE__ */ jsx22(
@@ -2736,8 +2805,8 @@ var meta17 = () => [
       lede: "7DT is designed, built and operated by the Center for the Gravitational-wave Universe at Seoul National University, with collaborators across Korea and abroad.",
       image: "/img/hero/team.jpg",
       meta: [
-        { value: String(team_default.members.length), label: "Core team" },
-        { value: String(collabs_default.collabs.length), label: "Collaborators" },
+        { value: String(team_default.members.length), label: "Core Members" },
+        { value: String(7), label: "Science Groups" },
         { value: "SNU", label: "Host institution" }
       ]
     }
@@ -2789,7 +2858,7 @@ var meta17 = () => [
       ] })
     ] })
   ] }, member.name)) }) }),
-  /* @__PURE__ */ jsxs21(Section, { eyebrow: "Collaboration", title: "Collaborators", alt: !0, wide: !0, children: [
+  /* @__PURE__ */ jsxs21(Section, { eyebrow: "Collaboration", title: "7DT/7DS team members", alt: !0, wide: !0, children: [
     /* @__PURE__ */ jsx22("p", { className: "lede", children: "Members of the 7DT collaboration contributing to the instrument, operations, pipeline and science working groups." }),
     /* @__PURE__ */ jsx22("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs21("table", { className: "tier-table", children: [
       /* @__PURE__ */ jsxs21("caption", { children: [
@@ -2834,13 +2903,13 @@ var meta18 = () => [
   { title: "Data archive \xB7 7-Dimensional Telescope" },
   {
     name: "description",
-    content: "What 7DT produces, how it is catalogued, and how to request data before the public release."
+    content: "What 7DT produces, how it is cataloged, and how to request data before the public release."
   }
 ], PRODUCTS = [
-  ["single", "A calibrated individual exposure, 100 s, with WCS and a source catalogue"],
+  ["single", "A calibrated individual exposure, 100 s, with WCS and a source catalog"],
   ["coadd", "Three singles combined to a 300 s frame \u2014 the basic survey product"],
   ["difference", "A coadd minus its RIS reference, for transient detection"],
-  ["catalogue", "A flux-calibrated source list attached to every image above"],
+  ["catalog", "A flux-calibrated source list attached to every image above"],
   ["master frame", "Bias, dark and flat, generated nightly and matched by group key"]
 ], CONVENTIONS = [
   ["Photometric system", "AB magnitudes"],
@@ -2865,7 +2934,7 @@ var meta18 = () => [
         "Data ",
         /* @__PURE__ */ jsx23("em", { children: "products" })
       ] }),
-      lede: "What the array produces each night, how it is calibrated and catalogued, and how to reach the data before the public release.",
+      lede: "What the array produces each night, how it is calibrated and cataloged, and how to reach the data before the public release.",
       image: "/img/hero/data.jpg",
       meta: [
         { value: "1.75", unit: "M", label: "Images acquired" },
@@ -2878,7 +2947,7 @@ var meta18 = () => [
     /* @__PURE__ */ jsx23("p", { className: "prose", children: archiveText }),
     /* @__PURE__ */ jsxs22("div", { className: "panel", style: { marginTop: "2rem", maxWidth: "68ch" }, children: [
       /* @__PURE__ */ jsx23("div", { className: "panel__title", children: "Requesting data" }),
-      /* @__PURE__ */ jsx23("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: "Until the public release, requests for 7DT imaging, catalogues or target-of-opportunity products are handled by the project directly. Please include the field or coordinates, the filters and the epoch range you need." }),
+      /* @__PURE__ */ jsx23("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: "Until the public release, requests for 7DT imaging, catalogs or target-of-opportunity products are handled by the project directly. Please include the field or coordinates, the filters and the epoch range you need." }),
       /* @__PURE__ */ jsx23("a", { className: "btn btn--primary", href: "mailto:mim@astro.snu.ac.kr?subject=7DT%20data%20request", children: "Contact the project" })
     ] })
   ] }),
@@ -2937,7 +3006,7 @@ var images_default = [
     file: "Figure7_Helix_Nebula_Zoomin.jpeg"
   },
   {
-    name: "Pseudo-colour image of the Helix Nebula from Sloan u and the m500 and m650 medium bands, mapped to blue, green and red.",
+    name: "Pseudo-color image of the Helix Nebula from Sloan u and the m500 and m650 medium bands, mapped to blue, green and red.",
     file: "Figure8a(lowres)_u-500-650_asinh.png"
   },
   {
@@ -3086,31 +3155,12 @@ var MainPage = () => {
           children: [
             /* @__PURE__ */ jsx25("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs24("div", { className: "reveal", children: [
               /* @__PURE__ */ jsx25("p", { className: "fullpage-hero__eyebrow", children: "Center for the Gravitational-wave Universe \xB7 Seoul National University" }),
-              /* @__PURE__ */ jsx25("h1", { children: "7-Dimensional Telescope" }),
-              /* @__PURE__ */ jsx25("p", { className: "fullpage-hero__lede", children: "An array of twenty 50-cm telescopes in the R\xEDo Hurtado Valley, Chile, carrying forty medium-band filters between them. Imaging that reads like spectroscopy, over a field no spectrograph can cover." }),
-              /* @__PURE__ */ jsxs24("div", { className: "stat-grid stat-grid--on-dark", children: [
-                /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
-                  /* @__PURE__ */ jsx25("span", { className: "stat__value", children: "20" }),
-                  /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Telescopes in the array" }),
-                  /* @__PURE__ */ jsx25("span", { className: "stat__note stat__note--live", children: "16 online" })
-                ] }),
-                /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
-                  /* @__PURE__ */ jsx25("span", { className: "stat__value", children: "40" }),
-                  /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Medium-band filters" }),
-                  /* @__PURE__ */ jsx25("span", { className: "stat__note", children: "35 installed" })
-                ] }),
-                /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
-                  /* @__PURE__ */ jsx25("span", { className: "stat__value", children: "30\u201370" }),
-                  /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Spectral resolution R" })
-                ] }),
-                /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
-                  /* @__PURE__ */ jsxs24("span", { className: "stat__value", children: [
-                    "1.2",
-                    /* @__PURE__ */ jsx25("span", { className: "stat__unit", children: "deg\xB2" })
-                  ] }),
-                  /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Per pointing" })
-                ] })
-              ] })
+              /* @__PURE__ */ jsx25("h1", { children: "7-Dimensional Sky Survey" }),
+              /* @__PURE__ */ jsx25("p", { className: "fullpage-hero__lede", children: "A multi-telescope array, 7 Dimensional Telescope, built to find the optical counterparts of gravitational-wave events \u2014 and, in the process, to map the southern sky in forty colors." }),
+              /* @__PURE__ */ jsx25("div", { className: "dimension-row", style: { marginTop: "2rem" }, children: surveys_default.dimensions.map((dim) => /* @__PURE__ */ jsxs24("span", { className: "dimension-item", children: [
+                /* @__PURE__ */ jsx25("span", { className: "dimension-item__n", children: dim.n }),
+                dim.label
+              ] }, dim.n)) })
             ] }) }),
             /* @__PURE__ */ jsxs24(
               "button",
@@ -3164,32 +3214,32 @@ var MainPage = () => {
           children: /* @__PURE__ */ jsx25("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs24("div", { className: "split split--middle reveal", children: [
             /* @__PURE__ */ jsxs24("div", { children: [
               /* @__PURE__ */ jsx25("span", { className: "eyebrow eyebrow--on-dark", children: "Science" }),
-              /* @__PURE__ */ jsx25("h2", { children: "Spectra without a spectrograph" }),
+              /* @__PURE__ */ jsx25("h2", { children: "One survey, seven fields" }),
               /* @__PURE__ */ jsx25("p", { className: "prose", style: { color: "rgba(255,255,255,.78)" }, children: mainText2 }),
-              /* @__PURE__ */ jsx25("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx25(Link11, { className: "link-arrow", to: "/science/overview", style: { color: "var(--accent-on-dark)" }, children: "Science programme" }) })
+              /* @__PURE__ */ jsx25("ul", { className: "theme-chips", children: science_default.themes.map((theme) => /* @__PURE__ */ jsx25("li", { children: /* @__PURE__ */ jsx25(Link11, { to: `/science/sci#${theme.id}`, children: theme.title }) }, theme.id)) }),
+              /* @__PURE__ */ jsx25("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx25(Link11, { className: "link-arrow", to: "/science/overview", style: { color: "var(--accent-on-dark)" }, children: "Science program" }) })
             ] }),
-            /* @__PURE__ */ jsxs24("div", { className: "stat-grid stat-grid--on-dark", style: { gridTemplateColumns: "1fr 1fr" }, children: [
+            /* @__PURE__ */ jsxs24("div", { className: "stat-grid stat-grid--on-dark", children: [
+              /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
+                /* @__PURE__ */ jsx25("span", { className: "stat__value", children: "20" }),
+                /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Telescopes in the array" }),
+                /* @__PURE__ */ jsx25("span", { className: "stat__note stat__note--live", children: "16 online" })
+              ] }),
+              /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
+                /* @__PURE__ */ jsx25("span", { className: "stat__value", children: "40" }),
+                /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Medium-band filters" }),
+                /* @__PURE__ */ jsx25("span", { className: "stat__note", children: "35 installed" })
+              ] }),
               /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
                 /* @__PURE__ */ jsx25("span", { className: "stat__value", children: "30\u201370" }),
                 /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Spectral resolution R" })
               ] }),
               /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
                 /* @__PURE__ */ jsxs24("span", { className: "stat__value", children: [
-                  "< 1",
-                  /* @__PURE__ */ jsx25("span", { className: "stat__unit", children: "min" })
+                  "1.25",
+                  /* @__PURE__ */ jsx25("span", { className: "stat__unit", children: "deg\xB2" })
                 ] }),
-                /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Alert to exposure start" })
-              ] }),
-              /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
-                /* @__PURE__ */ jsxs24("span", { className: "stat__value", children: [
-                  "1.75",
-                  /* @__PURE__ */ jsx25("span", { className: "stat__unit", children: "M" })
-                ] }),
-                /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Images, unattended" })
-              ] }),
-              /* @__PURE__ */ jsxs24("div", { className: "stat", children: [
-                /* @__PURE__ */ jsx25("span", { className: "stat__value", children: "\u2248 100" }),
-                /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "ToO follow-ups" })
+                /* @__PURE__ */ jsx25("span", { className: "stat__label", children: "Per pointing" })
               ] })
             ] })
           ] }) })
@@ -3223,44 +3273,41 @@ var MainPage = () => {
               ] }),
               /* @__PURE__ */ jsx25("span", { className: `pill pill--${tier.status}`, style: tier.status === "planned" ? { color: "rgba(255,255,255,.6)" } : void 0, children: tier.statusLabel })
             ] }, tier.code)) }),
-            /* @__PURE__ */ jsx25("div", { className: "dimension-row", style: { marginTop: "2rem" }, children: surveys_default.dimensions.map((dim) => /* @__PURE__ */ jsxs24("span", { className: "dimension-item", children: [
-              /* @__PURE__ */ jsx25("span", { className: "dimension-item__n", children: dim.n }),
-              dim.label
-            ] }, dim.n)) })
+            /* @__PURE__ */ jsx25("p", { className: "footnote footnote--on-dark", children: surveys_default.depthFootnote })
           ] }) })
         }
       ),
       /* @__PURE__ */ jsx25("section", { className: "fullpage-section", children: /* @__PURE__ */ jsx25("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs24("div", { className: "split split--middle reveal", children: [
         /* @__PURE__ */ jsxs24("div", { children: [
-          /* @__PURE__ */ jsx25("span", { className: "eyebrow", children: "The instrument" }),
-          /* @__PURE__ */ jsx25("h2", { children: "Twenty telescopes, one instrument" }),
+          /* @__PURE__ */ jsx25("span", { className: "eyebrow", children: "The facility" }),
+          /* @__PURE__ */ jsx25("h2", { children: "Twenty telescopes, one system" }),
           /* @__PURE__ */ jsx25("p", { className: "prose", children: mainText4 }),
           /* @__PURE__ */ jsx25("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx25(Link11, { className: "link-arrow", to: "/telescope/overview", children: "Telescope & site" }) })
         ] }),
         /* @__PURE__ */ jsxs24("ul", { className: "feature-list", children: [
           /* @__PURE__ */ jsxs24("li", { children: [
-            /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: "OTA" }),
+            /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: "Hardware" }),
             /* @__PURE__ */ jsxs24("div", { children: [
-              /* @__PURE__ */ jsx25("h3", { className: "feature-list__title", children: "PlaneWave DeltaRho 500" }),
-              /* @__PURE__ */ jsx25("p", { className: "feature-list__body", children: "508 mm corrected Cassegrain at f/3.0, covering 1.34\xB0 \xD7 0.90\xB0 at 0.5\u2033 per pixel." })
+              /* @__PURE__ */ jsx25("h3", { className: "feature-list__title", children: "PlaneWave DeltaRho 500 \xD7 20" }),
+              /* @__PURE__ */ jsx25("p", { className: "feature-list__body", children: "A 508 mm corrected Cassegrain at f/3.0 on an L-500 direct-drive mount, with a Moravian C3-61000 PRO CMOS camera and a nine-slot filter wheel \u2014 1.34\xB0 \xD7 0.90\xB0 at 0.5\u2033 per pixel, 1.25 deg\xB2 per unit." })
             ] })
           ] }),
           /* @__PURE__ */ jsxs24("li", { children: [
             /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: "Site" }),
             /* @__PURE__ */ jsxs24("div", { children: [
               /* @__PURE__ */ jsx25("h3", { className: "feature-list__title", children: "El Sauce Observatory, Chile" }),
-              /* @__PURE__ */ jsx25("p", { className: "feature-list__body", children: "1.5\u2033 median seeing, over 300 clear nights a year, next to Rubin and CTIO." })
+              /* @__PURE__ */ jsx25("p", { className: "feature-list__body", children: "1.5\u2033 median seeing, over 300 clear nights a year, next to Rubin and Gemini-South." })
             ] })
           ] }),
           /* @__PURE__ */ jsxs24("li", { children: [
-            /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: "Ops" }),
+            /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: "Operation" }),
             /* @__PURE__ */ jsxs24("div", { children: [
               /* @__PURE__ */ jsx25("h3", { className: "feature-list__title", children: "Robotic, unattended" }),
               /* @__PURE__ */ jsx25("p", { className: "feature-list__body", children: "RTCSpy runs the night end to end and interrupts it for an alert in under a minute." })
             ] })
           ] }),
           /* @__PURE__ */ jsxs24("li", { children: [
-            /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: "Data" }),
+            /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: "Pipeline" }),
             /* @__PURE__ */ jsxs24("div", { children: [
               /* @__PURE__ */ jsx25("h3", { className: "feature-list__title", children: "Same-night reduction" }),
               /* @__PURE__ */ jsx25("p", { className: "feature-list__body", children: "Py7DT clears a 3,000-image night in about five hours on 128 cores and two A100s." })
@@ -3295,20 +3342,7 @@ var MainPage = () => {
           /* @__PURE__ */ jsx25(Link11, { className: "btn btn--secondary", to: "/publication/list", children: "Publications" })
         ] })
       ] }) }) }),
-      /* @__PURE__ */ jsx25(
-        "div",
-        {
-          className: "fullpage-section",
-          style: {
-            display: "block",
-            height: "auto",
-            minHeight: "100vh",
-            alignItems: "stretch",
-            overflow: "visible"
-          },
-          children: /* @__PURE__ */ jsx25(footer_default, {})
-        }
-      )
+      /* @__PURE__ */ jsx25("div", { className: "fullpage-section fullpage-section--footer", children: /* @__PURE__ */ jsx25(footer_default, {}) })
     ] })
   ] });
 }, main_default = MainPage;
@@ -3492,7 +3526,7 @@ var meta22 = () => [
 }, news_default2 = Index22;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-R6ZED3SL.js", imports: ["/build/_shared/chunk-RMUOYFRO.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-UGC26Q5U.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-7WEJDDVY.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-SIUXED4B.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-ARFGNDFB.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-336YDANA.js", imports: ["/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-KJHNJQZ6.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-ROA5EYAX.js", imports: ["/build/_shared/chunk-4CNFZB4X.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-NLSURHLJ.js", imports: ["/build/_shared/chunk-4CNFZB4X.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-FC4DCZPR.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-EKKZIVFA.js", imports: ["/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-77OUF4KJ.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-74MVOQLH.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-XLH4I4DW.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-NQPYIATK.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-M7H3UDCL.js", imports: ["/build/_shared/chunk-EG4MTBFI.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-NCQVBXKH.js", imports: ["/build/_shared/chunk-EG4MTBFI.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-E3VZX3TS.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-HM2AOLR4.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XI3Z7UJN.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-OXBCPVY5.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-GCAMOBGE.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-VPZKFJ5O.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-YCEGBWAV.js", imports: ["/build/_shared/chunk-ISWS5LAM.js", "/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-5IVJ4I3N.js", imports: ["/build/_shared/chunk-G3EZMXQE.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "85cf385e", hmr: void 0, url: "/build/manifest-85CF385E.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-R6ZED3SL.js", imports: ["/build/_shared/chunk-RMUOYFRO.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-BEH4QWYH.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-QXDGTINU.js", imports: ["/build/_shared/chunk-BRBIUWAN.js", "/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-ZYG6XA2T.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-73FRUDGO.js", imports: ["/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-HUOYH64G.js", imports: ["/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-TSAT7GG4.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-YBKQU2CB.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-5YRUHC4Z.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-TSW55366.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-EKKZIVFA.js", imports: ["/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-6ZVHKAZH.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-BTZAXDKC.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-5EW3SMS5.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-ZUAKPWHM.js", imports: ["/build/_shared/chunk-BRBIUWAN.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-TIG2JEU3.js", imports: ["/build/_shared/chunk-BRBIUWAN.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-YTU6MMLB.js", imports: ["/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-ICNN7UDS.js", imports: ["/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-BKCL7ZXG.js", imports: ["/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-WHCSKZB6.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-3Y4Y7VCF.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-VCOMNER2.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-ELOMILM5.js", imports: ["/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-JDDFLARF.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "6ddbe24c", hmr: void 0, url: "/build/manifest-6DDBE24C.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

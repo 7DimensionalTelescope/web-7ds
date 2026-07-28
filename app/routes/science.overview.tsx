@@ -10,7 +10,7 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'From gravitational-wave counterparts to photometric redshifts: the science programme of the 7-Dimensional Telescope.',
+      'From gravitational-wave counterparts to photometric redshifts: the science program of the 7-Dimensional Telescope.',
   },
 ];
 
@@ -45,7 +45,7 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Programme" title="Seven science themes" alt>
+      <Section eyebrow="Program" title="Seven science themes" alt>
         <div className="grid grid-cols-2">
           {science.themes.map((theme) => (
             <a className="theme-card" href={`/science/sci#${theme.id}`} key={theme.id}>

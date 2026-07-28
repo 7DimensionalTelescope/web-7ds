@@ -6,7 +6,7 @@
       "rows": [
         ["Telescopes in the array", "20"],
         ["Currently operational", "16 (as of June 2026)"],
-        ["Field of view per pointing", "≈ 1.2 deg²"],
+        ["Field of view per pointing", "≈ 1.25 deg²"],
         ["Spectral resolution", "R = 30–70"]
       ]
     },
@@ -76,7 +76,7 @@
     ]
   },
   "performance": [
-    { "value": "1.4–2.2", "unit": "″", "label": "PSF FWHM at centre" },
+    { "value": "1.4–2.2", "unit": "″", "label": "PSF FWHM at center" },
     { "value": "2.0", "unit": "″", "label": "Array median FWHM" },
     { "value": "0.2", "unit": "″", "label": "Unit-to-unit scatter" },
     { "value": "< 0.1", "unit": "", "label": "PSF ellipticity" },

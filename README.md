@@ -78,8 +78,13 @@ This site is a scientific facility's public record. Two rules matter more than a
    Proc. SPIE 14147-84) and the pipeline paper (Hyun et al., Proc. SPIE 14155-12). The `note`
    field at the top of each content JSON records its provenance. If you cannot cite it, do not
    publish it.
-2. **Never invent placeholder data.** No sample observation tables, no illustrative catalogues, no
+2. **Never invent placeholder data.** No sample observation tables, no illustrative catalogs, no
    captions written without looking at the image. If something does not exist yet, say so.
+3. **American English.** color, program, center, catalog, analyze, percent, acknowledgment.
+4. **A publication's thumbnail is a figure from that publication.** These live in
+   `public/img/news/pub-*.jpg`. Three entries — Chang et al., Ko et al. and Lim et al. — had no
+   obtainable paper figure and fall back to a 7DT project figure; the `_note` in `news.json`
+   records which. Do not describe a fallback as a figure from the paper.
 
 Status figures are stamped "as of June 2026" and appear in several places. When the survey
 advances, grep for the old value before assuming one edit is enough.

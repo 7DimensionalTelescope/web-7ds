@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => [
 ];
 
 const TILING = [
-  ['Tile centres', 'HEALPix pixelization of the celestial sphere'],
+  ['Tile centers', 'HEALPix pixelization of the celestial sphere'],
   ['Tile range', 'T00000 – T28519, increasing declination'],
   ['Sky coverage', 'South pole to +30°'],
   ['Overlap near equator', '≈ 5′ in R.A., 4′ in Dec.'],
@@ -33,7 +33,7 @@ const Index = () => {
         image="/img/hero/survey.jpg"
       />
 
-      <Section eyebrow="Tiling" title="A single grid for the whole programme">
+      <Section eyebrow="Tiling" title="A single grid for the whole program">
         <div className="split split--wide-text">
           <div>
             <p className="prose">{surveyDesignText}</p>
@@ -57,7 +57,7 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Observing modes" title="Four ways to spend a night" alt>
+      <Section eyebrow="Observing modes" title="Four ways to acquire images" alt>
         <p className="prose">{modeText}</p>
         <div className="grid grid-cols-2" style={{ marginTop: '2rem' }}>
           {surveys.modes.map((mode) => (
@@ -73,8 +73,8 @@ const Index = () => {
         <figure className="figure" style={{ marginTop: '2rem', maxWidth: '760px' }}>
           <img src="/img/overview.png" alt="Schematic of the 7DT observing modes" loading="lazy" />
           <figcaption>
-            <b>Modes</b> Filter assignment across the array determines whether a night favours
-            spectral resolution, depth, colour or sky coverage.
+            <b>Modes</b> Filter assignment across the array determines whether a night favors
+            spectral resolution, depth, color or sky coverage.
           </figcaption>
         </figure>
       </Section>

@@ -17,15 +17,17 @@ export const mainText1 =
 Sauce Observatory in Chile, built and operated by the Center for the Gravitational-wave \
 Universe at Seoul National University. Each unit carries a share of a forty-filter \
 medium-band set, and together they turn imaging into low-resolution spectroscopy across \
-1.2 square degrees at a time. Sixteen units and thirty-five filters are in routine \
+1.25 square degrees at a time. Sixteen units and thirty-five filters are in routine \
 operation today; the remainder complete the designed array.'
 
 export const mainText2 =
-  'A resolution of R = 30-70 across 400-900 nm captures the 4000 A break, strong \
-emission lines and broad continuum shape for every source in the field. That is enough \
-to tell a kilonova from the hundred other transients in a gravitational-wave \
-localization, to place galaxies in redshift without a spectrograph, and to follow \
-colour changes on timescales of a single night.'
+  'Every source in the field arrives with a low-resolution spectrum already attached. \
+That single data product carries across most of the questions optical astronomy is \
+asking: how galaxies assemble and stop forming stars, where the heavy elements are \
+made, how fast the Universe is expanding, how black holes feed, what young stars do \
+from one night to the next, and what the small bodies of our own solar system are made \
+of. 7DS was designed for gravitational-wave counterparts; the same nightly images serve \
+all of it.'
 
 export const mainText3 =
   'The 7-Dimensional Sky Survey (7DS) runs on three tiers that trade area against \
@@ -50,15 +52,57 @@ identify the electromagnetic counterparts of gravitational-wave events. Its defi
 feature is a set of 40 medium-band filters of 25 nm width spanning 400 to 900 nm, \
 distributed across the array so that the full set is covered in a small number of \
 exposures. This yields IFU-like data at low spectral resolution (R = 30-70) over \
-approximately 1.2 square degrees per pointing — imaging that behaves like \
+approximately 1.25 square degrees per pointing — imaging that behaves like \
 spectroscopy, over an area no spectrograph can reach.'
 
 export const aboutText2 =
   'Since first light in October 2023 the array has grown from twelve to sixteen \
 operational units, and from twenty to thirty-five installed medium-band filters, \
 against a design of twenty telescopes and forty filters. Commissioning has reached \
-closure, robotic operation runs unattended, and the science programme — the \
+closure, robotic operation runs unattended, and the science program — the \
 7-Dimensional Sky Survey (7DS) — is under way on two of its three tiers.'
+
+export const aboutMotivationText =
+  'On 17 August 2017 the merger of two neutron stars, GW170817, was seen in \
+gravitational waves and then found in light. It remains the only gravitational-wave \
+event with a confirmed electromagnetic counterpart. The reason is not that such \
+mergers are rare but that their counterparts are hard to catch: a kilonova peaks near \
+absolute magnitude −15 to −17 and fades by about half a magnitude a day, and the sky \
+region a detector network reports for it covers hundreds to thousands of square \
+degrees. Only about a dozen gravitational-wave sources have ever been localized to \
+better than 100 square degrees — and a patch that size is expected to contain of order \
+a hundred unrelated transients over a week.'
+
+export const aboutMotivationText2 =
+  'That is the problem 7DT was built to solve. Searching an area that large quickly \
+requires a wide field and fast slewing; separating a kilonova from the supernovae, \
+novae and detector artifacts inside it requires spectral information. Conventional \
+practice is to image first and follow up spectroscopically, which costs nights on \
+large telescopes and time the source does not have. 7DT collapses the two steps into \
+one: every exposure already carries a low-resolution spectrum of every source in the \
+field.'
+
+export const aboutApproachText =
+  'The design answer is an array rather than a single large telescope. Twenty \
+commercial off-the-shelf 50-cm units, each carrying a different share of a \
+forty-filter medium-band set, cost a fraction of a purpose-built instrument, can be \
+brought on line in stages, and can be reconfigured between science goals without \
+touching hardware. Pointed together they build a spectrum; pointed apart they tile \
+25 square degrees at once. Other multi-telescope arrays — GOTO, BlackGEM, LAST — \
+made the same bet on off-the-shelf optics; 7DT is distinguished by what it puts in \
+front of them.'
+
+export const aboutOriginText =
+  '7DT is designed, built and operated by the Center for the Gravitational-wave \
+Universe at Seoul National University, with support from the National Research \
+Foundation of Korea, funded by the Korean government (MSIT). The Center came to the \
+project through GECKO, the Gravitational-wave Electromagnetic Counterpart Korean \
+Observatory — a network of existing Korean-accessible telescopes that followed up \
+gravitational-wave alerts during the O3 observing run. Its campaign on GW190425, the \
+first binary neutron star merger of that run, covered 621 candidate host galaxies \
+inside a 7,460 square-degree localization and found no kilonova. The limits of \
+working with borrowed time on telescopes not designed for the task were the direct \
+argument for building one that was.'
 
 export const aboutText3 =
   'The name counts the axes of the data. Two of position on the sky, one of \
@@ -80,17 +124,17 @@ spectral information good enough to reject the contaminants, which is precisely 
 medium-band array delivers.'
 
 export const scienceOverviewText2 =
-  'The same data serve a much broader programme. Low-resolution spectral mapping of \
-the southern sky supports photometric redshift catalogues, resolved stellar \
+  'The same data serve a much broader program. Low-resolution spectral mapping of \
+the southern sky supports photometric redshift catalogs, resolved stellar \
 populations in nearby galaxies, active galactic nuclei, variable stars, and the \
 time-domain study of solar-system bodies. Several of the science verification \
 observations taken during commissioning have since matured into refereed or \
-near-complete analyses.'
+near-complete analyzes.'
 
 /* --- Survey -------------------------------------------------------------- */
 
 export const surveyOverviewText =
-  '7DS is the science programme of 7DT. It is structured as three complementary \
+  '7DS is the science program of 7DT. It is structured as three complementary \
 surveys distinguished by area, cadence and depth: the Reference Imaging Survey (RIS), \
 the Wide-area Time-domain Survey (WTS), and the Intensive Monitoring Survey (IMS). \
 Across the three tiers sky coverage decreases and depth increases, spanning the range \
@@ -106,8 +150,8 @@ increasing declination, covering everything accessible to the array from the sou
 pole to +30 degrees.'
 
 export const surveyDesignText2 =
-  'The RIS tile grid is the operational reference for the entire programme: WTS and \
-IMS point at the same tile centres, and target-of-opportunity observations use them \
+  'The RIS tile grid is the operational reference for the entire program: WTS and \
+IMS point at the same tile centers, and target-of-opportunity observations use them \
 wherever the field allows. Because every survey shares the grid, data from any tier \
 coadd homogeneously with data from the others, and difference imaging always runs \
 against a consistent reference. A visit is three consecutive 100-second exposures, \
@@ -135,7 +179,7 @@ in routine use.'
 
 export const locationText =
   'El Sauce Observatory sits in the Rio Hurtado Valley of Chile at 30 deg 28 min 16 \
-sec South, 70 deg 45 min 47 sec West, 1,600 m above sea level. It neighbours the sites \
+sec South, 70 deg 45 min 47 sec West, 1,600 m above sea level. It neighbors the sites \
 of Cerro Tololo Inter-American Observatory, Gemini South, the Southern Astrophysical \
 Research Telescope and the Vera C. Rubin Observatory, and shares their sky conditions: \
 typical seeing of about 1.5 arcseconds, more than 300 clear nights a year, and a mean \
@@ -162,7 +206,7 @@ export const cameraText =
   'Each unit carries a Moravian Instruments C3-61000 PRO. Its back-illuminated SONY \
 IMX455 CMOS sensor measures 36 by 24 mm with 9,576 by 6,388 pixels of 3.76 micron \
 pitch. At the DeltaRho focal plane this gives a field of view of 1.34 by 0.90 degrees \
-at a pixel scale of 0.5 arcseconds - about 1.2 square degrees of spectral mapping per \
+at a pixel scale of 0.5 arcseconds - about 1.25 square degrees of spectral mapping per \
 pointing. Bias levels are consistent with the manufacturer specification of roughly \
 3.5 electrons RMS, and the horizontal pattern characteristic of CMOS detectors is \
 present but stable.'
@@ -188,17 +232,17 @@ original twenty remain the calibrated set in operational use.'
 
 export const performanceText =
   'Across the sixteen operational units the point-spread function measured at field \
-centre on good nights ranges from 1.4 to 2.2 arcseconds FWHM, with an array median of \
+center on good nights ranges from 1.4 to 2.2 arcseconds FWHM, with an array median of \
 2.0 arcseconds closely tracking the median site seeing. Unit-to-unit scatter in \
 delivered FWHM is 0.2 arcseconds, and the PSF grows by 0.3 arcseconds from field \
-centre to corner while ellipticity stays below 0.1 over the central 80 per cent of the \
+center to corner while ellipticity stays below 0.1 over the central 80 percent of the \
 field. The array behaves as a coherent set of instruments rather than sixteen \
 independent telescopes. Median delivered FWHM has held stable to within 0.3 arcseconds \
 since routine survey operations began in July 2024.'
 
 export const photometryText =
   'Photometric calibration runs against synthetic photometry derived from Gaia DR3 \
-BP/RP spectra, homogenized to correct the colour- and magnitude-dependent residuals \
+BP/RP spectra, homogenized to correct the color- and magnitude-dependent residuals \
 reported by the Gaia collaboration. The procedure was established during commissioning \
 on 68 spectrophotometric standard stars, including CALSPEC sources, with non-variable \
 point sources selected following criteria adapted from SkyMapper DR4. Zero-point \
@@ -263,7 +307,7 @@ and QA criteria for internal and external users of 7DT data.'
 
 export const dataProductText =
   'The basic data product of the survey is a 300-second coadd of three 100-second \
-exposures, with a source catalogue attached to every processed single, coadd and \
+exposures, with a source catalog attached to every processed single, coadd and \
 difference image. Coadds are flux-scaled to a zero point of 23.9 AB magnitudes, which \
 puts each pixel directly in units of microjansky - a convenient convention for the \
 pixel-based, IFU-like analysis that medium-band data invite. Quality-assurance metrics \
@@ -305,14 +349,13 @@ and keeps the learning cost of processing 7DT data low.'
 export const fundingGWText =
   'The 7-Dimensional Telescope is designed, built and operated by the Center for the \
 Gravitational-wave Universe at Seoul National University. The Center is supported by \
-National Research Foundation of Korea grant No. 2021M3F7A1084525, funded by the Korean \
-government (MSIT).'
+National Research Foundation of Korea (MSIT).'
 
 export const fundingNRFText =
-  'Further project support is provided by the National Research Foundation of Korea \
-under grant No. RS-2026-25490019, funded by the Korean government (MSIT). Several \
-members of the collaboration are additionally supported by individual NRF awards, \
-listed separately below; those grants support the researchers rather than the facility.'
+  'Further project support is provided by the National Research Foundation of Korea (MSIT). \
+Several members of the collaboration are additionally supported by individual NRF awards; \
+those grants support the researchers rather than the facility, and are acknowledged in \
+their own papers.'
 
 export const fundingKASIText =
   '7DT is operated in part with support from special funding of the Korea Astronomy \
@@ -328,15 +371,15 @@ survey and target-of-opportunity data would not be possible.'
 /* --- Miscellaneous ------------------------------------------------------- */
 
 export const publicationPolicyText =
-  'The 7DS publication policy governs authorship, data rights and the acknowledgement \
+  'The 7DS publication policy governs authorship, data rights and the acknowledgment \
 of 7DT observations in refereed work. It is being prepared by the collaboration and \
 will be posted here once ratified. In the meantime, anyone intending to publish results \
 based on 7DT data is asked to contact the principal investigator so that the \
-appropriate collaboration authors and funding acknowledgements can be agreed in \
+appropriate collaboration authors and funding acknowledgments can be agreed in \
 advance.'
 
 export const archiveText =
-  'A complete record of 7DT data — every image type and source catalogue — is \
+  'A complete record of 7DT data — every image type and source catalog — is \
 maintained internally in the gwportal database, with the provenance of any product \
 traceable back to the raw frames it was built from. There is no public archive \
 interface yet: a public release of survey products is being prepared alongside the \

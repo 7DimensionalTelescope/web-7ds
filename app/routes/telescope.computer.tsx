@@ -91,7 +91,7 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Facility" title="The processing centre" alt>
+      <Section eyebrow="Facility" title="The processing center" alt>
         <figure className="figure" style={{ maxWidth: '760px' }}>
           <img src="/img/computer.jpeg" alt="The 7DT data processing facility at Seoul National University" loading="lazy" />
           <figcaption>

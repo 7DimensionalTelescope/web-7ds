@@ -17,7 +17,7 @@ const FLOW = [
   ['Transfer', 'Roughly 350 GB is compressed and sent to Seoul over KREONET by GridFTP at ≈ 80 MB s⁻¹.'],
   ['Reduce', 'Py7DT groups, preprocesses, solves, calibrates, coadds and subtracts — about five hours per night.'],
   ['Record', 'Every product, its version, its QA metrics and its provenance are written to the gwportal database.'],
-  ['Deliver', 'Coadds, difference images and matched source catalogues, with SED plots and magnitude tables for ToO events.'],
+  ['Deliver', 'Coadds, difference images and matched source catalogs, with SED plots and magnitude tables for ToO events.'],
 ];
 
 const Index = () => {
@@ -27,7 +27,7 @@ const Index = () => {
         eyebrow="Data"
         title={
           <>
-            The 7DS <em>data centre</em>
+            The 7DS <em>data center</em>
           </>
         }
         lede="Observation, reduction and analysis closed into a single nightly loop between Chile and Seoul."
@@ -40,7 +40,7 @@ const Index = () => {
         ]}
       />
 
-      <Section eyebrow="Overview" title="From the mountain to the catalogue">
+      <Section eyebrow="Overview" title="From the mountain to the catalog">
         <p className="prose">{dataOverviewText}</p>
         <ul className="feature-list" style={{ marginTop: '2rem' }}>
           {FLOW.map((step, index) => (

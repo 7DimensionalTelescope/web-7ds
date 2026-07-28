@@ -9,7 +9,7 @@ export const meta: MetaFunction = () => [
   { title: 'Team · 7-Dimensional Telescope' },
   {
     name: 'description',
-    content: 'The people who build, operate and analyse 7DT and the 7-Dimensional Sky Survey.',
+    content: 'The people who build, operate and analyze 7DT and the 7-Dimensional Sky Survey.',
   },
 ];
 
@@ -34,8 +34,8 @@ const Index = () => {
         lede="7DT is designed, built and operated by the Center for the Gravitational-wave Universe at Seoul National University, with collaborators across Korea and abroad."
         image="/img/hero/team.jpg"
         meta={[
-          { value: String(members.members.length), label: 'Core team' },
-          { value: String(collabs.collabs.length), label: 'Collaborators' },
+          { value: String(members.members.length), label: 'Core Members' },
+          { value: String(7), label: 'Science Groups' },
           { value: 'SNU', label: 'Host institution' },
         ]}
       />
@@ -99,7 +99,7 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Collaboration" title="Collaborators" alt wide>
+      <Section eyebrow="Collaboration" title="7DT/7DS team members" alt wide>
         <p className="lede">
           Members of the 7DT collaboration contributing to the instrument, operations, pipeline
           and science working groups.

@@ -64,7 +64,7 @@
     },
     {
       "module": "Photometry",
-      "body": "Flux-calibrated source catalogues from SExtractor, in fixed apertures and in the AUTO aperture. Zero points come from synthetic photometry integrated from Gaia XP spectra over each 7DT bandpass — an unusual advantage for an instrument with an unusual filter set. The module runs on single, coadd and difference images alike."
+      "body": "Flux-calibrated source catalogs from SExtractor, in fixed apertures and in the AUTO aperture. Zero points come from synthetic photometry integrated from Gaia XP spectra over each 7DT bandpass — an unusual advantage for an instrument with an unusual filter set. The module runs on single, coadd and difference images alike."
     },
     {
       "module": "ImCoadd",

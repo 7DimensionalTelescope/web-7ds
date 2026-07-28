@@ -19,11 +19,11 @@ const Index = () => {
       <PageHero
         eyebrow="Science"
         title="Themes & early results"
-        lede="Each theme below draws on the same data product — a medium-band spectral energy distribution for every source in a 1.2 square degree field."
+        lede="Each theme below draws on the same data product — a medium-band spectral energy distribution for every source in a 1.25 square degree field."
         image="/img/hero/sci.jpg"
       />
 
-      <Section eyebrow="Themes" title="The 7DS science programme">
+      <Section eyebrow="Themes" title="The 7DS science program">
         <ul className="feature-list">
           {science.themes.map((theme) => (
             <li key={theme.id} id={theme.id} style={{ scrollMarginTop: '6rem' }}>
@@ -64,7 +64,7 @@ const Index = () => {
         <div className="split">
           <div>
             <p className="prose">
-              7DT data products are medium-band images and matched source catalogues on a fixed
+              7DT data products are medium-band images and matched source catalogs on a fixed
               tile grid, calibrated against Gaia DR3 synthetic photometry and flux-scaled so that
               pixel values carry units of microjansky. That makes them directly usable for
               pixel-based SED fitting without further conversion.
@@ -77,11 +77,11 @@ const Index = () => {
           <figure className="figure">
             <img
               src="/img/images/Figure8a(lowres)_u-500-650_asinh.png"
-              alt="Pseudo-colour image of the Helix Nebula from Sloan u and the m500 and m650 medium bands"
+              alt="Pseudo-color image of the Helix Nebula from Sloan u and the m500 and m650 medium bands"
               loading="lazy"
             />
             <figcaption>
-              <b>Helix Nebula</b> Pseudo-colour composite from Sloan u and the m500 and m650
+              <b>Helix Nebula</b> Pseudo-color composite from Sloan u and the m500 and m650
               medium bands, mapped to blue, green and red.
             </figcaption>
           </figure>
