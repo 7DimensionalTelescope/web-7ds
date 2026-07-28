@@ -463,6 +463,45 @@ hr {
   max-width: 78ch;
 }
 
+/* Survey design: why each tier is what it is. The trade-off is set opposite the
+   name so the three panels can be compared at a glance. */
+.rationale__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.rationale__head h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.rationale__tradeoff {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+}
+
+.rationale__goal {
+  margin: 0 0 1rem;
+  padding-left: 0.875rem;
+  border-left: 2px solid var(--accent);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--ink-900);
+  max-width: var(--measure);
+}
+
+@media (max-width: 640px) {
+  .rationale__tradeoff { margin-left: 0; width: 100%; }
+}
+
 /* Project history. A rule down the left with the date in the gutter, so the
    sequence reads before any of the entries do. */
 .timeline {

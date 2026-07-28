@@ -16,7 +16,10 @@
       "progress": 58,
       "progressLabel": "14,866 of 25,472 tiles observed",
       "summary": "The wide-area component of 7DS. Every tile of the southern sky is observed once with the full set of available medium bands, in three consecutive 100-second exposures. RIS images serve two purposes at once: reference frames against which transients are identified by difference imaging, and a homogeneous spectrophotometric map of the southern sky usable for galaxy population studies, photometric redshift catalogs and quasar identification. Full-cycle completion is anticipated by the end of 2027.",
-      "depthRange": "5σ depths range from 19.7 mag at m400 to 17.2 mag at m875."
+      "depthRange": "5σ depths range from 19.7 mag at m400 to 17.2 mag at m875.",
+      "tradeoff": "Area over depth and cadence",
+      "goal": "Give every part of the southern sky a medium-band reference image, once.",
+      "rationale": "Nothing can be identified as a transient without an earlier image of the same sky in the same bands to subtract. RIS exists to build that reference, and its scale is set by the problem it serves: a gravitational-wave localization can fall anywhere, so the reference has to cover everything the array can reach. Covering 23,000 deg² at all forces the minimum per tile — one visit of 3 × 100 s — which is why RIS is the shallowest tier. The compensation is that a reference map made of forty medium bands is itself a homogeneous spectrophotometric survey, so the same exposures that enable difference imaging also support galaxy population studies, photometric redshifts and quasar identification at no extra cost in telescope time."
     },
     {
       "code": "WTS",
@@ -32,7 +35,10 @@
       "progress": 0,
       "progressLabel": "Field selection under consideration",
       "summary": "WTS extends 7DS into the time domain over a moderately wide area, sustained over a five-year operational period. Field selection prioritizes regions with existing near-infrared coverage, including the VISTA Kilo-degree Infrared Galaxy (VIKING) survey footprint and the Vera C. Rubin Observatory Deep Drilling Fields, so that 7DT data are complemented at wavelengths the array cannot reach. Roughly 90 to 100 visits per tile accumulate to 22.0–22.5 mag in the majority of medium bands.",
-      "depthRange": "Science cases include reverberation mapping of AGN, long-period variables and eclipsing systems, and slow-evolving extragalactic transients such as superluminous supernovae and tidal disruption events."
+      "depthRange": "Science cases include reverberation mapping of AGN, long-period variables and eclipsing systems, and slow-evolving extragalactic transients such as superluminous supernovae and tidal disruption events.",
+      "tradeoff": "Cadence over area",
+      "goal": "Follow what changes on timescales of weeks, and stack deep enough to reach faint galaxies.",
+      "rationale": "A single epoch says what is there; it does not say what is changing. WTS gives up most of the sky to revisit a smaller area every 10 to 14 days — an interval matched to what actually evolves on that scale: reverberation in active galactic nuclei, long-period variable and eclipsing stars, and slow extragalactic transients such as superluminous supernovae and tidal disruption events. Repetition also accumulates: roughly 90 to 100 visits per tile stack to 22.0–22.5 mag across most of the medium bands, deep enough for precise photometric redshifts on galaxies far below the single-visit limit. Fields are chosen where near-infrared data already exist — the VIKING footprint, the Rubin Deep Drilling Fields — because those are wavelengths 7DT cannot reach for itself."
     },
     {
       "code": "IMS",
@@ -48,7 +54,10 @@
       "progress": 24,
       "progressLabel": "> 260 cycles per tile · ~1.2 of 5 planned years",
       "summary": "The deep, high-cadence component of 7DS. Seven tiles near the south ecliptic pole are observed every available night with the full medium-band set. The field was deliberately chosen to overlap the SPHEREx Deep Field South, so that 7DT optical medium-band photometry is co-located with SPHEREx near-infrared spectrophotometry within the same survey volume — a choice that maximizes the synergy between the two surveys for photometric redshifts and for spatially resolved studies of faint sources.",
-      "depthRange": "Field center: RA 05h13m07.36s, Dec −60°28′11.71″. Observing time budget of 20,000 minutes per year."
+      "depthRange": "Field center: RA 05h13m07.36s, Dec −60°28′11.71″. Observing time budget of 20,000 minutes per year.",
+      "tradeoff": "Depth and cadence over area",
+      "goal": "Catch variability within a single night, and build the deepest photometry 7DS will produce.",
+      "rationale": "Some sources change faster than any wide survey can follow. IMS gives up area almost entirely — about 8.5 deg², seven tiles — in order to observe every available night, which is the only way to characterize short-period variables, active galactic nuclei on short timescales, and any transient that appears inside the field. Observing the same tiles nightly for five years also coadds to the deepest single-tile photometry the survey will reach, about 23.6 mag at peak sensitivity. The field position was a deliberate choice rather than a convenient one: it overlaps the SPHEREx Deep Field South, so 7DT optical medium-band photometry and SPHEREx near-infrared spectrophotometry cover the same volume."
     }
   ],
   "modes": [
@@ -74,12 +83,34 @@
     }
   ],
   "dimensions": [
-    { "n": "01", "label": "Right ascension" },
-    { "n": "02", "label": "Declination" },
-    { "n": "03", "label": "Distance" },
-    { "n": "04", "label": "Radial velocity" },
-    { "n": "05", "label": "Brightness" },
-    { "n": "06", "label": "Wavelength" },
-    { "n": "07", "label": "Time" }
-  ]
+    {
+      "n": "01",
+      "label": "Right ascension"
+    },
+    {
+      "n": "02",
+      "label": "Declination"
+    },
+    {
+      "n": "03",
+      "label": "Distance"
+    },
+    {
+      "n": "04",
+      "label": "Radial velocity"
+    },
+    {
+      "n": "05",
+      "label": "Brightness"
+    },
+    {
+      "n": "06",
+      "label": "Wavelength"
+    },
+    {
+      "n": "07",
+      "label": "Time"
+    }
+  ],
+  "designNote": "Area, cadence and depth cannot all be maximized at once out of a fixed number of nights. Rather than settle on one compromise, 7DS spends its time at three separate points in that trade — and ties them together by putting all three on the same tile grid, so data from any tier coadds homogeneously with data from the others."
 }

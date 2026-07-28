@@ -118,7 +118,7 @@ import {
 var app_default = "/build/_assets/app-7VOXCDPI.css";
 
 // app/css/custom.css
-var custom_default = "/build/_assets/custom-IV6ZNRF4.css";
+var custom_default = "/build/_assets/custom-7AEC6XK7.css";
 
 // app/root.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
@@ -1698,7 +1698,10 @@ var surveys_default = {
       progress: 58,
       progressLabel: "14,866 of 25,472 tiles observed",
       summary: "The wide-area component of 7DS. Every tile of the southern sky is observed once with the full set of available medium bands, in three consecutive 100-second exposures. RIS images serve two purposes at once: reference frames against which transients are identified by difference imaging, and a homogeneous spectrophotometric map of the southern sky usable for galaxy population studies, photometric redshift catalogs and quasar identification. Full-cycle completion is anticipated by the end of 2027.",
-      depthRange: "5\u03C3 depths range from 19.7 mag at m400 to 17.2 mag at m875."
+      depthRange: "5\u03C3 depths range from 19.7 mag at m400 to 17.2 mag at m875.",
+      tradeoff: "Area over depth and cadence",
+      goal: "Give every part of the southern sky a medium-band reference image, once.",
+      rationale: "Nothing can be identified as a transient without an earlier image of the same sky in the same bands to subtract. RIS exists to build that reference, and its scale is set by the problem it serves: a gravitational-wave localization can fall anywhere, so the reference has to cover everything the array can reach. Covering 23,000 deg\xB2 at all forces the minimum per tile \u2014 one visit of 3 \xD7 100 s \u2014 which is why RIS is the shallowest tier. The compensation is that a reference map made of forty medium bands is itself a homogeneous spectrophotometric survey, so the same exposures that enable difference imaging also support galaxy population studies, photometric redshifts and quasar identification at no extra cost in telescope time."
     },
     {
       code: "WTS",
@@ -1714,7 +1717,10 @@ var surveys_default = {
       progress: 0,
       progressLabel: "Field selection under consideration",
       summary: "WTS extends 7DS into the time domain over a moderately wide area, sustained over a five-year operational period. Field selection prioritizes regions with existing near-infrared coverage, including the VISTA Kilo-degree Infrared Galaxy (VIKING) survey footprint and the Vera C. Rubin Observatory Deep Drilling Fields, so that 7DT data are complemented at wavelengths the array cannot reach. Roughly 90 to 100 visits per tile accumulate to 22.0\u201322.5 mag in the majority of medium bands.",
-      depthRange: "Science cases include reverberation mapping of AGN, long-period variables and eclipsing systems, and slow-evolving extragalactic transients such as superluminous supernovae and tidal disruption events."
+      depthRange: "Science cases include reverberation mapping of AGN, long-period variables and eclipsing systems, and slow-evolving extragalactic transients such as superluminous supernovae and tidal disruption events.",
+      tradeoff: "Cadence over area",
+      goal: "Follow what changes on timescales of weeks, and stack deep enough to reach faint galaxies.",
+      rationale: "A single epoch says what is there; it does not say what is changing. WTS gives up most of the sky to revisit a smaller area every 10 to 14 days \u2014 an interval matched to what actually evolves on that scale: reverberation in active galactic nuclei, long-period variable and eclipsing stars, and slow extragalactic transients such as superluminous supernovae and tidal disruption events. Repetition also accumulates: roughly 90 to 100 visits per tile stack to 22.0\u201322.5 mag across most of the medium bands, deep enough for precise photometric redshifts on galaxies far below the single-visit limit. Fields are chosen where near-infrared data already exist \u2014 the VIKING footprint, the Rubin Deep Drilling Fields \u2014 because those are wavelengths 7DT cannot reach for itself."
     },
     {
       code: "IMS",
@@ -1730,7 +1736,10 @@ var surveys_default = {
       progress: 24,
       progressLabel: "> 260 cycles per tile \xB7 ~1.2 of 5 planned years",
       summary: "The deep, high-cadence component of 7DS. Seven tiles near the south ecliptic pole are observed every available night with the full medium-band set. The field was deliberately chosen to overlap the SPHEREx Deep Field South, so that 7DT optical medium-band photometry is co-located with SPHEREx near-infrared spectrophotometry within the same survey volume \u2014 a choice that maximizes the synergy between the two surveys for photometric redshifts and for spatially resolved studies of faint sources.",
-      depthRange: "Field center: RA 05h13m07.36s, Dec \u221260\xB028\u203211.71\u2033. Observing time budget of 20,000 minutes per year."
+      depthRange: "Field center: RA 05h13m07.36s, Dec \u221260\xB028\u203211.71\u2033. Observing time budget of 20,000 minutes per year.",
+      tradeoff: "Depth and cadence over area",
+      goal: "Catch variability within a single night, and build the deepest photometry 7DS will produce.",
+      rationale: "Some sources change faster than any wide survey can follow. IMS gives up area almost entirely \u2014 about 8.5 deg\xB2, seven tiles \u2014 in order to observe every available night, which is the only way to characterize short-period variables, active galactic nuclei on short timescales, and any transient that appears inside the field. Observing the same tiles nightly for five years also coadds to the deepest single-tile photometry the survey will reach, about 23.6 mag at peak sensitivity. The field position was a deliberate choice rather than a convenient one: it overlaps the SPHEREx Deep Field South, so 7DT optical medium-band photometry and SPHEREx near-infrared spectrophotometry cover the same volume."
     }
   ],
   modes: [
@@ -1756,14 +1765,36 @@ var surveys_default = {
     }
   ],
   dimensions: [
-    { n: "01", label: "Right ascension" },
-    { n: "02", label: "Declination" },
-    { n: "03", label: "Distance" },
-    { n: "04", label: "Radial velocity" },
-    { n: "05", label: "Brightness" },
-    { n: "06", label: "Wavelength" },
-    { n: "07", label: "Time" }
-  ]
+    {
+      n: "01",
+      label: "Right ascension"
+    },
+    {
+      n: "02",
+      label: "Declination"
+    },
+    {
+      n: "03",
+      label: "Distance"
+    },
+    {
+      n: "04",
+      label: "Radial velocity"
+    },
+    {
+      n: "05",
+      label: "Brightness"
+    },
+    {
+      n: "06",
+      label: "Wavelength"
+    },
+    {
+      n: "07",
+      label: "Time"
+    }
+  ],
+  designNote: "Area, cadence and depth cannot all be maximized at once out of a fixed number of nights. Rather than settle on one compromise, 7DS spends its time at three separate points in that trade \u2014 and ties them together by putting all three on the same tile grid, so data from any tier coadds homogeneously with data from the others."
 };
 
 // app/routes/survey.overview.tsx
@@ -2254,7 +2285,7 @@ var meta13 = () => [
   { title: "Survey design \xB7 7-Dimensional Telescope" },
   {
     name: "description",
-    content: "Tiling, exposure strategy and observing modes of the 7-Dimensional Sky Survey."
+    content: "How the 7-Dimensional Sky Survey is laid out: one tile grid for the whole program, and why it is divided into three tiers."
   }
 ], TILING = [
   ["Tile centers", "HEALPix pixelization of the celestial sphere"],
@@ -2269,7 +2300,7 @@ var meta13 = () => [
     {
       eyebrow: "Survey",
       title: "Design",
-      lede: "One tile grid underlies everything the array does \u2014 survey tiers, target-of-opportunity pointings and difference imaging alike.",
+      lede: "One tile grid underlies everything the array does \u2014 survey tiers, target-of-opportunity pointings and difference imaging alike \u2014 and three tiers divide the available nights between area, cadence and depth.",
       image: "/img/hero/survey.jpg"
     }
   ),
@@ -2286,48 +2317,21 @@ var meta13 = () => [
       ] }, row[0])) })
     ] }) }) })
   ] }) }),
-  /* @__PURE__ */ jsxs17(Section, { eyebrow: "Observing modes", title: "Four ways to acquire images", alt: !0, children: [
-    /* @__PURE__ */ jsx18("p", { className: "prose", children: modeText }),
-    /* @__PURE__ */ jsx18("div", { className: "grid grid-cols-2", style: { marginTop: "2rem" }, children: surveys_default.modes.map((mode2) => /* @__PURE__ */ jsxs17("div", { className: "panel", children: [
-      /* @__PURE__ */ jsx18("div", { className: "panel__title", children: mode2.tagline }),
-      /* @__PURE__ */ jsx18("h3", { style: { fontSize: "1.125rem" }, children: mode2.name }),
-      /* @__PURE__ */ jsx18("p", { className: "feature-list__body", style: { margin: 0 }, children: mode2.body })
-    ] }, mode2.name)) }),
-    /* @__PURE__ */ jsxs17("figure", { className: "figure", style: { marginTop: "2rem", maxWidth: "760px" }, children: [
-      /* @__PURE__ */ jsx18("img", { src: "/img/overview.png", alt: "Schematic of the 7DT observing modes", loading: "lazy" }),
-      /* @__PURE__ */ jsxs17("figcaption", { children: [
-        /* @__PURE__ */ jsx18("b", { children: "Modes" }),
-        " Filter assignment across the array determines whether a night favors spectral resolution, depth, color or sky coverage."
-      ] })
-    ] })
-  ] }),
-  /* @__PURE__ */ jsxs17(Section, { eyebrow: "Tiers", title: "Cadence and depth by tier", children: [
-    /* @__PURE__ */ jsx18("div", { className: "grid grid-cols-3", children: surveys_default.tiers.map((tier) => /* @__PURE__ */ jsxs17("div", { className: "tier-card", children: [
-      /* @__PURE__ */ jsx18("span", { className: "tier-card__code", children: tier.code }),
-      /* @__PURE__ */ jsx18("h3", { className: "tier-card__name", children: tier.name }),
-      /* @__PURE__ */ jsxs17("dl", { children: [
-        /* @__PURE__ */ jsxs17("div", { children: [
-          /* @__PURE__ */ jsx18("dt", { children: "Area" }),
-          /* @__PURE__ */ jsx18("dd", { children: tier.area })
-        ] }),
-        /* @__PURE__ */ jsxs17("div", { children: [
-          /* @__PURE__ */ jsx18("dt", { children: "Cadence" }),
-          /* @__PURE__ */ jsx18("dd", { children: tier.cadence })
-        ] }),
-        /* @__PURE__ */ jsxs17("div", { children: [
-          /* @__PURE__ */ jsx18("dt", { children: "Depth" }),
-          /* @__PURE__ */ jsx18("dd", { children: tier.depth })
-        ] }),
-        /* @__PURE__ */ jsxs17("div", { children: [
-          /* @__PURE__ */ jsx18("dt", { children: "Started" }),
-          /* @__PURE__ */ jsx18("dd", { children: tier.started })
-        ] })
+  /* @__PURE__ */ jsxs17(Section, { eyebrow: "Tiers", title: "Why three surveys and not one", alt: !0, children: [
+    /* @__PURE__ */ jsx18("p", { className: "prose", children: surveys_default.designNote }),
+    /* @__PURE__ */ jsx18("div", { className: "stack-lg", style: { marginTop: "2rem" }, children: surveys_default.tiers.map((tier) => /* @__PURE__ */ jsxs17("div", { className: "panel", children: [
+      /* @__PURE__ */ jsxs17("div", { className: "rationale__head", children: [
+        /* @__PURE__ */ jsx18("span", { className: "tier-card__code", children: tier.code }),
+        /* @__PURE__ */ jsx18("h3", { children: tier.name }),
+        /* @__PURE__ */ jsx18("span", { className: "rationale__tradeoff", children: tier.tradeoff })
       ] }),
-      /* @__PURE__ */ jsx18("p", { className: "tier-card__note", children: tier.depthNote })
+      /* @__PURE__ */ jsx18("p", { className: "rationale__goal", children: tier.goal }),
+      /* @__PURE__ */ jsx18("p", { className: "prose", style: { fontSize: "1rem", marginBottom: 0 }, children: tier.rationale })
     ] }, tier.code)) }),
     /* @__PURE__ */ jsxs17("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
       /* @__PURE__ */ jsx18(Link8, { className: "btn btn--primary", to: "/survey/status", children: "Current status" }),
-      /* @__PURE__ */ jsx18(Link8, { className: "btn btn--secondary", to: "/survey/overview", children: "Survey overview" })
+      /* @__PURE__ */ jsx18(Link8, { className: "btn btn--secondary", to: "/survey/overview", children: "Tier parameters" }),
+      /* @__PURE__ */ jsx18(Link8, { className: "btn btn--secondary", to: "/telescope/mode", children: "Observing modes" })
     ] })
   ] })
 ] }), survey_design_default = Index13;
@@ -3526,7 +3530,7 @@ var meta22 = () => [
 }, news_default2 = Index22;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-R6ZED3SL.js", imports: ["/build/_shared/chunk-RMUOYFRO.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-BEH4QWYH.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-QXDGTINU.js", imports: ["/build/_shared/chunk-BRBIUWAN.js", "/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-ZYG6XA2T.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-73FRUDGO.js", imports: ["/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-HUOYH64G.js", imports: ["/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-TSAT7GG4.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-YBKQU2CB.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-5YRUHC4Z.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-TSW55366.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-EKKZIVFA.js", imports: ["/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-6ZVHKAZH.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-BTZAXDKC.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-5EW3SMS5.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-ZUAKPWHM.js", imports: ["/build/_shared/chunk-BRBIUWAN.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-TIG2JEU3.js", imports: ["/build/_shared/chunk-BRBIUWAN.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-YTU6MMLB.js", imports: ["/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-ICNN7UDS.js", imports: ["/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-BKCL7ZXG.js", imports: ["/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-WHCSKZB6.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-3Y4Y7VCF.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-VCOMNER2.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-ELOMILM5.js", imports: ["/build/_shared/chunk-AZ6IOHSM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-JDDFLARF.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "6ddbe24c", hmr: void 0, url: "/build/manifest-6DDBE24C.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-R6ZED3SL.js", imports: ["/build/_shared/chunk-RMUOYFRO.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-FKLX2W4N.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-PFXGV6MW.js", imports: ["/build/_shared/chunk-BRBIUWAN.js", "/build/_shared/chunk-XH3EH4GM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-ZYG6XA2T.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-54QXGZNQ.js", imports: ["/build/_shared/chunk-XH3EH4GM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-HUOYH64G.js", imports: ["/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-TSAT7GG4.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-YBKQU2CB.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-5YRUHC4Z.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-TSW55366.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-EKKZIVFA.js", imports: ["/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-6ZVHKAZH.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-BTZAXDKC.js", imports: ["/build/_shared/chunk-AYOP56YK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-5EW3SMS5.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-ZUAKPWHM.js", imports: ["/build/_shared/chunk-BRBIUWAN.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-TIG2JEU3.js", imports: ["/build/_shared/chunk-BRBIUWAN.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-6KO2XLD2.js", imports: ["/build/_shared/chunk-XH3EH4GM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-JKWJFUYC.js", imports: ["/build/_shared/chunk-XH3EH4GM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-MLBR523C.js", imports: ["/build/_shared/chunk-XH3EH4GM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-WHCSKZB6.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-3Y4Y7VCF.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-VCOMNER2.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-4VSION4K.js", imports: ["/build/_shared/chunk-XH3EH4GM.js", "/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-JDDFLARF.js", imports: ["/build/_shared/chunk-WR2WMO4T.js", "/build/_shared/chunk-BFVOVDUJ.js", "/build/_shared/chunk-VJBOCUYK.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "ad5d31d6", hmr: void 0, url: "/build/manifest-AD5D31D6.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
-import { surveyDesignText, surveyDesignText2, modeText } from './content/text';
+import { surveyDesignText, surveyDesignText2 } from './content/text';
 import surveys from './content/surveys.json';
 
 export const meta: MetaFunction = () => [
@@ -10,7 +10,7 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'Tiling, exposure strategy and observing modes of the 7-Dimensional Sky Survey.',
+      'How the 7-Dimensional Sky Survey is laid out: one tile grid for the whole program, and why it is divided into three tiers.',
   },
 ];
 
@@ -29,7 +29,7 @@ const Index = () => {
       <PageHero
         eyebrow="Survey"
         title="Design"
-        lede="One tile grid underlies everything the array does — survey tiers, target-of-opportunity pointings and difference imaging alike."
+        lede="One tile grid underlies everything the array does — survey tiers, target-of-opportunity pointings and difference imaging alike — and three tiers divide the available nights between area, cadence and depth."
         image="/img/hero/survey.jpg"
       />
 
@@ -57,59 +57,31 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Observing modes" title="Four ways to acquire images" alt>
-        <p className="prose">{modeText}</p>
-        <div className="grid grid-cols-2" style={{ marginTop: '2rem' }}>
-          {surveys.modes.map((mode) => (
-            <div className="panel" key={mode.name}>
-              <div className="panel__title">{mode.tagline}</div>
-              <h3 style={{ fontSize: '1.125rem' }}>{mode.name}</h3>
-              <p className="feature-list__body" style={{ margin: 0 }}>
-                {mode.body}
+      {/* Why the three tiers exist, not what their numbers are — the numbers are
+          tabulated on the overview page and tracked on the status page. */}
+      <Section eyebrow="Tiers" title="Why three surveys and not one" alt>
+        <p className="prose">{surveys.designNote}</p>
+
+        <div className="stack-lg" style={{ marginTop: '2rem' }}>
+          {surveys.tiers.map((tier) => (
+            <div className="panel" key={tier.code}>
+              <div className="rationale__head">
+                <span className="tier-card__code">{tier.code}</span>
+                <h3>{tier.name}</h3>
+                <span className="rationale__tradeoff">{tier.tradeoff}</span>
+              </div>
+              <p className="rationale__goal">{tier.goal}</p>
+              <p className="prose" style={{ fontSize: '1rem', marginBottom: 0 }}>
+                {tier.rationale}
               </p>
             </div>
           ))}
         </div>
-        <figure className="figure" style={{ marginTop: '2rem', maxWidth: '760px' }}>
-          <img src="/img/overview.png" alt="Schematic of the 7DT observing modes" loading="lazy" />
-          <figcaption>
-            <b>Modes</b> Filter assignment across the array determines whether a night favors
-            spectral resolution, depth, color or sky coverage.
-          </figcaption>
-        </figure>
-      </Section>
 
-      <Section eyebrow="Tiers" title="Cadence and depth by tier">
-        <div className="grid grid-cols-3">
-          {surveys.tiers.map((tier) => (
-            <div className="tier-card" key={tier.code}>
-              <span className="tier-card__code">{tier.code}</span>
-              <h3 className="tier-card__name">{tier.name}</h3>
-              <dl>
-                <div>
-                  <dt>Area</dt>
-                  <dd>{tier.area}</dd>
-                </div>
-                <div>
-                  <dt>Cadence</dt>
-                  <dd>{tier.cadence}</dd>
-                </div>
-                <div>
-                  <dt>Depth</dt>
-                  <dd>{tier.depth}</dd>
-                </div>
-                <div>
-                  <dt>Started</dt>
-                  <dd>{tier.started}</dd>
-                </div>
-              </dl>
-              <p className="tier-card__note">{tier.depthNote}</p>
-            </div>
-          ))}
-        </div>
         <div className="btn-row" style={{ marginTop: '2rem' }}>
           <Link className="btn btn--primary" to="/survey/status">Current status</Link>
-          <Link className="btn btn--secondary" to="/survey/overview">Survey overview</Link>
+          <Link className="btn btn--secondary" to="/survey/overview">Tier parameters</Link>
+          <Link className="btn btn--secondary" to="/telescope/mode">Observing modes</Link>
         </div>
       </Section>
     </PageLayout>
