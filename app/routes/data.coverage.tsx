@@ -77,8 +77,10 @@ const Index = () => {
         <p className="prose">
           The projection is Mollweide and equal-area, so a patch of ink covers the same amount of
           sky wherever it falls — the deep southern coverage is not exaggerated by the projection
-          the way it would be on a rectangular plot. Right ascension increases to the left, as on
-          the sky. Hover a tile for its identifier, position and visit count.
+          the way it would be on a rectangular plot. Longitude increases to the left, as on the
+          sky. Switch between equatorial and galactic coordinates to see the survey against the
+          sky's own grid or against the plane of the Milky Way; hover a tile for its identifier,
+          position and visit count.
         </p>
 
         <div style={{ marginTop: '2rem' }}>

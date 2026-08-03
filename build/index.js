@@ -2077,13 +2077,27 @@ function viridis(t) {
     Math.round(a[2] + (b[2] - a[2]) * f)
   ];
 }
-var rgb = (c) => `rgb(${c[0]},${c[1]},${c[2]})`, MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+var rgb = (c) => `rgb(${c[0]},${c[1]},${c[2]})`, NGP_RA = 192.85948 * DEG, NGP_DEC = 27.12825 * DEG, L_NCP = 122.93192 * DEG;
+function equatorialToGalactic(raDeg, decDeg) {
+  let ra = raDeg * DEG, dec = decDeg * DEG, sinDec = Math.sin(dec), cosDec = Math.cos(dec), dRa = ra - NGP_RA, sinB = Math.sin(NGP_DEC) * sinDec + Math.cos(NGP_DEC) * cosDec * Math.cos(dRa), b = Math.asin(Math.max(-1, Math.min(1, sinB))), y = cosDec * Math.sin(dRa), x = Math.cos(NGP_DEC) * sinDec - Math.sin(NGP_DEC) * cosDec * Math.cos(dRa), l = (L_NCP - Math.atan2(y, x)) / DEG;
+  return l = (l % 360 + 360) % 360, [l, b / DEG];
+}
+var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 function monthLabel(index, epoch) {
   let total = epoch[1] - 1 + index;
   return `${MONTHS[(total % 12 + 12) % 12]} ${epoch[0] + Math.floor(total / 12)}`;
 }
 function SkyMap({ tiles }) {
-  let canvasRef = useRef2(null), wrapRef = useRef2(null), [mode2, setMode] = useState4("date"), [width, setWidth] = useState4(960), [hover, setHover] = useState4(null), visitScale = useMemo2(() => Math.log(tiles.visitsMax + 1), [tiles.visitsMax]), value = useCallback(
+  let canvasRef = useRef2(null), wrapRef = useRef2(null), [mode2, setMode] = useState4("date"), [frame, setFrame] = useState4("equatorial"), [width, setWidth] = useState4(960), [hover, setHover] = useState4(null), coords = useMemo2(() => {
+    if (frame === "equatorial")
+      return { lon: tiles.ra, lat: tiles.dec };
+    let lon = new Float64Array(tiles.count), lat = new Float64Array(tiles.count);
+    for (let i = 0; i < tiles.count; i += 1) {
+      let [l, b] = equatorialToGalactic(tiles.ra[i], tiles.dec[i]);
+      lon[i] = l, lat[i] = b;
+    }
+    return { lon, lat };
+  }, [frame, tiles]), visitScale = useMemo2(() => Math.log(tiles.visitsMax + 1), [tiles.visitsMax]), value = useCallback(
     (i) => mode2 === "date" ? tiles.monthMax > 0 ? tiles.month[i] / tiles.monthMax : 1 : Math.log(tiles.visits[i] + 1) / visitScale,
     [mode2, tiles, visitScale]
   );
@@ -2110,7 +2124,7 @@ function SkyMap({ tiles }) {
     ctx.save(), ctx.beginPath(), ctx.ellipse(cx, cy, 2 * scale, scale, 0, 0, Math.PI * 2), ctx.clip(), ctx.fillStyle = "#f2f5fa", ctx.fillRect(0, 0, width, height);
     let FOV_LON = 1.34, FOV_LAT = 0.9;
     for (let i = 0; i < tiles.count; i += 1) {
-      let dec = tiles.dec[i], t = theta(dec), [x, y] = project(tiles.ra[i], dec), dLon = FOV_LON / Math.max(0.02, Math.cos(dec * DEG)), w = Math.max(1.1, 2 / Math.PI * dLon * DEG * Math.cos(t) * scale), hi = Math.min(90, dec + FOV_LAT / 2), lo = Math.max(-90, dec - FOV_LAT / 2), h = Math.max(1.1, (Math.sin(theta(hi)) - Math.sin(theta(lo))) * scale);
+      let lat = coords.lat[i], t = theta(lat), [x, y] = project(coords.lon[i], lat), dLon = FOV_LON / Math.max(0.02, Math.cos(lat * DEG)), w = Math.max(1.1, 2 / Math.PI * dLon * DEG * Math.cos(t) * scale), hi = Math.min(90, lat + FOV_LAT / 2), lo = Math.max(-90, lat - FOV_LAT / 2), h = Math.max(1.1, (Math.sin(theta(hi)) - Math.sin(theta(lo))) * scale);
       ctx.fillStyle = rgb(viridis(value(i))), ctx.fillRect(px(x) - w / 2, py(y) - h / 2, w, h);
     }
     ctx.restore(), ctx.strokeStyle = "rgba(10,16,28,0.18)", ctx.lineWidth = 0.6, ctx.setLineDash([2, 3]);
@@ -2130,24 +2144,29 @@ function SkyMap({ tiles }) {
       }
       ctx.stroke();
     }
-    ctx.setLineDash([]), ctx.strokeStyle = "#0a101c", ctx.lineWidth = 1.2, ctx.beginPath(), ctx.ellipse(cx, cy, 2 * scale, scale, 0, 0, Math.PI * 2), ctx.stroke(), ctx.fillStyle = "#4d5b71", ctx.font = '11px ui-monospace, "JetBrains Mono", monospace', ctx.textAlign = "center", ctx.textBaseline = "middle";
-    for (let hours = 2; hours <= 22; hours += 4) {
-      let ra = hours * 15, [x, y] = project(ra, 0);
-      ctx.fillText(`${String(hours).padStart(2, "0")}h`, px(x), py(y) - 9);
-    }
+    if (ctx.setLineDash([]), ctx.strokeStyle = "#0a101c", ctx.lineWidth = 1.2, ctx.beginPath(), ctx.ellipse(cx, cy, 2 * scale, scale, 0, 0, Math.PI * 2), ctx.stroke(), ctx.fillStyle = "#4d5b71", ctx.font = '11px ui-monospace, "JetBrains Mono", monospace', ctx.textAlign = "center", ctx.textBaseline = "middle", frame === "equatorial")
+      for (let hours = 2; hours <= 22; hours += 4) {
+        let [x, y] = project(hours * 15, 0);
+        ctx.fillText(`${String(hours).padStart(2, "0")}h`, px(x), py(y) - 9);
+      }
+    else
+      for (let l of [30, 90, 150, 210, 270, 330]) {
+        let [x, y] = project(l, 0);
+        ctx.fillText(`${l}\xB0`, px(x), py(y) - 9);
+      }
     ctx.textAlign = "right";
-    for (let dec = -75; dec <= 75; dec += 15) {
-      let [x, y] = projectLon(-180, dec);
-      ctx.fillText(`${dec > 0 ? "+" : ""}${dec}\xB0`, px(x) - 7, py(y));
+    for (let lat = -75; lat <= 75; lat += 15) {
+      let [x, y] = projectLon(-180, lat);
+      ctx.fillText(`${lat > 0 ? "+" : ""}${lat}\xB0`, px(x) - 7, py(y));
     }
-  }, [tiles, width, value]);
+  }, [tiles, coords, frame, width, value]);
   let onMove = (event) => {
     let canvas = canvasRef.current;
     if (!canvas)
       return;
     let rect = canvas.getBoundingClientRect(), height = rect.height, pad = 40, scale = Math.min((rect.width - pad * 2) / 4, (height - pad * 1.4) / 2), mx = event.clientX - rect.left, my = event.clientY - rect.top, best = -1, bestDistance = 64;
     for (let i = 0; i < tiles.count; i += 1) {
-      let [x, y] = project(tiles.ra[i], tiles.dec[i]), dx = rect.width / 2 + x * scale - mx, dy = height / 2 - y * scale - my, distance = dx * dx + dy * dy;
+      let [x, y] = project(coords.lon[i], coords.lat[i]), dx = rect.width / 2 + x * scale - mx, dy = height / 2 - y * scale - my, distance = dx * dx + dy * dy;
       distance < bestDistance && (bestDistance = distance, best = i);
     }
     setHover(best >= 0 ? best : null);
@@ -2157,6 +2176,28 @@ function SkyMap({ tiles }) {
   ), legendTicks = useMemo2(() => mode2 === "date" ? [0, 0.5, 1].map((t) => monthLabel(Math.round(t * tiles.monthMax), tiles.epoch)) : [0, 0.5, 1].map((t) => `${Math.round(Math.exp(t * visitScale) - 1).toLocaleString("en-US")}`), [mode2, tiles, visitScale]);
   return /* @__PURE__ */ jsxs15("div", { className: "skymap", children: [
     /* @__PURE__ */ jsxs15("div", { className: "skymap__controls", children: [
+      /* @__PURE__ */ jsxs15("div", { className: "skymap__modes", role: "group", "aria-label": "Coordinate system", children: [
+        /* @__PURE__ */ jsx16(
+          "button",
+          {
+            type: "button",
+            className: "toggle-btn",
+            "aria-pressed": frame === "equatorial",
+            onClick: () => setFrame("equatorial"),
+            children: "RA / Dec"
+          }
+        ),
+        /* @__PURE__ */ jsx16(
+          "button",
+          {
+            type: "button",
+            className: "toggle-btn",
+            "aria-pressed": frame === "galactic",
+            onClick: () => setFrame("galactic"),
+            children: "Galactic"
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsxs15("div", { className: "skymap__modes", role: "group", "aria-label": "Color the map by", children: [
         /* @__PURE__ */ jsx16(
           "button",
@@ -2181,12 +2222,23 @@ function SkyMap({ tiles }) {
       ] }),
       /* @__PURE__ */ jsx16("span", { className: "skymap__readout", role: "status", children: hover === null ? `${tiles.count.toLocaleString("en-US")} tiles observed` : /* @__PURE__ */ jsxs15(Fragment7, { children: [
         /* @__PURE__ */ jsx16("b", { children: tiles.name[hover] }),
-        " \xB7 RA ",
-        tiles.ra[hover].toFixed(1),
-        "\xB0 Dec",
+        " \xB7",
         " ",
-        tiles.dec[hover].toFixed(1),
-        "\xB0 \xB7 ",
+        frame === "equatorial" ? /* @__PURE__ */ jsxs15(Fragment7, { children: [
+          "RA ",
+          tiles.ra[hover].toFixed(1),
+          "\xB0 Dec ",
+          tiles.dec[hover].toFixed(1),
+          "\xB0"
+        ] }) : /* @__PURE__ */ jsxs15(Fragment7, { children: [
+          "l ",
+          coords.lon[hover].toFixed(1),
+          "\xB0 b ",
+          coords.lat[hover].toFixed(1),
+          "\xB0"
+        ] }),
+        " ",
+        "\xB7 ",
         tiles.visits[hover],
         " ",
         tiles.visits[hover] === 1 ? "visit" : "visits",
@@ -2205,7 +2257,7 @@ function SkyMap({ tiles }) {
         role: "img",
         "aria-label": `Mollweide all-sky map of ${tiles.count.toLocaleString(
           "en-US"
-        )} observed 7DS tiles, colored by ${mode2 === "date" ? "the date each was last observed" : "the number of visits to each"}. Right ascension increases to the left.`
+        )} observed 7DS tiles in ${frame === "equatorial" ? "equatorial" : "galactic"} coordinates, colored by ${mode2 === "date" ? "the date each was last observed" : "the number of visits to each"}. Longitude increases to the left.`
       }
     ) }),
     /* @__PURE__ */ jsxs15("div", { className: "skymap__legend", children: [
@@ -2378,7 +2430,7 @@ var CACHE = "public, max-age=3600, stale-while-revalidate=86400", headers = () =
       }
     ),
     /* @__PURE__ */ jsxs16(Section, { eyebrow: "Footprint", title: "Where 7DS has been", wide: !0, children: [
-      /* @__PURE__ */ jsx17("p", { className: "prose", children: "The projection is Mollweide and equal-area, so a patch of ink covers the same amount of sky wherever it falls \u2014 the deep southern coverage is not exaggerated by the projection the way it would be on a rectangular plot. Right ascension increases to the left, as on the sky. Hover a tile for its identifier, position and visit count." }),
+      /* @__PURE__ */ jsx17("p", { className: "prose", children: "The projection is Mollweide and equal-area, so a patch of ink covers the same amount of sky wherever it falls \u2014 the deep southern coverage is not exaggerated by the projection the way it would be on a rectangular plot. Longitude increases to the left, as on the sky. Switch between equatorial and galactic coordinates to see the survey against the sky's own grid or against the plane of the Milky Way; hover a tile for its identifier, position and visit count." }),
       /* @__PURE__ */ jsx17("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx17(SkyMap, { tiles }) }),
       /* @__PURE__ */ jsxs16("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
         live ? `Live from the 7DT GW Portal, generated ${day(generatedAt)}.` : "The portal could not be reached; this map is a stored copy and may be out of date.",
@@ -4072,7 +4124,7 @@ var meta23 = () => [
 }, news_default2 = Index23;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-ZNIUNI5Q.js", imports: ["/build/_shared/chunk-INIM7YPY.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-QDAJJAZE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-YWXHXMHQ.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-Q4ALZOX5.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-57QOBRM4.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-CQQLNJA7.js", imports: ["/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.coverage": { id: "routes/data.coverage", parentId: "root", path: "data/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/data.coverage-O3HPTNDY.js", imports: ["/build/_shared/chunk-GBQVOA7U.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-OGSNN6PZ.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-EO5E7IQG.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-3CFN7GST.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-YWUVHNL3.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-VDZ2INGS.js", imports: ["/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-SRGKFDSJ.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-VDS6YSAG.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-JSHLPCXM.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-WOG6Y3JP.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-UYDBYIYG.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-HMPV6TW3.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-4RQXE2GX.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-DHJSOW6P.js", imports: ["/build/_shared/chunk-GBQVOA7U.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-6IAIVMDD.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-4FZOA6XB.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-JFJCBQXX.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-RX53GWRW.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-UNCCIHW6.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "15acfc0a", hmr: void 0, url: "/build/manifest-15ACFC0A.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-ZNIUNI5Q.js", imports: ["/build/_shared/chunk-INIM7YPY.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-QDAJJAZE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-YWXHXMHQ.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-Q4ALZOX5.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-57QOBRM4.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-CQQLNJA7.js", imports: ["/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.coverage": { id: "routes/data.coverage", parentId: "root", path: "data/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/data.coverage-F75U4KQ5.js", imports: ["/build/_shared/chunk-GBQVOA7U.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-OGSNN6PZ.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-EO5E7IQG.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-3CFN7GST.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-YWUVHNL3.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-VDZ2INGS.js", imports: ["/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-SRGKFDSJ.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-VDS6YSAG.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-JSHLPCXM.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-WOG6Y3JP.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-UYDBYIYG.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-HMPV6TW3.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-4RQXE2GX.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-DHJSOW6P.js", imports: ["/build/_shared/chunk-GBQVOA7U.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-6IAIVMDD.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-4FZOA6XB.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-JFJCBQXX.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-RX53GWRW.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-UNCCIHW6.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "415c12f7", hmr: void 0, url: "/build/manifest-415C12F7.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

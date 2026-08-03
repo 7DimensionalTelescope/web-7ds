@@ -93,6 +93,32 @@ function viridis(t: number): [number, number, number] {
 
 const rgb = (c: [number, number, number]) => `rgb(${c[0]},${c[1]},${c[2]})`;
 
+/* Equatorial to galactic, J2000. The pole and node are the IAU 1958 values
+   precessed to J2000 and are quoted to more digits than this map can show;
+   they are written out in full so the transform is checkable against any
+   reference rather than being a set of magic numbers. */
+const NGP_RA = 192.85948 * DEG; // right ascension of the north galactic pole
+const NGP_DEC = 27.12825 * DEG; // its declination
+const L_NCP = 122.93192 * DEG; // galactic longitude of the north celestial pole
+
+function equatorialToGalactic(raDeg: number, decDeg: number): [number, number] {
+  const ra = raDeg * DEG;
+  const dec = decDeg * DEG;
+  const sinDec = Math.sin(dec);
+  const cosDec = Math.cos(dec);
+  const dRa = ra - NGP_RA;
+
+  const sinB = Math.sin(NGP_DEC) * sinDec + Math.cos(NGP_DEC) * cosDec * Math.cos(dRa);
+  const b = Math.asin(Math.max(-1, Math.min(1, sinB)));
+
+  const y = cosDec * Math.sin(dRa);
+  const x = Math.cos(NGP_DEC) * sinDec - Math.sin(NGP_DEC) * cosDec * Math.cos(dRa);
+  let l = (L_NCP - Math.atan2(y, x)) / DEG;
+  l = ((l % 360) + 360) % 360;
+
+  return [l, b / DEG];
+}
+
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 function monthLabel(index: number, epoch: [number, number]) {
@@ -101,13 +127,30 @@ function monthLabel(index: number, epoch: [number, number]) {
 }
 
 type Mode = 'date' | 'visits';
+type Frame = 'equatorial' | 'galactic';
 
 export default function SkyMap({ tiles }: { tiles: TileMap }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [mode, setMode] = useState<Mode>('date');
+  const [frame, setFrame] = useState<Frame>('equatorial');
   const [width, setWidth] = useState(960);
   const [hover, setHover] = useState<number | null>(null);
+
+  /* Fifteen thousand trigonometric conversions are cheap but not free, and the
+     map repaints on resize and on every colour change. Convert once per frame
+     choice instead. Equatorial is the identity, so it costs nothing. */
+  const coords = useMemo(() => {
+    if (frame === 'equatorial') return { lon: tiles.ra, lat: tiles.dec };
+    const lon = new Float64Array(tiles.count);
+    const lat = new Float64Array(tiles.count);
+    for (let i = 0; i < tiles.count; i += 1) {
+      const [l, b] = equatorialToGalactic(tiles.ra[i], tiles.dec[i]);
+      lon[i] = l;
+      lat[i] = b;
+    }
+    return { lon, lat };
+  }, [frame, tiles]);
 
   // Visit counts are long-tailed: a handful of IMS tiles sit in the hundreds
   // while most of the sky has been seen once. A linear ramp would render the
@@ -175,17 +218,20 @@ export default function SkyMap({ tiles }: { tiles: TileMap }) {
     const FOV_LON = 1.34;
     const FOV_LAT = 0.9;
     for (let i = 0; i < tiles.count; i += 1) {
-      const dec = tiles.dec[i];
-      const t = theta(dec);
-      const [x, y] = project(tiles.ra[i], dec);
+      const lat = coords.lat[i];
+      const t = theta(lat);
+      const [x, y] = project(coords.lon[i], lat);
 
       // A field of view fixed on the sky spans more longitude the nearer the
-      // pole it sits. Without the 1/cos(dec) term the polar tiles shrink to
-      // dots and the south pole reads as a gap rather than as coverage.
-      const dLon = FOV_LON / Math.max(0.02, Math.cos(dec * DEG));
+      // pole it sits. Without the 1/cos(lat) term the polar tiles shrink to
+      // dots and the pole reads as a gap rather than as coverage. In galactic
+      // coordinates a tile is rotated by an angle that varies across the sky;
+      // it is drawn axis-aligned at the same solid angle, which is right to
+      // within a fraction of the tile at this scale.
+      const dLon = FOV_LON / Math.max(0.02, Math.cos(lat * DEG));
       const w = Math.max(1.1, (2 / Math.PI) * dLon * DEG * Math.cos(t) * scale);
-      const hi = Math.min(90, dec + FOV_LAT / 2);
-      const lo = Math.max(-90, dec - FOV_LAT / 2);
+      const hi = Math.min(90, lat + FOV_LAT / 2);
+      const lo = Math.max(-90, lat - FOV_LAT / 2);
       const h = Math.max(1.1, (Math.sin(theta(hi)) - Math.sin(theta(lo))) * scale);
 
       ctx.fillStyle = rgb(viridis(value(i)));
@@ -224,23 +270,30 @@ export default function SkyMap({ tiles }: { tiles: TileMap }) {
     ctx.ellipse(cx, cy, 2 * scale, scale, 0, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Labels
+    // Labels. Right ascension is conventionally read in hours, galactic
+    // longitude in degrees, so the two frames are labelled differently.
     ctx.fillStyle = '#4d5b71';
     ctx.font = '11px ui-monospace, "JetBrains Mono", monospace';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    for (let hours = 2; hours <= 22; hours += 4) {
-      const ra = hours * 15;
-      const [x, y] = project(ra, 0);
-      ctx.fillText(`${String(hours).padStart(2, '0')}h`, px(x), py(y) - 9);
+    if (frame === 'equatorial') {
+      for (let hours = 2; hours <= 22; hours += 4) {
+        const [x, y] = project(hours * 15, 0);
+        ctx.fillText(`${String(hours).padStart(2, '0')}h`, px(x), py(y) - 9);
+      }
+    } else {
+      for (const l of [30, 90, 150, 210, 270, 330]) {
+        const [x, y] = project(l, 0);
+        ctx.fillText(`${l}°`, px(x), py(y) - 9);
+      }
     }
-    // Declination labels ride the left edge of the ellipse, just outside it.
+    // Latitude labels ride the left edge of the ellipse, just outside it.
     ctx.textAlign = 'right';
-    for (let dec = -75; dec <= 75; dec += 15) {
-      const [x, y] = projectLon(-180, dec);
-      ctx.fillText(`${dec > 0 ? '+' : ''}${dec}°`, px(x) - 7, py(y));
+    for (let lat = -75; lat <= 75; lat += 15) {
+      const [x, y] = projectLon(-180, lat);
+      ctx.fillText(`${lat > 0 ? '+' : ''}${lat}°`, px(x) - 7, py(y));
     }
-  }, [tiles, width, value]);
+  }, [tiles, coords, frame, width, value]);
 
   const onMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -255,7 +308,7 @@ export default function SkyMap({ tiles }: { tiles: TileMap }) {
     let best = -1;
     let bestDistance = 64; // px², so within about 8 px
     for (let i = 0; i < tiles.count; i += 1) {
-      const [x, y] = project(tiles.ra[i], tiles.dec[i]);
+      const [x, y] = project(coords.lon[i], coords.lat[i]);
       const dx = rect.width / 2 + x * scale - mx;
       const dy = height / 2 - y * scale - my;
       const distance = dx * dx + dy * dy;
@@ -286,6 +339,24 @@ export default function SkyMap({ tiles }: { tiles: TileMap }) {
   return (
     <div className="skymap">
       <div className="skymap__controls">
+        <div className="skymap__modes" role="group" aria-label="Coordinate system">
+          <button
+            type="button"
+            className="toggle-btn"
+            aria-pressed={frame === 'equatorial'}
+            onClick={() => setFrame('equatorial')}
+          >
+            RA / Dec
+          </button>
+          <button
+            type="button"
+            className="toggle-btn"
+            aria-pressed={frame === 'galactic'}
+            onClick={() => setFrame('galactic')}
+          >
+            Galactic
+          </button>
+        </div>
         <div className="skymap__modes" role="group" aria-label="Color the map by">
           <button
             type="button"
@@ -309,9 +380,17 @@ export default function SkyMap({ tiles }: { tiles: TileMap }) {
             `${tiles.count.toLocaleString('en-US')} tiles observed`
           ) : (
             <>
-              <b>{tiles.name[hover]}</b> · RA {tiles.ra[hover].toFixed(1)}° Dec{' '}
-              {tiles.dec[hover].toFixed(1)}° · {tiles.visits[hover]}{' '}
-              {tiles.visits[hover] === 1 ? 'visit' : 'visits'} · last{' '}
+              <b>{tiles.name[hover]}</b> ·{' '}
+              {frame === 'equatorial' ? (
+                <>
+                  RA {tiles.ra[hover].toFixed(1)}° Dec {tiles.dec[hover].toFixed(1)}°
+                </>
+              ) : (
+                <>
+                  l {coords.lon[hover].toFixed(1)}° b {coords.lat[hover].toFixed(1)}°
+                </>
+              )}{' '}
+              · {tiles.visits[hover]} {tiles.visits[hover] === 1 ? 'visit' : 'visits'} · last{' '}
               {monthLabel(tiles.month[hover], tiles.epoch)}
             </>
           )}
@@ -327,9 +406,11 @@ export default function SkyMap({ tiles }: { tiles: TileMap }) {
           role="img"
           aria-label={`Mollweide all-sky map of ${tiles.count.toLocaleString(
             'en-US'
-          )} observed 7DS tiles, colored by ${
+          )} observed 7DS tiles in ${
+            frame === 'equatorial' ? 'equatorial' : 'galactic'
+          } coordinates, colored by ${
             mode === 'date' ? 'the date each was last observed' : 'the number of visits to each'
-          }. Right ascension increases to the left.`}
+          }. Longitude increases to the left.`}
         />
       </div>
 
