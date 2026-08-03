@@ -62,7 +62,7 @@
     },
     {
       "title": "Follow-up of transient alerts",
-      "body": "7DT searched for the optical counterpart of the bright X-ray transient EP240219a and reported upper limits in several medium bands, and covered approximately 170 deg² in Sloan r and the medium-band suite in follow-up of the LVK gravitational-wave event S240422ed. Since RTCSpy took over nightly operation in August 2024 the array has carried out about 100 follow-up observations and some ten gravitational-wave event campaigns.",
+      "body": "7DT searched for the optical counterpart of the bright X-ray transient EP240219a and reported upper limits in several medium bands, and covered approximately 170 deg² in Sloan r and the medium-band suite in follow-up of the LVK gravitational-wave event S240422ed. Target-of-opportunity follow-up has run continuously since RTCSpy took over nightly operation in August 2024; current campaign counts are on the survey status page.",
       "tag": "Multi-messenger"
     }
   ],

@@ -55,6 +55,7 @@ const MENU = [
     href: '/data/overview',
     items: [
       { label: 'Overview', href: '/data/overview' },
+      { label: 'Sky Coverage', href: '/data/coverage' },
       { label: 'Data Archive', href: '/data/data' },
       { label: 'Software', href: '/data/software' },
     ],

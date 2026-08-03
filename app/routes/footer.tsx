@@ -49,6 +49,7 @@ const COLUMNS = [
       { label: 'Computational Resources', href: '/telescope/computer' },
       { label: 'Observing Mode', href: '/telescope/mode' },
       { label: 'Data & Software', href: '/data/overview' },
+      { label: 'Sky Coverage', href: '/data/coverage' },
     ],
   },
 ];

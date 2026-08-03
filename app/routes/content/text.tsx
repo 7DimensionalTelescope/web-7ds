@@ -158,13 +158,9 @@ against a consistent reference. A visit is three consecutive 100-second exposure
 coadded to a 300-second frame - a number set by the unguided tracking capability of \
 the mount and the read noise of the detector.'
 
-export const surveyStatusText =
-  'RIS began routine operation in July 2024 and IMS in April 2025; WTS is scheduled \
-to commence in 2026. In a typical night the array observes about 30 tiles, including \
-the seven IMS tiles, for roughly 3,000 individual exposures. Since RTCSpy took over \
-nightly operation in August 2024 the array has acquired approximately 1.75 million \
-images under fully unattended operation, alongside about 100 target-of-opportunity \
-follow-ups and some ten gravitational-wave event campaigns.'
+/* surveyStatusText was removed when /survey/status became live: its figures
+   (image counts, ToO totals) are now read from the portal, and a second copy
+   in this file could only ever be out of date. */
 
 /* --- Telescope ----------------------------------------------------------- */
 

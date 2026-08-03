@@ -2558,6 +2558,98 @@ table[class*='w-full'] thead {
 
 .notice svg { flex-shrink: 0; color: var(--slate-400); }
 
+/* Used when a live figure could not be fetched and the page is showing a
+   stored copy. It has to be visible without relying on colour alone. */
+.notice--warn {
+  color: #7a4b00;
+  background: #fff6e6;
+  border-bottom-color: #f0dcb4;
+}
+
+.notice--warn svg { color: #b8791a; }
+
+/* ==========================================================================
+   Sky coverage map
+   ========================================================================== */
+
+.skymap {
+  border: var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.skymap__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: var(--hairline);
+  background: var(--slate-50);
+}
+
+.skymap__modes { display: flex; gap: 0.5rem; }
+
+/* Monospaced so the readout does not reflow as the numbers change under the
+   pointer. */
+.skymap__readout {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--slate-600);
+  min-height: 1.2em;
+}
+
+.skymap__readout b { color: var(--ink-900); }
+
+.skymap__canvas { padding: 0.5rem; }
+
+.skymap__legend {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  padding: 0.875rem 1rem 1rem;
+  border-top: var(--hairline);
+}
+
+.skymap__legend-title {
+  grid-row: span 2;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+}
+
+.skymap__ramp {
+  height: 10px;
+  border-radius: 999px;
+  border: var(--hairline);
+}
+
+.skymap__ticks {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--slate-500);
+}
+
+.chip--static { cursor: default; }
+.chip--static:hover {
+  border-color: var(--slate-200);
+  color: var(--slate-700);
+  background: var(--paper);
+}
+
+@media (max-width: 640px) {
+  .skymap__controls { flex-direction: column; align-items: stretch; }
+  .skymap__legend { grid-template-columns: 1fr; }
+  .skymap__legend-title { grid-row: auto; }
+}
+
 /* ==========================================================================
    Motion preferences & print
    ========================================================================== */

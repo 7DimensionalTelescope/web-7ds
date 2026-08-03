@@ -52,7 +52,7 @@ const MILESTONES = [
     when: 'Aug 2024',
     what: 'The array runs itself',
     body:
-      'RTCSpy takes over nightly operation. Since then the array has acquired some 1.75 million images under fully unattended operation.',
+      'RTCSpy takes over nightly operation. From this point the array plans, observes and \n      hands off the night without anyone at the controls; the running totals are on the \n      survey status page.',
   },
   {
     when: 'Dec 2024',

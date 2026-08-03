@@ -70,6 +70,25 @@ Rebuild and restart after any change: the JSON is compiled into the bundle, not 
 
 ---
 
+## Live survey data
+
+`/survey/status` and `/data/coverage` read the 7DT GW Portal rather than hard-coded numbers.
+
+- The portal's address is **not in this repository**. Set `PORTAL_API_BASE` in `.env`
+  (copy `.env.example`) or in the process environment. `app/lib/portal.server.ts` reads
+  `process.env` first and falls back to parsing `.env`, because `remix-serve` does not load it.
+- All fetching happens in a `.server.ts` module inside route loaders, so the address never
+  reaches the browser bundle and a visitor's browser never contacts the portal.
+- Responses are cached in-process for 10 minutes — no longer than the portal's own refresh —
+  and a stale cache entry is preferred to an error.
+- If the portal is unreachable, the status page renders from
+  `app/routes/content/status-snapshot.json` and says so in a banner; the sky map renders empty.
+  Refresh the snapshot occasionally so the fallback is not embarrassing.
+- The tile payload is ~2 MB. `getTileMap()` reduces it to parallel arrays before it is
+  serialised to the client. Do not pass the raw payload through.
+
+---
+
 ## Editorial rules
 
 This site is a scientific facility's public record. Two rules matter more than any style guide:
