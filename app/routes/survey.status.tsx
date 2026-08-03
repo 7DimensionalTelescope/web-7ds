@@ -1,5 +1,5 @@
 import React from 'react';
-import type { MetaFunction } from '@remix-run/node';
+import type { HeadersFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import { PageLayout, PageHero, Section, StatGrid } from '../components/site';
@@ -15,12 +15,16 @@ export const meta: MetaFunction = () => [
   },
 ];
 
+const CACHE = 'public, max-age=900, stale-while-revalidate=86400';
+
 export async function loader() {
   const status = await getStatus();
-  return json(status, {
-    headers: { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=3600' },
-  });
+  return json(status, { headers: { 'Cache-Control': CACHE } });
 }
+
+/* Without this the header set on the loader response only reaches client-side
+   navigations — Remix does not carry it onto the document request by itself. */
+export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
 
 /* Dated milestones are project history, not status — they stay in the page. */
 const MILESTONES = [
@@ -115,7 +119,7 @@ const Index = () => {
             </>
           ) : (
             <>
-              The portal could not be reached, so these figures are the last recorded snapshot,
+              The portal could not be reached, so these figures are the last copy the site holds,
               generated {minute(generatedAt)}. They may be out of date.
             </>
           )}

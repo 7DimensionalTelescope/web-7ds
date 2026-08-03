@@ -1,5 +1,5 @@
 import React from 'react';
-import type { MetaFunction } from '@remix-run/node';
+import type { HeadersFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import { PageLayout, PageHero, Section, StatGrid } from '../components/site';
@@ -31,9 +31,17 @@ export async function loader() {
       ris: status?.data.ris ?? null,
       frames: status?.data.totals.science_frames ?? null,
     },
-    { headers: { 'Cache-Control': 'public, max-age=600, stale-while-revalidate=3600' } }
+    { headers: { 'Cache-Control': CACHE } }
   );
 }
+
+/* The tile list changes once a night at most, so this can sit in front caches
+   for an hour without ever being wrong by more than one night. The exported
+   headers function is what puts it on the document response; the loader's own
+   headers only reach client-side navigations. */
+const CACHE = 'public, max-age=3600, stale-while-revalidate=86400';
+
+export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
 
 const num = (value: number) => value.toLocaleString('en-US');
 

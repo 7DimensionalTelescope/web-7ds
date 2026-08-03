@@ -79,8 +79,14 @@ Rebuild and restart after any change: the JSON is compiled into the bundle, not 
   `process.env` first and falls back to parsing `.env`, because `remix-serve` does not load it.
 - All fetching happens in a `.server.ts` module inside route loaders, so the address never
   reaches the browser bundle and a visitor's browser never contacts the portal.
-- Responses are cached in-process for 10 minutes — no longer than the portal's own refresh —
-  and a stale cache entry is preferred to an error.
+- Refresh intervals are per endpoint and set by `PORTAL_TTL_STATUS_MIN` (default 30) and
+  `PORTAL_TTL_TILES_MIN` (default 1440, i.e. once a day). Status is ~2 KB and worth keeping
+  current; the tile list is ~2 MB and cannot change until a night in Chile ends, so refetching
+  it more often is pure bandwidth. At these settings the portal sees about 50 requests a day.
+- The cache serves stale while it revalidates: an expired entry is returned immediately and the
+  refetch runs behind the response, so no visitor ever waits on the portal. Concurrent requests
+  share one refresh. A failed refresh marks the held copy stale — the page then says so — and
+  backs off for two minutes rather than retrying on every request.
 - If the portal is unreachable, the status page renders from
   `app/routes/content/status-snapshot.json` and says so in a banner; the sky map renders empty.
   Refresh the snapshot occasionally so the fallback is not embarrassing.

@@ -42,8 +42,28 @@ function fromEnvFile(key: string): string | undefined {
 }
 
 const BASE = (process.env.PORTAL_API_BASE || fromEnvFile('PORTAL_API_BASE') || '').replace(/\/$/, '');
-const TTL_MS = 10 * 60 * 1000;
 const TIMEOUT_MS = 6000;
+
+function minutes(key: string, fallback: number) {
+  const raw = process.env[key] || fromEnvFile(key);
+  const parsed = raw ? Number(raw) : NaN;
+  return (Number.isFinite(parsed) && parsed > 0 ? parsed : fallback) * 60 * 1000;
+}
+
+/* How long a payload is served before it is refetched. The two endpoints are
+   costed very differently, so they are cached very differently:
+
+     status  ~2 KB, and the whole point of the page is that it is current.
+     tiles   ~2 MB, and it can only change once a night, after Chile closes.
+
+   Refetching two megabytes every ten minutes was three hundred megabytes a day
+   off the portal to show a map that gains about thirty-six tiles a night. Once
+   a day costs two megabytes and loses nothing. Both are overridable from the
+   environment so the rate can be changed without a deploy. */
+const TTL = {
+  status: minutes('PORTAL_TTL_STATUS_MIN', 30),
+  tiles: minutes('PORTAL_TTL_TILES_MIN', 24 * 60),
+} as const;
 
 export type PortalStatus = typeof snapshot;
 
@@ -55,9 +75,14 @@ export type Fetched<T> = {
   generatedAt: string;
 };
 
-type Entry<T> = { at: number; value: Fetched<T> };
+type Entry<T> = { at: number; value: Fetched<T>; failed: boolean };
 
 const cache = new Map<string, Entry<unknown>>();
+const inFlight = new Map<string, Promise<unknown>>();
+
+/* After a failed refresh, wait this long before trying again rather than
+   retrying on every request and hammering a portal that is already down. */
+const RETRY_MS = 2 * 60 * 1000;
 
 async function getJson<T>(endpoint: string): Promise<T> {
   if (!BASE) throw new Error('PORTAL_API_BASE is not configured');
@@ -69,19 +94,56 @@ async function getJson<T>(endpoint: string): Promise<T> {
   return (await response.json()) as T;
 }
 
-async function cached<T>(key: string, load: () => Promise<Fetched<T>>): Promise<Fetched<T>> {
-  const hit = cache.get(key) as Entry<T> | undefined;
-  if (hit && Date.now() - hit.at < TTL_MS) return hit.value;
+/* Serve-stale-while-revalidating. Once something is in the cache no request
+   ever waits on the portal again: an expired entry is returned immediately and
+   the refetch happens behind it. Without this, one unlucky visitor a day would
+   pay the three seconds it takes to pull two megabytes of tiles. Concurrent
+   requests share one refresh, so the portal sees a single call either way. */
+function revalidate<T>(key: keyof typeof TTL, load: () => Promise<Fetched<T>>) {
+  const existing = inFlight.get(key);
+  if (existing) return existing as Promise<Fetched<T>>;
 
-  try {
-    const value = await load();
-    cache.set(key, { at: Date.now(), value });
-    return value;
-  } catch (error) {
-    // Serve a stale hit rather than nothing — better an hour old than absent.
-    if (hit) return { ...hit.value, live: false };
-    throw error;
+  const task = load()
+    .then((value) => {
+      cache.set(key, { at: Date.now(), value, failed: false });
+      return value;
+    })
+    .catch((error) => {
+      const hit = cache.get(key) as Entry<T> | undefined;
+      if (hit) {
+        // Keep the data, mark it as no longer trustworthy, and schedule the
+        // next attempt by backdating the entry to expire in RETRY_MS.
+        cache.set(key, {
+          ...hit,
+          at: Date.now() - TTL[key] + RETRY_MS,
+          value: { ...hit.value, live: false },
+          failed: true,
+        });
+      }
+      throw error;
+    })
+    .finally(() => inFlight.delete(key));
+
+  inFlight.set(key, task);
+  return task;
+}
+
+async function cached<T>(
+  key: keyof typeof TTL,
+  load: () => Promise<Fetched<T>>
+): Promise<Fetched<T>> {
+  const hit = cache.get(key) as Entry<T> | undefined;
+  if (hit && Date.now() - hit.at < TTL[key]) return hit.value;
+
+  if (hit) {
+    // Expired but usable: answer from it now and refresh behind the response.
+    // The rejection is swallowed because the held copy is the answer — but
+    // revalidate() has already flagged it, so the page will say it is stale.
+    revalidate(key, load).catch(() => undefined);
+    return (cache.get(key) as Entry<T>).value;
   }
+
+  return revalidate(key, load);
 }
 
 export function getStatus(): Promise<Fetched<PortalStatus>> {
@@ -171,6 +233,16 @@ export function getTileMap(): Promise<Fetched<TileMap>> {
 
     return { data, live: true, generatedAt: raw.generated_at };
   }).catch(() => ({ data: EMPTY_TILES, live: false, generatedAt: '' }));
+}
+
+/* Serve-stale only helps once something is cached, so the first request after
+   a restart would otherwise pay for the two-megabyte tile pull. Fill both
+   caches at boot instead, without blocking startup or failing it. */
+if (BASE) {
+  setTimeout(() => {
+    void getStatus().catch(() => undefined);
+    void getTileMap().catch(() => undefined);
+  }, 500).unref?.();
 }
 
 /* There is no committed copy of the tile list — it is two megabytes and would

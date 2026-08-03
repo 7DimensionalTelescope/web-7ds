@@ -2016,6 +2016,7 @@ var meta10 = () => [
 var data_coverage_exports = {};
 __export(data_coverage_exports, {
   default: () => data_coverage_default,
+  headers: () => headers,
   loader: () => loader,
   meta: () => meta11
 });
@@ -2238,7 +2239,15 @@ function fromEnvFile(key) {
   } catch {
   }
 }
-var BASE = (process.env.PORTAL_API_BASE || fromEnvFile("PORTAL_API_BASE") || "").replace(/\/$/, ""), TTL_MS = 10 * 60 * 1e3, TIMEOUT_MS = 6e3, cache = /* @__PURE__ */ new Map();
+var BASE = (process.env.PORTAL_API_BASE || fromEnvFile("PORTAL_API_BASE") || "").replace(/\/$/, ""), TIMEOUT_MS = 6e3;
+function minutes(key, fallback) {
+  let raw = process.env[key] || fromEnvFile(key), parsed = raw ? Number(raw) : NaN;
+  return (Number.isFinite(parsed) && parsed > 0 ? parsed : fallback) * 60 * 1e3;
+}
+var TTL = {
+  status: minutes("PORTAL_TTL_STATUS_MIN", 30),
+  tiles: minutes("PORTAL_TTL_TILES_MIN", 24 * 60)
+}, cache = /* @__PURE__ */ new Map(), inFlight = /* @__PURE__ */ new Map(), RETRY_MS = 2 * 60 * 1e3;
 async function getJson(endpoint) {
   if (!BASE)
     throw new Error("PORTAL_API_BASE is not configured");
@@ -2250,18 +2259,25 @@ async function getJson(endpoint) {
     throw new Error(`${endpoint} responded ${response.status}`);
   return await response.json();
 }
+function revalidate(key, load) {
+  let existing = inFlight.get(key);
+  if (existing)
+    return existing;
+  let task = load().then((value) => (cache.set(key, { at: Date.now(), value, failed: !1 }), value)).catch((error) => {
+    let hit = cache.get(key);
+    throw hit && cache.set(key, {
+      ...hit,
+      at: Date.now() - TTL[key] + RETRY_MS,
+      value: { ...hit.value, live: !1 },
+      failed: !0
+    }), error;
+  }).finally(() => inFlight.delete(key));
+  return inFlight.set(key, task), task;
+}
 async function cached(key, load) {
   let hit = cache.get(key);
-  if (hit && Date.now() - hit.at < TTL_MS)
-    return hit.value;
-  try {
-    let value = await load();
-    return cache.set(key, { at: Date.now(), value }), value;
-  } catch (error) {
-    if (hit)
-      return { ...hit.value, live: !1 };
-    throw error;
-  }
+  return hit && Date.now() - hit.at < TTL[key] ? hit.value : hit ? (revalidate(key, load).catch(() => {
+  }), cache.get(key).value) : revalidate(key, load);
 }
 function getStatus() {
   return cached("status", async () => {
@@ -2296,6 +2312,11 @@ function getTileMap() {
     return data.monthMax = data.month.reduce((a, b) => b > a ? b : a, 0), data.visitsMax = data.visits.reduce((a, b) => b > a ? b : a, 0), { data, live: !0, generatedAt: raw.generated_at };
   }).catch(() => ({ data: EMPTY_TILES, live: !1, generatedAt: "" }));
 }
+BASE && setTimeout(() => {
+  getStatus().catch(() => {
+  }), getTileMap().catch(() => {
+  });
+}, 500).unref?.();
 var EMPTY_TILES = {
   count: 0,
   name: [],
@@ -2332,10 +2353,10 @@ async function loader() {
       ris: status?.data.ris ?? null,
       frames: status?.data.totals.science_frames ?? null
     },
-    { headers: { "Cache-Control": "public, max-age=600, stale-while-revalidate=3600" } }
+    { headers: { "Cache-Control": CACHE } }
   );
 }
-var num = (value) => value.toLocaleString("en-US"), day = (iso) => new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }), Index11 = () => {
+var CACHE = "public, max-age=3600, stale-while-revalidate=86400", headers = () => ({ "Cache-Control": CACHE }), num = (value) => value.toLocaleString("en-US"), day = (iso) => new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }), Index11 = () => {
   let { tiles, generatedAt, live, ris, frames } = useLoaderData(), singleVisit = tiles.visits.filter((v) => v === 1).length, repeated = tiles.count - singleVisit;
   return /* @__PURE__ */ jsxs16(PageLayout, { menu: "manuData", children: [
     /* @__PURE__ */ jsx17(
@@ -2722,6 +2743,7 @@ var meta14 = () => [
 var survey_status_exports = {};
 __export(survey_status_exports, {
   default: () => survey_status_default,
+  headers: () => headers2,
   loader: () => loader2,
   meta: () => meta15
 });
@@ -2734,14 +2756,12 @@ var meta15 = () => [
     name: "description",
     content: "Live progress of the Reference Imaging, Wide-area Time-domain and Intensive Monitoring surveys, read from the 7DT GW Portal."
   }
-];
+], CACHE2 = "public, max-age=900, stale-while-revalidate=86400";
 async function loader2() {
   let status = await getStatus();
-  return json2(status, {
-    headers: { "Cache-Control": "public, max-age=300, stale-while-revalidate=3600" }
-  });
+  return json2(status, { headers: { "Cache-Control": CACHE2 } });
 }
-var MILESTONES = [
+var headers2 = () => ({ "Cache-Control": CACHE2 }), MILESTONES = [
   ["Oct. 2023", "First light"],
   ["Jul. 2024", "Reference Imaging Survey commences"],
   ["Aug. 2024", "RTCSpy takes over nightly operation"],
@@ -2804,7 +2824,7 @@ var MILESTONES = [
         day2(nightly.last_night),
         "."
       ] }) : /* @__PURE__ */ jsxs20(Fragment10, { children: [
-        "The portal could not be reached, so these figures are the last recorded snapshot, generated ",
+        "The portal could not be reached, so these figures are the last copy the site holds, generated ",
         minute(generatedAt),
         ". They may be out of date."
       ] }) })
@@ -4052,7 +4072,7 @@ var meta23 = () => [
 }, news_default2 = Index23;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-ZNIUNI5Q.js", imports: ["/build/_shared/chunk-INIM7YPY.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-QDAJJAZE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-YWXHXMHQ.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-Q4ALZOX5.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-57QOBRM4.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-CQQLNJA7.js", imports: ["/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.coverage": { id: "routes/data.coverage", parentId: "root", path: "data/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/data.coverage-6X6A4ISM.js", imports: ["/build/_shared/chunk-GBQVOA7U.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-OGSNN6PZ.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-EO5E7IQG.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-3CFN7GST.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-YWUVHNL3.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-VDZ2INGS.js", imports: ["/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-SRGKFDSJ.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-VDS6YSAG.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-JSHLPCXM.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-WOG6Y3JP.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-UYDBYIYG.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-HMPV6TW3.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-4RQXE2GX.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-UBCXUXQC.js", imports: ["/build/_shared/chunk-GBQVOA7U.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-6IAIVMDD.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-4FZOA6XB.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-JFJCBQXX.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-RX53GWRW.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-UNCCIHW6.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "78b93a4f", hmr: void 0, url: "/build/manifest-78B93A4F.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-ZNIUNI5Q.js", imports: ["/build/_shared/chunk-INIM7YPY.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-QDAJJAZE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-YWXHXMHQ.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-Q4ALZOX5.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-57QOBRM4.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-CQQLNJA7.js", imports: ["/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.coverage": { id: "routes/data.coverage", parentId: "root", path: "data/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/data.coverage-O3HPTNDY.js", imports: ["/build/_shared/chunk-GBQVOA7U.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-OGSNN6PZ.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-EO5E7IQG.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-3CFN7GST.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-YWUVHNL3.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-VDZ2INGS.js", imports: ["/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-SRGKFDSJ.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-VDS6YSAG.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-JSHLPCXM.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-WOG6Y3JP.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-UYDBYIYG.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-HMPV6TW3.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-4RQXE2GX.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-DHJSOW6P.js", imports: ["/build/_shared/chunk-GBQVOA7U.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-6IAIVMDD.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-4FZOA6XB.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-JFJCBQXX.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-RX53GWRW.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-UNCCIHW6.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "15acfc0a", hmr: void 0, url: "/build/manifest-15ACFC0A.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
