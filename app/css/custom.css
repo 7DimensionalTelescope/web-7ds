@@ -249,23 +249,28 @@ html {
   overflow-y: scroll;
   scrollbar-gutter: stable;
   scrollbar-width: auto;
-  scrollbar-color: var(--slate-400) var(--slate-100);
+  scrollbar-color: var(--slate-500) var(--slate-100);
 }
 
-::-webkit-scrollbar { width: 12px; height: 12px; }
+/* Wide enough to grab and dark enough to find. Styling ::-webkit-scrollbar at
+   all is what makes Chrome, Edge and Safari draw a classic always-present bar
+   instead of an overlay one that fades out. */
+::-webkit-scrollbar { width: 14px; height: 14px; }
 
 ::-webkit-scrollbar-track {
   background: var(--slate-100);
-  border-left: 1px solid var(--slate-200);
+  border-left: 1px solid var(--slate-300);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--slate-400);
+  background: var(--slate-500);
   border-radius: 999px;
   border: 3px solid var(--slate-100);
+  min-height: 42px;
 }
 
-::-webkit-scrollbar-thumb:hover { background: var(--slate-500); }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-900); }
+::-webkit-scrollbar-corner { background: var(--slate-100); }
 
 .sr-only {
   position: absolute;
@@ -2152,26 +2157,34 @@ html.fullpage-active { overflow: hidden; }
   scroll-snap-type: y proximity;
   scroll-behavior: smooth;
   position: relative;
-  /* Shown here too: the deck is the one place a reader has no other cue for
-     how far through the page they are. */
+  /* Shown here too. The home page suppresses the document scrollbar because it
+     scrolls this element instead, so if this one were hidden the deck would
+     have no scrollbar at all. */
   scrollbar-width: auto;
-  scrollbar-color: var(--slate-400) rgba(10, 16, 28, 0.35);
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--slate-300) rgba(10, 16, 28, 0.55);
 }
 
 @media (min-width: 976px) and (min-height: 760px) {
   .fullpage-wrapper { scroll-snap-type: y mandatory; }
 }
 
-.fullpage-wrapper::-webkit-scrollbar { width: 12px; height: 12px; }
+.fullpage-wrapper::-webkit-scrollbar { width: 14px; height: 14px; }
+
 .fullpage-wrapper::-webkit-scrollbar-track {
-  background: rgba(10, 16, 28, 0.35);
-  border-left: 0;
+  background: rgba(10, 16, 28, 0.55);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
 }
+
 .fullpage-wrapper::-webkit-scrollbar-thumb {
-  background: var(--slate-400);
+  background: var(--slate-300);
+  border-radius: 999px;
   border: 3px solid transparent;
   background-clip: content-box;
+  min-height: 42px;
 }
+
+.fullpage-wrapper::-webkit-scrollbar-thumb:hover { background: #fff; }
 
 .fullpage-section {
   position: relative;
