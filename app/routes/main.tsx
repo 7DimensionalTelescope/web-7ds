@@ -285,7 +285,7 @@ const MainPage = () => {
                   <Link className="link-arrow" to="/science/overview" style={{ color: 'var(--accent-on-dark)' }}>Science program</Link>
                 </p>
               </div>
-              <div className="stat-grid stat-grid--on-dark">
+              <div className="stat-grid stat-grid--2x2 stat-grid--on-dark">
                 <div className="stat">
                   <span className="stat__value">20</span>
                   <span className="stat__label">Telescopes in the array</span>
