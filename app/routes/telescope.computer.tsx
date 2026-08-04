@@ -49,7 +49,7 @@ const Index = () => {
             <em>Computational</em> resources
           </>
         }
-        lede="Some 350 gigabytes a night cross the Pacific and are reduced within the daily budget. That takes as much engineering as the optics do."
+        lede="About 350 GB of raw data are produced each night, transferred from Chile to Seoul and reduced the same day."
         image="/img/hero/computer.jpg"
         meta={[
           { value: '128', label: 'CPU cores' },

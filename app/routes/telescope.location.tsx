@@ -73,7 +73,7 @@ const Index = () => {
             7DT in <em>Chile</em>
           </>
         }
-        lede="El Sauce — the willow tree — sits in the Río Hurtado Valley just south of the great Chilean observatories, and shares their skies."
+        lede="El Sauce Observatory, in the Río Hurtado Valley of Chile, at 1,600 m and close to Cerro Tololo, Gemini South and Rubin."
         image="/img/hero/location.jpg"
         meta={[
           { value: '1600', unit: 'm', label: 'Altitude' },

@@ -17,7 +17,7 @@
       "depthRange": "5σ depths range from 19.7 mag at m400 to 17.2 mag at m875.",
       "tradeoff": "Area over depth and cadence",
       "goal": "Give every part of the southern sky a medium-band reference image, once.",
-      "rationale": "Nothing can be identified as a transient without an earlier image of the same sky in the same bands to subtract. RIS exists to build that reference, and its scale is set by the problem it serves: a gravitational-wave localization can fall anywhere, so the reference has to cover everything the array can reach. Covering 23,000 deg² at all forces the minimum per tile — one visit of 3 × 100 s — which is why RIS is the shallowest tier. The compensation is that a reference map made of forty medium bands is itself a homogeneous spectrophotometric survey, so the same exposures that enable difference imaging also support galaxy population studies, photometric redshifts and quasar identification at no extra cost in telescope time."
+      "rationale": "Difference imaging requires an earlier image of the same sky in the same bands. RIS builds that reference, and its scale follows from the problem: a gravitational-wave localization can fall anywhere, so the reference must cover everything the array can reach. Covering 23,000 deg² limits the time available per tile to a single visit of 3 × 100 s, which makes RIS the shallowest of the three components. A reference map built from forty medium bands is also a homogeneous spectrophotometric survey in its own right, so the same exposures support galaxy population studies, photometric redshifts and quasar identification."
     },
     {
       "code": "WTS",
@@ -34,7 +34,7 @@
       "depthRange": "Science cases include reverberation mapping of AGN, long-period variables and eclipsing systems, and slow-evolving extragalactic transients such as superluminous supernovae and tidal disruption events.",
       "tradeoff": "Cadence over area",
       "goal": "Follow what changes on timescales of weeks, and stack deep enough to reach faint galaxies.",
-      "rationale": "A single epoch says what is there; it does not say what is changing. WTS gives up most of the sky to revisit a smaller area every 10 to 14 days — an interval matched to what actually evolves on that scale: reverberation in active galactic nuclei, long-period variable and eclipsing stars, and slow extragalactic transients such as superluminous supernovae and tidal disruption events. Repetition also accumulates: roughly 90 to 100 visits per tile stack to 22.0–22.5 mag across most of the medium bands, deep enough for precise photometric redshifts on galaxies far below the single-visit limit. Fields are chosen where near-infrared data already exist — the VIKING footprint, the Rubin Deep Drilling Fields — because those are wavelengths 7DT cannot reach for itself."
+      "rationale": "A single epoch measures what is present, not what is changing. WTS covers a smaller area in order to revisit it every 10 to 14 days, an interval matched to what evolves on that timescale: reverberation in active galactic nuclei, long-period variable and eclipsing stars, and slow extragalactic transients such as superluminous supernovae and tidal disruption events. Repetition also accumulates depth: 90 to 100 visits per tile stack to 22.0–22.5 mag across most medium bands, sufficient for photometric redshifts on galaxies well below the single-visit limit. Fields are selected where near-infrared data already exist — the VIKING footprint and the Rubin Deep Drilling Fields — covering wavelengths 7DT cannot reach."
     },
     {
       "code": "IMS",
@@ -51,29 +51,29 @@
       "depthRange": "Field center: RA 05h13m07.36s, Dec −60°28′11.71″. Observing time budget of 20,000 minutes per year.",
       "tradeoff": "Depth and cadence over area",
       "goal": "Catch variability within a single night, and build the deepest photometry 7DS will produce.",
-      "rationale": "Some sources change faster than any wide survey can follow. IMS gives up area almost entirely — about 8.5 deg², seven tiles — in order to observe every available night, which is the only way to characterize short-period variables, active galactic nuclei on short timescales, and any transient that appears inside the field. Observing the same tiles nightly for five years also coadds to the deepest single-tile photometry the survey will reach, about 23.6 mag at peak sensitivity. The field position was a deliberate choice rather than a convenient one: it overlaps the SPHEREx Deep Field South, so 7DT optical medium-band photometry and SPHEREx near-infrared spectrophotometry cover the same volume."
+      "rationale": "Some sources vary faster than a wide survey can follow. IMS reduces area to about 8.5 deg² — seven tiles — in order to observe every available night, which is what is required to characterize short-period variables, active galactic nuclei on short timescales, and transients appearing within the field. Observing the same tiles nightly for five years also coadds to the deepest photometry the survey will produce, about 23.6 mag at peak sensitivity. The field position was chosen to overlap the SPHEREx Deep Field South, so that 7DT optical medium-band photometry and SPHEREx near-infrared spectrophotometry cover the same volume."
     }
   ],
   "modes": [
     {
       "name": "Spec",
       "tagline": "Maximum spectral resolution",
-      "body": "The default mode. Units rotate through every available medium and broad band, covering the full spectral range in as few exposures as the filter distribution allows. This is the mode that makes 7DT behave like a low-resolution spectrograph over 1.25 square degrees."
+      "body": "The default mode. Units rotate through every available medium and broad band, covering the full spectral range in as few exposures as the filter distribution allows. This is the mode in which 7DT delivers low-resolution spectroscopy over 1.25 square degrees."
     },
     {
       "name": "Deep",
       "tagline": "Maximum depth",
-      "body": "A selected subset of filters is used, trading spectral sampling for signal-to-noise. Used when the question is whether a source is there at all."
+      "body": "A selected subset of filters is used, trading spectral sampling for signal-to-noise. Used when the question is detection rather than characterization."
     },
     {
       "name": "Color",
       "tagline": "Broadband, fast",
-      "body": "Broad-band filters only. Chosen for faint, fast events such as gamma-ray bursts and young supernovae, where detection early on the light curve matters more than spectral detail."
+      "body": "Broad-band filters only. Used for faint, fast events such as gamma-ray bursts and young supernovae, where early detection on the light curve matters more than spectral detail."
     },
     {
       "name": "Search",
       "tagline": "Maximum sky coverage",
-      "body": "Each unit points at a different region of sky. The optical counterpart of a gravitational-wave event is reported as a probable region over a wide area, and tiling it quickly is worth more than observing any one field well."
+      "body": "Each unit points at a different region of sky. A gravitational-wave counterpart is localized only to a probable region covering a wide area, so covering that area quickly takes priority over observing any single field deeply."
     }
   ],
   "dimensions": [
@@ -106,5 +106,5 @@
       "label": "Time"
     }
   ],
-  "designNote": "Area, cadence and depth cannot all be maximized at once out of a fixed number of nights. Rather than settle on one compromise, 7DS spends its time at three separate points in that trade — and ties them together by putting all three on the same tile grid, so data from any tier coadds homogeneously with data from the others."
+  "designNote": "Area, cadence and depth cannot all be maximized from a fixed number of nights. Rather than adopt a single compromise, 7DS operates at three separate points in that trade, and ties them together by using one tiling for all three, so that data from any component coadd directly with data from the others."
 }

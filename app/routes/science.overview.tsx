@@ -29,30 +29,15 @@ const Index = () => (
     />
 
     <Section eyebrow="Spectral mapping" title="A spectrum for every source in the field">
-      <div className="split split--wide-text">
-        <div>
-          <p className="prose">{scienceOverviewText}</p>
-          <p className="prose">
-            The practical consequence is that classification no longer depends on follow-up. A
-            source detected in a 7DS image already carries the information needed to estimate a
-            photometric redshift, separate a quasar from a star, or distinguish a kilonova from
-            the supernovae and detector artifacts that outnumber it — at the moment of detection,
-            for every object in 1.25 square degrees.
-          </p>
-        </div>
-        <figure className="figure">
-          <img
-            src="/img/filter.png"
-            alt="Transmission curves of the 7DT medium-band filter set"
-            loading="lazy"
-          />
-          <figcaption>
-            <b>Filter set</b> Medium bands of about 25 nm width spanning 375–875 nm, distributed
-            across the array. Which bands exist on a given tile is reported on the{' '}
-            <a href="/survey/coverage">coverage map</a>.
-          </figcaption>
-        </figure>
-      </div>
+      <p className="prose">{scienceOverviewText}</p>
+      <p className="prose">
+        The practical consequence is that classification does not depend on follow-up. A source
+        detected in a 7DS image already carries the information needed to estimate a photometric
+        redshift, separate a quasar from a star, or distinguish a kilonova from the supernovae and
+        detector artifacts that outnumber it — at the moment of detection, for every object in
+        1.25 square degrees. The filter set that makes this possible, and which bands exist on a
+        given tile, are described under <Link to="/users/status">status and overview</Link>.
+      </p>
     </Section>
 
     <Section eyebrow="Time domain" title="Repeating the measurement" alt>

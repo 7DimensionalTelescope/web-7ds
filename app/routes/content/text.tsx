@@ -227,9 +227,9 @@ center on good nights ranges from 1.4 to 2.2 arcseconds FWHM, with an array medi
 2.0 arcseconds closely tracking the median site seeing. Unit-to-unit scatter in \
 delivered FWHM is 0.2 arcseconds, and the PSF grows by 0.3 arcseconds from field \
 center to corner while ellipticity stays below 0.1 over the central 80 percent of the \
-field. The array behaves as a coherent set of instruments rather than sixteen \
-independent telescopes. Median delivered FWHM has held stable to within 0.3 arcseconds \
-since routine survey operations began in July 2024.'
+field. Delivered image quality is therefore consistent across the array. Median \
+delivered FWHM has held stable to within 0.3 arcseconds since routine survey operations \
+began in July 2024.'
 
 export const photometryText =
   'Photometric calibration runs against synthetic photometry derived from Gaia DR3 \
@@ -332,8 +332,8 @@ and outside the 7DT team can run the same codebase to reprocess data with custom
 configurations, resuming from any stage of the reduction, and choose for themselves how \
 far to trust the standard products. Images are passed through the pipeline as string \
 paths with metadata in FITS headers and YAML files, rather than wrapped in a bespoke \
-data model - a deliberate choice that keeps products inspectable outside the pipeline \
-and keeps the learning cost of processing 7DT data low.'
+data model, which keeps products inspectable outside the pipeline and lowers the cost \
+of learning to process 7DT data.'
 
 /* --- Funding ------------------------------------------------------------- */
 

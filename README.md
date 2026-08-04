@@ -3,8 +3,9 @@
 Website for the **7-Dimensional Telescope (7DT)** and the **7-Dimensional Sky Survey (7DS)**,
 operated by the Center for the Gravitational-wave Universe at Seoul National University.
 
-Built with [Remix](https://remix.run) + React 18 + Tailwind. Every route is static — no loaders,
-no database, no secrets — so deployment is just a Node process behind a proxy.
+Built with [Remix](https://remix.run) + React 18 + Tailwind. Most routes are static; the pages
+that report survey progress read the observation database on the server (see **Live survey
+data** below). Deployment is a Node process behind a proxy, plus one environment variable.
 
 ---
 
@@ -121,8 +122,33 @@ This site is a scientific facility's public record. Two rules matter more than a
    obtainable paper figure and fall back to a 7DT project figure; the `_note` in `news.json`
    records which. Do not describe a fallback as a figure from the paper.
 
+5. **One fact, one home.** Tier parameters live on the survey overview, depths on the For Users
+   performance page, tiling in one table, per-component rationale on the component pages, project
+   history in About. Everywhere else links. If you find yourself pasting a number into a second
+   page, link to the first instead — otherwise the two drift apart.
+6. **Plain scientific wording.** State what is measured and what follows from it. Avoid rhetorical
+   framing, and avoid asserting significance the reader can judge for themselves.
+
 Status figures are stamped "as of June 2026" and appear in several places. When the survey
 advances, grep for the old value before assuming one edit is enough.
+
+---
+
+## Site structure
+
+```
+/                     landing page — survey overview, live footprint map
+/about/…              intro (motivation, seven dimensions, approach, history), team, funding
+/science/…            overview (motivation: spectral mapping + time domain), themes
+/survey/…             overview (design + parameters + tiling), ris, wts, ims,
+                      coverage (interactive map), status (array operations)
+/telescope/…          overview (hardware first), instrument, location, computer
+/users/…              status, performance, propose, data, format, access, software, faq
+/publication/…        list, policy          /news  /gallery  /links
+```
+
+Redirects are kept for URLs that moved: `/data/*` → the For Users pages, `/survey/design` →
+`/survey/overview`, `/telescope/mode` → `/users/propose`. Do not delete these — they were public.
 
 ---
 
@@ -132,6 +158,9 @@ advances, grep for the old value before assuming one edit is enough.
 app/
   components/site.tsx     shared page furniture (PageLayout, PageHero, Section, tables, StatGrid)
   css/custom.css          the design system — tokens, components, responsive rules
+  components/skymap.tsx   the all-sky coverage map (canvas, Mollweide, equatorial/galactic)
+  components/surveypage.tsx  shared layout for the RIS/WTS/IMS pages
+  lib/portal.server.ts    live data: fetch, cache, reduce, fall back
   routes/                 one file per URL, plus navigate/footer/main/plot (components, not routes)
   routes/content/         all site copy and data
 public/img/

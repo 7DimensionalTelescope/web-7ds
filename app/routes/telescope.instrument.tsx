@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section, SimpleTable } from '../components/site';
 import {
@@ -68,7 +69,7 @@ const Index = () => {
             Instrument <em>specification</em>
           </>
         }
-        lede="All twenty units of the array are identical: the same optics, the same mount, the same camera. What differs between them is the filters they carry — and that is the whole design."
+        lede="All twenty units are identical in optics, mount and camera. They differ only in the filters they carry, which is what allows the array to cover the full medium-band set in a few exposures."
         image="/img/hero/instrument.jpg"
       />
 
@@ -102,18 +103,13 @@ const Index = () => {
           <SimpleTable caption="Filter complement" rows={FILTERS} />
         </div>
 
-        <figure className="figure" style={{ marginTop: '2.5rem' }}>
-          <img src="/img/filter.png" alt="Transmission curves of the 7DT medium-band filter set" loading="lazy" />
-          <figcaption>
-            <b>System response</b> Filter response curves incorporating detector quantum
-            efficiency, sky transmission, telescope optics and filter throughput. Filters are
-            designated by central wavelength in nanometers — m400 is the band centered at 400 nm.
-          </figcaption>
-        </figure>
-      </Section>
-
-      <Section eyebrow="05" title="Calibration">
-        <p className="prose">{photometryText}</p>
+        <p className="note" style={{ marginTop: '1.5rem' }}>
+          Filters are designated by central wavelength in nanometers — m400 is the band centered
+          at 400 nm. System response curves, which fold in detector quantum efficiency, sky
+          transmission and telescope optics, are shown under{' '}
+          <Link to="/users/status">status and overview</Link>; photometric calibration and its
+          accuracy are reported on the <Link to="/users/performance">performance page</Link>.
+        </p>
       </Section>
 
       <Section eyebrow="On sky" title="What the filter set looks like" alt>

@@ -5,7 +5,7 @@
       "id": "mma",
       "n": "01",
       "title": "Multi-messenger Astronomy",
-      "summary": "The mission 7DT was built for. A kilonova peaks near absolute magnitude −15 to −17 and fades by roughly half a magnitude per day, inside a gravitational-wave localization of hundreds to thousands of square degrees — where even a single 100 deg² patch is expected to hold of order a hundred unrelated transients over a seven-day window. 7DT answers with wide-field tiling, sub-minute response to an alert, and enough spectral information in a single visit to reject the contaminants without follow-up spectroscopy."
+      "summary": "The application 7DT was designed for. A kilonova peaks near absolute magnitude −15 to −17 and fades by roughly half a magnitude per day, within a gravitational-wave localization of hundreds to thousands of square degrees; a single 100 deg² region is expected to contain of order a hundred unrelated transients over a seven-day window. 7DT addresses this with wide-field tiling, sub-minute response to an alert, and sufficient spectral information in one visit to reject contaminants without follow-up spectroscopy."
     },
     {
       "id": "transients",
@@ -29,7 +29,7 @@
       "id": "agn",
       "n": "05",
       "title": "Active Galactic Nuclei",
-      "summary": "Repeated medium-band visits measure how an AGN spectrum changes, not merely how its brightness does. The 10–14 day cadence of WTS over five years is matched to reverberation mapping through long-term spectral variability, while the nightly cadence of IMS reaches variability on timescales of a single night."
+      "summary": "Repeated medium-band visits measure how an AGN spectrum changes, not only how its brightness does. The 10–14 day cadence of WTS over five years is suited to reverberation mapping through long-term spectral variability, while the nightly cadence of IMS reaches variability on timescales of a single night."
     },
     {
       "id": "galactic",

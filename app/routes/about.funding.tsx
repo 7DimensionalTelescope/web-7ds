@@ -26,7 +26,7 @@ const Index = () => {
       <PageHero
         eyebrow="About"
         title="Funding sources"
-        lede="7DT exists because of sustained public investment in gravitational-wave astronomy and in the research network that carries its data across the Pacific each night."
+        lede="The bodies that fund the facility, its operation, and the network that carries its data."
         image="/img/hero/about.jpg"
       />
 
