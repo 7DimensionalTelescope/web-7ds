@@ -23,13 +23,23 @@ export async function loader() {
     getStatus().catch(() => null),
   ]);
 
+  /* The portal reports open-shutter time only as a survey total, not per tile,
+     so the pointer card estimates a tile's integration from its frame count
+     and this mean. It is labelled as an estimate wherever it is shown. */
+  const totals = status?.data.totals;
+  const exposureSec =
+    totals && totals.science_frames > 0
+      ? (totals.exposure_hours * 3600) / totals.science_frames
+      : null;
+
   return json(
     {
       tiles: tiles.data,
       generatedAt: tiles.generatedAt,
       live: tiles.live,
       ris: status?.data.ris ?? null,
-      frames: status?.data.totals.science_frames ?? null,
+      frames: totals?.science_frames ?? null,
+      exposureSec,
     },
     { headers: { 'Cache-Control': CACHE } }
   );
@@ -49,7 +59,7 @@ const day = (iso: string) =>
   new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
 const Index = () => {
-  const { tiles, generatedAt, live, ris, frames } = useLoaderData<typeof loader>();
+  const { tiles, generatedAt, live, ris, frames, exposureSec } = useLoaderData<typeof loader>();
 
   const singleVisit = tiles.visits.filter((v) => v === 1).length;
   const repeated = tiles.count - singleVisit;
@@ -79,12 +89,15 @@ const Index = () => {
           sky wherever it falls — the deep southern coverage is not exaggerated by the projection
           the way it would be on a rectangular plot. Longitude increases to the left, as on the
           sky. Switch between equatorial and galactic coordinates to see the survey against the
-          sky's own grid or against the plane of the Milky Way; hover a tile for its identifier,
-          position and visit count.
+          sky's own grid or against the plane of the Milky Way. Point anywhere on the map to read
+          what the observation record holds for that position: the tile identifier, how many nights
+          it has been visited, how many frames it carries, roughly how much open-shutter time that
+          represents, and which of the medium bands have been taken on it. Positions with no data
+          say so rather than reporting nothing.
         </p>
 
         <div style={{ marginTop: '2rem' }}>
-          <SkyMap tiles={tiles} />
+          <SkyMap tiles={tiles} exposureSec={exposureSec} />
         </div>
 
         <p className="footnote" style={{ marginTop: '1rem' }}>
@@ -93,6 +106,15 @@ const Index = () => {
             : 'The portal could not be reached; this map is a stored copy and may be out of date.'}{' '}
           Only tiles with at least one science exposure appear. Target-of-opportunity pointings at
           arbitrary coordinates are not on the tile grid and are not shown.
+          {exposureSec ? (
+            <>
+              {' '}
+              Frame counts and filters are exact. Exposure time is an estimate: the database records
+              open-shutter time for the survey as a whole rather than per tile, so a tile's figure
+              is its frame count times the survey mean of {exposureSec.toFixed(0)} seconds per
+              frame, and is marked ≈ for that reason.
+            </>
+          ) : null}
         </p>
       </Section>
 

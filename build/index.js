@@ -118,7 +118,7 @@ import {
 var app_default = "/build/_assets/app-ZXQWFZKN.css";
 
 // app/css/custom.css
-var custom_default = "/build/_assets/custom-YR3IQEO5.css";
+var custom_default = "/build/_assets/custom-ND35RQDE.css";
 
 // app/root.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
@@ -2057,6 +2057,15 @@ function projectLon(lonDeg, decDeg) {
 function project(raDeg, decDeg) {
   return projectLon(toLon(raDeg), decDeg);
 }
+function unproject(x, y) {
+  if (x * x / 4 + y * y > 1 + 1e-9)
+    return null;
+  let t = Math.asin(Math.max(-1, Math.min(1, y))), lat = Math.asin(Math.max(-1, Math.min(1, (2 * t + Math.sin(2 * t)) / Math.PI))) / DEG, cosT = Math.cos(t);
+  if (cosT < 1e-9)
+    return [0, lat > 0 ? 90 : -90];
+  let lon = Math.PI * x / (2 * cosT) / DEG;
+  return lon < -180.0001 || lon > 180.0001 ? null : [(-lon % 360 + 360) % 360, lat];
+}
 var VIRIDIS = [
   [68, 1, 84],
   [72, 40, 120],
@@ -2082,13 +2091,69 @@ function equatorialToGalactic(raDeg, decDeg) {
   let ra = raDeg * DEG, dec = decDeg * DEG, sinDec = Math.sin(dec), cosDec = Math.cos(dec), dRa = ra - NGP_RA, sinB = Math.sin(NGP_DEC) * sinDec + Math.cos(NGP_DEC) * cosDec * Math.cos(dRa), b = Math.asin(Math.max(-1, Math.min(1, sinB))), y = cosDec * Math.sin(dRa), x = Math.cos(NGP_DEC) * sinDec - Math.sin(NGP_DEC) * cosDec * Math.cos(dRa), l = (L_NCP - Math.atan2(y, x)) / DEG;
   return l = (l % 360 + 360) % 360, [l, b / DEG];
 }
+function galacticToEquatorial(lDeg, bDeg) {
+  let l = lDeg * DEG, b = bDeg * DEG, sinB = Math.sin(b), cosB = Math.cos(b), dL = L_NCP - l, sinDec = Math.sin(NGP_DEC) * sinB + Math.cos(NGP_DEC) * cosB * Math.cos(dL), dec = Math.asin(Math.max(-1, Math.min(1, sinDec))), y = cosB * Math.sin(dL), x = Math.cos(NGP_DEC) * sinB - Math.sin(NGP_DEC) * cosB * Math.cos(dL), ra = (NGP_RA + Math.atan2(y, x)) / DEG;
+  return ra = (ra % 360 + 360) % 360, [ra, dec / DEG];
+}
+var SPECTRUM = [
+  [0, [91, 58, 209]],
+  [0.14, [53, 99, 216]],
+  [0.28, [43, 155, 196]],
+  [0.42, [53, 171, 124]],
+  [0.56, [143, 180, 63]],
+  [0.68, [210, 177, 53]],
+  [0.8, [216, 128, 47]],
+  [0.9, [191, 66, 44]],
+  [1, [140, 36, 32]]
+];
+function wavelengthColor(nm) {
+  let t = Math.max(0, Math.min(1, (nm - 400) / 500)), i = 0;
+  for (; i < SPECTRUM.length - 2 && t > SPECTRUM[i + 1][0]; )
+    i += 1;
+  let [t0, a] = SPECTRUM[i], [t1, b] = SPECTRUM[i + 1], f = t1 === t0 ? 0 : (t - t0) / (t1 - t0);
+  return `rgb(${Math.round(a[0] + (b[0] - a[0]) * f)},${Math.round(
+    a[1] + (b[1] - a[1]) * f
+  )},${Math.round(a[2] + (b[2] - a[2]) * f)})`;
+}
 var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 function monthLabel(index, epoch) {
   let total = epoch[1] - 1 + index;
   return `${MONTHS[(total % 12 + 12) % 12]} ${epoch[0] + Math.floor(total / 12)}`;
 }
-function SkyMap({ tiles }) {
-  let canvasRef = useRef2(null), wrapRef = useRef2(null), [mode2, setMode] = useState4("date"), [frame, setFrame] = useState4("equatorial"), [width, setWidth] = useState4(960), [hover, setHover] = useState4(null), coords = useMemo2(() => {
+var DAY_MS = 24 * 60 * 60 * 1e3;
+function dayLabel(index, epochDate) {
+  return new Date(Date.parse(`${epochDate}T00:00:00Z`) + index * DAY_MS).toISOString().slice(0, 10);
+}
+function duration(seconds) {
+  let h = seconds / 3600;
+  return h < 1 ? `${Math.round(seconds / 60)} min` : h < 10 ? `${h.toFixed(1)} h` : `${Math.round(h).toLocaleString("en-US")} h`;
+}
+var deg = (value) => `${value >= 0 ? "+" : "\u2212"}${Math.abs(value).toFixed(1)}\xB0`;
+function SkyMap({
+  tiles,
+  exposureSec
+}) {
+  let canvasRef = useRef2(null), wrapRef = useRef2(null), [mode2, setMode] = useState4("date"), [frame, setFrame] = useState4("equatorial"), [width, setWidth] = useState4(960), [probe, setProbe] = useState4(null), hover = probe?.tile ?? null, ids = useMemo2(() => {
+    if (!tiles.nameDelta)
+      return null;
+    let out = new Int32Array(tiles.nameDelta.length), running = 0;
+    for (let i = 0; i < out.length; i += 1)
+      running += tiles.nameDelta[i], out[i] = running;
+    return out;
+  }, [tiles]), nameAt = useCallback(
+    (i) => ids ? `T${String(ids[i]).padStart(5, "0")}` : tiles.name?.[i] ?? "",
+    [ids, tiles]
+  ), months = useMemo2(() => {
+    let epochMs = Date.parse(`${tiles.epochDate}T00:00:00Z`), index = new Int32Array(tiles.count), max = 0;
+    for (let i = 0; i < tiles.count; i += 1) {
+      let at = new Date(epochMs + tiles.lastDay[i] * DAY_MS), m = (at.getUTCFullYear() - Number(tiles.epochDate.slice(0, 4))) * 12 + (at.getUTCMonth() + 1 - Number(tiles.epochDate.slice(5, 7)));
+      index[i] = m, m > max && (max = m);
+    }
+    return { index, max };
+  }, [tiles]), epoch = useMemo2(
+    () => [Number(tiles.epochDate.slice(0, 4)), Number(tiles.epochDate.slice(5, 7))],
+    [tiles.epochDate]
+  ), coords = useMemo2(() => {
     if (frame === "equatorial")
       return { lon: tiles.ra, lat: tiles.dec };
     let lon = new Float64Array(tiles.count), lat = new Float64Array(tiles.count);
@@ -2098,7 +2163,7 @@ function SkyMap({ tiles }) {
     }
     return { lon, lat };
   }, [frame, tiles]), visitScale = useMemo2(() => Math.log(tiles.visitsMax + 1), [tiles.visitsMax]), value = useCallback(
-    (i) => mode2 === "date" ? tiles.monthMax > 0 ? tiles.month[i] / tiles.monthMax : 1 : Math.log(tiles.visits[i] + 1) / visitScale,
+    (i) => mode2 === "date" ? months.max > 0 ? months.index[i] / months.max : 1 : Math.log(tiles.visits[i] + 1) / visitScale,
     [mode2, tiles, visitScale]
   );
   useEffect3(() => {
@@ -2164,16 +2229,40 @@ function SkyMap({ tiles }) {
     let canvas = canvasRef.current;
     if (!canvas)
       return;
-    let rect = canvas.getBoundingClientRect(), height = rect.height, pad = 40, scale = Math.min((rect.width - pad * 2) / 4, (height - pad * 1.4) / 2), mx = event.clientX - rect.left, my = event.clientY - rect.top, best = -1, bestDistance = 64;
+    let rect = canvas.getBoundingClientRect(), height = rect.height, pad = 40, scale = Math.min((rect.width - pad * 2) / 4, (height - pad * 1.4) / 2), mx = event.clientX - rect.left, my = event.clientY - rect.top, sky = unproject((mx - rect.width / 2) / scale, (height / 2 - my) / scale);
+    if (!sky) {
+      setProbe(null);
+      return;
+    }
+    let perDegree = scale * (2 / 180), tolerance = Math.max(6, perDegree * 1.2), best = -1, bestDistance = tolerance * tolerance;
     for (let i = 0; i < tiles.count; i += 1) {
       let [x, y] = project(coords.lon[i], coords.lat[i]), dx = rect.width / 2 + x * scale - mx, dy = height / 2 - y * scale - my, distance = dx * dx + dy * dy;
       distance < bestDistance && (bestDistance = distance, best = i);
     }
-    setHover(best >= 0 ? best : null);
-  }, legendStops = useMemo2(
+    let [lon, lat] = sky, equatorial = best >= 0 ? [tiles.ra[best], tiles.dec[best]] : frame === "equatorial" ? [lon, lat] : galacticToEquatorial(lon, lat), galactic = best >= 0 ? frame === "galactic" ? [coords.lon[best], coords.lat[best]] : equatorialToGalactic(tiles.ra[best], tiles.dec[best]) : frame === "galactic" ? [lon, lat] : equatorialToGalactic(lon, lat);
+    setProbe({
+      x: mx,
+      y: my,
+      tile: best >= 0 ? best : null,
+      ra: equatorial[0],
+      dec: equatorial[1],
+      l: galactic[0],
+      b: galactic[1]
+    });
+  }, detail = useMemo2(() => {
+    if (hover === null)
+      return null;
+    let flat = tiles.patterns[tiles.pattern[hover]] ?? [], bands = [], broad = [], peak = 0;
+    for (let i = 0; i < flat.length; i += 2) {
+      let name = tiles.filters[flat[i]], frames = flat[i + 1];
+      frames > peak && (peak = frames), name?.startsWith("m") ? bands.push({ name, nm: tiles.filterWave[flat[i]], frames }) : name && broad.push({ name, frames });
+    }
+    let byName = new Map(bands.map((band) => [band.name, band])), strip = tiles.filters.map((name, i) => ({ name, nm: tiles.filterWave[i] })).filter((f) => f.name.startsWith("m")).map((f) => ({ ...f, frames: byName.get(f.name)?.frames ?? 0 }));
+    return { bands, broad, strip, peak, count: bands.length + broad.length };
+  }, [hover, tiles]), legendStops = useMemo2(
     () => Array.from({ length: 12 }, (_, i) => rgb(viridis(i / 11))).join(", "),
     []
-  ), legendTicks = useMemo2(() => mode2 === "date" ? [0, 0.5, 1].map((t) => monthLabel(Math.round(t * tiles.monthMax), tiles.epoch)) : [0, 0.5, 1].map((t) => `${Math.round(Math.exp(t * visitScale) - 1).toLocaleString("en-US")}`), [mode2, tiles, visitScale]);
+  ), legendTicks = useMemo2(() => mode2 === "date" ? [0, 0.5, 1].map((t) => monthLabel(Math.round(t * months.max), epoch)) : [0, 0.5, 1].map((t) => `${Math.round(Math.exp(t * visitScale) - 1).toLocaleString("en-US")}`), [mode2, tiles, visitScale]);
   return /* @__PURE__ */ jsxs15("div", { className: "skymap", children: [
     /* @__PURE__ */ jsxs15("div", { className: "skymap__controls", children: [
       /* @__PURE__ */ jsxs15("div", { className: "skymap__modes", role: "group", "aria-label": "Coordinate system", children: [
@@ -2220,46 +2309,157 @@ function SkyMap({ tiles }) {
           }
         )
       ] }),
-      /* @__PURE__ */ jsx16("span", { className: "skymap__readout", role: "status", children: hover === null ? `${tiles.count.toLocaleString("en-US")} tiles observed` : /* @__PURE__ */ jsxs15(Fragment7, { children: [
-        /* @__PURE__ */ jsx16("b", { children: tiles.name[hover] }),
+      /* @__PURE__ */ jsx16("span", { className: "skymap__readout", role: "status", children: probe === null ? `${tiles.count.toLocaleString("en-US")} tiles observed` : hover === null ? /* @__PURE__ */ jsxs15(Fragment7, { children: [
+        "RA ",
+        probe.ra.toFixed(1),
+        "\xB0 Dec ",
+        deg(probe.dec),
+        " \xB7 not observed"
+      ] }) : /* @__PURE__ */ jsxs15(Fragment7, { children: [
+        /* @__PURE__ */ jsx16("b", { children: nameAt(hover) }),
         " \xB7",
         " ",
         frame === "equatorial" ? /* @__PURE__ */ jsxs15(Fragment7, { children: [
           "RA ",
-          tiles.ra[hover].toFixed(1),
+          probe.ra.toFixed(1),
           "\xB0 Dec ",
-          tiles.dec[hover].toFixed(1),
-          "\xB0"
+          deg(probe.dec)
         ] }) : /* @__PURE__ */ jsxs15(Fragment7, { children: [
           "l ",
-          coords.lon[hover].toFixed(1),
+          probe.l.toFixed(1),
           "\xB0 b ",
-          coords.lat[hover].toFixed(1),
-          "\xB0"
+          deg(probe.b)
         ] }),
         " ",
         "\xB7 ",
         tiles.visits[hover],
         " ",
         tiles.visits[hover] === 1 ? "visit" : "visits",
-        " \xB7 last",
+        " \xB7",
         " ",
-        monthLabel(tiles.month[hover], tiles.epoch)
+        tiles.frames[hover].toLocaleString("en-US"),
+        " frames \xB7 last",
+        " ",
+        monthLabel(months.index[hover], epoch)
       ] }) })
     ] }),
-    /* @__PURE__ */ jsx16("div", { className: "skymap__canvas", ref: wrapRef, children: /* @__PURE__ */ jsx16(
-      "canvas",
-      {
-        ref: canvasRef,
-        style: { width: "100%", display: "block" },
-        onMouseMove: onMove,
-        onMouseLeave: () => setHover(null),
-        role: "img",
-        "aria-label": `Mollweide all-sky map of ${tiles.count.toLocaleString(
-          "en-US"
-        )} observed 7DS tiles in ${frame === "equatorial" ? "equatorial" : "galactic"} coordinates, colored by ${mode2 === "date" ? "the date each was last observed" : "the number of visits to each"}. Longitude increases to the left.`
-      }
-    ) }),
+    /* @__PURE__ */ jsxs15("div", { className: "skymap__canvas", ref: wrapRef, children: [
+      /* @__PURE__ */ jsx16(
+        "canvas",
+        {
+          ref: canvasRef,
+          style: { width: "100%", display: "block" },
+          onPointerMove: onMove,
+          onPointerLeave: () => setProbe(null),
+          role: "img",
+          "aria-label": `Mollweide all-sky map of ${tiles.count.toLocaleString(
+            "en-US"
+          )} observed 7DS tiles in ${frame === "equatorial" ? "equatorial" : "galactic"} coordinates, colored by ${mode2 === "date" ? "the date each was last observed" : "the number of visits to each"}. Longitude increases to the left.`
+        }
+      ),
+      probe && /* @__PURE__ */ jsx16(
+        "div",
+        {
+          className: `skymap__tip${probe.x > width * 0.55 ? " skymap__tip--left" : ""}${probe.y > width * RATIO * 0.55 ? " skymap__tip--up" : ""}`,
+          style: { left: probe.x, top: probe.y },
+          "aria-hidden": "true",
+          children: hover === null || !detail ? /* @__PURE__ */ jsxs15(Fragment7, { children: [
+            /* @__PURE__ */ jsxs15("div", { className: "skymap__tip-head", children: [
+              /* @__PURE__ */ jsx16("span", { className: "skymap__tip-name", children: "No observation" }),
+              /* @__PURE__ */ jsx16("span", { className: "skymap__tip-badge skymap__tip-badge--none", children: "Not observed" })
+            ] }),
+            /* @__PURE__ */ jsxs15("dl", { className: "skymap__tip-grid", children: [
+              /* @__PURE__ */ jsx16("dt", { children: "RA" }),
+              /* @__PURE__ */ jsxs15("dd", { children: [
+                probe.ra.toFixed(1),
+                "\xB0"
+              ] }),
+              /* @__PURE__ */ jsx16("dt", { children: "Dec" }),
+              /* @__PURE__ */ jsx16("dd", { children: deg(probe.dec) }),
+              /* @__PURE__ */ jsx16("dt", { children: "l, b" }),
+              /* @__PURE__ */ jsxs15("dd", { children: [
+                probe.l.toFixed(1),
+                "\xB0, ",
+                deg(probe.b)
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx16("p", { className: "skymap__tip-note", children: "No science frames recorded at this position." })
+          ] }) : /* @__PURE__ */ jsxs15(Fragment7, { children: [
+            /* @__PURE__ */ jsxs15("div", { className: "skymap__tip-head", children: [
+              /* @__PURE__ */ jsx16("span", { className: "skymap__tip-name", children: nameAt(hover) }),
+              /* @__PURE__ */ jsx16("span", { className: "skymap__tip-badge", children: "Observed" })
+            ] }),
+            /* @__PURE__ */ jsxs15("dl", { className: "skymap__tip-grid", children: [
+              /* @__PURE__ */ jsx16("dt", { children: "RA, Dec" }),
+              /* @__PURE__ */ jsxs15("dd", { children: [
+                probe.ra.toFixed(1),
+                "\xB0, ",
+                deg(probe.dec)
+              ] }),
+              /* @__PURE__ */ jsx16("dt", { children: "l, b" }),
+              /* @__PURE__ */ jsxs15("dd", { children: [
+                probe.l.toFixed(1),
+                "\xB0, ",
+                deg(probe.b)
+              ] }),
+              /* @__PURE__ */ jsx16("dt", { children: "Visits" }),
+              /* @__PURE__ */ jsxs15("dd", { children: [
+                tiles.visits[hover].toLocaleString("en-US"),
+                " ",
+                tiles.visits[hover] === 1 ? "night" : "nights"
+              ] }),
+              /* @__PURE__ */ jsx16("dt", { children: "Frames" }),
+              /* @__PURE__ */ jsx16("dd", { children: tiles.frames[hover].toLocaleString("en-US") }),
+              exposureSec ? /* @__PURE__ */ jsxs15(Fragment7, { children: [
+                /* @__PURE__ */ jsx16("dt", { children: "Exposure" }),
+                /* @__PURE__ */ jsxs15("dd", { children: [
+                  "\u2248 ",
+                  duration(tiles.frames[hover] * exposureSec)
+                ] })
+              ] }) : null,
+              /* @__PURE__ */ jsx16("dt", { children: "Filters" }),
+              /* @__PURE__ */ jsx16("dd", { children: detail.count }),
+              /* @__PURE__ */ jsx16("dt", { children: "Dates" }),
+              /* @__PURE__ */ jsxs15("dd", { children: [
+                dayLabel(tiles.lastDay[hover] - tiles.span[hover], tiles.epochDate),
+                tiles.span[hover] > 0 && /* @__PURE__ */ jsxs15(Fragment7, { children: [
+                  " \u2013 ",
+                  dayLabel(tiles.lastDay[hover], tiles.epochDate)
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx16("div", { className: "skymap__tip-bands", children: detail.strip.map((band) => /* @__PURE__ */ jsx16(
+              "span",
+              {
+                className: "skymap__tip-band",
+                title: `${band.name}: ${band.frames} frames`,
+                children: /* @__PURE__ */ jsx16(
+                  "span",
+                  {
+                    className: "skymap__tip-band-fill",
+                    style: {
+                      height: `${band.frames > 0 ? Math.max(12, Math.sqrt(band.frames) / Math.sqrt(detail.peak) * 100) : 0}%`,
+                      background: wavelengthColor(band.nm)
+                    }
+                  }
+                )
+              },
+              band.name
+            )) }),
+            /* @__PURE__ */ jsxs15("div", { className: "skymap__tip-scale", children: [
+              /* @__PURE__ */ jsx16("span", { children: "400 nm" }),
+              /* @__PURE__ */ jsx16("span", { children: "frames per medium band" }),
+              /* @__PURE__ */ jsx16("span", { children: "875 nm" })
+            ] }),
+            detail.broad.length > 0 && /* @__PURE__ */ jsx16("p", { className: "skymap__tip-broad", children: detail.broad.map((band) => /* @__PURE__ */ jsxs15("span", { children: [
+              /* @__PURE__ */ jsx16("b", { children: band.name }),
+              " ",
+              band.frames.toLocaleString("en-US")
+            ] }, band.name)) })
+          ] })
+        }
+      )
+    ] }),
     /* @__PURE__ */ jsxs15("div", { className: "skymap__legend", children: [
       /* @__PURE__ */ jsx16("span", { className: "skymap__legend-title", children: mode2 === "date" ? "Last observed" : "Visits per tile" }),
       /* @__PURE__ */ jsx16("div", { className: "skymap__ramp", style: { background: `linear-gradient(to right, ${legendStops})` } }),
@@ -2291,7 +2491,7 @@ function fromEnvFile(key) {
   } catch {
   }
 }
-var BASE = (process.env.PORTAL_API_BASE || fromEnvFile("PORTAL_API_BASE") || "").replace(/\/$/, ""), TIMEOUT_MS = 6e3;
+var BASE = (process.env.PORTAL_API_BASE || fromEnvFile("PORTAL_API_BASE") || "").replace(/\/$/, ""), TIMEOUT_MS = { status: 6e3, tiles: 45e3 };
 function minutes(key, fallback) {
   let raw = process.env[key] || fromEnvFile(key), parsed = raw ? Number(raw) : NaN;
   return (Number.isFinite(parsed) && parsed > 0 ? parsed : fallback) * 60 * 1e3;
@@ -2300,11 +2500,11 @@ var TTL = {
   status: minutes("PORTAL_TTL_STATUS_MIN", 30),
   tiles: minutes("PORTAL_TTL_TILES_MIN", 24 * 60)
 }, cache = /* @__PURE__ */ new Map(), inFlight = /* @__PURE__ */ new Map(), RETRY_MS = 2 * 60 * 1e3;
-async function getJson(endpoint) {
+async function getJson(endpoint, key) {
   if (!BASE)
     throw new Error("PORTAL_API_BASE is not configured");
   let response = await fetch(`${BASE}${endpoint}`, {
-    signal: AbortSignal.timeout(TIMEOUT_MS),
+    signal: AbortSignal.timeout(TIMEOUT_MS[key]),
     headers: { accept: "application/json" }
   });
   if (!response.ok)
@@ -2333,7 +2533,7 @@ async function cached(key, load) {
 }
 function getStatus() {
   return cached("status", async () => {
-    let data = await getJson("/status/");
+    let data = await getJson("/status/", "status");
     return { data, live: !0, generatedAt: data.generated_at };
   }).catch(() => ({
     data: status_snapshot_default,
@@ -2341,27 +2541,46 @@ function getStatus() {
     generatedAt: status_snapshot_default.generated_at
   }));
 }
-var monthIndex = (iso, epochY, epochM) => (Number(iso.slice(0, 4)) - epochY) * 12 + (Number(iso.slice(5, 7)) - epochM);
+var DAY_MS2 = 24 * 60 * 60 * 1e3, dayIndex = (iso, epochMs) => Math.round((Date.parse(`${iso}T00:00:00Z`) - epochMs) / DAY_MS2), BROADBAND_NM = { u: 355, g: 477, r: 623, i: 762, z: 913 };
+function filterWavelength(name) {
+  let medium = /^m(\d+)w?$/.exec(name);
+  return medium ? Number(medium[1]) : BROADBAND_NM[name] ?? Number.POSITIVE_INFINITY;
+}
 function getTileMap() {
   return cached("tiles", async () => {
-    let raw = await getJson("/tiles/"), tiles = raw.tiles.filter((t) => Number.isFinite(t.ra) && Number.isFinite(t.dec)), firstNight = tiles[0]?.first_night ?? "", lastNight = tiles[0]?.last_night ?? "";
+    let raw = await getJson("/tiles/", "tiles"), tiles = raw.tiles.filter((t) => Number.isFinite(t.ra) && Number.isFinite(t.dec)).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0), firstNight = tiles[0]?.first_night ?? "", lastNight = tiles[0]?.last_night ?? "";
     for (let tile of tiles)
       tile.first_night < firstNight && (firstNight = tile.first_night), tile.last_night > lastNight && (lastNight = tile.last_night);
-    let epochY = Number(firstNight.slice(0, 4)), epochM = Number(firstNight.slice(5, 7)), data = {
+    let epochMs = Date.parse(`${firstNight}T00:00:00Z`), numeric = tiles.map((t) => /^T\d{1,6}$/.test(t.name) ? Number(t.name.slice(1)) : NaN), nameDelta = numeric.every((n) => Number.isFinite(n)) && numeric.every((n, i) => i === 0 || n > numeric[i - 1]) ? numeric.map((n, i) => i === 0 ? n : n - numeric[i - 1]) : void 0, seen = /* @__PURE__ */ new Set();
+    for (let tile of tiles)
+      for (let name of Object.keys(tile.filters ?? {}))
+        seen.add(name);
+    let filters = [...seen].sort((a, b) => filterWavelength(a) - filterWavelength(b)), filterIndex = new Map(filters.map((name, i) => [name, i])), patterns = [], patternIndex = /* @__PURE__ */ new Map(), patternFor = (tile) => {
+      let flat = Object.entries(tile.filters ?? {}).map(([name, frames]) => [filterIndex.get(name) ?? -1, frames]).filter(([i]) => i >= 0).sort((a, b) => a[0] - b[0]).flatMap(([i, frames]) => [i, frames]), key = flat.join(","), at = patternIndex.get(key);
+      return at === void 0 && (at = patterns.push(flat) - 1, patternIndex.set(key, at)), at;
+    }, data = {
       count: tiles.length,
-      name: tiles.map((t) => t.name),
+      ...nameDelta ? { nameDelta } : { name: tiles.map((t) => t.name) },
       // One decimal is well below the ~1° tile pitch and halves the payload.
       ra: tiles.map((t) => Math.round(t.ra * 10) / 10),
       dec: tiles.map((t) => Math.round(t.dec * 10) / 10),
-      month: tiles.map((t) => monthIndex(t.last_night, epochY, epochM)),
       visits: tiles.map((t) => t.n_nights),
-      epoch: [epochY, epochM],
-      monthMax: 0,
+      frames: tiles.map((t) => t.n_frames),
+      lastDay: tiles.map((t) => dayIndex(t.last_night, epochMs)),
+      // Most tiles were observed on a single night, so a span of zero repeats
+      // thousands of times and costs almost nothing to send.
+      span: tiles.map((t) => dayIndex(t.last_night, epochMs) - dayIndex(t.first_night, epochMs)),
+      pattern: tiles.map(patternFor),
+      filters,
+      filterWave: filters.map(filterWavelength),
+      patterns,
+      epochDate: firstNight,
       visitsMax: 0,
+      framesMax: 0,
       firstNight,
       lastNight
     };
-    return data.monthMax = data.month.reduce((a, b) => b > a ? b : a, 0), data.visitsMax = data.visits.reduce((a, b) => b > a ? b : a, 0), { data, live: !0, generatedAt: raw.generated_at };
+    return data.visitsMax = data.visits.reduce((a, b) => b > a ? b : a, 0), data.framesMax = data.frames.reduce((a, b) => b > a ? b : a, 0), { data, live: !0, generatedAt: raw.generated_at };
   }).catch(() => ({ data: EMPTY_TILES, live: !1, generatedAt: "" }));
 }
 BASE && setTimeout(() => {
@@ -2374,11 +2593,17 @@ var EMPTY_TILES = {
   name: [],
   ra: [],
   dec: [],
-  month: [],
   visits: [],
-  epoch: [2023, 10],
-  monthMax: 0,
+  frames: [],
+  lastDay: [],
+  span: [],
+  pattern: [],
+  filters: [],
+  filterWave: [],
+  patterns: [],
+  epochDate: "2023-10-01",
   visitsMax: 0,
+  framesMax: 0,
   firstNight: "",
   lastNight: ""
 };
@@ -2396,20 +2621,21 @@ async function loader() {
   let [tiles, status] = await Promise.all([
     getTileMap(),
     getStatus().catch(() => null)
-  ]);
+  ]), totals = status?.data.totals, exposureSec = totals && totals.science_frames > 0 ? totals.exposure_hours * 3600 / totals.science_frames : null;
   return json(
     {
       tiles: tiles.data,
       generatedAt: tiles.generatedAt,
       live: tiles.live,
       ris: status?.data.ris ?? null,
-      frames: status?.data.totals.science_frames ?? null
+      frames: totals?.science_frames ?? null,
+      exposureSec
     },
     { headers: { "Cache-Control": CACHE } }
   );
 }
 var CACHE = "public, max-age=3600, stale-while-revalidate=86400", headers = () => ({ "Cache-Control": CACHE }), num = (value) => value.toLocaleString("en-US"), day = (iso) => new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }), Index11 = () => {
-  let { tiles, generatedAt, live, ris, frames } = useLoaderData(), singleVisit = tiles.visits.filter((v) => v === 1).length, repeated = tiles.count - singleVisit;
+  let { tiles, generatedAt, live, ris, frames, exposureSec } = useLoaderData(), singleVisit = tiles.visits.filter((v) => v === 1).length, repeated = tiles.count - singleVisit;
   return /* @__PURE__ */ jsxs16(PageLayout, { menu: "manuData", children: [
     /* @__PURE__ */ jsx17(
       PageHero,
@@ -2430,12 +2656,18 @@ var CACHE = "public, max-age=3600, stale-while-revalidate=86400", headers = () =
       }
     ),
     /* @__PURE__ */ jsxs16(Section, { eyebrow: "Footprint", title: "Where 7DS has been", wide: !0, children: [
-      /* @__PURE__ */ jsx17("p", { className: "prose", children: "The projection is Mollweide and equal-area, so a patch of ink covers the same amount of sky wherever it falls \u2014 the deep southern coverage is not exaggerated by the projection the way it would be on a rectangular plot. Longitude increases to the left, as on the sky. Switch between equatorial and galactic coordinates to see the survey against the sky's own grid or against the plane of the Milky Way; hover a tile for its identifier, position and visit count." }),
-      /* @__PURE__ */ jsx17("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx17(SkyMap, { tiles }) }),
+      /* @__PURE__ */ jsx17("p", { className: "prose", children: "The projection is Mollweide and equal-area, so a patch of ink covers the same amount of sky wherever it falls \u2014 the deep southern coverage is not exaggerated by the projection the way it would be on a rectangular plot. Longitude increases to the left, as on the sky. Switch between equatorial and galactic coordinates to see the survey against the sky's own grid or against the plane of the Milky Way. Point anywhere on the map to read what the observation record holds for that position: the tile identifier, how many nights it has been visited, how many frames it carries, roughly how much open-shutter time that represents, and which of the medium bands have been taken on it. Positions with no data say so rather than reporting nothing." }),
+      /* @__PURE__ */ jsx17("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx17(SkyMap, { tiles, exposureSec }) }),
       /* @__PURE__ */ jsxs16("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
         live ? `Live from the 7DT GW Portal, generated ${day(generatedAt)}.` : "The portal could not be reached; this map is a stored copy and may be out of date.",
         " ",
-        "Only tiles with at least one science exposure appear. Target-of-opportunity pointings at arbitrary coordinates are not on the tile grid and are not shown."
+        "Only tiles with at least one science exposure appear. Target-of-opportunity pointings at arbitrary coordinates are not on the tile grid and are not shown.",
+        exposureSec ? /* @__PURE__ */ jsxs16(Fragment8, { children: [
+          " ",
+          "Frame counts and filters are exact. Exposure time is an estimate: the database records open-shutter time for the survey as a whole rather than per tile, so a tile's figure is its frame count times the survey mean of ",
+          exposureSec.toFixed(0),
+          " seconds per frame, and is marked \u2248 for that reason."
+        ] }) : null
       ] })
     ] }),
     /* @__PURE__ */ jsxs16(Section, { eyebrow: "Read from the map", title: "What the coverage shows", alt: !0, children: [
@@ -3817,7 +4049,7 @@ var MainPage = () => {
               /* @__PURE__ */ jsx27("ul", { className: "theme-chips", children: science_default.themes.map((theme) => /* @__PURE__ */ jsx27("li", { children: /* @__PURE__ */ jsx27(Link13, { to: `/science/sci#${theme.id}`, children: theme.title }) }, theme.id)) }),
               /* @__PURE__ */ jsx27("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx27(Link13, { className: "link-arrow", to: "/science/overview", style: { color: "var(--accent-on-dark)" }, children: "Science program" }) })
             ] }),
-            /* @__PURE__ */ jsxs26("div", { className: "stat-grid stat-grid--on-dark", children: [
+            /* @__PURE__ */ jsxs26("div", { className: "stat-grid stat-grid--2x2 stat-grid--on-dark", children: [
               /* @__PURE__ */ jsxs26("div", { className: "stat", children: [
                 /* @__PURE__ */ jsx27("span", { className: "stat__value", children: "20" }),
                 /* @__PURE__ */ jsx27("span", { className: "stat__label", children: "Telescopes in the array" }),
@@ -4124,7 +4356,7 @@ var meta23 = () => [
 }, news_default2 = Index23;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-ZNIUNI5Q.js", imports: ["/build/_shared/chunk-INIM7YPY.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-QDAJJAZE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-YWXHXMHQ.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-Q4ALZOX5.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-57QOBRM4.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-CQQLNJA7.js", imports: ["/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.coverage": { id: "routes/data.coverage", parentId: "root", path: "data/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/data.coverage-F75U4KQ5.js", imports: ["/build/_shared/chunk-GBQVOA7U.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-OGSNN6PZ.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-EO5E7IQG.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-3CFN7GST.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-YWUVHNL3.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-VDZ2INGS.js", imports: ["/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-SRGKFDSJ.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-VDS6YSAG.js", imports: ["/build/_shared/chunk-7BKNUNV7.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-JSHLPCXM.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-WOG6Y3JP.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-UYDBYIYG.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-HMPV6TW3.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-4RQXE2GX.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-DHJSOW6P.js", imports: ["/build/_shared/chunk-GBQVOA7U.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-6IAIVMDD.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-4FZOA6XB.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-JFJCBQXX.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-RX53GWRW.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-UNCCIHW6.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-V6ZAKWRO.js", "/build/_shared/chunk-5NYPLOVW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "415c12f7", hmr: void 0, url: "/build/manifest-415C12F7.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-ZFC5QO2S.js", imports: ["/build/_shared/chunk-CHAT7RQX.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-A75UTJLZ.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-CWKBPX3B.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-OURZ3T2C.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-MG5OIKS4.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-AELYJHXY.js", imports: ["/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.coverage": { id: "routes/data.coverage", parentId: "root", path: "data/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/data.coverage-DCKXO6MS.js", imports: ["/build/_shared/chunk-NYRQ4YHK.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.data": { id: "routes/data.data", parentId: "root", path: "data/data", index: void 0, caseSensitive: void 0, module: "/build/routes/data.data-SCKDF453.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.overview": { id: "routes/data.overview", parentId: "root", path: "data/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/data.overview-VBUUO6LP.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.software": { id: "routes/data.software", parentId: "root", path: "data/software", index: void 0, caseSensitive: void 0, module: "/build/routes/data.software-OOTWQYDF.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-4A4SR6CX.js", imports: ["/build/_shared/chunk-SZPEIRJL.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-L2UZP3JY.js", imports: ["/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-BRIFIE25.js", imports: ["/build/_shared/chunk-SZPEIRJL.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-ZRQUA6I6.js", imports: ["/build/_shared/chunk-SZPEIRJL.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-N2JBVXRN.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-LF3EQV6C.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-MYYFSFXM.js", imports: ["/build/_shared/chunk-ZYNMG2W5.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-4HQBPDNA.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-Z4FIVTXK.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-TM6GI5YW.js", imports: ["/build/_shared/chunk-NYRQ4YHK.js", "/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-HBIQTKM7.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-5J332QUL.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-C3LMVCX4.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-DTOBHXRC.js", imports: ["/build/_shared/chunk-W6MFKUVP.js", "/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-RM3WNNGO.js", imports: ["/build/_shared/chunk-DR3DY6EE.js", "/build/_shared/chunk-H7PSGHGO.js", "/build/_shared/chunk-5WT5YMMJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "a895d226", hmr: void 0, url: "/build/manifest-A895D226.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

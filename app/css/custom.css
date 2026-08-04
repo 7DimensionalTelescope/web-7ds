@@ -980,6 +980,14 @@ hr {
   box-shadow: 0 0 0 3px rgba(95, 208, 166, 0.2);
 }
 
+.stat-grid--2x2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.stat-grid--2x2 .stat:nth-child(2n) { border-right: 0; }
+.stat-grid--2x2 .stat:nth-child(-n+2) { border-bottom: var(--hairline); }
+.stat-grid--2x2 .stat:last-child { border-right: 0; }
+
 .stat-grid--on-dark {
   border-color: rgba(255, 255, 255, 0.14);
   background: transparent;
@@ -989,12 +997,19 @@ hr {
 .stat-grid--on-dark .stat__value { color: #fff; }
 .stat-grid--on-dark .stat__label { color: rgba(255, 255, 255, 0.8); }
 .stat-grid--on-dark .stat__unit { color: rgba(255, 255, 255, 0.6); }
+.stat-grid--on-dark.stat-grid--2x2 .stat:nth-child(-n+2) { border-bottom-color: rgba(255, 255, 255, 0.14); }
 
 @media (max-width: 560px) {
   .stat-grid { grid-template-columns: minmax(0, 1fr); }
   .stat { border-right: 0; border-bottom: var(--hairline); }
   .stat:last-child { border-bottom: 0; }
   .stat-grid--on-dark .stat { border-bottom-color: rgba(255, 255, 255, 0.14); }
+
+  .stat-grid--2x2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-grid--2x2 .stat:nth-child(2n) { border-right: 0; border-bottom: var(--hairline); }
+  .stat-grid--2x2 .stat:nth-child(2n-1) { border-right: var(--hairline); border-bottom: var(--hairline); }
+  .stat-grid--2x2 .stat:nth-last-child(-n+2) { border-bottom: 0; }
+  .stat-grid--on-dark.stat-grid--2x2 .stat { border-right-color: rgba(255, 255, 255, 0.14); border-bottom-color: rgba(255, 255, 255, 0.14); }
 }
 
 /* Progress meter, for survey completion */
@@ -2603,7 +2618,140 @@ table[class*='w-full'] thead {
 
 .skymap__readout b { color: var(--ink-900); }
 
-.skymap__canvas { padding: 0.5rem; }
+.skymap__canvas { padding: 0.5rem; position: relative; }
+
+/* Pointer card. Placed at the cursor and flipped away from the edges by the
+   component, so it never runs off the map. It cannot take the pointer or the
+   hover would flicker between the card and the canvas beneath it. */
+.skymap__tip {
+  --tx: 14px;
+  --ty: 14px;
+  position: absolute;
+  z-index: 3;
+  width: 15.5rem;
+  padding: 0.6rem 0.7rem 0.55rem;
+  transform: translate(var(--tx), var(--ty));
+  pointer-events: none;
+  background: var(--paper);
+  border: var(--hairline);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.skymap__tip--left { --tx: calc(-100% - 14px); }
+.skymap__tip--up { --ty: calc(-100% - 14px); }
+
+.skymap__tip-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.45rem;
+  border-bottom: var(--hairline);
+}
+
+.skymap__tip-name {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.skymap__tip-badge {
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--radius-sm);
+  color: #16795e;
+  background: rgba(22, 121, 94, 0.1);
+}
+
+.skymap__tip-badge--none {
+  color: var(--slate-500);
+  background: var(--slate-100);
+}
+
+.skymap__tip-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.6rem;
+  margin: 0.5rem 0 0;
+  font-size: 0.6875rem;
+}
+
+.skymap__tip-grid dt {
+  color: var(--slate-500);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.625rem;
+  align-self: center;
+}
+
+.skymap__tip-grid dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  color: var(--ink-900);
+  text-align: right;
+}
+
+.skymap__tip-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  color: var(--slate-600);
+}
+
+/* One column per medium band, in wavelength order. Bands with no frames stay
+   as empty slots so the gaps in a tile's coverage are as visible as the fills. */
+.skymap__tip-bands {
+  display: flex;
+  align-items: flex-end;
+  gap: 1px;
+  height: 26px;
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: var(--hairline);
+}
+
+.skymap__tip-band {
+  flex: 1 1 0;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  background: var(--slate-100);
+  border-radius: 1px;
+}
+
+.skymap__tip-band-fill {
+  display: block;
+  width: 100%;
+  border-radius: 1px;
+}
+
+.skymap__tip-scale {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+  font-size: 0.5625rem;
+  letter-spacing: 0.03em;
+  color: var(--slate-500);
+}
+
+.skymap__tip-broad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.45rem 0 0;
+  padding-top: 0.4rem;
+  border-top: var(--hairline);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--slate-600);
+}
+
+.skymap__tip-broad b { color: var(--ink-900); }
 
 .skymap__legend {
   display: grid;

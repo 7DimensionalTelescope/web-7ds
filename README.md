@@ -81,8 +81,12 @@ Rebuild and restart after any change: the JSON is compiled into the bundle, not 
   reaches the browser bundle and a visitor's browser never contacts the portal.
 - Refresh intervals are per endpoint and set by `PORTAL_TTL_STATUS_MIN` (default 30) and
   `PORTAL_TTL_TILES_MIN` (default 1440, i.e. once a day). Status is ~2 KB and worth keeping
-  current; the tile list is ~2 MB and cannot change until a night in Chile ends, so refetching
+  current; the tile list is ~6 MB and cannot change until a night in Chile ends, so refetching
   it more often is pure bandwidth. At these settings the portal sees about 50 requests a day.
+- Timeouts are per endpoint too: 6 s for status, 45 s for tiles. The portal builds the tile
+  payload on demand — a third of a second while its own cache is warm, thirteen or more when it
+  is not — so a shared 6 s limit made the map fail exactly when the portal refreshed. Nothing
+  waits on the tile fetch anyway; it happens at boot or behind a stale response.
 - The cache serves stale while it revalidates: an expired entry is returned immediately and the
   refetch runs behind the response, so no visitor ever waits on the portal. Concurrent requests
   share one refresh. A failed refresh marks the held copy stale — the page then says so — and
@@ -90,8 +94,14 @@ Rebuild and restart after any change: the JSON is compiled into the bundle, not 
 - If the portal is unreachable, the status page renders from
   `app/routes/content/status-snapshot.json` and says so in a banner; the sky map renders empty.
   Refresh the snapshot occasionally so the fallback is not embarrassing.
-- The tile payload is ~2 MB. `getTileMap()` reduces it to parallel arrays before it is
-  serialised to the client. Do not pass the raw payload through.
+- The tile payload is ~6 MB. `getTileMap()` reduces it to parallel arrays before it is
+  serialised to the client. Do not pass the raw payload through. Two encodings keep that
+  reduction small enough to send whole, at ~90 KB gzipped for 15,000 tiles: identifiers travel
+  as first differences (they are ascending `T#####`, with a fallback to raw strings if the
+  portal ever breaks that pattern), and the per-filter frame counts are deduplicated into a
+  table of ~950 distinct patterns that the tiles index into. Anything derivable on the client —
+  the month index used for the colour scale, a tile's first night — is derived there rather
+  than sent.
 
 ---
 
