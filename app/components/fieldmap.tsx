@@ -1,5 +1,5 @@
 import React from 'react';
-import { viridis, rgb, isDark } from './colors';
+import { spectrum, rgb, isDark } from './colors';
 
 /* ---------------------------------------------------------------------------
    A single survey field, drawn at its own scale.
@@ -209,7 +209,7 @@ export default function FieldMap({
             .sort((a, b) => Number(Boolean(a.tile.highlight)) - Number(Boolean(b.tile.highlight)))
             .map(({ tile, points }) => {
               const active = tile.highlight !== false;
-              const color = viridis(
+              const color = spectrum(
                 maxValue === minValue
                   ? 0.65
                   : ((tile.value - minValue) / (maxValue - minValue)) * 0.75 + 0.2

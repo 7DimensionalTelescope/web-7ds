@@ -349,11 +349,10 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
                           Mollweide ellipse leaves the corners empty, so it
                           covers nothing. */}
                       <div className="home-survey__stamp">
-                        <LiveBadge live={tilesLive} updated={generatedAt} onDark />
+                        <LiveBadge live={tilesLive} updated={generatedAt} />
                       </div>
                       <SkyMap
                         tiles={tiles}
-                        theme="dark"
                         interactive={false}
                         caption={`${tiles.count.toLocaleString('en-US')} tiles observed`}
                       />
@@ -361,11 +360,7 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
                         <span className="home-survey__count">
                           {tiles.count.toLocaleString('en-US')} tiles observed
                         </span>
-                        <Link
-                          className="link-arrow"
-                          to="/users/access"
-                          style={{ color: 'var(--accent-on-dark)' }}
-                        >
+                        <Link className="link-arrow" to="/users/access">
                           Explore the coverage map
                         </Link>
                       </div>
