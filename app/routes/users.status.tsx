@@ -98,7 +98,7 @@ const Index = () => {
 
       {/* Array-wide operation. It is neither a property of one survey nor of
           the instrument, and a user planning work needs it before either. */}
-      <Section eyebrow="Operations" title="What a night produces">
+      <Section eyebrow="Operations" title="What a night produces" alt>
         <p className="prose">
           Over {num(nightly.n_nights)} observing nights since {day(nightly.first_night)}, the array
           has recorded {num(totals.science_frames)} science frames in{' '}
@@ -145,7 +145,7 @@ const Index = () => {
         </p>
       </Section>
 
-      <Section eyebrow="Filters" title="Bands available" alt>
+      <Section eyebrow="Filters" title="Bands available">
         <div className="split split--wide-text">
           <div>
             <p className="prose">
@@ -193,7 +193,7 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Response" title="Filter response curves" wide>
+      <Section eyebrow="Response" title="Filter response curves" alt wide>
         <FilterCurves />
         <p className="footnote" style={{ marginTop: '1rem' }}>
           Curves are read from the reference data shipped with{' '}
@@ -233,7 +233,7 @@ const Index = () => {
           Target-of-opportunity data skip compression and the wait for sunrise, which brings
           latency down to tens of minutes. What the pipeline produces, and the quality metrics
           attached to each product, are described under{' '}
-          <Link to="/users/format">data format</Link>.
+          <Link to="/users/access#format">using the data</Link>.
         </p>
       </Section>
     </PageLayout>

@@ -102,7 +102,7 @@ const GROUPS: { group: string; items: { q: string; a: React.ReactNode }[] }[] = 
           <>
             Coadds are flux-scaled to a zero point of 23.9 AB, which puts each pixel directly in
             µJy. It suits the pixel-based analysis medium-band data invite, but it differs from the
-            counts most archives deliver — see <Link to="/users/format">data format</Link>.
+            counts most archives deliver — see <Link to="/users/access#format">using the data</Link>.
           </>
         ),
       },

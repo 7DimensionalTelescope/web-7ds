@@ -42,6 +42,16 @@ function fromEnvFile(key: string): string | undefined {
   return undefined;
 }
 
+/**
+ * A configuration value from the process environment, falling back to .env.
+ * Exported because the internal service addresses are configured the same way
+ * and for the same reason: they do not belong in a public repository.
+ */
+export function readEnv(key: string): string | undefined {
+  const value = process.env[key] || fromEnvFile(key);
+  return value && value.trim() ? value.trim() : undefined;
+}
+
 const BASE = (process.env.PORTAL_API_BASE || fromEnvFile('PORTAL_API_BASE') || '').replace(/\/$/, '');
 
 /* How long to wait on each endpoint, which is not the same question for the

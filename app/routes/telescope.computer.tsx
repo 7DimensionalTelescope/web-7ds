@@ -105,7 +105,7 @@ const Index = () => {
         </figure>
         <div className="btn-row" style={{ marginTop: '2rem' }}>
           <Link className="btn btn--primary" to="/users/software">Reduction software</Link>
-          <Link className="btn btn--secondary" to="/users/format">Data products</Link>
+          <Link className="btn btn--secondary" to="/users/access#format">Data products</Link>
         </div>
       </Section>
     </PageLayout>

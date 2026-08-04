@@ -50,7 +50,7 @@ const Index = () => {
               pixel-based SED fitting without further conversion.
             </p>
             <div className="btn-row" style={{ marginTop: '1.5rem' }}>
-              <Link className="btn btn--primary" to="/users/format">Data format</Link>
+              <Link className="btn btn--primary" to="/users/access#format">Using the data</Link>
               <Link className="btn btn--secondary" to="/users/software">Software</Link>
             </div>
           </div>

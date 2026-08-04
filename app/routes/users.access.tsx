@@ -2,17 +2,19 @@ import React from 'react';
 import type { HeadersFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
-import { PageLayout, PageHero, Section, StatGrid, LiveBadge } from '../components/site';
+import { PageLayout, PageHero, Section, StatGrid, SimpleTable, LiveBadge } from '../components/site';
 import SkyMap from '../components/skymap';
 import TileQuery from '../components/tilequery';
 import { getStatus, getTileMap } from '../lib/portal.server';
+import { dataProductText } from './content/text';
+import software from './content/software.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Data access · 7DT for users' },
   {
     name: 'description',
     content:
-      'Search 7DS coverage by position or on an all-sky map, see what exists for a tile, and find out how to obtain the data.',
+      'Search 7DS coverage by position or on an all-sky map, find out how to obtain the data, and what the pipeline produces and in what units.',
   },
 ];
 
@@ -46,6 +48,34 @@ export async function loader() {
   );
 }
 
+/* Format lives here rather than on a page of its own: finding data and knowing
+   what arrives are the same errand. */
+const PRODUCTS = [
+  ['single', 'A calibrated individual exposure, 100 s, with WCS and a source catalog'],
+  ['coadd', 'Three singles combined to a 300 s frame — the basic survey product'],
+  ['difference', 'A coadd minus its reference image, for transient detection'],
+  ['catalog', 'A flux-calibrated source list attached to every image above'],
+  ['master frame', 'Bias, dark and flat, generated nightly and matched by group key'],
+];
+
+const CONVENTIONS = [
+  ['Photometric system', 'AB magnitudes'],
+  ['Coadd zero point', '23.9 AB — pixel values in µJy'],
+  ['Astrometric reference', 'Gaia DR3'],
+  ['Flux calibration', 'Synthetic photometry from Gaia XP spectra'],
+  ['Tiling', 'HEALPix-derived, T00000 – T28519'],
+  ['File format', 'FITS, with QA metrics in the header'],
+];
+
+const QA_KEYS = [
+  ['SANITY', 'Boolean; false means the image should not be used for science'],
+  ['REJ_PROC', 'The processing stage at which SANITY was set false'],
+  ['SEEING', 'Measured PSF FWHM'],
+  ['UL5_5', '5σ limiting magnitude'],
+  ['ELLIP', 'Point-source elongation'],
+  ['PPFLAG', 'Bitmask recording compromises in master-frame selection'],
+];
+
 const num = (value: number) => value.toLocaleString('en-US');
 
 const day = (iso: string) =>
@@ -63,10 +93,10 @@ const Index = () => {
         eyebrow="For users"
         title={
           <>
-            Data <em>access</em>
+            Data access &amp; <em>format</em>
           </>
         }
-        lede="Find out whether a position has been observed, what exists for it, and how to obtain it."
+        lede="Find out whether a position has been observed, obtain the data, and know what arrives when you do."
         image="/img/hero/data.jpg"
         meta={[
           { value: num(tiles.count), label: 'Tiles with data', live: true },
@@ -176,7 +206,101 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Ahead" title="Planned public release" alt>
+      <Section id="format" eyebrow="Format" title="What the pipeline produces" alt>
+        <div className="split split--wide-text">
+        <div>
+          <p className="prose">{dataProductText}</p>
+          <ul className="feature-list" style={{ marginTop: '1.5rem' }}>
+            {PRODUCTS.map((product) => (
+              <li key={product[0]}>
+                <span className="feature-list__key" style={{ fontFamily: 'var(--font-mono)' }}>
+                  {product[0]}
+                </span>
+                <div>
+                  <p className="feature-list__body" style={{ margin: 0 }}>
+                    {product[1]}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <SimpleTable caption="Conventions" rows={CONVENTIONS} />
+        </div>
+      </Section>
+
+        <Section eyebrow="Headers" title="Header and catalog information">
+        <div className="split split--wide-text">
+        <div>
+          <p className="prose">
+            Quality-assurance metrics are written into the FITS header of every product and
+            ingested into the operations database, so the state of an image can be inspected
+            without opening it. Each catalog is a flux-calibrated source list matched to its parent
+            image, carrying positions on the Gaia DR3 frame and AB magnitudes in the band of the
+            image it was extracted from. For a coadd this means one row per detected source per
+            band; combining bands for a given source gives the medium-band spectral energy
+            distribution that the survey exists to produce.
+          </p>
+        </div>
+        <SimpleTable caption="Selected header keywords" rows={QA_KEYS} />
+        </div>
+      </Section>
+
+        <Section eyebrow="Processing" title="How a night is reduced" alt>
+        <p className="prose">
+        Images are grouped by their properties — unit, filter, observing mode, night — into
+        configurations, and each group runs through the same sequence. Established astronomical
+        software does the numerical work behind Python interfaces rather than being reimplemented,
+        so the behavior of each stage is that of the underlying tool.
+        </p>
+
+        <ul className="feature-list" style={{ marginTop: '2rem' }}>
+        {software.stages.map((stage, index) => (
+          <li key={stage.module}>
+            <span className="feature-list__key">{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h3
+                className="feature-list__title"
+                style={{ fontFamily: 'var(--font-mono)', fontSize: '1rem' }}
+              >
+                {stage.module}
+              </h3>
+              <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
+                {stage.body}
+              </p>
+            </div>
+          </li>
+        ))}
+        </ul>
+
+        <div className="panel panel--alt" style={{ marginTop: '2rem' }}>
+        <div className="panel__title">External engines</div>
+        <div className="table-wrap" style={{ border: 0 }}>
+          <table className="spec-table">
+            <tbody>
+              {software.external.map((tool) => (
+                <tr key={tool[0]}>
+                  <th scope="row" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8125rem' }}>
+                    {tool[0]}
+                  </th>
+                  <td style={{ fontFamily: 'var(--font-sans)' }}>{tool[1]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+        <div className="btn-row" style={{ marginTop: '2rem' }}>
+        <Link className="btn btn--primary" to="/users/access">
+          Getting the data
+        </Link>
+        <Link className="btn btn--secondary" to="/users/software">
+          Reprocessing it yourself
+        </Link>
+        </div>
+      </Section>
+      <Section eyebrow="Ahead" title="Planned public release">
         <p className="prose">
           A public release of survey products is being prepared alongside the completion of the
           Reference Imaging Survey, whose first full cycle is anticipated by the end of 2027. The

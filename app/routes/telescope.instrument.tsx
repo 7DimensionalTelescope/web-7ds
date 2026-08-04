@@ -112,7 +112,7 @@ const Index = () => {
         </p>
       </Section>
 
-      <Section eyebrow="On sky" title="What the filter set looks like" alt>
+      <Section eyebrow="On sky" title="What the filter set looks like">
         <div className="split">
           <figure className="figure">
             <img src="/img/NGC7293.gif" alt="The Helix Nebula through successive 7DT medium bands" loading="lazy" />
