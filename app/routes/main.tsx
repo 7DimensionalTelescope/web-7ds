@@ -343,14 +343,29 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
                 <div className="home-survey__map">
                   {tiles && tiles.count > 0 ? (
                     <>
+                      {/* The live mark sits in the corner of the map itself:
+                          it qualifies what is drawn, so it belongs on the
+                          figure rather than in a caption under it. The
+                          Mollweide ellipse leaves the corners empty, so it
+                          covers nothing. */}
+                      <div className="home-survey__stamp">
+                        <LiveBadge live={tilesLive} updated={generatedAt} onDark />
+                      </div>
                       <SkyMap
                         tiles={tiles}
+                        theme="dark"
                         interactive={false}
                         caption={`${tiles.count.toLocaleString('en-US')} tiles observed`}
                       />
                       <div className="home-survey__meta">
-                        <LiveBadge live={tilesLive} updated={generatedAt} />
-                        <Link className="link-arrow" to="/users/access">
+                        <span className="home-survey__count">
+                          {tiles.count.toLocaleString('en-US')} tiles observed
+                        </span>
+                        <Link
+                          className="link-arrow"
+                          to="/users/access"
+                          style={{ color: 'var(--accent-on-dark)' }}
+                        >
                           Explore the coverage map
                         </Link>
                       </div>
@@ -367,16 +382,13 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
                     >
                       <span className="tier-card__code">{tier.code}</span>
                       <h3 className="tier-card__name">{tier.name}</h3>
-                      <dl>
-                        <div>
-                          <dt>Area</dt>
-                          <dd>{tier.area}</dd>
-                        </div>
-                        <div>
-                          <dt>Cadence</dt>
-                          <dd>{tier.cadence}</dd>
-                        </div>
-                      </dl>
+                      {/* One line rather than a two-row table: the cards sit
+                          beside the map and have to come out shorter than it,
+                          or the map card ends early and leaves dead space. The
+                          full parameters are one click away. */}
+                      <p className="home-survey__spec">
+                        {tier.area} · {tier.cadence}
+                      </p>
                       <span className={`pill pill--${tier.status}`}>
                         {tier.status === 'live' && risCoverage !== null && tier.code === 'RIS'
                           ? `${risCoverage}% observed`
