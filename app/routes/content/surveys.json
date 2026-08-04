@@ -13,11 +13,11 @@
       "depth": "19.1 mag",
       "depthNote": "5σ point source in m600, single visit (3 × 100 s)",
       "started": "July 2024",
-      "summary": "The wide-area component of 7DS. Every tile of the southern sky is observed once with the full set of available medium bands, in three consecutive 100-second exposures. RIS images serve two purposes at once: reference frames against which transients are identified by difference imaging, and a homogeneous spectrophotometric map of the southern sky usable for galaxy population studies, photometric redshift catalogs and quasar identification. Full-cycle completion is anticipated by the end of 2027.",
+      "summary": "The wide-area survey of 7DS. Every tile of the southern sky is observed once with the full set of available medium bands, in three consecutive 100-second exposures. RIS images serve two purposes at once: reference frames against which transients are identified by difference imaging, and a homogeneous spectrophotometric map of the southern sky usable for galaxy population studies, photometric redshift catalogs and quasar identification. Full-cycle completion is anticipated by the end of 2027.",
       "depthRange": "5σ depths range from 19.7 mag at m400 to 17.2 mag at m875.",
       "tradeoff": "Area over depth and cadence",
       "goal": "Give every part of the southern sky a medium-band reference image, once.",
-      "rationale": "Difference imaging requires an earlier image of the same sky in the same bands. RIS builds that reference, and its scale follows from the problem: a gravitational-wave localization can fall anywhere, so the reference must cover everything the array can reach. Covering 23,000 deg² limits the time available per tile to a single visit of 3 × 100 s, which makes RIS the shallowest of the three components. A reference map built from forty medium bands is also a homogeneous spectrophotometric survey in its own right, so the same exposures support galaxy population studies, photometric redshifts and quasar identification."
+      "rationale": "Difference imaging requires an earlier image of the same sky in the same bands. RIS builds that reference, and its scale follows from the problem: a gravitational-wave localization can fall anywhere, so the reference must cover everything the array can reach. Covering 23,000 deg² limits the time available per tile to a single visit of 3 × 100 s, which makes RIS the shallowest of the three surveys. A reference map built from forty medium bands is also a homogeneous spectrophotometric survey in its own right, so the same exposures support galaxy population studies, photometric redshifts and quasar identification."
     },
     {
       "code": "WTS",
@@ -47,7 +47,7 @@
       "depth": "23.6 mag*",
       "depthNote": "*Cumulative over the planned five-year operation",
       "started": "April 2025",
-      "summary": "The deep, high-cadence component of 7DS. Seven tiles near the south ecliptic pole are observed every available night with the full medium-band set. The field was deliberately chosen to overlap the SPHEREx Deep Field South, so that 7DT optical medium-band photometry is co-located with SPHEREx near-infrared spectrophotometry within the same survey volume — a choice that maximizes the synergy between the two surveys for photometric redshifts and for spatially resolved studies of faint sources.",
+      "summary": "The deep, high-cadence survey of 7DS. Seven tiles near the south ecliptic pole are observed every available night with the full medium-band set. The field was deliberately chosen to overlap the SPHEREx Deep Field South, so that 7DT optical medium-band photometry is co-located with SPHEREx near-infrared spectrophotometry within the same survey volume — a choice that maximizes the synergy between the two surveys for photometric redshifts and for spatially resolved studies of faint sources.",
       "depthRange": "Field center: RA 05h13m07.36s, Dec −60°28′11.71″. Observing time budget of 20,000 minutes per year.",
       "tradeoff": "Depth and cadence over area",
       "goal": "Catch variability within a single night, and build the deepest photometry 7DS will produce.",
@@ -106,5 +106,5 @@
       "label": "Time"
     }
   ],
-  "designNote": "Area, cadence and depth cannot all be maximized from a fixed number of nights. Rather than adopt a single compromise, 7DS operates at three separate points in that trade, and ties them together by using one tiling for all three, so that data from any component coadd directly with data from the others."
+  "designNote": "Area, cadence and depth cannot all be maximized from a fixed number of nights. Rather than adopt a single compromise, 7DS operates at three separate points in that trade, and ties them together by using one tiling for all three, so that data from any of them coadd directly with data from the others."
 }

@@ -43,9 +43,9 @@ const Index = () => (
     <Section eyebrow="Time domain" title="Repeating the measurement" alt>
       <p className="prose">{scienceOverviewText2}</p>
       <p className="prose">
-        The three survey components exist to put that repetition at different cadences: one visit
+        The three surveys exist to put that repetition at different cadences: one visit
         everywhere, a revisit every 10 to 14 days over a smaller area, and nightly observation of
-        a single deep field. Which cadence a question needs is what determines which component
+        a single deep field. Which cadence a question needs is what determines which survey
         serves it — set out under <Link to="/survey/overview">survey design</Link>.
       </p>
     </Section>

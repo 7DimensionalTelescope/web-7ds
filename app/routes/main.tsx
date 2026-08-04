@@ -11,7 +11,7 @@ import FooterBar from './footer';
 
 /* Which snap sections carry a dark background — the dot navigation and the
    scroll cue invert against it. The last entry is the footer. */
-const SECTION_IS_DARK = [true, false, true, true, false, false, true];
+const SECTION_IS_DARK = [true, false, true, false, true, false, true];
 const SECTION_COUNT = SECTION_IS_DARK.length;
 const SECTION_NAMES = [
   'Introduction',
@@ -326,20 +326,17 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
         </section>
 
         {/* 04 — Survey ---------------------------------------------------- */}
-        <section
-          className="fullpage-section fullpage-section--dark"
-          style={{ backgroundImage: "url('/img/hero/survey.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}
-        >
+        <section className="fullpage-section section--alt">
           <div className="container container--wide">
             <div className="reveal">
-              <span className="eyebrow eyebrow--on-dark">7-Dimensional Sky Survey</span>
-              <h2>Three components over the southern sky</h2>
-              <p className="prose" style={{ color: 'rgba(255,255,255,.78)', maxWidth: '62ch' }}>
+              <span className="eyebrow">7-Dimensional Sky Survey</span>
+              <h2>Three surveys over the southern sky</h2>
+              <p className="prose" style={{ maxWidth: '62ch' }}>
                 {mainText3}
               </p>
 
               {/* The footprint is shown here rather than described, because
-                  what the three components divide up is exactly this sky. The
+                  what the three surveys divide up is exactly this sky. The
                   map is a figure, not a tool: the interactive one, with
                   per-tile detail, is on the coverage page. */}
               <div className="home-survey">
@@ -352,8 +349,8 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
                         caption={`${tiles.count.toLocaleString('en-US')} tiles observed`}
                       />
                       <div className="home-survey__meta">
-                        <LiveBadge live={tilesLive} updated={generatedAt} onDark />
-                        <Link className="link-arrow" to="/survey/coverage" style={{ color: 'var(--accent-on-dark)' }}>
+                        <LiveBadge live={tilesLive} updated={generatedAt} />
+                        <Link className="link-arrow" to="/users/access">
                           Explore the coverage map
                         </Link>
                       </div>
@@ -367,26 +364,20 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
                       className="tier-card tier-card--link"
                       key={tier.code}
                       to={`/survey/${tier.code.toLowerCase()}`}
-                      style={{ background: 'rgba(255,255,255,.04)', borderColor: 'rgba(255,255,255,.16)' }}
                     >
-                      <span className="tier-card__code" style={{ color: 'var(--accent-on-dark)' }}>
-                        {tier.code}
-                      </span>
-                      <h3 className="tier-card__name" style={{ color: '#fff' }}>{tier.name}</h3>
-                      <dl style={{ borderTopColor: 'rgba(255,255,255,.16)' }}>
-                        <div style={{ borderBottomColor: 'rgba(255,255,255,.1)' }}>
-                          <dt style={{ color: 'rgba(255,255,255,.55)' }}>Area</dt>
-                          <dd style={{ color: '#fff' }}>{tier.area}</dd>
+                      <span className="tier-card__code">{tier.code}</span>
+                      <h3 className="tier-card__name">{tier.name}</h3>
+                      <dl>
+                        <div>
+                          <dt>Area</dt>
+                          <dd>{tier.area}</dd>
                         </div>
-                        <div style={{ borderBottomColor: 'rgba(255,255,255,.1)' }}>
-                          <dt style={{ color: 'rgba(255,255,255,.55)' }}>Cadence</dt>
-                          <dd style={{ color: '#fff' }}>{tier.cadence}</dd>
+                        <div>
+                          <dt>Cadence</dt>
+                          <dd>{tier.cadence}</dd>
                         </div>
                       </dl>
-                      <span
-                        className={`pill pill--${tier.status}`}
-                        style={tier.status === 'planned' ? { color: 'rgba(255,255,255,.6)' } : undefined}
-                      >
+                      <span className={`pill pill--${tier.status}`}>
                         {tier.status === 'live' && risCoverage !== null && tier.code === 'RIS'
                           ? `${risCoverage}% observed`
                           : tier.statusLabel}
@@ -400,18 +391,23 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
         </section>
 
         {/* 05 — Telescope -------------------------------------------------- */}
-        <section className="fullpage-section">
+        <section
+          className="fullpage-section fullpage-section--dark"
+          style={{ backgroundImage: "url('/img/hero/survey.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+        >
           <div className="container container--wide">
             <div className="split split--middle reveal">
               <div>
-                <span className="eyebrow">The facility</span>
+                <span className="eyebrow eyebrow--on-dark">The facility</span>
                 <h2>Twenty telescopes, one system</h2>
-                <p className="prose">{mainText4}</p>
+                <p className="prose" style={{ color: 'rgba(255,255,255,.78)' }}>{mainText4}</p>
                 <p style={{ marginTop: '1.5rem' }}>
-                  <Link className="link-arrow" to="/telescope/overview">Telescope &amp; site</Link>
+                  <Link className="link-arrow" to="/telescope/overview" style={{ color: 'var(--accent-on-dark)' }}>
+                    Telescope &amp; site
+                  </Link>
                 </p>
               </div>
-              <ul className="feature-list">
+              <ul className="feature-list feature-list--on-dark">
                 <li>
                   <span className="feature-list__key">Hardware</span>
                   <div>

@@ -3,6 +3,7 @@ import type { HeadersFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import SurveyPage from '../components/surveypage';
+import SkyMap from '../components/skymap';
 import { getStatus, getTileMapLite } from '../lib/portal.server';
 import surveys from './content/surveys.json';
 
@@ -11,7 +12,7 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'The wide-area component of the 7-Dimensional Sky Survey: one medium-band visit to every tile of the southern sky, with live coverage from the observation database.',
+      'The wide-area survey of 7DS: one medium-band visit to every tile of the southern sky, with live coverage from the observation database.',
   },
 ];
 
@@ -64,8 +65,13 @@ const Index = () => {
       live={live}
       generatedAt={generatedAt}
       map={{
-        tiles,
-        caption: `${num(tiles.count)} tiles observed`,
+        node: (
+          <SkyMap
+            tiles={tiles}
+            interactive={false}
+            caption={`${num(tiles.count)} tiles observed`}
+          />
+        ),
         note:
           'Every tile with at least one science exposure, colored by the month it was last observed. Because RIS covers everything the array can reach, this map is also the footprint of the survey as a whole.',
       }}

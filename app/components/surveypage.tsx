@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from '@remix-run/react';
-import type { TileMap } from '../lib/portal.server';
 import { PageLayout, PageHero, Section, StatGrid, LiveBadge } from './site';
-import SkyMap from './skymap';
 
 /* ---------------------------------------------------------------------------
-   One page per component of the survey — RIS, IMS, WTS.
+   One page per survey — RIS, WTS, IMS.
 
    The three pages answer the same four questions in the same order (strategy,
    map, coverage, status), so they are one component rather than three copies.
-   What differs is only whether a component has data yet: WTS has not started,
+   What differs is only whether a survey has data yet: WTS has not started,
    so it renders the strategy and says plainly that the rest is not applicable
    instead of showing zeros.
 --------------------------------------------------------------------------- */
@@ -32,10 +30,10 @@ export type SurveyPageProps = {
   live: boolean;
   generatedAt?: string;
   map?: {
-    tiles: TileMap;
-    emphasize?: string[] | null;
-    caption: string;
-    note: string;
+    /** The figure itself — an all-sky map, a field map, whatever fits. */
+    node: React.ReactNode;
+    title?: string;
+    note: React.ReactNode;
   };
   coverage?: Stat[];
   progress?: { percent: number; label: string; note?: string };
@@ -71,7 +69,7 @@ export default function SurveyPage(props: SurveyPageProps) {
         meta={heroMeta}
       />
 
-      <Section eyebrow="Strategy" title="What this component is for">
+      <Section eyebrow="Strategy" title="What this survey is for">
         <div className="split split--wide-text">
           <div>
             <p className="rationale__goal">{goal}</p>
@@ -102,19 +100,14 @@ export default function SurveyPage(props: SurveyPageProps) {
       </Section>
 
       {map && (
-        <Section eyebrow="Map" title="Where it has observed" alt wide>
+        <Section eyebrow="Map" title={map.title ?? 'Where it has observed'} alt wide>
           <div style={{ marginBottom: '1.25rem' }}>
             <LiveBadge live={live} updated={generatedAt} interval="daily" />
           </div>
-          <SkyMap
-            tiles={map.tiles}
-            emphasize={map.emphasize}
-            interactive={false}
-            caption={map.caption}
-          />
+          {map.node}
           <p className="footnote" style={{ marginTop: '1rem' }}>
-            {map.note} The full map, with per-tile detail under the pointer, is on the{' '}
-            <Link to="/survey/coverage">sky coverage page</Link>.
+            {map.note} The whole survey footprint, with per-tile detail under the pointer and a
+            search by position, is on the <Link to="/users/access">data access page</Link>.
           </p>
         </Section>
       )}
@@ -157,16 +150,16 @@ export default function SurveyPage(props: SurveyPageProps) {
       <Section eyebrow="Elsewhere" title="Related pages" alt>
         <div className="chip-row">
           <Link className="chip" to="/survey/overview">
-            All three components
+            All three surveys
           </Link>
-          <Link className="chip" to="/survey/coverage">
-            Sky coverage map
-          </Link>
-          <Link className="chip" to="/survey/status">
-            Array operations
+          <Link className="chip" to="/users/access">
+            Sky coverage and search
           </Link>
           <Link className="chip" to="/users/status">
-            Data availability
+            Array operations
+          </Link>
+          <Link className="chip" to="/users/performance">
+            Measured performance
           </Link>
         </div>
       </Section>

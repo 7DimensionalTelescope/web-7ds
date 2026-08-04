@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { TileMap } from '../lib/portal.server';
+import { viridis, rgb } from './colors';
+import { TileDetail, degLabel as deg } from './tiledetail';
 
 /* ---------------------------------------------------------------------------
    All-sky map of observed 7DS tiles.
@@ -80,37 +82,6 @@ function unproject(x: number, y: number): [number, number] | null {
   return [((-lon % 360) + 360) % 360, lat];
 }
 
-/* Viridis, sampled at nine stops and interpolated between them. Chosen to
-   match the colour scale used in the survey's own footprint figures, and
-   because it stays legible in greyscale and to colour-blind readers. */
-const VIRIDIS: [number, number, number][] = [
-  [68, 1, 84],
-  [72, 40, 120],
-  [62, 74, 137],
-  [49, 104, 142],
-  [38, 130, 142],
-  [31, 158, 137],
-  [53, 183, 121],
-  [110, 206, 88],
-  [181, 222, 43],
-  [253, 231, 37],
-];
-
-function viridis(t: number): [number, number, number] {
-  const clamped = Math.max(0, Math.min(1, t));
-  const scaled = clamped * (VIRIDIS.length - 1);
-  const i = Math.min(VIRIDIS.length - 2, Math.floor(scaled));
-  const f = scaled - i;
-  const a = VIRIDIS[i];
-  const b = VIRIDIS[i + 1];
-  return [
-    Math.round(a[0] + (b[0] - a[0]) * f),
-    Math.round(a[1] + (b[1] - a[1]) * f),
-    Math.round(a[2] + (b[2] - a[2]) * f),
-  ];
-}
-
-const rgb = (c: [number, number, number]) => `rgb(${c[0]},${c[1]},${c[2]})`;
 
 /* Equatorial to galactic, J2000. The pole and node are the IAU 1958 values
    precessed to J2000 and are quoted to more digits than this map can show;
@@ -158,34 +129,6 @@ function galacticToEquatorial(lDeg: number, bDeg: number): [number, number] {
   return [ra, dec / DEG];
 }
 
-/* The site's medium-band motif, 400 to 900 nm, so a tile's filter coverage is
-   drawn in the same colours as the spectrum rule used elsewhere on the site
-   rather than in a second, unrelated palette. */
-const SPECTRUM: [number, [number, number, number]][] = [
-  [0, [91, 58, 209]],
-  [0.14, [53, 99, 216]],
-  [0.28, [43, 155, 196]],
-  [0.42, [53, 171, 124]],
-  [0.56, [143, 180, 63]],
-  [0.68, [210, 177, 53]],
-  [0.8, [216, 128, 47]],
-  [0.9, [191, 66, 44]],
-  [1, [140, 36, 32]],
-];
-
-/** Colour for a central wavelength in nm, sampled off the spectrum motif. */
-function wavelengthColor(nm: number): string {
-  const t = Math.max(0, Math.min(1, (nm - 400) / 500));
-  let i = 0;
-  while (i < SPECTRUM.length - 2 && t > SPECTRUM[i + 1][0]) i += 1;
-  const [t0, a] = SPECTRUM[i];
-  const [t1, b] = SPECTRUM[i + 1];
-  const f = t1 === t0 ? 0 : (t - t0) / (t1 - t0);
-  return `rgb(${Math.round(a[0] + (b[0] - a[0]) * f)},${Math.round(
-    a[1] + (b[1] - a[1]) * f
-  )},${Math.round(a[2] + (b[2] - a[2]) * f)})`;
-}
-
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 function monthLabel(index: number, epoch: [number, number]) {
@@ -194,25 +137,6 @@ function monthLabel(index: number, epoch: [number, number]) {
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000;
-
-/* ISO rather than the prose dates used elsewhere on the site: a range of two
-   written-out dates wraps onto a second line in a card this narrow, and an
-   observing night is an ISO date everywhere in the observation record. */
-function dayLabel(index: number, epochDate: string) {
-  return new Date(Date.parse(`${epochDate}T00:00:00Z`) + index * DAY_MS)
-    .toISOString()
-    .slice(0, 10);
-}
-
-/** Integration time, at the precision the estimate actually supports. */
-function duration(seconds: number) {
-  const h = seconds / 3600;
-  if (h < 1) return `${Math.round(seconds / 60)} min`;
-  if (h < 10) return `${h.toFixed(1)} h`;
-  return `${Math.round(h).toLocaleString('en-US')} h`;
-}
-
-const deg = (value: number) => `${value >= 0 ? '+' : '−'}${Math.abs(value).toFixed(1)}°`;
 
 type Mode = 'date' | 'visits';
 type Frame = 'equatorial' | 'galactic';
@@ -236,6 +160,7 @@ export default function SkyMap({
   emphasize,
   interactive = true,
   caption,
+  theme = 'light',
 }: {
   tiles: TileMap;
   /** Mean seconds per science frame, used to estimate integration time. */
@@ -250,7 +175,10 @@ export default function SkyMap({
   interactive?: boolean;
   /** Replaces the tile count in the readout line. */
   caption?: string;
+  /** 'dark' drops the card chrome and inverts the sky, for dark sections. */
+  theme?: 'light' | 'dark';
 }) {
+  const dark = theme === 'dark';
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [mode, setMode] = useState<Mode>('date');
@@ -384,7 +312,7 @@ export default function SkyMap({
     ctx.beginPath();
     ctx.ellipse(cx, cy, 2 * scale, scale, 0, 0, Math.PI * 2);
     ctx.clip();
-    ctx.fillStyle = '#f2f5fa';
+    ctx.fillStyle = dark ? 'rgba(255,255,255,0.05)' : '#f2f5fa';
     ctx.fillRect(0, 0, width, height);
 
     // Tiles. Each is drawn at its true angular footprint so that contiguous
@@ -411,13 +339,17 @@ export default function SkyMap({
       const h = Math.max(1.1, (Math.sin(theta(hi)) - Math.sin(theta(lo))) * scale);
 
       ctx.fillStyle =
-        emphasized && !emphasized[i] ? 'rgba(10,16,28,0.10)' : rgb(viridis(value(i)));
+        emphasized && !emphasized[i]
+          ? dark
+            ? 'rgba(255,255,255,0.12)'
+            : 'rgba(10,16,28,0.10)'
+          : rgb(viridis(value(i)));
       ctx.fillRect(px(x) - w / 2, py(y) - h / 2, w, h);
     }
     ctx.restore();
 
     // Graticule — drawn in longitude so the curves are continuous.
-    ctx.strokeStyle = 'rgba(10,16,28,0.18)';
+    ctx.strokeStyle = dark ? 'rgba(255,255,255,0.16)' : 'rgba(10,16,28,0.18)';
     ctx.lineWidth = 0.6;
     ctx.setLineDash([2, 3]);
     for (let dec = -75; dec <= 75; dec += 15) {
@@ -441,7 +373,7 @@ export default function SkyMap({
     ctx.setLineDash([]);
 
     // Border
-    ctx.strokeStyle = '#0a101c';
+    ctx.strokeStyle = dark ? 'rgba(255,255,255,0.42)' : '#0a101c';
     ctx.lineWidth = 1.2;
     ctx.beginPath();
     ctx.ellipse(cx, cy, 2 * scale, scale, 0, 0, Math.PI * 2);
@@ -449,7 +381,7 @@ export default function SkyMap({
 
     // Labels. Right ascension is conventionally read in hours, galactic
     // longitude in degrees, so the two frames are labelled differently.
-    ctx.fillStyle = '#4d5b71';
+    ctx.fillStyle = dark ? 'rgba(255,255,255,0.62)' : '#4d5b71';
     ctx.font = '11px ui-monospace, "JetBrains Mono", monospace';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -470,7 +402,7 @@ export default function SkyMap({
       const [x, y] = projectLon(-180, lat);
       ctx.fillText(`${lat > 0 ? '+' : ''}${lat}°`, px(x) - 7, py(y));
     }
-  }, [tiles, coords, frame, width, value, emphasized]);
+  }, [tiles, coords, frame, width, value, emphasized, dark]);
 
   const onMove = (event: React.PointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -536,32 +468,6 @@ export default function SkyMap({
     });
   };
 
-  /* The per-filter breakdown for the hovered tile, unpacked from the shared
-     pattern table. Medium bands are drawn as a spectrum; the broadbands do not
-     belong on that axis and are listed separately. */
-  const detail = useMemo(() => {
-    const { patterns, pattern, filters, filterWave } = tiles;
-    if (hover === null || !patterns || !pattern || !filters || !filterWave) return null;
-    const flat = patterns[pattern[hover]] ?? [];
-    const bands: { name: string; nm: number; frames: number }[] = [];
-    const broad: { name: string; frames: number }[] = [];
-    let peak = 0;
-    for (let i = 0; i < flat.length; i += 2) {
-      const name = filters[flat[i]];
-      const frames = flat[i + 1];
-      if (frames > peak) peak = frames;
-      if (name?.startsWith('m')) bands.push({ name, nm: filterWave[flat[i]], frames });
-      else if (name) broad.push({ name, frames });
-    }
-    const byName = new Map(bands.map((band) => [band.name, band]));
-    // Every medium band the survey owns, so the gaps are visible too.
-    const strip = filters
-      .map((name, i) => ({ name, nm: filterWave[i] }))
-      .filter((f) => f.name.startsWith('m'))
-      .map((f) => ({ ...f, frames: byName.get(f.name)?.frames ?? 0 }));
-    return { bands, broad, strip, peak, count: bands.length + broad.length };
-  }, [hover, tiles]);
-
   const legendStops = useMemo(
     () =>
       Array.from({ length: 12 }, (_, i) => rgb(viridis(i / 11))).join(', '),
@@ -579,7 +485,7 @@ export default function SkyMap({
   }, [mode, tiles, visitScale]);
 
   return (
-    <div className="skymap">
+    <div className={`skymap${dark ? ' skymap--dark' : ''}`}>
       {interactive && (
       <div className="skymap__controls">
         <div className="skymap__modes" role="group" aria-label="Coordinate system">
@@ -673,7 +579,7 @@ export default function SkyMap({
             style={{ left: probe.x, top: probe.y }}
             aria-hidden="true"
           >
-            {hover === null || !detail ? (
+            {hover === null ? (
               <>
                 <div className="skymap__tip-head">
                   <span className="skymap__tip-name">No observation</span>
@@ -694,85 +600,16 @@ export default function SkyMap({
                 </p>
               </>
             ) : (
-              <>
-                <div className="skymap__tip-head">
-                  <span className="skymap__tip-name">{nameAt(hover)}</span>
-                  <span className="skymap__tip-badge">Observed</span>
-                </div>
-
-                <dl className="skymap__tip-grid">
-                  <dt>RA, Dec</dt>
-                  <dd>
-                    {probe.ra.toFixed(1)}°, {deg(probe.dec)}
-                  </dd>
-                  <dt>l, b</dt>
-                  <dd>
-                    {probe.l.toFixed(1)}°, {deg(probe.b)}
-                  </dd>
-                  <dt>Visits</dt>
-                  <dd>
-                    {tiles.visits[hover].toLocaleString('en-US')}{' '}
-                    {tiles.visits[hover] === 1 ? 'night' : 'nights'}
-                  </dd>
-                  <dt>Frames</dt>
-                  <dd>{(tiles.frames?.[hover] ?? 0).toLocaleString('en-US')}</dd>
-                  {exposureSec ? (
-                    <>
-                      <dt>Exposure</dt>
-                      <dd>≈ {duration((tiles.frames?.[hover] ?? 0) * exposureSec)}</dd>
-                    </>
-                  ) : null}
-                  <dt>Filters</dt>
-                  <dd>{detail.count}</dd>
-                  <dt>Dates</dt>
-                  <dd>
-                    {dayLabel(tiles.lastDay[hover] - (tiles.span?.[hover] ?? 0), tiles.epochDate)}
-                    {(tiles.span?.[hover] ?? 0) > 0 && (
-                      <> – {dayLabel(tiles.lastDay[hover], tiles.epochDate)}</>
-                    )}
-                  </dd>
-                </dl>
-
-                {/* Frames per medium band, laid out by wavelength: the shape of
-                    this strip is the tile's spectral coverage at a glance, and
-                    the empty slots are the bands it still lacks. */}
-                <div className="skymap__tip-bands">
-                  {detail.strip.map((band) => (
-                    <span
-                      key={band.name}
-                      className="skymap__tip-band"
-                      title={`${band.name}: ${band.frames} frames`}
-                    >
-                      <span
-                        className="skymap__tip-band-fill"
-                        style={{
-                          height: `${
-                            band.frames > 0
-                              ? Math.max(12, (Math.sqrt(band.frames) / Math.sqrt(detail.peak)) * 100)
-                              : 0
-                          }%`,
-                          background: wavelengthColor(band.nm),
-                        }}
-                      />
-                    </span>
-                  ))}
-                </div>
-                <div className="skymap__tip-scale">
-                  <span>400 nm</span>
-                  <span>frames per medium band</span>
-                  <span>875 nm</span>
-                </div>
-
-                {detail.broad.length > 0 && (
-                  <p className="skymap__tip-broad">
-                    {detail.broad.map((band) => (
-                      <span key={band.name}>
-                        <b>{band.name}</b> {band.frames.toLocaleString('en-US')}
-                      </span>
-                    ))}
-                  </p>
-                )}
-              </>
+              <TileDetail
+                tiles={tiles}
+                index={hover}
+                name={nameAt(hover)}
+                ra={probe.ra}
+                dec={probe.dec}
+                l={probe.l}
+                b={probe.b}
+                exposureSec={exposureSec}
+              />
             )}
           </div>
         )}

@@ -46,7 +46,7 @@ const MILESTONES = [
     when: 'Jul 2024',
     what: 'Reference Imaging Survey begins',
     body:
-      'Routine survey operation starts on the wide-area component, covering roughly 23,000 deg² south of Dec +20° with a single visit per tile.',
+      'Routine survey operation starts on the wide-area survey, covering roughly 23,000 deg² south of Dec +20° with a single visit per tile.',
   },
   {
     when: 'Aug 2024',
@@ -76,7 +76,7 @@ const MILESTONES = [
     when: 'Jun 2026',
     what: 'Commissioning closes',
     body:
-      'Final commissioning is completed. The facility is reported as an operating observatory, with two of the three survey components under way.',
+      'Final commissioning is completed. The facility is reported as an operating observatory, with two of the three surveys under way.',
   },
   {
     when: 'Ahead',
@@ -157,7 +157,7 @@ const Index = () => {
               <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
                 <div>
                   <p className="feature-list__body" style={{ margin: 0 }}>
-                    How the three survey components divide area, cadence and depth —{' '}
+                    How the three surveys divide area, cadence and depth —{' '}
                     <Link to="/survey/overview">survey design</Link>.
                   </p>
                 </div>
@@ -202,7 +202,7 @@ const Index = () => {
           <NextLinks
             title="Continue"
             links={[
-              { label: 'Current survey status', href: '/survey/status' },
+              { label: 'Survey design', href: '/survey/overview' },
               { label: 'Team', href: '/about/team' },
               { label: 'Funding', href: '/about/funding' },
               { label: 'For users', href: '/users/status' },

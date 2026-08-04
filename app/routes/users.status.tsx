@@ -3,6 +3,7 @@ import type { HeadersFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import { PageLayout, PageHero, Section, StatGrid, LiveBadge } from '../components/site';
+import FilterCurves from '../components/filtercurves';
 import { getStatus } from '../lib/portal.server';
 
 export const meta: MetaFunction = () => [
@@ -87,16 +88,61 @@ const Index = () => {
                 note: `of ${telescopes.total}`,
                 live: true,
               },
+              { value: '35', label: 'Filters installed', note: 'of 40 medium bands' },
               { value: num(nightly.n_nights), label: 'Nights observed' },
-              { value: num(totals.science_frames), label: 'Science frames' },
+              { value: day(nightly.last_night), label: 'Most recent night' },
+            ]}
+          />
+        </div>
+      </Section>
+
+      {/* Array-wide operation. It is neither a property of one survey nor of
+          the instrument, and a user planning work needs it before either. */}
+      <Section eyebrow="Operations" title="What a night produces">
+        <p className="prose">
+          Over {num(nightly.n_nights)} observing nights since {day(nightly.first_night)}, the array
+          has recorded {num(totals.science_frames)} science frames in{' '}
+          {num(totals.exposure_hours)} hours of open shutter. A typical night covers{' '}
+          {nightly.tiles_per_night.median} tiles in {num(nightly.exposures_per_night.median)}{' '}
+          exposures and writes {num(nightly.raw_gb_per_night.median)} GB of raw data, calibration
+          frames included.
+        </p>
+        <div style={{ marginTop: '2rem' }}>
+          <StatGrid
+            items={[
+              {
+                value: num(nightly.tiles_per_night.median),
+                label: 'Tiles per night',
+                note: 'median',
+              },
               {
                 value: num(nightly.exposures_per_night.median),
                 label: 'Exposures per night',
                 note: 'median',
               },
+              {
+                value: num(nightly.raw_gb_per_night.median),
+                unit: 'GB',
+                label: 'Raw data per night',
+                note: 'median',
+              },
+              { value: num(totals.science_frames), label: 'Science frames', note: 'to date' },
+              {
+                value: num(totals.exposure_hours),
+                unit: 'hr',
+                label: 'Open shutter',
+                note: 'to date',
+              },
             ]}
           />
         </div>
+        <p className="footnote" style={{ marginTop: '1.25rem' }}>
+          Medians rather than means: target-of-opportunity nights run to{' '}
+          {num(nightly.exposures_per_night.max)} exposures and would otherwise dominate the figure.
+          Progress of each survey is on its own page —{' '}
+          <Link to="/survey/ris">RIS</Link>, <Link to="/survey/wts">WTS</Link> and{' '}
+          <Link to="/survey/ims">IMS</Link>.
+        </p>
       </Section>
 
       <Section eyebrow="Filters" title="Bands available" alt>
@@ -114,8 +160,8 @@ const Index = () => {
               calibration of the fifteen added filters is in preparation, and their central
               wavelengths are not aligned to a regular grid — check which bands a given tile
               actually carries on the{' '}
-              <Link to="/survey/coverage">sky coverage map</Link>, which reports the medium bands
-              observed on any tile under the pointer.
+              <Link to="/users/access">data access page</Link>, which reports the medium bands
+              observed on any tile.
             </p>
 
             <div className="table-wrap" style={{ marginTop: '1.5rem' }}>
@@ -144,19 +190,19 @@ const Index = () => {
               </table>
             </div>
           </div>
-          <figure className="figure">
-            <img
-              src="/img/filter.png"
-              alt="Transmission curves of the 7DT medium-band filter set from 375 to 875 nm"
-              loading="lazy"
-            />
-            <figcaption>
-              <b>Transmission</b> Medium-band filter transmission across the operational set.
-              Response curves for individual filters can also be generated with the{' '}
-              <code>supy</code> simulator — see <a href="/users/software">software</a>.
-            </figcaption>
-          </figure>
         </div>
+      </Section>
+
+      <Section eyebrow="Response" title="Filter response curves" wide>
+        <FilterCurves />
+        <p className="footnote" style={{ marginTop: '1rem' }}>
+          Curves are read from the reference data shipped with{' '}
+          <Link to="/users/software">
+            <code>supy</code>
+          </Link>
+          , which is also what its simulator module uses, so a response computed there matches
+          this figure exactly.
+        </p>
       </Section>
 
       <Section eyebrow="Coverage" title="What has been observed">
@@ -167,8 +213,8 @@ const Index = () => {
           taken and how many frames exist, is on the sky coverage map.
         </p>
         <div className="btn-row" style={{ marginTop: '1.5rem' }}>
-          <Link className="btn btn--primary" to="/survey/coverage">
-            Sky coverage map
+          <Link className="btn btn--primary" to="/users/access">
+            Search coverage
           </Link>
           <Link className="btn btn--secondary" to="/users/performance">
             Measured depths

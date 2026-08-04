@@ -2,9 +2,9 @@ import React from 'react';
 import type { HeadersFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import { Section } from '../components/site';
 import SurveyPage from '../components/surveypage';
-import { getStatus, getTileMapLite } from '../lib/portal.server';
+import FieldMap from '../components/fieldmap';
+import { getStatus, getTilesNear } from '../lib/portal.server';
 import surveys from './content/surveys.json';
 
 export const meta: MetaFunction = () => [
@@ -12,22 +12,27 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'The deep, nightly component of the 7-Dimensional Sky Survey: seven tiles at the south ecliptic pole, overlapping the SPHEREx Deep Field South.',
+      'The deep, nightly survey of 7DS: seven tiles at the south ecliptic pole, overlapping the SPHEREx Deep Field South.',
   },
 ];
 
 const CACHE = 'public, max-age=900, stale-while-revalidate=86400';
 export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
 
+/* Field centre, from the survey definition. */
+const CENTER = { ra: 78.28, dec: -60.47 };
+
 export async function loader() {
-  // Names are needed here: the map draws these seven tiles against the rest of
-  // the footprint, and it picks them out by identifier.
-  const [tiles, status] = await Promise.all([getTileMapLite(true), getStatus()]);
+  const status = await getStatus();
+  /* The field and its neighbours, and nothing else. Shipping the whole tile
+     list to draw a few dozen would be fifty kilobytes to show a speck. */
+  const field = await getTilesNear(CENTER.ra, CENTER.dec, 3.4);
+
   return json(
     {
-      tiles: tiles.data,
+      field: field.data,
       ims: status.data.ims,
-      live: status.live && tiles.live,
+      live: status.live && field.live,
       generatedAt: status.generatedAt,
     },
     { headers: { 'Cache-Control': CACHE } }
@@ -39,9 +44,8 @@ const num = (value: number) => value.toLocaleString('en-US');
 const tier = surveys.tiers.find((t) => t.code === 'IMS')!;
 
 const Index = () => {
-  const { tiles, ims, live, generatedAt } = useLoaderData<typeof loader>();
+  const { field, ims, live, generatedAt } = useLoaderData<typeof loader>();
 
-  const names = Object.keys(ims.cycles_per_tile);
   const cycles = Object.values(ims.cycles_per_tile) as number[];
   const median = [...cycles].sort((a, b) => a - b)[Math.floor(cycles.length / 2)];
 
@@ -76,11 +80,25 @@ const Index = () => {
       live={live}
       generatedAt={generatedAt}
       map={{
-        tiles,
-        emphasize: names,
-        caption: `${ims.n_tiles} monitored tiles`,
+        title: 'The monitored field',
+        node: (
+          <FieldMap
+            tiles={field.map((tile) => {
+              const cycles = (ims.cycles_per_tile as Record<string, number>)[tile.name];
+              return {
+                name: tile.name,
+                ra: tile.ra,
+                dec: tile.dec,
+                value: cycles ?? tile.visits,
+                highlight: cycles !== undefined,
+              };
+            })}
+            valueLabel="cycles"
+            caption={`The ${ims.n_tiles} monitored tiles, dashed, against their neighbours on the survey tiling. Shading and the figure inside each monitored tile give the observing cycles completed on it, read from the observation database.`}
+          />
+        ),
         note:
-          'The seven monitored tiles are drawn in color against the rest of the observed footprint in grey, so their position on the sky is visible at the scale it actually occupies — about 8.5 square degrees out of 23,000.',
+          'The field covers about 8.5 square degrees near the south ecliptic pole and is drawn at its own scale, on a tangent plane, rather than on an all-sky map where it would be a few pixels across.',
       }}
       coverage={[
         { value: String(ims.n_tiles), label: 'Tiles monitored' },
@@ -94,25 +112,7 @@ const Index = () => {
         note:
           'Progress is the median tile against a nominal five years of observable nights. Cycle counts differ between tiles because the field sets at different times through the season and because weather does not fall evenly.',
       }}
-    >
-      <Section eyebrow="Per tile" title="Observing cycles by tile" alt>
-        <div className="table-wrap" style={{ maxWidth: '480px' }}>
-          <table className="spec-table">
-            <caption>Cycles completed on each monitored tile</caption>
-            <tbody>
-              {Object.entries(ims.cycles_per_tile).map(([tile, count]) => (
-                <tr key={tile}>
-                  <th scope="row" style={{ fontFamily: 'var(--font-mono)' }}>
-                    {tile}
-                  </th>
-                  <td>{num(count as number)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Section>
-    </SurveyPage>
+    />
   );
 };
 

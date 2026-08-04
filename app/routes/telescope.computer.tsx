@@ -9,7 +9,7 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'On-site control computers, the Proton processing server and the Lyman and Balmer storage servers behind 7DT.',
+      'On-site control computers, the Proton processing server and the storage behind 7DT.',
   },
 ];
 
@@ -31,10 +31,14 @@ const PROTON = [
   ['Target throughput', '≈ 30 s per image'],
 ];
 
+/* Servers are added as the archive grows, so this lists the current set and
+   the convention behind the names rather than treating two of them as the
+   permanent arrangement. */
 const STORAGE = [
+  ['Naming', 'Hydrogen transition series — Lyman, Balmer, …'],
   ['Lyman', '2 × 1.2 PB (RAID 60)'],
   ['Balmer', '1 × 1.2 PB, extensible'],
-  ['Total capacity', '≈ 3.6 PB'],
+  ['Current capacity', '≈ 3.6 PB, extended as required'],
   ['Attachment', 'NFS over 10 Gbps class network'],
   ['Nightly inflow', '≈ 350 GB (≈ 3,000 × 117 MiB)'],
 ];
@@ -73,7 +77,7 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Storage" title="Lyman & Balmer">
+      <Section eyebrow="Storage" title="Storage servers">
         <div className="split split--wide-text">
           <p className="prose">{storageText}</p>
           <SimpleTable caption="Storage servers" rows={STORAGE} />

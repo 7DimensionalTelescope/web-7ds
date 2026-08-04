@@ -10,7 +10,7 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'The 7-Dimensional Sky Survey: three components covering the southern sky in medium bands, from a single-visit reference map to nightly deep monitoring, on one tiling.',
+      'The 7-Dimensional Sky Survey: three surveys covering the southern sky in medium bands, from a single-visit reference map to nightly deep monitoring, on one tiling.',
   },
 ];
 
@@ -41,22 +41,22 @@ const Index = () => {
             The 7-Dimensional <em>Sky Survey</em>
           </>
         }
-        lede="7DS is the science program of 7DT. It is divided into three components that differ in area, cadence and depth, and that share one tiling of the sky."
+        lede="7DS is the science program of 7DT. It comprises three surveys that differ in area, cadence and depth, and that share one tiling of the sky."
         image="/img/hero/survey.jpg"
         meta={[
-          { value: '3', label: 'Survey components' },
-          { value: '23,000', unit: 'deg²', label: 'Widest component' },
+          { value: '3', label: 'Surveys' },
+          { value: '23,000', unit: 'deg²', label: 'Widest survey' },
           { value: '1', unit: 'd', label: 'Fastest cadence' },
           { value: '23.6', unit: 'mag', label: 'Deepest planned' },
         ]}
       />
 
-      <Section eyebrow="Overview" title="Three components on one tiling">
+      <Section eyebrow="Overview" title="Three surveys on one tiling">
         <p className="prose">{surveyOverviewText}</p>
 
         <div className="table-wrap" style={{ marginTop: '2rem' }}>
           <table className="tier-table">
-            <caption>Design parameters of the three survey components</caption>
+            <caption>Design parameters of the three surveys</caption>
             <thead>
               <tr>
                 <th scope="col">Property</th>
@@ -106,7 +106,7 @@ const Index = () => {
           visit (3 × 100 s); the WTS and IMS figures are cumulative over the planned five-year
           operation. Measured performance is reported on the{' '}
           <Link to="/users/performance">performance page</Link>, and current progress on each
-          component page.
+          survey page.
         </p>
       </Section>
 
@@ -132,7 +132,7 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Rationale" title="Why three components and not one">
+      <Section eyebrow="Rationale" title="Why three surveys and not one">
         <p className="prose">{surveys.designNote}</p>
 
         <div className="grid grid-cols-3" style={{ marginTop: '2rem' }}>
@@ -150,7 +150,7 @@ const Index = () => {
         </div>
 
         <p className="note" style={{ marginTop: '1.5rem' }}>
-          Each component page carries its own strategy, sky map, coverage and current status.
+          Each survey page carries its own strategy, sky map, coverage and current status.
         </p>
       </Section>
     </PageLayout>

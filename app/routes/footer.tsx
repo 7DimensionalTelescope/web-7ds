@@ -23,11 +23,9 @@ const COLUMNS = [
     title: 'Survey',
     links: [
       { label: 'Overview', href: '/survey/overview' },
-      { label: 'RIS — Reference Imaging', href: '/survey/ris' },
-      { label: 'WTS — Wide-area Time-domain', href: '/survey/wts' },
-      { label: 'IMS — Intensive Monitoring', href: '/survey/ims' },
-      { label: 'Sky Coverage', href: '/survey/coverage' },
-      { label: 'Status', href: '/survey/status' },
+      { label: 'Reference Imaging (RIS)', href: '/survey/ris' },
+      { label: 'Wide-area Time-domain (WTS)', href: '/survey/wts' },
+      { label: 'Intensive Monitoring (IMS)', href: '/survey/ims' },
     ],
   },
   {

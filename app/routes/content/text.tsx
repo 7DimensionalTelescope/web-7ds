@@ -30,7 +30,7 @@ small solar-system bodies. 7DS was designed to identify gravitational-wave \
 counterparts; the same images serve the rest.'
 
 export const mainText3 =
-  '7DS is divided into three components that trade area against depth and cadence: a \
+  '7DS comprises three surveys that trade area against depth and cadence: a \
 single-visit reference map of the southern sky, a time-domain survey on a 10-14 day \
 cadence, and nightly monitoring of a deep field at the south ecliptic pole. All three \
 use the same tiling of the sky, so their data coadd directly.'
@@ -128,7 +128,7 @@ to +30 degrees.'
 export const surveyTilingText2 =
   'This tiling is the operational reference for the whole program. WTS and IMS point at \
 the same tile centers, and target-of-opportunity observations use them wherever the \
-field allows. Because every component shares it, data from any of them coadd directly \
+field allows. Because all three surveys share it, data from any of them coadd directly \
 with data from the others and difference imaging always runs against a consistent \
 reference. A visit is three consecutive 100-second exposures coadded to a 300-second \
 frame; the exposure length is set by the unguided tracking capability of the mount and \
@@ -265,10 +265,11 @@ before compression. Raw data are compressed on site and transferred by GridFTP a
 typical 80 MB/s, a procedure that usually completes in under twelve hours; \
 target-of-opportunity data skip the compression and the wait for sunrise, cutting \
 latency to tens of minutes. Storage \
-is provided by two servers named for the hydrogen transition series: Lyman, with two \
-1.2 PB volumes, and Balmer, with one, for a combined capacity of approximately 3.6 PB. \
-Both are attached to the compute server as NFS mounts over a 10 Gbps class network, so \
-that I/O buffering does not burden processing.'
+is provided by a growing set of servers named for the hydrogen transition series. Two \
+are in service — Lyman, with two 1.2 PB volumes, and Balmer, with one — for a current \
+capacity of about 3.6 PB, and further servers are added as the archive grows. Each is \
+attached to the compute server as an NFS mount over a 10 Gbps class network, so that \
+I/O buffering does not burden processing.'
 
 export const protonText =
   'All 7DT data are reduced on Proton, a dedicated server with dual AMD EPYC 7513 \

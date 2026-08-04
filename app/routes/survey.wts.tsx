@@ -9,7 +9,7 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'The time-domain component of the 7-Dimensional Sky Survey: 800–1,200 deg² revisited every 10–14 days over five years, in fields with existing near-infrared coverage.',
+      'The time-domain survey of 7DS: 800–1,200 deg² revisited every 10–14 days over five years, in fields with existing near-infrared coverage.',
   },
 ];
 
@@ -52,7 +52,7 @@ const Index = () => (
           medium-band photometry is complemented at wavelengths the array cannot reach. Until
           observations begin there is no coverage to report; tiles observed under the Reference
           Imaging Survey in these fields already exist and are shown on the{' '}
-          <a href="/survey/coverage">sky coverage map</a>.
+          <a href="/users/access">data access page</a>.
         </p>
       </div>
     </Section>

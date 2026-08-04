@@ -11,7 +11,7 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'Measured on-sky performance of the 7DT array and the depths reached by each component of the survey: image quality, photometric calibration and limiting magnitudes.',
+      'Measured on-sky performance of the 7DT array and the depths reached by each of its three surveys: image quality, photometric calibration and limiting magnitudes.',
   },
 ];
 
@@ -71,7 +71,7 @@ const Index = () => (
 
         <div className="table-wrap">
           <table className="spec-table">
-            <caption>Depth reached by each survey component, 5σ in m600</caption>
+            <caption>Depth reached by each survey, 5σ in m600</caption>
             <tbody>
               {surveys.tiers.map((tier) => (
                 <tr key={tier.code}>
@@ -86,7 +86,24 @@ const Index = () => (
         </div>
       </div>
 
-      <p className="footnote" style={{ marginTop: '1rem' }}>
+      <figure className="figure" style={{ marginTop: '2.5rem' }}>
+        <img
+          src="/img/images/depth-distribution.png"
+          alt="Violin plot of the 5-sigma limiting magnitude distribution for each 7DT band in a 100-second exposure"
+          loading="lazy"
+        />
+        <figcaption>
+          <b>Measured depth per band</b> Distribution of single-exposure 5σ point-source depths for
+          the twenty original medium bands and Sloan g, r, i and z, measured from individual
+          100-second exposures taken in routine survey operation. The width of each violin is
+          proportional to the number of exposures reaching that magnitude; the spread within a band
+          is the variation in seeing, airmass and sky brightness across real nights. The fifteen
+          filters added in late 2025 are not included, their spectrophotometric calibration being
+          incomplete. From Kim et al., Proc. SPIE 14147-84.
+        </figcaption>
+      </figure>
+
+      <p className="footnote" style={{ marginTop: '1.5rem' }}>
         Single-exposure depths above are for a 100 s exposure under nominal conditions: seeing
         better than 2.0 arcseconds, airmass below 1.5, and a non-bright night. The RIS figure is
         one visit of 3 × 100 s. WTS and IMS figures are cumulative over the planned five-year

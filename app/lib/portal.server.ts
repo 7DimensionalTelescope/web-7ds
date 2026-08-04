@@ -344,6 +344,103 @@ export function getTileMap(): Promise<Fetched<TileMap>> {
    nothing extra.
 ------------------------------------------------------------------------- */
 
+export type NamedTile = {
+  name: string;
+  ra: number;
+  dec: number;
+  visits: number;
+  frames: number;
+  lastDay: number;
+  epochDate: string;
+};
+
+/**
+ * Look up a handful of tiles by identifier. A page showing one small field
+ * needs those tiles and nothing else, so this returns them directly rather
+ * than making the browser download fifteen thousand to find seven.
+ */
+export async function getTilesByName(names: string[]): Promise<Fetched<NamedTile[]>> {
+  const full = await getTileMap();
+  const { data } = full;
+
+  const wanted = new Set(names);
+  const found: NamedTile[] = [];
+
+  for (let i = 0; i < data.count; i += 1) {
+    const name = data.name
+      ? data.name[i]
+      : `T${String(runningId(data.nameDelta ?? [], i)).padStart(5, '0')}`;
+    if (!wanted.has(name)) continue;
+    found.push({
+      name,
+      ra: data.ra[i],
+      dec: data.dec[i],
+      visits: data.visits[i],
+      frames: data.frames?.[i] ?? 0,
+      lastDay: data.lastDay[i],
+      epochDate: data.epochDate,
+    });
+  }
+
+  return { ...full, data: found };
+}
+
+/* The identifiers are first differences, so resolving one means summing the
+   prefix. Cached per payload because the callers scan the whole list. */
+let ids: { from: number[]; value: Int32Array } | null = null;
+
+function runningId(deltas: number[], index: number) {
+  if (!ids || ids.from !== deltas) {
+    const out = new Int32Array(deltas.length);
+    let running = 0;
+    for (let i = 0; i < deltas.length; i += 1) {
+      running += deltas[i];
+      out[i] = running;
+    }
+    ids = { from: deltas, value: out };
+  }
+  return ids.value[index];
+}
+
+/**
+ * Every observed tile within `radius` degrees of a position. Used to draw a
+ * field with its neighbours around it, so a small survey area is shown in the
+ * context of the tiling rather than floating on an empty plot.
+ */
+export async function getTilesNear(
+  ra: number,
+  dec: number,
+  radius: number
+): Promise<Fetched<NamedTile[]>> {
+  const full = await getTileMap();
+  const { data } = full;
+  const found: NamedTile[] = [];
+  const cosDec = Math.cos(dec * (Math.PI / 180));
+
+  for (let i = 0; i < data.count; i += 1) {
+    const dDec = data.dec[i] - dec;
+    if (Math.abs(dDec) > radius) continue;
+    let dRa = data.ra[i] - ra;
+    if (dRa > 180) dRa -= 360;
+    if (dRa < -180) dRa += 360;
+    if (Math.abs(dRa * cosDec) > radius) continue;
+
+    found.push({
+      name: data.name
+        ? data.name[i]
+        : `T${String(runningId(data.nameDelta ?? [], i)).padStart(5, '0')}`,
+      ra: data.ra[i],
+      dec: data.dec[i],
+      visits: data.visits[i],
+      frames: data.frames?.[i] ?? 0,
+      lastDay: data.lastDay[i],
+      epochDate: data.epochDate,
+    });
+  }
+
+  return { ...full, data: found };
+}
+
 const lite = new Map<string, { from: string; value: Fetched<TileMap> }>();
 
 /**

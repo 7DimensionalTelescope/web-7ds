@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
+import QuestionForm from '../components/questionform';
 
 export const meta: MetaFunction = () => [
   { title: 'Questions · 7DT for users' },
@@ -55,7 +56,7 @@ const GROUPS: { group: string; items: { q: string; a: React.ReactNode }[] }[] = 
           <>
             A single 100 s exposure reaches 19.06 mag at m400 and 19.61 mag at m475, where
             throughput peaks; Sloan g reaches 20.59 mag. Cumulative depths for each survey
-            component and the conditions these assume are on the{' '}
+            survey and the conditions these assume are on the{' '}
             <Link to="/users/performance">performance page</Link>.
           </>
         ),
@@ -69,7 +70,7 @@ const GROUPS: { group: string; items: { q: string; a: React.ReactNode }[] }[] = 
         q: 'How do I check whether my field has been observed?',
         a: (
           <>
-            Use the <Link to="/survey/coverage">sky coverage map</Link>. Pointing at a position
+            Use the search on <Link to="/users/access">data access</Link>. Entering a position
             reports whether a tile there has data, how many nights and frames it carries, which
             medium bands were taken and the date range they span.
           </>
@@ -110,7 +111,7 @@ const GROUPS: { group: string; items: { q: string; a: React.ReactNode }[] }[] = 
         a: (
           <>
             A fixed pointing on the survey tiling, 1.34° × 0.90°, numbered T00000 to T28519 by
-            increasing declination. All three survey components and most target-of-opportunity
+            increasing declination. All three surveys and most target-of-opportunity
             pointings use the same tiling, so data taken at different times coadd without
             resampling.
           </>
@@ -193,19 +194,21 @@ const Index = () => (
       </Section>
     ))}
 
-    <Section eyebrow="Not answered" title="Something else">
+    <Section eyebrow="Not answered" title="Ask a question">
       <p className="prose">
-        Questions not covered here can be sent to the project. If the answer would be useful to
-        others it will be added to this page.
+        Questions not covered above go to the principal investigator. If the answer would be
+        useful to others it will be added to this page.
       </p>
-      <div className="btn-row" style={{ marginTop: '1.25rem' }}>
-        <a className="btn btn--primary" href="mailto:mim@astro.snu.ac.kr?subject=7DT%20question">
-          Ask the project
-        </a>
-        <Link className="btn btn--secondary" to="/users/status">
-          Status &amp; overview
-        </Link>
+
+      <div style={{ marginTop: '2rem' }}>
+        <QuestionForm />
       </div>
+
+      <p className="footnote" style={{ marginTop: '1.5rem' }}>
+        If your question is about a data request, <Link to="/users/access">data access</Link> sets
+        out what to include; for an observation, see{' '}
+        <Link to="/users/propose">how to propose</Link>.
+      </p>
     </Section>
   </PageLayout>
 );

@@ -2648,13 +2648,23 @@ table[class*='w-full'] thead {
 
 .skymap__readout b { color: var(--ink-900); }
 
+/* --- Feature list on a dark section --------------------------------------- */
+
+.feature-list--on-dark { border-top-color: rgba(255, 255, 255, 0.16); }
+.feature-list--on-dark > li { border-bottom-color: rgba(255, 255, 255, 0.1); }
+.feature-list--on-dark .feature-list__key { color: rgba(255, 255, 255, 0.5); }
+.feature-list--on-dark .feature-list__title { color: #fff; }
+.feature-list--on-dark .feature-list__body { color: rgba(255, 255, 255, 0.72); }
+
 /* --- Landing page: survey section ----------------------------------------- */
 
 .home-survey {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
   gap: 1.75rem;
-  align-items: start;
+  /* Stretch, not start: the map and the three cards beside it are one figure,
+     and ragged bottoms made them read as two unrelated blocks. */
+  align-items: stretch;
   margin-top: 1.75rem;
 }
 
@@ -2673,8 +2683,19 @@ table[class*='w-full'] thead {
    section is one viewport tall and a row would push the map off it. */
 .home-survey__tiers {
   display: grid;
+  grid-auto-rows: 1fr;
   gap: 0.75rem;
 }
+
+.home-survey__tiers .tier-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-survey__tiers .tier-card dl { margin-top: auto; }
+/* The card is a flex column, so a block-level pill would stretch the full
+   width instead of hugging its label. */
+.home-survey__tiers .tier-card .pill { align-self: flex-start; }
 
 .home-survey__tiers .tier-card { padding: 0.875rem 1rem; }
 .home-survey__tiers .tier-card__name { font-size: 0.9375rem; margin-bottom: 0.5rem; }
@@ -2687,6 +2708,204 @@ table[class*='w-full'] thead {
 
 @media (max-width: 720px) {
   .home-survey__tiers { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --- Sky map on a dark section -------------------------------------------- */
+
+/* The card chrome is dropped entirely: on the landing page the map should read
+   as part of the section, not as a white panel pasted onto it. */
+.skymap--dark {
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.skymap--dark .skymap__canvas { padding: 0; }
+
+.skymap--dark .skymap__legend {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.875rem 0 0;
+}
+
+.skymap--dark .skymap__legend-title,
+.skymap--dark .skymap__ticks { color: rgba(255, 255, 255, 0.55); }
+
+.skymap--dark .skymap__ramp {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 24px -6px rgba(120, 200, 160, 0.35);
+}
+
+/* --- Coordinate query ------------------------------------------------------ */
+
+.tilequery {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 17rem);
+  gap: 1.75rem;
+  align-items: start;
+}
+
+.tilequery__form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.tilequery__field { display: grid; gap: 0.3rem; flex: 1 1 11rem; min-width: 0; }
+
+.tilequery__field label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+}
+
+.tilequery__field input {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: var(--hairline);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--ink-900);
+}
+
+.tilequery__field input:focus-visible {
+  outline: 2px solid var(--tag-publication);
+  outline-offset: 1px;
+}
+
+.tilequery__result {
+  border: var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  padding: 0.75rem 0.85rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.tilequery__empty {
+  font-size: 0.8125rem;
+  color: var(--slate-500);
+  margin: 0;
+}
+
+.tilequery__error {
+  margin: 0.75rem 0 0;
+  font-size: 0.8125rem;
+  color: #b45309;
+}
+
+.tilequery__examples {
+  margin: 0.85rem 0 0;
+  font-size: 0.75rem;
+  color: var(--slate-500);
+}
+
+.tilequery__examples button {
+  border: 0;
+  background: none;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--tag-publication);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .tilequery { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --- Question form --------------------------------------------------------- */
+
+.qform { display: grid; gap: 1rem; max-width: 46rem; }
+
+.qform__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.qform__field { display: grid; gap: 0.35rem; }
+
+.qform__field label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+}
+
+.qform__field input,
+.qform__field select,
+.qform__field textarea {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: var(--hairline);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  color: var(--ink-900);
+  resize: vertical;
+}
+
+.qform__field input:focus-visible,
+.qform__field select:focus-visible,
+.qform__field textarea:focus-visible {
+  outline: 2px solid var(--tag-publication);
+  outline-offset: 1px;
+}
+
+.qform__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.qform__note {
+  flex: 1 1 20rem;
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--slate-500);
+}
+
+.qform__sent {
+  margin: 0;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: rgba(22, 121, 94, 0.08);
+  border: 1px solid rgba(22, 121, 94, 0.28);
+  font-size: 0.8125rem;
+  color: var(--tag-update);
+}
+
+@media (max-width: 640px) {
+  .qform__row { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --- Field map ------------------------------------------------------------ */
+
+.fieldmap {
+  border: var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  padding: 0.75rem 0.75rem 0.5rem;
+  overflow-x: auto;
+}
+
+.fieldmap svg { display: block; min-width: 420px; }
+
+.fieldmap__caption {
+  margin: 0.75rem 0.25rem 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--slate-600);
+  max-width: 78ch;
 }
 
 /* --- Questions ------------------------------------------------------------ */

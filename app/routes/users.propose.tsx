@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link } from '@remix-run/react';
-import type { MetaFunction } from '@remix-run/node';
-import { PageLayout, PageHero, Section } from '../components/site';
+import { Link, useLoaderData } from '@remix-run/react';
+import type { HeadersFunction, MetaFunction } from '@remix-run/node';
+import { json } from '@remix-run/node';
+import { PageLayout, PageHero, Section, LiveBadge } from '../components/site';
+import { getStatus } from '../lib/portal.server';
 import { modeText } from './content/text';
 import surveys from './content/surveys.json';
 
@@ -14,7 +16,23 @@ export const meta: MetaFunction = () => [
   },
 ];
 
-const Index = () => (
+const CACHE = 'public, max-age=900, stale-while-revalidate=86400';
+export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
+
+export async function loader() {
+  const status = await getStatus();
+  return json(
+    { too: status.data.too, live: status.live, generatedAt: status.generatedAt },
+    { headers: { 'Cache-Control': CACHE } }
+  );
+}
+
+const num = (value: number) => value.toLocaleString('en-US');
+
+const Index = () => {
+  const { too, live, generatedAt } = useLoaderData<typeof loader>();
+
+  return (
   <PageLayout menu="manuUsers">
     <PageHero
       eyebrow="For users"
@@ -84,7 +102,7 @@ const Index = () => (
               <div>
                 <p className="feature-list__body" style={{ margin: 0 }}>
                   Check visibility and existing coverage — the{' '}
-                  <Link to="/survey/coverage">sky coverage map</Link> reports the bands and frame
+                  <Link to="/users/access">data access page</Link> reports the bands and frame
                   counts held for any position.
                 </p>
               </div>
@@ -128,6 +146,26 @@ const Index = () => (
         when raw data arrive, as each filter set completes, and on completion with a spectral
         energy distribution plot and magnitude table attached.
       </p>
+
+      <div style={{ margin: '2rem 0 1.25rem' }}>
+        <LiveBadge live={live} updated={generatedAt} interval="every 30 minutes" />
+      </div>
+      <p className="prose">
+        {num(too.followup_events)} follow-up campaigns have been carried out since automated
+        target-of-opportunity response entered service, {num(too.gw_campaigns)} of them on
+        gravitational-wave events.
+      </p>
+      <div className="chip-row" style={{ marginTop: '1.25rem' }}>
+        {too.gw_event_ids.map((id: string) => (
+          <span className="chip chip--static" key={id}>
+            {id}
+          </span>
+        ))}
+      </div>
+      <p className="footnote" style={{ marginTop: '1rem' }}>
+        LVK superevent identifiers as issued in the public alert stream. Target-level details are
+        not published here.
+      </p>
     </Section>
 
     <Section eyebrow="Applying" title="Requesting observing time" alt>
@@ -149,6 +187,7 @@ const Index = () => (
       </div>
     </Section>
   </PageLayout>
-);
+  );
+};
 
 export default Index;

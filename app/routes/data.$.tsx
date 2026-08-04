@@ -6,7 +6,7 @@ import { redirect } from '@remix-run/node';
    they redirect to whichever page now holds that content rather than 404ing. */
 const MOVED: Record<string, string> = {
   overview: '/users/status',
-  coverage: '/survey/coverage',
+  coverage: '/users/access',
   data: '/users/access',
   software: '/users/software',
 };
