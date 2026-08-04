@@ -4,7 +4,6 @@ import { Link } from '@remix-run/react';
 import { PageLayout, PageHero, Section, NextLinks } from '../components/site';
 import {
   surveyIntroText,
-  aboutText2,
   aboutText3,
   aboutMotivationText,
   aboutMotivationText2,
@@ -184,24 +183,9 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Status" title="Where the project stands" alt>
-        <p className="prose">{aboutText2}</p>
-        <div style={{ marginTop: '2rem' }}>
-          <NextLinks
-            title="Continue"
-            links={[
-              { label: 'Current survey status', href: '/survey/status' },
-              { label: 'Team', href: '/about/team' },
-              { label: 'Funding', href: '/about/funding' },
-              { label: 'For users', href: '/users/status' },
-            ]}
-          />
-        </div>
-      </Section>
-
       {/* History last: it is a record rather than an explanation, and a reader
           arriving at this page wants the second before the first. */}
-      <Section id="history" eyebrow="History" title="From first light to survey operation">
+      <Section id="history" eyebrow="History" title="From first light to survey operation" alt>
         <ol className="timeline">
           {MILESTONES.map((item) => (
             <li key={item.when}>
@@ -213,6 +197,18 @@ const Index = () => {
             </li>
           ))}
         </ol>
+
+        <div style={{ marginTop: '2.5rem' }}>
+          <NextLinks
+            title="Continue"
+            links={[
+              { label: 'Current survey status', href: '/survey/status' },
+              { label: 'Team', href: '/about/team' },
+              { label: 'Funding', href: '/about/funding' },
+              { label: 'For users', href: '/users/status' },
+            ]}
+          />
+        </div>
       </Section>
     </PageLayout>
   );

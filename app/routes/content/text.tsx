@@ -52,12 +52,6 @@ Applied over 23,000 square degrees, this produces a homogeneous low-resolution \
 spectroscopic map of the southern sky, and applied repeatedly it measures how those \
 spectra change with time.'
 
-export const aboutText2 =
-  'Since first light in October 2023 the array has grown from twelve to sixteen \
-operational units and from twenty to thirty-five installed medium-band filters, against \
-a design of twenty telescopes and forty filters. Commissioning is complete, operation is \
-robotic and unattended, and two of the three survey components are under way.'
-
 export const aboutMotivationText =
   'Most optical surveys measure a source in a few broad bands, which constrains its \
 spectrum only weakly. Identifying what a source is — and, for anything that varies, \
