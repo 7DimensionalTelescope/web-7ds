@@ -1,5 +1,5 @@
 {
-  "note": "Science themes and early results. Source: Kim et al., Proc. SPIE 14147-84, Sec. 3.4 and Sec. 5.",
+  "note": "Science themes of 7DS. Source: Kim et al., Proc. SPIE 14147-84, Sec. 3.4. Published results are listed on the publications page rather than duplicated here.",
   "themes": [
     {
       "id": "mma",
@@ -34,8 +34,8 @@
     {
       "id": "galactic",
       "n": "06",
-      "title": "Galactic Science",
-      "summary": "Two-epoch 7DT photometry with sixteen medium bands across 400–825 nm identified 110 variable young stellar objects in the central region of Orion A — 14 percent of 769 candidates — including seven extreme cases varying by more than 0.5 mag. The wavelength dependence of the variability distinguishes extinction-like, gray and spot-like mechanisms on day timescales, which otherwise requires rapid filter cycling or simultaneous multi-band instrumentation."
+      "title": "Galactic Science & Exoplanets",
+      "summary": "Two-epoch 7DT photometry with sixteen medium bands across 400–825 nm identified 110 variable young stellar objects in the central region of Orion A — 14 percent of 769 candidates — including seven varying by more than 0.5 mag. The wavelength dependence of the variability distinguishes extinction-like, gray and spot-like mechanisms on day timescales, which otherwise requires rapid filter cycling or simultaneous multi-band instrumentation. The same combination of cadence and spectral sampling applies to transiting exoplanets: a transit observed in many bands at once measures its depth as a function of wavelength, which separates a genuine planetary signal from a blended eclipsing binary and constrains stellar activity that would otherwise bias the derived planet radius."
     },
     {
       "id": "solar",
@@ -43,34 +43,5 @@
       "title": "Solar System Objects",
       "summary": "Medium-band imaging of the main-belt asteroids 13 Egeria and 10 Hygiea targets the 0.7 µm absorption feature characteristic of Ch-type bodies, a tracer of their thermal history. Time-series observations of the third interstellar object, 3I/ATLAS, followed the emergence of extended CN emission as it fell inside 3 au — behavior resembling that of 2I/Borisov at comparable heliocentric distance."
     }
-  ],
-  "results": [
-    {
-      "title": "Photometric redshifts at survey scale",
-      "body": "Forecasts using EAZY on EL-COSMOS mock catalogs give σ_NMAD = 0.003–0.007 and catastrophic failure fractions of 0.8–8.1 percent for the five-year stacked WTS with 40 medium bands at 19 < m625 < 22. Combining 7DS with SPHEREx all-sky data reduces the failure fraction to 0.4 percent for fainter sources by breaking color–redshift degeneracies with near-infrared coverage. Extending the analysis to six independent methods — four template-fitting codes and two machine-learning approaches — gives σ_NMAD ≲ 0.005 for bright GAMA-like galaxies and ≈ 0.01 for fainter COSMOS-like galaxies, with the combined dataset consistently outperforming either survey alone.",
-      "tag": "Cosmology"
-    },
-    {
-      "title": "Resolved star formation in nearby galaxies",
-      "body": "Spatially resolved maps of star formation rate and 3.3 µm PAH emission were constructed for a nearby galaxy from 7DT and SPHEREx data. Dust-corrected star formation rates agree with those derived for H ii regions from higher-resolution spectroscopy, correlate tightly with PAH luminosity, and reveal the inside-out growth of the galactic disk together with the suppression of PAH emission in intensely star-forming regions. A companion study of NGC 3627 used VLT/MUSE observations as reference and found that pixel-wise SED fitting of combined 7DT and SPHEREx data improves stellar-age precision significantly over broadband photometry alone, with global and radial trends agreeing with MUSE apart from a minor metallicity offset in the central region. Both studies are unpublished as yet (Shim et al., submitted; Lee et al., in prep).",
-      "tag": "Nearby galaxies"
-    },
-    {
-      "title": "Single-epoch transient classification",
-      "body": "A framework coupling an Isolation Forest anomaly detector to an XGBoost multiclass classifier, trained on realistically simulated 7DT photometry, achieves macro F1 ≈ 0.80 across eight common transient types while recovering more than 90 percent of simulated and observed optically detectable kilonovae at low contamination. Feature analysis shows that the top-ranked half of the 40 medium bands combined with a single LSST band reproduces the full-model accuracy to within 1–2 percent, which points directly at practical follow-up strategies for the Rubin alert stream.",
-      "tag": "Time domain"
-    },
-    {
-      "title": "Follow-up of transient alerts",
-      "body": "7DT searched for the optical counterpart of the bright X-ray transient EP240219a and reported upper limits in several medium bands, and covered approximately 170 deg² in Sloan r and the medium-band suite in follow-up of the LVK gravitational-wave event S240422ed. Target-of-opportunity follow-up has run continuously since RTCSpy took over nightly operation in August 2024; current campaign counts are on the survey status page.",
-      "tag": "Multi-messenger"
-    }
-  ],
-  "verification": [
-    "Main-belt asteroids 13 Egeria and 10 Hygiea, medium-band imaging of the 0.7 µm hydration feature",
-    "Orion Molecular Cloud 2/3 at two epochs on a one-day cadence, and Serpens Main at three epochs",
-    "Nineteen galaxies from the PHANGS sample, compared pixel-by-pixel against PHANGS-MUSE IFU data",
-    "The galaxy cluster PSZ G227.44−31.24 and the COSMOS field, for photometric redshift validation to z ≈ 0.5",
-    "The X-ray transient EP240219a and the gravitational-wave event S240422ed, as target-of-opportunity tests"
   ]
 }

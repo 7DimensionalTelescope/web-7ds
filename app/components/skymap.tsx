@@ -233,10 +233,23 @@ type Probe = {
 export default function SkyMap({
   tiles,
   exposureSec,
+  emphasize,
+  interactive = true,
+  caption,
 }: {
   tiles: TileMap;
   /** Mean seconds per science frame, used to estimate integration time. */
   exposureSec?: number | null;
+  /**
+   * Tile names to draw in colour, with everything else muted. Used by the
+   * per-survey pages to show one component against the whole footprint
+   * rather than on an empty sky, which would lose all sense of scale.
+   */
+  emphasize?: string[] | null;
+  /** False strips the controls and the pointer readout: a figure, not a tool. */
+  interactive?: boolean;
+  /** Replaces the tile count in the readout line. */
+  caption?: string;
 }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
@@ -264,6 +277,17 @@ export default function SkyMap({
     (i: number) => (ids ? `T${String(ids[i]).padStart(5, '0')}` : tiles.name?.[i] ?? ''),
     [ids, tiles]
   );
+
+  /* Which tiles are drawn in colour. Built from names rather than indices so
+     a page can name the tiles it cares about without knowing their position
+     in the arrays. */
+  const emphasized = useMemo(() => {
+    if (!emphasize || emphasize.length === 0) return null;
+    const wanted = new Set(emphasize);
+    const mask = new Uint8Array(tiles.count);
+    for (let i = 0; i < tiles.count; i += 1) mask[i] = wanted.has(nameAt(i)) ? 1 : 0;
+    return mask;
+  }, [emphasize, tiles, nameAt]);
 
   /* Month index per tile, for the colour scale and its legend. Derived here
      rather than sent, because the exact dates are already on the wire and the
@@ -386,7 +410,8 @@ export default function SkyMap({
       const lo = Math.max(-90, lat - FOV_LAT / 2);
       const h = Math.max(1.1, (Math.sin(theta(hi)) - Math.sin(theta(lo))) * scale);
 
-      ctx.fillStyle = rgb(viridis(value(i)));
+      ctx.fillStyle =
+        emphasized && !emphasized[i] ? 'rgba(10,16,28,0.10)' : rgb(viridis(value(i)));
       ctx.fillRect(px(x) - w / 2, py(y) - h / 2, w, h);
     }
     ctx.restore();
@@ -445,7 +470,7 @@ export default function SkyMap({
       const [x, y] = projectLon(-180, lat);
       ctx.fillText(`${lat > 0 ? '+' : ''}${lat}°`, px(x) - 7, py(y));
     }
-  }, [tiles, coords, frame, width, value]);
+  }, [tiles, coords, frame, width, value, emphasized]);
 
   const onMove = (event: React.PointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -515,22 +540,23 @@ export default function SkyMap({
      pattern table. Medium bands are drawn as a spectrum; the broadbands do not
      belong on that axis and are listed separately. */
   const detail = useMemo(() => {
-    if (hover === null) return null;
-    const flat = tiles.patterns[tiles.pattern[hover]] ?? [];
+    const { patterns, pattern, filters, filterWave } = tiles;
+    if (hover === null || !patterns || !pattern || !filters || !filterWave) return null;
+    const flat = patterns[pattern[hover]] ?? [];
     const bands: { name: string; nm: number; frames: number }[] = [];
     const broad: { name: string; frames: number }[] = [];
     let peak = 0;
     for (let i = 0; i < flat.length; i += 2) {
-      const name = tiles.filters[flat[i]];
+      const name = filters[flat[i]];
       const frames = flat[i + 1];
       if (frames > peak) peak = frames;
-      if (name?.startsWith('m')) bands.push({ name, nm: tiles.filterWave[flat[i]], frames });
+      if (name?.startsWith('m')) bands.push({ name, nm: filterWave[flat[i]], frames });
       else if (name) broad.push({ name, frames });
     }
     const byName = new Map(bands.map((band) => [band.name, band]));
     // Every medium band the survey owns, so the gaps are visible too.
-    const strip = tiles.filters
-      .map((name, i) => ({ name, nm: tiles.filterWave[i] }))
+    const strip = filters
+      .map((name, i) => ({ name, nm: filterWave[i] }))
       .filter((f) => f.name.startsWith('m'))
       .map((f) => ({ ...f, frames: byName.get(f.name)?.frames ?? 0 }));
     return { bands, broad, strip, peak, count: bands.length + broad.length };
@@ -554,6 +580,7 @@ export default function SkyMap({
 
   return (
     <div className="skymap">
+      {interactive && (
       <div className="skymap__controls">
         <div className="skymap__modes" role="group" aria-label="Coordinate system">
           <button
@@ -593,7 +620,7 @@ export default function SkyMap({
         </div>
         <span className="skymap__readout" role="status">
           {probe === null ? (
-            `${tiles.count.toLocaleString('en-US')} tiles observed`
+            caption ?? `${tiles.count.toLocaleString('en-US')} tiles observed`
           ) : hover === null ? (
             <>
               RA {probe.ra.toFixed(1)}° Dec {deg(probe.dec)} · not observed
@@ -611,19 +638,20 @@ export default function SkyMap({
                 </>
               )}{' '}
               · {tiles.visits[hover]} {tiles.visits[hover] === 1 ? 'visit' : 'visits'} ·{' '}
-              {tiles.frames[hover].toLocaleString('en-US')} frames · last{' '}
+              {(tiles.frames?.[hover] ?? 0).toLocaleString('en-US')} frames · last{' '}
               {monthLabel(months.index[hover], epoch)}
             </>
           )}
         </span>
       </div>
+      )}
 
       <div className="skymap__canvas" ref={wrapRef}>
         <canvas
           ref={canvasRef}
           style={{ width: '100%', display: 'block' }}
-          onPointerMove={onMove}
-          onPointerLeave={() => setProbe(null)}
+          onPointerMove={interactive ? onMove : undefined}
+          onPointerLeave={interactive ? () => setProbe(null) : undefined}
           role="img"
           aria-label={`Mollweide all-sky map of ${tiles.count.toLocaleString(
             'en-US'
@@ -687,19 +715,19 @@ export default function SkyMap({
                     {tiles.visits[hover] === 1 ? 'night' : 'nights'}
                   </dd>
                   <dt>Frames</dt>
-                  <dd>{tiles.frames[hover].toLocaleString('en-US')}</dd>
+                  <dd>{(tiles.frames?.[hover] ?? 0).toLocaleString('en-US')}</dd>
                   {exposureSec ? (
                     <>
                       <dt>Exposure</dt>
-                      <dd>≈ {duration(tiles.frames[hover] * exposureSec)}</dd>
+                      <dd>≈ {duration((tiles.frames?.[hover] ?? 0) * exposureSec)}</dd>
                     </>
                   ) : null}
                   <dt>Filters</dt>
                   <dd>{detail.count}</dd>
                   <dt>Dates</dt>
                   <dd>
-                    {dayLabel(tiles.lastDay[hover] - tiles.span[hover], tiles.epochDate)}
-                    {tiles.span[hover] > 0 && (
+                    {dayLabel(tiles.lastDay[hover] - (tiles.span?.[hover] ?? 0), tiles.epochDate)}
+                    {(tiles.span?.[hover] ?? 0) > 0 && (
                       <> – {dayLabel(tiles.lastDay[hover], tiles.epochDate)}</>
                     )}
                   </dd>

@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from '@remix-run/react';
+import type { TileMap } from '../lib/portal.server';
+import { LiveBadge } from '../components/site';
+import SkyMap from '../components/skymap';
 import news from './content/news.json';
 import surveys from './content/surveys.json';
 import science from './content/science.json';
@@ -178,7 +181,15 @@ function ScrollChrome() {
   );
 }
 
-const MainPage = () => {
+type MainProps = {
+  tiles: TileMap | null;
+  tilesLive: boolean;
+  generatedAt: string;
+  telescopes: { total: number; online: number } | null;
+  risCoverage: number | null;
+};
+
+const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: MainProps) => {
   const latest = (news.news as any[]).filter((item) => item.type !== 'update').slice(0, 3);
 
   return (
@@ -198,7 +209,10 @@ const MainPage = () => {
               </p>
               <h1>7-Dimensional Sky Survey</h1>
               <p className="fullpage-hero__lede">
-              A multi-telescope array, 7 Dimensional Telescope, built to find the optical counterparts of gravitational-wave events — and, in the process, to map the southern sky in forty colors.
+                A medium-band survey of the southern sky, measuring a low-resolution spectrum for
+                every source it observes and repeating the measurement over time. It is carried
+                out with the 7-Dimensional Telescope, an array of twenty 50-cm telescopes in
+                Chile.
               </p>
               <div className="dimension-row" style={{ marginTop: '2rem' }}>
                 {surveys.dimensions.map((dim) => (
@@ -235,7 +249,7 @@ const MainPage = () => {
             <div className="split split--wide-text split--middle reveal">
               <div>
                 <span className="eyebrow">Introduction</span>
-                <h2>An array that observes in seven dimensions</h2>
+                <h2>A survey that measures spectra, not colors</h2>
                 <p className="prose">{mainText1}</p>
                 <p style={{ marginTop: '1.5rem' }}>
                   <Link className="link-arrow" to="/about/intro">What is 7DS</Link>
@@ -268,7 +282,7 @@ const MainPage = () => {
             <div className="split split--middle reveal">
               <div>
                 <span className="eyebrow eyebrow--on-dark">Science</span>
-                <h2>One survey, seven fields</h2>
+                <h2>Broad science topics</h2>
                 <p className="prose" style={{ color: 'rgba(255,255,255,.78)' }}>
                   {mainText2}
                 </p>
@@ -287,9 +301,11 @@ const MainPage = () => {
               </div>
               <div className="stat-grid stat-grid--2x2 stat-grid--on-dark">
                 <div className="stat">
-                  <span className="stat__value">20</span>
+                  <span className="stat__value">{telescopes?.total ?? 20}</span>
                   <span className="stat__label">Telescopes in the array</span>
-                  <span className="stat__note stat__note--live">16 online</span>
+                  <span className="stat__note stat__note--live">
+                    {telescopes ? `${telescopes.online} online` : '16 online'}
+                  </span>
                 </div>
                 <div className="stat">
                   <span className="stat__value">40</span>
@@ -317,40 +333,68 @@ const MainPage = () => {
           <div className="container container--wide">
             <div className="reveal">
               <span className="eyebrow eyebrow--on-dark">7-Dimensional Sky Survey</span>
-              <h2>Three tiers over the southern sky</h2>
-              <p className="prose" style={{ color: 'rgba(255,255,255,.78)', maxWidth: '60ch' }}>
+              <h2>Three components over the southern sky</h2>
+              <p className="prose" style={{ color: 'rgba(255,255,255,.78)', maxWidth: '62ch' }}>
                 {mainText3}
               </p>
 
-              <div className="grid grid-cols-3" style={{ marginTop: '2rem' }}>
-                {surveys.tiers.map((tier) => (
-                  <div className="tier-card" key={tier.code} style={{ background: 'rgba(255,255,255,.04)', borderColor: 'rgba(255,255,255,.16)' }}>
-                    <span className="tier-card__code" style={{ color: 'var(--accent-on-dark)' }}>
-                      {tier.code}
-                    </span>
-                    <h3 className="tier-card__name" style={{ color: '#fff' }}>{tier.name}</h3>
-                    <dl style={{ borderTopColor: 'rgba(255,255,255,.16)' }}>
-                      <div style={{ borderBottomColor: 'rgba(255,255,255,.1)' }}>
-                        <dt style={{ color: 'rgba(255,255,255,.55)' }}>Area</dt>
-                        <dd style={{ color: '#fff' }}>{tier.area}</dd>
+              {/* The footprint is shown here rather than described, because
+                  what the three components divide up is exactly this sky. The
+                  map is a figure, not a tool: the interactive one, with
+                  per-tile detail, is on the coverage page. */}
+              <div className="home-survey">
+                <div className="home-survey__map">
+                  {tiles && tiles.count > 0 ? (
+                    <>
+                      <SkyMap
+                        tiles={tiles}
+                        interactive={false}
+                        caption={`${tiles.count.toLocaleString('en-US')} tiles observed`}
+                      />
+                      <div className="home-survey__meta">
+                        <LiveBadge live={tilesLive} updated={generatedAt} onDark />
+                        <Link className="link-arrow" to="/survey/coverage" style={{ color: 'var(--accent-on-dark)' }}>
+                          Explore the coverage map
+                        </Link>
                       </div>
-                      <div style={{ borderBottomColor: 'rgba(255,255,255,.1)' }}>
-                        <dt style={{ color: 'rgba(255,255,255,.55)' }}>Cadence</dt>
-                        <dd style={{ color: '#fff' }}>{tier.cadence}</dd>
-                      </div>
-                      <div style={{ borderBottomColor: 'rgba(255,255,255,.1)' }}>
-                        <dt style={{ color: 'rgba(255,255,255,.55)' }}>Depth</dt>
-                        <dd style={{ color: '#fff' }}>{tier.depth}</dd>
-                      </div>
-                    </dl>
-                    <span className={`pill pill--${tier.status}`} style={tier.status === 'planned' ? { color: 'rgba(255,255,255,.6)' } : undefined}>
-                      {tier.statusLabel}
-                    </span>
-                  </div>
-                ))}
-              </div>
+                    </>
+                  ) : null}
+                </div>
 
-              <p className="footnote footnote--on-dark">{surveys.depthFootnote}</p>
+                <div className="home-survey__tiers">
+                  {surveys.tiers.map((tier) => (
+                    <Link
+                      className="tier-card tier-card--link"
+                      key={tier.code}
+                      to={`/survey/${tier.code.toLowerCase()}`}
+                      style={{ background: 'rgba(255,255,255,.04)', borderColor: 'rgba(255,255,255,.16)' }}
+                    >
+                      <span className="tier-card__code" style={{ color: 'var(--accent-on-dark)' }}>
+                        {tier.code}
+                      </span>
+                      <h3 className="tier-card__name" style={{ color: '#fff' }}>{tier.name}</h3>
+                      <dl style={{ borderTopColor: 'rgba(255,255,255,.16)' }}>
+                        <div style={{ borderBottomColor: 'rgba(255,255,255,.1)' }}>
+                          <dt style={{ color: 'rgba(255,255,255,.55)' }}>Area</dt>
+                          <dd style={{ color: '#fff' }}>{tier.area}</dd>
+                        </div>
+                        <div style={{ borderBottomColor: 'rgba(255,255,255,.1)' }}>
+                          <dt style={{ color: 'rgba(255,255,255,.55)' }}>Cadence</dt>
+                          <dd style={{ color: '#fff' }}>{tier.cadence}</dd>
+                        </div>
+                      </dl>
+                      <span
+                        className={`pill pill--${tier.status}`}
+                        style={tier.status === 'planned' ? { color: 'rgba(255,255,255,.6)' } : undefined}
+                      >
+                        {tier.status === 'live' && risCoverage !== null && tier.code === 'RIS'
+                          ? `${risCoverage}% observed`
+                          : tier.statusLabel}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>

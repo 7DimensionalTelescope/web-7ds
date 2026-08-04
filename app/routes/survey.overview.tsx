@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
-import { PageLayout, PageHero, Section, NextLinks } from '../components/site';
-import { surveyOverviewText } from './content/text';
+import { PageLayout, PageHero, Section } from '../components/site';
+import { surveyOverviewText, surveyTilingText, surveyTilingText2 } from './content/text';
 import surveys from './content/surveys.json';
 
 export const meta: MetaFunction = () => [
@@ -9,9 +10,26 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'The 7-Dimensional Sky Survey: a three-tier program covering the southern sky in medium bands, from a single-visit reference map to nightly deep monitoring.',
+      'The 7-Dimensional Sky Survey: three components covering the southern sky in medium bands, from a single-visit reference map to nightly deep monitoring, on one tiling.',
   },
 ];
+
+/* Tiling parameters live here and nowhere else on the site. The component
+   pages give the parameters specific to each survey and link back. */
+const TILING = [
+  ['Tile centers', 'HEALPix pixelization of the celestial sphere'],
+  ['Tile numbering', 'T00000 – T28519, by increasing declination'],
+  ['Sky coverage', 'South celestial pole to Dec +30°'],
+  ['Overlap near equator', '≈ 5′ in right ascension, 4′ in declination'],
+  ['Standard visit', '3 × 100 s, coadded to 300 s'],
+  ['Field of view per tile', '1.34° × 0.90°, 1.25 deg²'],
+];
+
+const PAGES: Record<string, string> = {
+  RIS: '/survey/ris',
+  WTS: '/survey/wts',
+  IMS: '/survey/ims',
+};
 
 const Index = () => {
   return (
@@ -23,30 +41,28 @@ const Index = () => {
             The 7-Dimensional <em>Sky Survey</em>
           </>
         }
-        lede="Wide-area, high-cadence and deep, on one tile grid and one instrument. 7DS trades area against depth across three tiers that share a single observational infrastructure."
+        lede="7DS is the science program of 7DT. It is divided into three components that differ in area, cadence and depth, and that share one tiling of the sky."
         image="/img/hero/survey.jpg"
         meta={[
-          { value: '23,000', unit: 'deg²', label: 'RIS area' },
-          { value: 'Single-visit', unit: '', label: 'RIS cadence' },
-          { value: '10–14', unit: 'd', label: 'WTS cadence' },
-          { value: '800-1200', unit: 'deg²', label: 'WTS area' },
-          { value: '1', unit: 'd', label: 'IMS cadence' },
-          { value: '8.5', unit: 'deg²', label: 'IMS area' },
+          { value: '3', label: 'Survey components' },
+          { value: '23,000', unit: 'deg²', label: 'Widest component' },
+          { value: '1', unit: 'd', label: 'Fastest cadence' },
+          { value: '23.6', unit: 'mag', label: 'Deepest planned' },
         ]}
       />
 
-      <Section eyebrow="Overview" title="Three tiers, one grid">
+      <Section eyebrow="Overview" title="Three components on one tiling">
         <p className="prose">{surveyOverviewText}</p>
 
         <div className="table-wrap" style={{ marginTop: '2rem' }}>
           <table className="tier-table">
-            <caption>Summary of the three components of 7DS — status June 2026</caption>
+            <caption>Design parameters of the three survey components</caption>
             <thead>
               <tr>
                 <th scope="col">Property</th>
                 {surveys.tiers.map((tier) => (
                   <th scope="col" key={tier.code}>
-                    {tier.code}
+                    <Link to={PAGES[tier.code]}>{tier.code}</Link>
                   </th>
                 ))}
               </tr>
@@ -86,49 +102,56 @@ const Index = () => {
           </table>
         </div>
         <p className="footnote" style={{ marginTop: '0.75rem' }}>
-          Depths are 5σ point-source limits in the m600 band. The RIS figure is a single-visit
-          depth (3 × 100 s); the WTS and IMS figures are expected values from cumulative data
-          after five years of operation.
+          Depths are 5σ point-source limits in the m600 band. The RIS figure is the depth of one
+          visit (3 × 100 s); the WTS and IMS figures are cumulative over the planned five-year
+          operation. Measured performance is reported on the{' '}
+          <Link to="/users/performance">performance page</Link>, and current progress on each
+          component page.
         </p>
       </Section>
 
-      <Section eyebrow="Tiers" title="What each survey is for" alt>
-        <div className="stack-lg">
-          {surveys.tiers.map((tier) => (
-            <div className="panel" key={tier.code}>
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'baseline',
-                  gap: '0.75rem',
-                  marginBottom: '0.75rem',
-                }}
-              >
-                <span className="tier-card__code">{tier.code}</span>
-                <h3 style={{ margin: 0, fontSize: '1.25rem' }}>{tier.name}</h3>
-                <span className={`pill pill--${tier.status}`}>{tier.statusLabel}</span>
-              </div>
-              <p className="prose" style={{ fontSize: '1rem' }}>
-                {tier.summary}
-              </p>
-              <p className="note" style={{ marginBottom: 0 }}>
-                {tier.depthRange}
-              </p>
-            </div>
-          ))}
+      <Section eyebrow="Tiling" title="One tile pattern for the whole program" alt>
+        <div className="split split--wide-text">
+          <div>
+            <p className="prose">{surveyTilingText}</p>
+            <p className="prose">{surveyTilingText2}</p>
+          </div>
+          <div className="table-wrap">
+            <table className="spec-table">
+              <caption>Tiling and exposure</caption>
+              <tbody>
+                {TILING.map((row) => (
+                  <tr key={row[0]}>
+                    <th scope="row">{row[0]}</th>
+                    <td>{row[1]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </Section>
 
-      <Section eyebrow="Continue" title="Explore the survey">
-        <NextLinks
-          links={[
-            { label: 'Survey design', href: '/survey/design' },
-            { label: 'Current status', href: '/survey/status' },
-            { label: 'Observing modes', href: '/telescope/mode' },
-            { label: 'Science program', href: '/science/overview' },
-          ]}
-        />
+      <Section eyebrow="Rationale" title="Why three components and not one">
+        <p className="prose">{surveys.designNote}</p>
+
+        <div className="grid grid-cols-3" style={{ marginTop: '2rem' }}>
+          {surveys.tiers.map((tier) => (
+            <Link className="tier-card tier-card--link" key={tier.code} to={PAGES[tier.code]}>
+              <span className="tier-card__code">{tier.code}</span>
+              <h3 className="tier-card__name">{tier.name}</h3>
+              <p className="rationale__tradeoff" style={{ marginBottom: '0.75rem' }}>
+                {tier.tradeoff}
+              </p>
+              <p className="tier-card__note">{tier.goal}</p>
+              <span className={`pill pill--${tier.status}`}>{tier.statusLabel}</span>
+            </Link>
+          ))}
+        </div>
+
+        <p className="note" style={{ marginTop: '1.5rem' }}>
+          Each component page carries its own strategy, sky map, coverage and current status.
+        </p>
       </Section>
     </PageLayout>
   );

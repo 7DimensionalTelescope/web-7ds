@@ -114,6 +114,54 @@ export function Section({
   );
 }
 
+/* ---------------------------------------------------------------------------
+   Live-update indicator.
+
+   Every figure on this site is either a fixed property of the instrument or a
+   number read from the observation database a moment ago. This marks the
+   second kind, so a reader never has to guess which they are looking at, and
+   says plainly when the database could not be reached and the page is showing
+   a stored copy instead.
+--------------------------------------------------------------------------- */
+export function LiveBadge({
+  live,
+  updated,
+  interval,
+  onDark,
+}: {
+  live: boolean;
+  /** ISO timestamp the source stamped on the data. */
+  updated?: string;
+  /** How often this page refetches, in plain words. */
+  interval?: string;
+  onDark?: boolean;
+}) {
+  const when = updated
+    ? new Date(updated).toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'UTC',
+      }) + ' UTC'
+    : null;
+
+  return (
+    <span
+      className={`live-badge${live ? '' : ' live-badge--stale'}${onDark ? ' live-badge--on-dark' : ''}`}
+      role="status"
+    >
+      <span className="live-badge__dot" aria-hidden="true" />
+      <span className="live-badge__text">
+        {live ? 'Live data' : 'Stored copy'}
+        {when && <span className="live-badge__when"> · {when}</span>}
+        {live && interval && <span className="live-badge__when"> · refreshed {interval}</span>}
+      </span>
+    </span>
+  );
+}
+
 export function StatGrid({ items, onDark }: { items: Meta[]; onDark?: boolean }) {
   return (
     <div className={`stat-grid${onDark ? ' stat-grid--on-dark' : ''}`}>

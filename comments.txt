@@ -1,0 +1,27 @@
+0. Use American english. Not british.
+
+1. 1.2 deg^2 to 1.25 deg^2
+
+2. In the front page "science" card, the contents in "Spectra without a spectrograph" looks weird. Instead of describing the specific science, provide broader pictures (or list up some key science) like 7ds allows to uncover key questions in galaxies or something like that.
+
+3. for WTS and IMS, the depth is estimated with the 5 years observations. Note this. like put * at depth and put this in somewhere
+
+4. the instrument to the facility. OTA -> hardware, OPS -> Operation, Data -> pipeline. OTA should contain more information on the instrument like mount, camera, and others in a compact way
+
+5. change the catch-phrase, "Twenty telescopes, one instrument" to "Twenty telescopes, One system"
+
+6. participating institute logoes are not showing up properly. check this
+
+7. when you scroll down to the end, you can see the white bar (blanck strip). Remove it
+
+8. For author list, Last name, The first letter in the first name, et al. like Kim et al. to Kim, M et al. 
+
+9. for publication image, you can pick one of the image in the paper.
+
+10. Rewrite the "about" page entire. A page that includes motivation, history, original funding resource, ...
+
+11. In publication, add an image relavant to the paper. Also, there are some works that do not show their abstract. Fill them
+
+12. in Survey menu, in each card (RIS, WTS, IMS), add a relavant image. You can find the appropriate image from the reference by Kim Jihoon.
+
+13. 

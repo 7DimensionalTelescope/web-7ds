@@ -13,150 +13,132 @@
 /* --- Home page ----------------------------------------------------------- */
 
 export const mainText1 =
-  'The 7-Dimensional Telescope (7DT) is an array of twenty 50-cm telescopes at El \
-Sauce Observatory in Chile, built and operated by the Center for the Gravitational-wave \
-Universe at Seoul National University. Each unit carries a share of a forty-filter \
-medium-band set, and together they turn imaging into low-resolution spectroscopy across \
-1.25 square degrees at a time. Sixteen units and thirty-five filters are in routine \
-operation today; the remainder complete the designed array.'
+  'The 7-Dimensional Sky Survey (7DS) is a medium-band survey of the southern sky. It \
+is carried out with the 7-Dimensional Telescope (7DT), an array of twenty 50-cm \
+telescopes at El Sauce Observatory in Chile, built and operated by the Center for the \
+Gravitational-wave Universe at Seoul National University. Each unit carries a share of a \
+forty-filter medium-band set, so a single visit records a low-resolution spectrum of \
+every source in 1.25 square degrees. As of now, sixteen units and thirty-five filters \
+are in routine operation.'
 
 export const mainText2 =
-  'Every source in the field arrives with a low-resolution spectrum already attached. \
-That single data product carries across most of the questions optical astronomy is \
-asking: how galaxies assemble and stop forming stars, where the heavy elements are \
-made, how fast the Universe is expanding, how black holes feed, what young stars do \
-from one night to the next, and what the small bodies of our own solar system are made \
-of. 7DS was designed for gravitational-wave counterparts; the same nightly images serve \
-all of it.'
+  'A medium-band spectral energy distribution for every source in the field supports a \
+wide range of science from one data product: how galaxies assemble and cease forming \
+stars, where the heavy elements are produced, the expansion rate of the Universe, \
+accretion onto black holes, the variability of young stars, and the composition of \
+small solar-system bodies. 7DS was designed to identify gravitational-wave \
+counterparts; the same images serve the rest.'
 
 export const mainText3 =
-  'The 7-Dimensional Sky Survey (7DS) runs on three tiers that trade area against \
-depth and cadence: a single-visit reference map of the southern sky, a wide \
-time-domain survey on a 10-14 day cadence, and nightly monitoring of a deep field at \
-the south ecliptic pole. All three observe the same tile grid, so their data coadd \
-without compromise.'
+  '7DS is divided into three components that trade area against depth and cadence: a \
+single-visit reference map of the southern sky, a time-domain survey on a 10-14 day \
+cadence, and nightly monitoring of a deep field at the south ecliptic pole. All three \
+use the same tiling of the sky, so their data coadd directly.'
 
 export const mainText4 =
-  'Twenty DeltaRho 500 units on direct-drive mounts, sixteen of them observing \
-tonight, one control computer per operational telescope, a robotic scheduler that can \
-interrupt the night and start a follow-up exposure in under a minute, and a pipeline \
-that reduces a 3,000-image night within the daily budget. 7DT is built to be pointed at \
-a transient while it is still bright.'
+  'Twenty DeltaRho 500 units on direct-drive mounts, sixteen currently observing, one \
+control computer per operational telescope, a scheduler that can interrupt the night \
+and begin a follow-up exposure in under a minute, and a pipeline that reduces a \
+3,000-image night the same day. The array is built to observe a transient while it is \
+still bright.'
 
 /* --- About / 7DS overview ------------------------------------------------- */
 
-export const overviewText =
-  'The 7-Dimensional Telescope (7DT) is a multi-telescope array of twenty 50-cm \
-commercial off-the-shelf telescopes at El Sauce Observatory, Chile, designed to \
-identify the electromagnetic counterparts of gravitational-wave events. Its defining \
-feature is a set of 40 medium-band filters of 25 nm width spanning 400 to 900 nm, \
-distributed across the array so that the full set is covered in a small number of \
-exposures. This yields IFU-like data at low spectral resolution (R = 30-70) over \
-approximately 1.25 square degrees per pointing — imaging that behaves like \
-spectroscopy, over an area no spectrograph can reach.'
+export const surveyIntroText =
+  '7DS is a spectral-mapping survey of the southern sky. Rather than measuring a few \
+broadband colors, it images through medium-band filters of about 25 nm width, so each \
+visit yields a spectral energy distribution at R = 30-70 for every source in the field. \
+Applied over 23,000 square degrees, this produces a homogeneous low-resolution \
+spectroscopic map of the southern sky, and applied repeatedly it measures how those \
+spectra change with time.'
 
 export const aboutText2 =
   'Since first light in October 2023 the array has grown from twelve to sixteen \
-operational units, and from twenty to thirty-five installed medium-band filters, \
-against a design of twenty telescopes and forty filters. Commissioning has reached \
-closure, robotic operation runs unattended, and the science program — the \
-7-Dimensional Sky Survey (7DS) — is under way on two of its three tiers.'
+operational units and from twenty to thirty-five installed medium-band filters, against \
+a design of twenty telescopes and forty filters. Commissioning is complete, operation is \
+robotic and unattended, and two of the three survey components are under way.'
 
 export const aboutMotivationText =
-  'On 17 August 2017 the merger of two neutron stars, GW170817, was seen in \
-gravitational waves and then found in light. It remains the only gravitational-wave \
-event with a confirmed electromagnetic counterpart. The reason is not that such \
-mergers are rare but that their counterparts are hard to catch: a kilonova peaks near \
-absolute magnitude −15 to −17 and fades by about half a magnitude a day, and the sky \
-region a detector network reports for it covers hundreds to thousands of square \
-degrees. Only about a dozen gravitational-wave sources have ever been localized to \
-better than 100 square degrees — and a patch that size is expected to contain of order \
-a hundred unrelated transients over a week.'
+  'Most optical surveys measure a source in a few broad bands, which constrains its \
+spectrum only weakly. Identifying what a source is — and, for anything that varies, \
+what is changing about it — then requires spectroscopic follow-up on a larger \
+telescope, which is expensive and cannot be applied to more than a small fraction of \
+detections. The result is a large gap between the number of sources a survey finds and \
+the number it can characterize.'
 
 export const aboutMotivationText2 =
-  'That is the problem 7DT was built to solve. Searching an area that large quickly \
-requires a wide field and fast slewing; separating a kilonova from the supernovae, \
-novae and detector artifacts inside it requires spectral information. Conventional \
-practice is to image first and follow up spectroscopically, which costs nights on \
-large telescopes and time the source does not have. 7DT collapses the two steps into \
-one: every exposure already carries a low-resolution spectrum of every source in the \
-field.'
+  '7DS closes that gap by putting the spectral information into the survey itself. \
+Imaging through a set of medium bands rather than a few broad ones gives every source \
+a low-resolution spectrum at the moment it is detected, for the whole field at once and \
+without follow-up. The immediate motivation was the search for optical counterparts to \
+gravitational-wave events, where candidates must be classified quickly and in large \
+numbers; the same capability applies to any survey question that depends on knowing \
+what a source is rather than only how bright it is.'
 
 export const aboutApproachText =
-  'The design answer is an array rather than a single large telescope. Twenty \
-commercial off-the-shelf 50-cm units, each carrying a different share of a \
-forty-filter medium-band set, cost a fraction of a purpose-built instrument, can be \
-brought on line in stages, and can be reconfigured between science goals without \
-touching hardware. Pointed together they build a spectrum; pointed apart they tile \
-25 square degrees at once. Other multi-telescope arrays — GOTO, BlackGEM, LAST — \
-made the same bet on off-the-shelf optics; 7DT is distinguished by what it puts in \
-front of them.'
+  'The survey combines two capabilities that are usually separate. Spectral mapping: \
+each visit samples the spectrum of every source in a 1.25 square-degree field at \
+R = 30-70 between 375 and 875 nm, which is enough to locate the 4000 Angstrom break \
+and strong emission lines, and so to estimate redshifts and stellar populations \
+directly from imaging. Time domain: the same field can be revisited on cadences from \
+one day to two weeks, so the spectral measurement becomes a time series rather than a \
+single epoch.'
 
-export const aboutOriginText =
-  '7DT is designed, built and operated by the Center for the Gravitational-wave \
-Universe at Seoul National University, with support from the National Research \
-Foundation of Korea, funded by the Korean government (MSIT). The Center came to the \
-project through GECKO, the Gravitational-wave Electromagnetic Counterpart Korean \
-Observatory — a network of existing Korean-accessible telescopes that followed up \
-gravitational-wave alerts during the O3 observing run. Its campaign on GW190425, the \
-first binary neutron star merger of that run, covered 621 candidate host galaxies \
-inside a 7,460 square-degree localization and found no kilonova. The limits of \
-working with borrowed time on telescopes not designed for the task were the direct \
-argument for building one that was.'
+export const aboutApproachText2 =
+  'Sampling a spectrum at this resolution costs exposures: a full medium-band set is \
+many more frames than a broadband survey takes for the same field. The array is what \
+makes that affordable, and the trade is set out under the telescope and the survey \
+design.'
 
 export const aboutText3 =
-  'The name counts the axes of the data. Two of position on the sky, one of \
+  'The name counts the measured axes of the data. Two of position on the sky, one of \
 brightness, one of wavelength and one of time come directly from the observations; \
-distance and radial velocity follow from the medium-band spectral energy distribution. \
-A single visit therefore records not just where a source is and how bright it is, but \
-what it is made of and how it is moving.'
+distance and radial velocity are derived from the medium-band spectral energy \
+distribution. A single visit therefore records where a source is, how bright it is, \
+what its spectrum looks like, and how both change with time.'
 
 /* --- Science ------------------------------------------------------------- */
 
 export const scienceOverviewText =
-  'The primary mission of 7DT is the rapid identification of electromagnetic \
-counterparts to gravitational-wave events. A typical kilonova peaks near an absolute \
-magnitude of −15 to −17 and fades by roughly 0.5 mag per day, inside a \
-localization region of hundreds to thousands of square degrees — where even a \
-single 100 deg² patch is expected to hold of order a hundred unrelated transients \
-over a seven-day window. Finding one demands wide-area coverage, fast response, and \
-spectral information good enough to reject the contaminants, which is precisely what a \
-medium-band array delivers.'
+  'Two capabilities define what 7DS can answer. The first is spectral mapping: every \
+visit samples the spectrum of every source in the field at R = 30-70 across 375 to 875 \
+nm. That is coarse compared with a spectrograph, but it resolves the 4000 Angstrom \
+break, strong emission lines and broad continuum features, and it applies to every \
+object in 1.25 square degrees at once rather than to the few that fit on a slit.'
 
 export const scienceOverviewText2 =
-  'The same data serve a much broader program. Low-resolution spectral mapping of \
-the southern sky supports photometric redshift catalogs, resolved stellar \
-populations in nearby galaxies, active galactic nuclei, variable stars, and the \
-time-domain study of solar-system bodies. Several of the science verification \
-observations taken during commissioning have since matured into refereed or \
-near-complete analyzes.'
+  'The second is the time domain. Because the spectral measurement is made by imaging, \
+it can be repeated: the same field is revisited on cadences from one night to two \
+weeks, so what is measured is not a spectrum but its evolution. Questions that need \
+both at once — what a transient is while it is still bright, how an active galactic \
+nucleus responds to its own variability, how a young star changes from night to night — \
+are the ones this survey is built for.'
 
 /* --- Survey -------------------------------------------------------------- */
 
 export const surveyOverviewText =
-  '7DS is the science program of 7DT. It is structured as three complementary \
-surveys distinguished by area, cadence and depth: the Reference Imaging Survey (RIS), \
-the Wide-area Time-domain Survey (WTS), and the Intensive Monitoring Survey (IMS). \
-Across the three tiers sky coverage decreases and depth increases, spanning the range \
-from a single-visit all-southern-sky reference map to daily monitoring of a small \
-field, while sharing a single observational infrastructure.'
+  '7DS is the science program of 7DT. It comprises three surveys distinguished by area, \
+cadence and depth: the Reference Imaging Survey (RIS), the Wide-area Time-domain Survey \
+(WTS) and the Intensive Monitoring Survey (IMS). Across the three, area decreases and \
+depth increases — from a single visit to the whole southern sky, to nightly observation \
+of one field — while all three use the same instrument and the same tiling.'
 
-export const surveyDesignText =
-  'All 7DS observations follow a common tile pattern generated from a HEALPix \
-pixelization of the celestial sphere, with adjacent pointings overlapping by about 5 \
-arcminutes in right ascension and 4 arcminutes in declination near the celestial \
-equator and by more toward the poles. Tiles are numbered T00000 to T28519 in order of \
-increasing declination, covering everything accessible to the array from the south \
-pole to +30 degrees.'
+export const surveyTilingText =
+  'All 7DS observations use a common set of fixed pointings, generated from a HEALPix \
+pixelization of the celestial sphere. Adjacent pointings overlap by about 5 arcminutes \
+in right ascension and 4 arcminutes in declination near the celestial equator, and by \
+more toward the poles. Tiles are numbered T00000 to T28519 in order of increasing \
+declination, covering everything accessible to the array from the south celestial pole \
+to +30 degrees.'
 
-export const surveyDesignText2 =
-  'The RIS tile grid is the operational reference for the entire program: WTS and \
-IMS point at the same tile centers, and target-of-opportunity observations use them \
-wherever the field allows. Because every survey shares the grid, data from any tier \
-coadd homogeneously with data from the others, and difference imaging always runs \
-against a consistent reference. A visit is three consecutive 100-second exposures, \
-coadded to a 300-second frame - a number set by the unguided tracking capability of \
-the mount and the read noise of the detector.'
+export const surveyTilingText2 =
+  'This tiling is the operational reference for the whole program. WTS and IMS point at \
+the same tile centers, and target-of-opportunity observations use them wherever the \
+field allows. Because every component shares it, data from any of them coadd directly \
+with data from the others and difference imaging always runs against a consistent \
+reference. A visit is three consecutive 100-second exposures coadded to a 300-second \
+frame; the exposure length is set by the unguided tracking capability of the mount and \
+the read noise of the detector.'
 
 /* surveyStatusText was removed when /survey/status became live: its figures
    (image counts, ToO totals) are now read from the portal, and a second copy
@@ -166,12 +148,25 @@ the mount and the read noise of the detector.'
 
 export const telescopeOverviewText =
   '7DT is an array of twenty 50-cm commercial off-the-shelf telescopes. Each unit is a \
-PlaneWave DeltaRho 500 optical tube assembly on an L-500 direct-drive mount operated in \
-equatorial configuration, paired with a Moravian Instruments C3-61000 PRO CMOS camera — \
-every unit identical but for the filters it carries. Sixteen of the twenty are deployed \
-and operational as of June 2026, and the four remaining units complete the array. All \
+PlaneWave DeltaRho 500 optical tube assembly on an L-500 direct-drive mount in \
+equatorial configuration, paired with a Moravian Instruments C3-61000 PRO CMOS camera. \
+Units are identical except for the filters they carry. Sixteen of the twenty are \
+deployed and operational as of June 2026; the remaining four complete the array. All \
 operational units share a common configuration and show consistent optical performance \
 in routine use.'
+
+export const arrayDesignText =
+  'Twenty commercial 50-cm units, each carrying a different share of the forty-filter \
+medium-band set, cost a fraction of a purpose-built instrument, can be brought on line \
+in stages, and can be reconfigured between science goals without hardware changes. \
+Pointed together the units build a spectrum of one field; pointed apart they cover 25 \
+square degrees at once.'
+
+export const arrayDesignText2 =
+  'Other multi-telescope arrays — GOTO, BlackGEM, LAST — take the same approach to \
+off-the-shelf optics. What distinguishes 7DT is the filter set placed in front of them: \
+40 medium bands of about 25 nm width spanning 375 to 900 nm, distributed across the \
+array so that the full set is covered in a small number of exposures.'
 
 export const locationText =
   'El Sauce Observatory sits in the Rio Hurtado Valley of Chile at 30 deg 28 min 16 \
@@ -256,9 +251,9 @@ seeing better than 2.0 arcseconds, airmass below 1.5, and non-bright nights.'
 export const modeText =
   'Because each unit carries its own filter complement, the array can be reconfigured \
 between science goals without changing hardware. The full spectral range is covered by \
-assigning unique filter combinations to individual units and rotating through them \
-during an observation. Four modes are in routine use, and the choice between them is \
-the choice of what to spend the night on: spectral resolution, depth, or sky coverage.'
+assigning different filter combinations to individual units and rotating through them \
+during an observation. Four modes are in routine use; the choice between them trades \
+spectral sampling, depth and sky coverage against one another.'
 
 /* --- Computing and data -------------------------------------------------- */
 

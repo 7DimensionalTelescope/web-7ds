@@ -23,7 +23,10 @@ const COLUMNS = [
     title: 'Survey',
     links: [
       { label: 'Overview', href: '/survey/overview' },
-      { label: 'Design', href: '/survey/design' },
+      { label: 'RIS — Reference Imaging', href: '/survey/ris' },
+      { label: 'WTS — Wide-area Time-domain', href: '/survey/wts' },
+      { label: 'IMS — Intensive Monitoring', href: '/survey/ims' },
+      { label: 'Sky Coverage', href: '/survey/coverage' },
       { label: 'Status', href: '/survey/status' },
     ],
   },
@@ -41,15 +44,25 @@ const COLUMNS = [
     ],
   },
   {
-    title: 'Facilities',
+    title: 'Telescope',
     links: [
       { label: 'Overview', href: '/telescope/overview' },
-      { label: 'Location', href: '/telescope/location' },
       { label: 'Instrument', href: '/telescope/instrument' },
+      { label: 'Location', href: '/telescope/location' },
       { label: 'Computational Resources', href: '/telescope/computer' },
-      { label: 'Observing Mode', href: '/telescope/mode' },
-      { label: 'Data & Software', href: '/data/overview' },
-      { label: 'Sky Coverage', href: '/data/coverage' },
+    ],
+  },
+  {
+    title: 'For Users',
+    links: [
+      { label: 'Status & Overview', href: '/users/status' },
+      { label: 'Performance', href: '/users/performance' },
+      { label: 'How to Propose', href: '/users/propose' },
+      { label: 'How to Use the Data', href: '/users/data' },
+      { label: 'Data Format', href: '/users/format' },
+      { label: 'Data Access', href: '/users/access' },
+      { label: 'Available Software', href: '/users/software' },
+      { label: 'Questions', href: '/users/faq' },
     ],
   },
 ];

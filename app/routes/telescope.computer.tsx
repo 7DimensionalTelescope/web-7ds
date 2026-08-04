@@ -100,8 +100,8 @@ const Index = () => {
           </figcaption>
         </figure>
         <div className="btn-row" style={{ marginTop: '2rem' }}>
-          <Link className="btn btn--primary" to="/data/software">Reduction software</Link>
-          <Link className="btn btn--secondary" to="/data/overview">Data products</Link>
+          <Link className="btn btn--primary" to="/users/software">Reduction software</Link>
+          <Link className="btn btn--secondary" to="/users/format">Data products</Link>
         </div>
       </Section>
     </PageLayout>

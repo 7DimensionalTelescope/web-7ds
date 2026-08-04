@@ -204,23 +204,23 @@ export type TileMap = {
   /** Distinct observing nights on that tile. */
   visits: number[];
   /** Science frames recorded on that tile, all filters together. */
-  frames: number[];
+  frames?: number[];
   /** Days elapsed since `epochDate` for the tile's most recent night. */
   lastDay: number[];
   /** Nights spanned from first observation to last; 0 for a single night. */
-  span: number[];
+  span?: number[];
   /** Index into `patterns` giving this tile's per-filter frame counts. */
-  pattern: number[];
+  pattern?: number[];
   /** Every filter name the survey has used, ordered by central wavelength. */
-  filters: string[];
+  filters?: string[];
   /** Central wavelength in nm for each entry of `filters`. */
-  filterWave: number[];
+  filterWave?: number[];
   /**
    * Distinct per-filter frame counts across the survey, each flattened to
    * [filterIndex, frames, filterIndex, frames, ...]. Fifteen thousand tiles
    * share fewer than a thousand of these, so they are sent once and indexed.
    */
-  patterns: number[][];
+  patterns?: number[][];
   /** Calendar day `lastDay` and `span` count from, ISO. */
   epochDate: string;
   visitsMax: number;
@@ -328,10 +328,41 @@ export function getTileMap(): Promise<Fetched<TileMap>> {
       lastNight,
     };
     data.visitsMax = data.visits.reduce((a, b) => (b > a ? b : a), 0);
-    data.framesMax = data.frames.reduce((a, b) => (b > a ? b : a), 0);
+    data.framesMax = (data.frames ?? []).reduce((a, b) => (b > a ? b : a), 0);
 
     return { data, live: true, generatedAt: raw.generated_at };
   }).catch(() => ({ data: EMPTY_TILES, live: false, generatedAt: '' }));
+}
+
+/* --- A lighter copy -------------------------------------------------------
+
+   The landing page draws the footprint but has no pointer readout, so it needs
+   coordinates and dates and nothing else. Stripping the identifiers and the
+   filter breakdown takes the payload from ~90 KB gzipped to ~40 KB, which is
+   the difference between the map being worth putting on the front page and
+   not. It is derived from the same cached fetch, so it costs the portal
+   nothing extra.
+------------------------------------------------------------------------- */
+
+const lite = new Map<string, { from: string; value: Fetched<TileMap> }>();
+
+/**
+ * The tile list without the per-filter breakdown. Pass `withNames` when the
+ * page needs to pick tiles out by identifier — the identifiers are only 3 KB
+ * gzipped, the filter tables are ten times that.
+ */
+export async function getTileMapLite(withNames = false): Promise<Fetched<TileMap>> {
+  const full = await getTileMap();
+  const key = withNames ? 'named' : 'bare';
+  const held = lite.get(key);
+  if (held && held.from === full.generatedAt) return held.value;
+
+  const { frames, span, pattern, filters, filterWave, patterns, name, nameDelta, ...rest } =
+    full.data;
+  const data = withNames ? ({ ...rest, name, nameDelta } as TileMap) : (rest as TileMap);
+  const value = { ...full, data };
+  lite.set(key, { from: full.generatedAt, value });
+  return value;
 }
 
 /* Serve-stale only helps once something is cached, so the first request after
