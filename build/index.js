@@ -118,7 +118,7 @@ import {
 var app_default = "/build/_assets/app-ZXQWFZKN.css";
 
 // app/css/custom.css
-var custom_default = "/build/_assets/custom-D4XIE6FV.css";
+var custom_default = "/build/_assets/custom-MCPL35RR.css";
 
 // app/root.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
@@ -672,6 +672,21 @@ function SimpleTable({
       /* @__PURE__ */ jsx5("td", { children: row[1] })
     ] }, row[0])) })
   ] }) });
+}
+function Figure({
+  src,
+  alt,
+  caption,
+  label
+}) {
+  return /* @__PURE__ */ jsxs4("figure", { className: "figure", children: [
+    /* @__PURE__ */ jsx5("img", { src, alt, loading: "lazy" }),
+    (caption || label) && /* @__PURE__ */ jsxs4("figcaption", { children: [
+      label && /* @__PURE__ */ jsx5("b", { children: label }),
+      " ",
+      caption
+    ] })
+  ] });
 }
 function NextLinks({
   title,
@@ -1844,49 +1859,150 @@ import { Link as Link9 } from "@remix-run/react";
 
 // app/routes/content/science.json
 var science_default = {
-  note: "Science themes of 7DS. Source: Kim et al., Proc. SPIE 14147-84, Sec. 3.4. Published results are listed on the publications page rather than duplicated here.",
+  note: "Science themes of 7DS. Sources: Kim et al., Proc. SPIE 14147-84, Sec. 3.4, and the 7DS science program targets. Published results are listed on the publications page rather than duplicated here. Figures are 7DT observations and 7DS simulations produced by the team; no third-party figures are reproduced.",
   themes: [
     {
       id: "mma",
       n: "01",
       title: "Multi-messenger Astronomy",
-      summary: "The application 7DT was designed for. A kilonova peaks near absolute magnitude \u221215 to \u221217 and fades by roughly half a magnitude per day, within a gravitational-wave localization of hundreds to thousands of square degrees; a single 100 deg\xB2 region is expected to contain of order a hundred unrelated transients over a seven-day window. 7DT addresses this with wide-field tiling, sub-minute response to an alert, and sufficient spectral information in one visit to reject contaminants without follow-up spectroscopy."
+      question: "Where do gravitational-wave events happen?",
+      summary: "The application 7DT was designed for. A kilonova peaks near absolute magnitude \u221215 to \u221217 and fades by roughly half a magnitude per day, within a gravitational-wave localization of hundreds to thousands of square degrees; a single 100 deg\xB2 region is expected to contain of order a hundred unrelated transients over a seven-day window. 7DT addresses this with wide-field tiling, sub-minute response to an alert, and sufficient spectral information in one visit to reject contaminants without follow-up spectroscopy.",
+      detail: [
+        "GW170817 remains the only gravitational-wave event whose kilonova was identified, and the reasons are structural rather than accidental. Localizations span hundreds to thousands of square degrees. The kilonova itself is faint and fades within about a day. And searching an area that large turns up thousands to tens of thousands of unrelated transients and artifacts, any of which can pass for the real thing in broadband imaging.",
+        "The conventional response is a sequence: localize, image wide, build a candidate list, then chase candidates with spectroscopy on a larger telescope. The spectroscopy is the bottleneck, and it arrives after the source has faded. 7DT collapses the sequence by imaging and spectrally sampling at the same time, so every candidate arrives already carrying the information needed to keep or reject it."
+      ],
+      goals: [
+        "Optical counterparts for gravitational-wave events, with the statistical properties of their host galaxies",
+        "About ten kilonova-bearing events \u2014 enough to decide the Hubble tension by standard-siren distances"
+      ],
+      figure: {
+        src: "/img/science/kilonova-vs-supernova.jpg",
+        alt: "Simulated spectra of a kilonova at 0.5 days and a Type Ia supernova at 35 days, sampled by 7DT medium bands and by broadband filters",
+        label: "Why medium bands settle it",
+        caption: "A kilonova at 0.5 days (orange) and a Type Ia supernova at 35 days (grey) have nearly the same broadband colors \u2014 the three red points cannot separate them. The 7DT medium bands (blue) trace the continuum shape closely enough that the two are no longer confusable. Simulation by the 7DS team."
+      }
     },
     {
       id: "transients",
       n: "02",
       title: "Transients",
-      summary: "Medium-band spectral sampling gives direct color and continuum information for a transient from one epoch of imaging. A hybrid classification framework built on 7DT spectral energy distributions \u2014 an unsupervised anomaly detector coupled to a supervised multiclass classifier \u2014 reaches macro F1 \u2248 0.80 across eight common transient types and recovers more than 90 percent of optically detectable kilonovae, including AT2017gfo, without ever being trained on one."
+      question: "What happens in the first hours of an explosion?",
+      summary: "Medium-band spectral sampling gives direct color and continuum information for a transient from one epoch of imaging. A hybrid classification framework built on 7DT spectral energy distributions \u2014 an unsupervised anomaly detector coupled to a supervised multiclass classifier \u2014 reaches macro F1 \u2248 0.80 across eight common transient types and recovers more than 90 percent of optically detectable kilonovae, including AT2017gfo, without ever being trained on one.",
+      detail: [
+        "The earliest hours of a supernova carry the imprint of what the star was before it exploded \u2014 the size of a companion, the extent of circumstellar material, the structure of the outer envelope. That information is gone within days, which is why so few explosions have been caught with spectral coverage early enough to use it.",
+        "A survey that samples the spectrum at every visit does not need to decide in advance which transients deserve follow-up. The spectral information is already in the discovery data."
+      ],
+      goals: [
+        "Early-time spectral coverage for more than a hundred supernovae, to constrain explosion mechanisms and progenitor systems"
+      ]
     },
     {
       id: "galaxies",
       n: "03",
       title: "Galaxy Formation & Evolution",
-      summary: "Medium-band mapping over 1.25 square degrees is IFU-like data at survey scale. Star-forming clumps are identified through H\u03B1 emission in stellar-continuum-subtracted images, and pilot studies indicate that pixel-based SED fitting of 7DT and SPHEREx data can recover spatially resolved stellar populations approaching the quality of high-resolution IFU spectroscopy \u2014 for galaxies that would otherwise demand dedicated campaigns on much larger telescopes. Both studies are as yet unpublished (Shim et al., submitted; Lee et al., in prep)."
+      question: "How do galaxies build themselves, and where are the ones we have never seen?",
+      summary: "Medium-band mapping over 1.25 square degrees is IFU-like data at survey scale. Star-forming clumps are identified through H\u03B1 emission in stellar-continuum-subtracted images, and pilot studies indicate that pixel-based SED fitting of 7DT and SPHEREx data can recover spatially resolved stellar populations approaching the quality of high-resolution IFU spectroscopy \u2014 for galaxies that would otherwise demand dedicated campaigns on much larger telescopes. Both studies are as yet unpublished (Shim et al., submitted; Lee et al., in prep).",
+      detail: [
+        "Every pixel of a 7DT image carries a low-resolution spectrum, which makes a nearby galaxy an integral-field observation rather than a photometric one. Emission lines can be isolated from the stellar continuum band by band, and the stellar populations behind that continuum can be fitted pixel by pixel \u2014 age and metallicity as maps rather than as single numbers per galaxy.",
+        "At the other end of the scale, the same data address a gap in every existing redshift map. Behind the plane of the Milky Way, crowding and dust have left a zone of avoidance where few galaxies are catalogued at all. Because 7DS measures a spectrum for every source rather than a color for every source, galaxies and quasars can be picked out of those crowded fields."
+      ],
+      goals: [
+        "50 million galaxy spectra, forming a southern-sky catalogue",
+        "2 million galaxies with spatially resolved spectra",
+        "5 million galaxies and 20,000 quasars recovered in the zone of avoidance",
+        "More than 100,000 clusters and superclusters mapped out to redshift 1"
+      ],
+      figure: {
+        src: "/img/science/ngc253-halpha.jpg",
+        alt: "NGC 253 in the 7DT m625, m650 and m675 medium bands, and the resulting continuum-subtracted H-alpha plus [N II] emission map",
+        label: "Emission lines, separated band by band",
+        caption: "NGC 253 in three adjacent 7DT medium bands. Because the bands on either side measure the stellar continuum, the H\u03B1 + [N II] emission can be isolated directly from imaging (right panel). 7DT observation."
+      },
+      figure2: {
+        src: "/img/science/ngc253-populations.jpg",
+        alt: "Maps of stellar age and stellar metallicity across NGC 253 derived from pixel-by-pixel SED fitting of 7DT medium-band data",
+        label: "Stellar populations, pixel by pixel",
+        caption: "Stellar age and metallicity across NGC 253, fitted from the 7DT medium-band spectral energy distribution of each pixel \u2014 the kind of map that otherwise requires an integral-field spectrograph on a much larger telescope. The program targets this measurement for 2 million galaxies."
+      }
     },
     {
       id: "cosmology",
       n: "04",
       title: "Cosmology & Photometric Redshifts",
-      summary: "At R = 30\u201370 across 0.4\u20130.9 \xB5m, 7DT straddles the boundary between broadband photometry and low-resolution spectroscopy, capturing the 4000 \xC5 break and prominent emission lines at a resolution that lifts much of the color\u2013redshift degeneracy inherent to broadband surveys. Forecasts give \u03C3_NMAD = 0.003\u20130.007 at 19 < m625 < 22 for the five-year stacked WTS, with strong gains when combined with SPHEREx all-sky data."
+      question: "What is the universe made of, and why do the two measurements of its expansion disagree?",
+      summary: "At R = 30\u201370 across 0.4\u20130.9 \xB5m, 7DT straddles the boundary between broadband photometry and low-resolution spectroscopy, capturing the 4000 \xC5 break and prominent emission lines at a resolution that lifts much of the color\u2013redshift degeneracy inherent to broadband surveys. Forecasts give \u03C3_NMAD = 0.003\u20130.007 at 19 < m625 < 22 for the five-year stacked WTS, with strong gains when combined with SPHEREx all-sky data.",
+      detail: [
+        "The Hubble constant measured from the local distance ladder and the value inferred from the cosmic microwave background disagree by more than their stated uncertainties. Gravitational-wave events with identified optical counterparts offer a third route that shares no calibration with either, which is why the counterpart searches under theme 01 are also a cosmology program.",
+        "Redshifts are the other half. A photometric redshift is only as good as the spectral features the filter set can resolve, and medium bands resolve the 4000 \xC5 break and the brighter emission lines that broadband surveys blur together."
+      ],
+      goals: [
+        "Cosmological parameters from several independent methods, including standard sirens",
+        "Photometric redshifts precise enough to map large-scale structure out to redshift 1"
+      ]
     },
     {
       id: "agn",
       n: "05",
       title: "Active Galactic Nuclei",
-      summary: "Repeated medium-band visits measure how an AGN spectrum changes, not only how its brightness does. The 10\u201314 day cadence of WTS over five years is suited to reverberation mapping through long-term spectral variability, while the nightly cadence of IMS reaches variability on timescales of a single night."
+      question: "How did supermassive black holes grow so large so early?",
+      summary: "Repeated medium-band visits measure how an AGN spectrum changes, not only how its brightness does. The 10\u201314 day cadence of WTS over five years is suited to reverberation mapping through long-term spectral variability, while the nightly cadence of IMS reaches variability on timescales of a single night.",
+      detail: [
+        "Black hole masses at high redshift are mostly inferred indirectly, through scaling relations calibrated on nearby objects. Measuring one directly means watching the broad emission lines respond to a change in the continuum, and timing the delay \u2014 reverberation mapping, which has always required repeated spectroscopy on a single object at a time.",
+        "Medium bands turn that into a survey measurement. A filter set that separates the emission lines from the continuum tracks both light curves at once, for every AGN in the field, at whatever cadence the survey runs. The delay also scales with luminosity, which makes it a candidate distance indicator and ties this theme back to cosmology.",
+        "The same data are sensitive to AGN that change type between epochs, to stars disrupted by the black holes they fall into, and to the periodic variability expected of binary black holes."
+      ],
+      goals: [
+        "Time-series spectra for more than 50,000 active galactic nuclei",
+        "Direct mass measurements for more than 5,000 supermassive black holes",
+        "More than 20,000 quasars found at low Galactic latitude, where broadband surveys struggle"
+      ],
+      figure: {
+        src: "/img/science/agn-medium-band.jpg",
+        alt: "Simulated 7DS medium-band and LSST broadband sampling of a type-1 AGN spectrum at redshift 0.8",
+        label: "Lines separated from continuum",
+        caption: "A type-1 AGN at redshift 0.8. The 7DS medium bands (red) follow the broad emission lines and the continuum between them separately; the four broadband points (blue) average across both. Simulation by the 7DS team over an SDSS spectrum."
+      }
     },
     {
       id: "galactic",
       n: "06",
       title: "Galactic Science & Exoplanets",
-      summary: "Two-epoch 7DT photometry with sixteen medium bands across 400\u2013825 nm identified 110 variable young stellar objects in the central region of Orion A \u2014 14 percent of 769 candidates \u2014 including seven varying by more than 0.5 mag. The wavelength dependence of the variability distinguishes extinction-like, gray and spot-like mechanisms on day timescales, which otherwise requires rapid filter cycling or simultaneous multi-band instrumentation. The same combination of cadence and spectral sampling applies to transiting exoplanets: a transit observed in many bands at once measures its depth as a function of wavelength, which separates a genuine planetary signal from a blended eclipsing binary and constrains stellar activity that would otherwise bias the derived planet radius."
+      question: "What is our Galaxy made of, and what is in the atmospheres of its planets?",
+      summary: "Two-epoch 7DT photometry with sixteen medium bands across 400\u2013825 nm identified 110 variable young stellar objects in the central region of Orion A \u2014 14 percent of 769 candidates \u2014 including seven varying by more than 0.5 mag. The wavelength dependence of the variability distinguishes extinction-like, gray and spot-like mechanisms on day timescales, which otherwise requires rapid filter cycling or simultaneous multi-band instrumentation. The same combination of cadence and spectral sampling applies to transiting exoplanets: a transit observed in many bands at once measures its depth as a function of wavelength, which separates a genuine planetary signal from a blended eclipsing binary and constrains stellar activity that would otherwise bias the derived planet radius.",
+      detail: [
+        "Surveys of the Galactic plane usually trade one thing for another: either many stars measured crudely, or few stars measured well. Sampling the spectrum of every pixel removes the trade \u2014 stars, H II regions and planetary nebulae in the same field are all measured the same way, and diffuse structure gets a spectrum per pixel rather than a single integrated color.",
+        "Transiting planets benefit from the same property for a different reason. Measuring a transit simultaneously in every band gives the transit depth as a function of wavelength in one visit, from a single telescope, without the systematic errors that come from stitching together transits observed on different nights."
+      ],
+      goals: [
+        "Spectra for roughly 100 million stars, constraining the origin of the Milky Way's stellar populations",
+        "Transmission spectra for transiting exoplanets, measured in all bands within a single transit"
+      ],
+      figure: {
+        src: "/img/science/exoplanet-wasp74b.jpg",
+        alt: "7DT transit light curves of WASP-74b in seventeen medium bands from 400 to 850 nm, and the resulting transmission spectrum compared with published measurements",
+        label: "One transit, seventeen wavelengths",
+        caption: "The transit of the hot Jupiter WASP-74b recorded simultaneously in seventeen 7DT medium bands (left), and the transmission spectrum that follows from it (right, black), against published measurements of the same planet. A single visit from 0.5 m telescopes reaches comparable precision. 7DT observation; analysis in preparation (Bae et al.)."
+      }
     },
     {
       id: "solar",
       n: "07",
       title: "Solar System Objects",
-      summary: "Medium-band imaging of the main-belt asteroids 13 Egeria and 10 Hygiea targets the 0.7 \xB5m absorption feature characteristic of Ch-type bodies, a tracer of their thermal history. Time-series observations of the third interstellar object, 3I/ATLAS, followed the emergence of extended CN emission as it fell inside 3 au \u2014 behavior resembling that of 2I/Borisov at comparable heliocentric distance."
+      question: "What were the building blocks of the Solar System made of?",
+      summary: "Medium-band imaging of the main-belt asteroids 13 Egeria and 10 Hygiea targets the 0.7 \xB5m absorption feature characteristic of Ch-type bodies, a tracer of their thermal history. Time-series observations of the third interstellar object, 3I/ATLAS, followed the emergence of extended CN emission as it fell inside 3 au \u2014 behavior resembling that of 2I/Borisov at comparable heliocentric distance.",
+      detail: [
+        "Asteroid taxonomy still rests on spectra of roughly three thousand objects. Photometry exists for far more, but broadband filters straddle the 0.7 \xB5m hydration feature rather than resolving it, so the distinction between a hydrated body and a dry one is largely lost. The feature matters because water in a parent body is a record of where it formed and how warm it became.",
+        "A medium-band survey measures a reflectance spectrum for every moving object that crosses the field, which changes the sample size rather than the technique."
+      ],
+      goals: [
+        "Reflectance spectra for roughly 100,000 solar system objects, against about 3,000 classified spectroscopically today"
+      ],
+      figure: {
+        src: "/img/science/asteroid-reflectance.jpg",
+        alt: "7DT reflectance spectra of asteroids 13 Egeria and 10 Hygiea compared with SMASS and ECAS reference spectra",
+        label: "Hydrated and dry, told apart",
+        caption: "Three-minute 7DT observations of 13 Egeria (left) and 10 Hygiea (right), as normalized reflectance. Egeria shows the 0.7 \xB5m absorption of a hydrated body; Hygiea does not. Reference spectra from SMASS (DeMeo et al. 2009) and ECAS (Tholen 1984) shown for comparison. Preliminary 7DT result."
+      }
     }
   ]
 };
@@ -1930,12 +2046,31 @@ var meta8 = () => [
       "."
     ] })
   ] }),
-  /* @__PURE__ */ jsxs12(Section, { eyebrow: "Program", title: "Seven science themes", children: [
+  /* @__PURE__ */ jsxs12(Section, { eyebrow: "Reach", title: "What the questions require", children: [
+    /* @__PURE__ */ jsxs12("div", { className: "prose", children: [
+      /* @__PURE__ */ jsx13("p", { children: "Spectral information is only useful as far out as the survey can detect a source, and the depth reached at each wavelength is what decides which of the questions below are answerable. Sampling the spectrum in many narrow steps costs depth per band relative to a broadband survey of the same aperture, and the survey design trades that against the three cadences." }),
+      /* @__PURE__ */ jsxs12("p", { children: [
+        "The comparison below also shows why 7DS and SPHEREx are complementary rather than redundant: they reach similar depth over overlapping wavelengths, but 7DS resolves the sky roughly ten times more finely, so a 7DS pixel is a measurement of one source where a SPHEREx pixel is a blend of several. Measured per-band depths for the current filter set are on the ",
+        /* @__PURE__ */ jsx13(Link9, { to: "/users/performance", children: "performance page" }),
+        "."
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx13("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx13(
+      Figure,
+      {
+        src: "/img/science/survey-depth.jpg",
+        alt: "Five-sigma depth against wavelength for 7DT single exposures, the wide-area time-domain survey and the intensive monitoring survey, compared with SPHEREx, Pan-STARRS 1 and SkyMapper",
+        label: "Depth against wavelength",
+        caption: "5\u03C3 depth for a single 7DT exposure and for the accumulated wide-area and intensive-monitoring surveys, against SPHEREx, Pan-STARRS 1 and SkyMapper. 7DS covers the optical at medium-band resolution where SPHEREx continues into the infrared."
+      }
+    ) })
+  ] }),
+  /* @__PURE__ */ jsxs12(Section, { eyebrow: "Program", title: "Seven science themes", alt: !0, children: [
     /* @__PURE__ */ jsx13("p", { className: "prose", children: "Each theme below draws on the same data product: a medium-band spectral energy distribution for every source in the field, measured repeatedly." }),
     /* @__PURE__ */ jsx13("div", { className: "grid grid-cols-2", style: { marginTop: "2rem" }, children: science_default.themes.map((theme) => /* @__PURE__ */ jsxs12("a", { className: "theme-card", href: `/science/sci#${theme.id}`, children: [
       /* @__PURE__ */ jsx13("span", { className: "theme-card__index", children: theme.n }),
       /* @__PURE__ */ jsx13("h3", { className: "theme-card__title", children: theme.title }),
-      /* @__PURE__ */ jsx13("p", { className: "theme-card__body", children: theme.summary })
+      /* @__PURE__ */ jsx13("p", { className: "theme-card__body", children: theme.question ?? theme.summary })
     ] }, theme.id)) }),
     /* @__PURE__ */ jsxs12("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
       /* @__PURE__ */ jsx13(Link9, { className: "btn btn--primary", to: "/science/sci", children: "All themes in detail" }),
@@ -8326,25 +8461,57 @@ var meta16 = () => [
   { title: "Science themes \xB7 7-Dimensional Telescope" },
   {
     name: "description",
-    content: "Science themes and early results from the 7-Dimensional Telescope: multi-messenger astronomy, transients, galaxies, cosmology, AGN, Galactic and solar-system science."
+    content: "The seven questions 7DS is built to answer: multi-messenger astronomy, transients, galaxy evolution, cosmology, active galactic nuclei, Galactic science and exoplanets, and solar system objects."
   }
-], Index16 = () => /* @__PURE__ */ jsxs24(PageLayout, { menu: "manuScience", children: [
+], themes = science_default.themes, Index16 = () => /* @__PURE__ */ jsxs24(PageLayout, { menu: "manuScience", children: [
   /* @__PURE__ */ jsx25(
     PageHero,
     {
       eyebrow: "Science",
-      title: "Themes & early results",
-      lede: "Each theme draws on the same data product: a medium-band spectral energy distribution for every source in a 1.25 square degree field.",
+      title: "Seven questions",
+      lede: "7DS produces one kind of measurement \u2014 a spectrum for every source in the field, repeated over time. These are the questions that measurement was assembled to answer.",
       image: "/img/hero/sci.jpg"
     }
   ),
-  /* @__PURE__ */ jsx25(Section, { eyebrow: "Themes", title: "The 7DS science program", children: /* @__PURE__ */ jsx25("ul", { className: "feature-list", children: science_default.themes.map((theme) => /* @__PURE__ */ jsxs24("li", { id: theme.id, style: { scrollMarginTop: "6rem" }, children: [
-    /* @__PURE__ */ jsx25("span", { className: "feature-list__key", children: theme.n }),
-    /* @__PURE__ */ jsxs24("div", { children: [
-      /* @__PURE__ */ jsx25("h2", { className: "feature-list__title", style: { fontSize: "1.25rem" }, children: theme.title }),
-      /* @__PURE__ */ jsx25("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: theme.summary })
-    ] })
-  ] }, theme.id)) }) }),
+  themes.map((theme, i) => /* @__PURE__ */ jsxs24(
+    Section,
+    {
+      id: theme.id,
+      eyebrow: `Theme ${theme.n}`,
+      title: theme.title,
+      alt: i % 2 === 1,
+      children: [
+        theme.question && /* @__PURE__ */ jsx25("p", { className: "lede", children: theme.question }),
+        /* @__PURE__ */ jsxs24("div", { className: "prose", style: { marginTop: theme.question ? "1.5rem" : 0 }, children: [
+          (theme.detail ?? []).map((para, k) => /* @__PURE__ */ jsx25("p", { children: para }, k)),
+          /* @__PURE__ */ jsx25("p", { children: theme.summary })
+        ] }),
+        theme.goals && theme.goals.length > 0 && /* @__PURE__ */ jsxs24("div", { className: "panel", style: { marginTop: "2rem", maxWidth: "68ch" }, children: [
+          /* @__PURE__ */ jsx25("div", { className: "panel__title", children: "What the program aims to deliver" }),
+          /* @__PURE__ */ jsx25("ul", { className: "prose prose--full", style: { marginBottom: 0 }, children: theme.goals.map((g) => /* @__PURE__ */ jsx25("li", { children: g }, g)) })
+        ] }),
+        theme.figure && /* @__PURE__ */ jsx25("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx25(
+          Figure,
+          {
+            src: theme.figure.src,
+            alt: theme.figure.alt,
+            label: theme.figure.label,
+            caption: theme.figure.caption
+          }
+        ) }),
+        theme.figure2 && /* @__PURE__ */ jsx25("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx25(
+          Figure,
+          {
+            src: theme.figure2.src,
+            alt: theme.figure2.alt,
+            label: theme.figure2.label,
+            caption: theme.figure2.caption
+          }
+        ) })
+      ]
+    },
+    theme.id
+  )),
   /* @__PURE__ */ jsx25(Section, { eyebrow: "Data", title: "Working with 7DT data", alt: !0, children: /* @__PURE__ */ jsxs24("div", { className: "split", children: [
     /* @__PURE__ */ jsxs24("div", { children: [
       /* @__PURE__ */ jsx25("p", { className: "prose", children: "7DT data products are medium-band images and matched source catalogs on the survey tiling, calibrated against Gaia DR3 synthetic photometry and flux-scaled so that pixel values carry units of microjansky. That makes them directly usable for pixel-based SED fitting without further conversion." }),
@@ -10137,7 +10304,7 @@ var meta27 = () => [
 }, news_default2 = Index27;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-AEBKYLPI.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-CVCNBYXF.js", imports: ["/build/_shared/chunk-M4HIUWHP.js", "/build/_shared/chunk-CEJZKTJ4.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-UDVPC7JN.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-ZCOG57LH.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-27W2JOBD.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-LOAZ3X5E.js", imports: ["/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-6JE4C6XR.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-TM7WFXP6.js", imports: ["/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-5S7FZS3Z.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-4SR3ZWNG.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-ZAKHRI4P.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-RN6RAEBC.js", imports: ["/build/_shared/chunk-UDVPC7JN.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-YGIJQDMR.js", imports: ["/build/_shared/chunk-UDVPC7JN.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-IRUNOONW.js", imports: ["/build/_shared/chunk-FTAXXPUR.js", "/build/_shared/chunk-CEJZKTJ4.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-MJMBWUA7.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-AHWK6R5E.js", imports: ["/build/_shared/chunk-FTAXXPUR.js", "/build/_shared/chunk-M4HIUWHP.js", "/build/_shared/chunk-CEJZKTJ4.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-QXWIQWLB.js", imports: ["/build/_shared/chunk-FTAXXPUR.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-N5MNN2ZS.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-G7EIGGKF.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-74UWM7PW.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-6HFPS5R4.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-GCMD4SIQ.js", imports: ["/build/_shared/chunk-M4HIUWHP.js", "/build/_shared/chunk-CEJZKTJ4.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-UY2RUAK7.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-I6BYCUNY.js", imports: ["/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-E7CQG7IZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-AU3A4LEG.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-N25M5SQ6.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-Z4DEK2G3.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-J7BR5CN6.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-TPOPGMOL.js", imports: ["/build/_shared/chunk-CEJZKTJ4.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-3NIHSVOT.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "e6de918c", hmr: void 0, url: "/build/manifest-E6DE918C.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-V6C6LT74.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-PRRFL54H.js", imports: ["/build/_shared/chunk-M4HIUWHP.js", "/build/_shared/chunk-CEJZKTJ4.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-KTKHCKBM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-EIMJ2IPG.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-PQC6YW7P.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-N3SUFXBR.js", imports: ["/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-OICQCXUU.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-FRSH6CNV.js", imports: ["/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-IKVAQS65.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-LYLL4YJT.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-NIAOUGO7.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-LBR4KKQE.js", imports: ["/build/_shared/chunk-KTKHCKBM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-5YLJGGLK.js", imports: ["/build/_shared/chunk-KTKHCKBM.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-K52HRPTS.js", imports: ["/build/_shared/chunk-5KNM5YA5.js", "/build/_shared/chunk-CEJZKTJ4.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-QWBI5O3V.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-S2HHISIA.js", imports: ["/build/_shared/chunk-5KNM5YA5.js", "/build/_shared/chunk-M4HIUWHP.js", "/build/_shared/chunk-CEJZKTJ4.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-LHZ7IKOB.js", imports: ["/build/_shared/chunk-5KNM5YA5.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-TF3TJSFA.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-TSH4X6A2.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-3WMRUYK2.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-TBXCUZBA.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-BTKLPWRD.js", imports: ["/build/_shared/chunk-M4HIUWHP.js", "/build/_shared/chunk-CEJZKTJ4.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-BAPR2AWW.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-UGDG3TQP.js", imports: ["/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-E7CQG7IZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-FTJVZFLS.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-QVG2K3ZW.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-GSOA4PWC.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-Q24P5T44.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-GBYDABTX.js", imports: ["/build/_shared/chunk-CEJZKTJ4.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-WMLQJKQS.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "499f6d23", hmr: void 0, url: "/build/manifest-499F6D23.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

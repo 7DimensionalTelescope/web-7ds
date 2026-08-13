@@ -322,6 +322,10 @@ html {
 
 .section:first-of-type { border-top: 0; }
 .section--alt { background: var(--slate-50); }
+
+/* Themes are linked to directly from the nav and the overview cards, so an
+   anchored section must not land under the fixed bar. */
+.section[id] { scroll-margin-top: 5.5rem; }
 .section--tight { padding: var(--space-2xl) 0; }
 
 .stack > * + * { margin-top: var(--space-md); }

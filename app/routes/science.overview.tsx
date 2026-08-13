@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
-import { PageLayout, PageHero, Section } from '../components/site';
+import { PageLayout, PageHero, Section, Figure } from '../components/site';
 import { scienceOverviewText, scienceOverviewText2 } from './content/text';
 import science from './content/science.json';
 
@@ -50,7 +50,34 @@ const Index = () => (
       </p>
     </Section>
 
-    <Section eyebrow="Program" title="Seven science themes">
+    <Section eyebrow="Reach" title="What the questions require">
+      <div className="prose">
+        <p>
+          Spectral information is only useful as far out as the survey can detect a source, and
+          the depth reached at each wavelength is what decides which of the questions below are
+          answerable. Sampling the spectrum in many narrow steps costs depth per band relative to
+          a broadband survey of the same aperture, and the survey design trades that against the
+          three cadences.
+        </p>
+        <p>
+          The comparison below also shows why 7DS and SPHEREx are complementary rather than
+          redundant: they reach similar depth over overlapping wavelengths, but 7DS resolves the
+          sky roughly ten times more finely, so a 7DS pixel is a measurement of one source where
+          a SPHEREx pixel is a blend of several. Measured per-band depths for the current filter
+          set are on the <Link to="/users/performance">performance page</Link>.
+        </p>
+      </div>
+      <div style={{ marginTop: '2.5rem' }}>
+        <Figure
+          src="/img/science/survey-depth.jpg"
+          alt="Five-sigma depth against wavelength for 7DT single exposures, the wide-area time-domain survey and the intensive monitoring survey, compared with SPHEREx, Pan-STARRS 1 and SkyMapper"
+          label="Depth against wavelength"
+          caption="5σ depth for a single 7DT exposure and for the accumulated wide-area and intensive-monitoring surveys, against SPHEREx, Pan-STARRS 1 and SkyMapper. 7DS covers the optical at medium-band resolution where SPHEREx continues into the infrared."
+        />
+      </div>
+    </Section>
+
+    <Section eyebrow="Program" title="Seven science themes" alt>
       <p className="prose">
         Each theme below draws on the same data product: a medium-band spectral energy
         distribution for every source in the field, measured repeatedly.
@@ -60,7 +87,7 @@ const Index = () => (
           <a className="theme-card" href={`/science/sci#${theme.id}`} key={theme.id}>
             <span className="theme-card__index">{theme.n}</span>
             <h3 className="theme-card__title">{theme.title}</h3>
-            <p className="theme-card__body">{theme.summary}</p>
+            <p className="theme-card__body">{theme.question ?? theme.summary}</p>
           </a>
         ))}
       </div>
