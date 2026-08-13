@@ -52,7 +52,7 @@ Almost everything on the site is data, not code. These files need no web develop
 | Collaborator list | `app/routes/content/collabs.json` | `id` must be unique. |
 | Survey tiers and status | `app/routes/content/surveys.json` | Includes each tier's `progress` percentage. |
 | Instrument specs and depths | `app/routes/content/specs.json` | |
-| Science themes and results | `app/routes/content/science.json` | Theme `id`s are the anchor targets the nav links to. |
+| Science themes and results | `app/routes/content/science.json` | One page per theme at `/science/<id>`; `id` is the route segment. Adding a theme means adding a `app/routes/science.<id>.tsx` stub and a nav entry. |
 | Software descriptions | `app/routes/content/software.json` | |
 | External links | `app/routes/content/links.json` | |
 | Gallery | `app/routes/content/images.json` | Put the full-size file in `public/img/images/` **and** a ≤900 px version in `public/img/thumbs/`, same basename, `.jpg`. |
@@ -139,7 +139,9 @@ advances, grep for the old value before assuming one edit is enough.
 ```
 /                     landing page — survey overview, live footprint map
 /about/…              intro (motivation, seven dimensions, approach, history), team, funding
-/science/…            overview (motivation: spectral mapping + time domain), themes
+/science/…            overview (motivation: spectral mapping + time domain, reach),
+                      then one page per theme: mma, transients, galaxies,
+                      cosmology, agn, galactic, solar
 /survey/…             overview (design + parameters + tiling), ris, wts, ims,
                       coverage (interactive map), status (array operations)
 /telescope/…          overview (hardware first), instrument, location, computer
@@ -167,6 +169,7 @@ public/img/
   hero/                   page hero backgrounds (~2400 px)
   thumbs/                 gallery thumbnails (~900 px)
   images/                 full-resolution science images
+  science/                figures for the science theme pages
 ```
 
 `navigate.tsx`, `footer.tsx`, `main.tsx` and `plot.tsx` sit under `app/routes/` for historical

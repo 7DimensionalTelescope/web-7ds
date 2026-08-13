@@ -84,17 +84,14 @@ const Index = () => (
       </p>
       <div className="grid grid-cols-2" style={{ marginTop: '2rem' }}>
         {science.themes.map((theme) => (
-          <a className="theme-card" href={`/science/sci#${theme.id}`} key={theme.id}>
+          <Link className="theme-card" to={`/science/${theme.id}`} key={theme.id}>
             <span className="theme-card__index">{theme.n}</span>
             <h3 className="theme-card__title">{theme.title}</h3>
             <p className="theme-card__body">{theme.question ?? theme.summary}</p>
-          </a>
+          </Link>
         ))}
       </div>
       <div className="btn-row" style={{ marginTop: '2rem' }}>
-        <Link className="btn btn--primary" to="/science/sci">
-          All themes in detail
-        </Link>
         <Link className="btn btn--secondary" to="/publication/list">
           Publications
         </Link>

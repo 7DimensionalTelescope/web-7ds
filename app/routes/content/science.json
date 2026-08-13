@@ -5,6 +5,8 @@
       "id": "mma",
       "n": "01",
       "title": "Multi-messenger Astronomy",
+      "image": "/img/hero/sci.jpg",
+      "metaDescription": "Why GW170817 is still the only gravitational-wave event with an identified kilonova, and how 7DS is built to change that.",
       "question": "Where do gravitational-wave events happen?",
       "summary": "The application 7DT was designed for. A kilonova peaks near absolute magnitude −15 to −17 and fades by roughly half a magnitude per day, within a gravitational-wave localization of hundreds to thousands of square degrees; a single 100 deg² region is expected to contain of order a hundred unrelated transients over a seven-day window. 7DT addresses this with wide-field tiling, sub-minute response to an alert, and sufficient spectral information in one visit to reject contaminants without follow-up spectroscopy.",
       "detail": [
@@ -26,6 +28,8 @@
       "id": "transients",
       "n": "02",
       "title": "Transients",
+      "image": "/img/hero/science.jpg",
+      "metaDescription": "Catching the first hours of a stellar explosion with spectral information already in the discovery data.",
       "question": "What happens in the first hours of an explosion?",
       "summary": "Medium-band spectral sampling gives direct color and continuum information for a transient from one epoch of imaging. A hybrid classification framework built on 7DT spectral energy distributions — an unsupervised anomaly detector coupled to a supervised multiclass classifier — reaches macro F1 ≈ 0.80 across eight common transient types and recovers more than 90 percent of optically detectable kilonovae, including AT2017gfo, without ever being trained on one.",
       "detail": [
@@ -40,6 +44,8 @@
       "id": "galaxies",
       "n": "03",
       "title": "Galaxy Formation & Evolution",
+      "image": "/img/images/Figure4_NGC0253.jpg",
+      "metaDescription": "Resolved stellar populations and emission-line maps at survey scale, and the galaxies hidden behind the plane of the Milky Way.",
       "question": "How do galaxies build themselves, and where are the ones we have never seen?",
       "summary": "Medium-band mapping over 1.25 square degrees is IFU-like data at survey scale. Star-forming clumps are identified through Hα emission in stellar-continuum-subtracted images, and pilot studies indicate that pixel-based SED fitting of 7DT and SPHEREx data can recover spatially resolved stellar populations approaching the quality of high-resolution IFU spectroscopy — for galaxies that would otherwise demand dedicated campaigns on much larger telescopes. Both studies are as yet unpublished (Shim et al., submitted; Lee et al., in prep).",
       "detail": [
@@ -69,6 +75,8 @@
       "id": "cosmology",
       "n": "04",
       "title": "Cosmology & Photometric Redshifts",
+      "image": "/img/hero/science.jpg",
+      "metaDescription": "Standard sirens, photometric redshifts and the disagreement between the two measurements of the expansion of the universe.",
       "question": "What is the universe made of, and why do the two measurements of its expansion disagree?",
       "summary": "At R = 30–70 across 0.4–0.9 µm, 7DT straddles the boundary between broadband photometry and low-resolution spectroscopy, capturing the 4000 Å break and prominent emission lines at a resolution that lifts much of the color–redshift degeneracy inherent to broadband surveys. Forecasts give σ_NMAD = 0.003–0.007 at 19 < m625 < 22 for the five-year stacked WTS, with strong gains when combined with SPHEREx all-sky data.",
       "detail": [
@@ -84,6 +92,8 @@
       "id": "agn",
       "n": "05",
       "title": "Active Galactic Nuclei",
+      "image": "/img/hero/sci.jpg",
+      "metaDescription": "Reverberation mapping turned into a survey measurement: direct black hole masses for thousands of active galactic nuclei.",
       "question": "How did supermassive black holes grow so large so early?",
       "summary": "Repeated medium-band visits measure how an AGN spectrum changes, not only how its brightness does. The 10–14 day cadence of WTS over five years is suited to reverberation mapping through long-term spectral variability, while the nightly cadence of IMS reaches variability on timescales of a single night.",
       "detail": [
@@ -107,6 +117,8 @@
       "id": "galactic",
       "n": "06",
       "title": "Galactic Science & Exoplanets",
+      "image": "/img/images/Figure9(lowres)_NGC6514_RGB.jpg",
+      "metaDescription": "A spectrum for every star and every pixel of diffuse structure in the Galactic plane, and transmission spectra for transiting planets.",
       "question": "What is our Galaxy made of, and what is in the atmospheres of its planets?",
       "summary": "Two-epoch 7DT photometry with sixteen medium bands across 400–825 nm identified 110 variable young stellar objects in the central region of Orion A — 14 percent of 769 candidates — including seven varying by more than 0.5 mag. The wavelength dependence of the variability distinguishes extinction-like, gray and spot-like mechanisms on day timescales, which otherwise requires rapid filter cycling or simultaneous multi-band instrumentation. The same combination of cadence and spectral sampling applies to transiting exoplanets: a transit observed in many bands at once measures its depth as a function of wavelength, which separates a genuine planetary signal from a blended eclipsing binary and constrains stellar activity that would otherwise bias the derived planet radius.",
       "detail": [
@@ -128,6 +140,8 @@
       "id": "solar",
       "n": "07",
       "title": "Solar System Objects",
+      "image": "/img/hero/sci.jpg",
+      "metaDescription": "Reflectance spectra for a hundred thousand solar system objects, resolving the 0.7 micron hydration feature broadband filters miss.",
       "question": "What were the building blocks of the Solar System made of?",
       "summary": "Medium-band imaging of the main-belt asteroids 13 Egeria and 10 Hygiea targets the 0.7 µm absorption feature characteristic of Ch-type bodies, a tracer of their thermal history. Time-series observations of the third interstellar object, 3I/ATLAS, followed the emergence of extended CN emission as it fell inside 3 au — behavior resembling that of 2I/Borisov at comparable heliocentric distance.",
       "detail": [

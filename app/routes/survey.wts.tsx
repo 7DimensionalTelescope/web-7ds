@@ -63,7 +63,7 @@ const Index = () => (
         Stacking 90 to 100 visits also reaches 22.0–22.5 mag across most of the medium bands,
         deep enough for photometric redshifts on galaxies well below the single-visit limit.
         Forecast redshift precision for the stacked survey is given under{' '}
-        <a href="/science/sci#cosmology">cosmology and photometric redshifts</a>.
+        <a href="/science/cosmology">cosmology and photometric redshifts</a>.
       </p>
     </Section>
   </SurveyPage>
