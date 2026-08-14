@@ -30,6 +30,15 @@ export async function loader() {
     getStatus().catch(() => null),
   ]);
 
+  /* Open-shutter time is recorded for the survey as a whole, so time on a
+     given tile is its frame count times this mean. The map behind the survey
+     panel is shaded by it. */
+  const totals = status?.data.totals;
+  const exposureSec =
+    totals && totals.science_frames > 0
+      ? (totals.exposure_hours * 3600) / totals.science_frames
+      : null;
+
   return json(
     {
       tiles: tiles?.data ?? null,
@@ -37,6 +46,7 @@ export async function loader() {
       generatedAt: tiles?.generatedAt ?? '',
       telescopes: status?.data.telescopes ?? null,
       risCoverage: status?.data.ris.coverage_pct ?? null,
+      exposureSec,
     },
     { headers: { 'Cache-Control': CACHE } }
   );

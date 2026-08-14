@@ -187,9 +187,11 @@ type MainProps = {
   generatedAt: string;
   telescopes: { total: number; online: number } | null;
   risCoverage: number | null;
+  /** Mean seconds per science frame, for the footprint's exposure shading. */
+  exposureSec: number | null;
 };
 
-const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: MainProps) => {
+const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, exposureSec }: MainProps) => {
   const latest = (news.news as any[]).filter((item) => item.type !== 'update').slice(0, 3);
 
   return (
@@ -315,10 +317,15 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
         <section className="fullpage-section home-survey-panel">
           {tiles && tiles.count > 0 ? (
             <div className="home-survey__bg" aria-hidden="true">
-              {/* Coloured by date: behind a veil this is texture rather than a
-                  reading, and the seasonal bands of the observing record are
-                  the part of it with any shape to them. */}
-              <SkyMap tiles={tiles} interactive={false} defaultMode="date" />
+              {/* Shaded by integration time: it varies smoothly across the
+                  footprint, so behind a veil it reads as depth of coverage
+                  rather than as a patchwork. */}
+              <SkyMap
+                tiles={tiles}
+                exposureSec={exposureSec}
+                interactive={false}
+                defaultMode="exposure"
+              />
             </div>
           ) : null}
 

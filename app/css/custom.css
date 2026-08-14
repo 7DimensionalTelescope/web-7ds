@@ -2729,17 +2729,26 @@ table[class*='w-full'] thead {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: 0.5rem 0.75rem;
   padding: 0.75rem 1rem;
   border-bottom: var(--hairline);
   background: var(--slate-50);
 }
 
-.skymap__modes { display: flex; gap: 0.5rem; }
+.skymap__modes { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
-/* Monospaced so the readout does not reflow as the numbers change under the
-   pointer. */
+/* Its own row, always, and never more than one line of it. The readout is
+   rewritten on every pointer move and grows from four words to a whole
+   observing record; sharing a row with the toggles, it shoved them sideways
+   and wrapped them onto a second line the moment the pointer met a tile. The
+   full record is in the card under the pointer, so a clipped tail costs
+   nothing. Monospaced so the numbers do not reflow either. */
 .skymap__readout {
+  flex: 1 0 100%;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--slate-600);
