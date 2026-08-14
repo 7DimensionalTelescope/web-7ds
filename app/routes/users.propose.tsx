@@ -29,6 +29,43 @@ export async function loader() {
 
 const num = (value: number) => value.toLocaleString('en-US');
 
+/* What a request has to pin down. Ordered the way a proposal is written:
+   what and where first, then how it is taken, then when. */
+const REQUEST_PARAMETERS: string[][] = [
+  [
+    'Observing mode',
+    'Spec, Deep, Color or Search — described above. The mode decides how the array divides itself between filters and fields.',
+  ],
+  [
+    'Target',
+    'Position in RA and Dec, or a tile identifier. A tile is preferred where the science allows, since the data then coadd and difference against what already exists.',
+  ],
+  [
+    'Filters',
+    'Which of the 35 medium bands and five broad bands, or a wavelength range and a mode that covers it. Each unit carries nine slots, so a wider set costs more units or more nights.',
+  ],
+  [
+    'Exposure time',
+    'Seconds per frame. One hundred is the fiducial exposure the surveys are built from, and the depth every published figure is quoted at.',
+  ],
+  [
+    'Repetitions',
+    'Frames per visit, and visits per target. Depth in the coadd goes as the square root of the total time, so four frames buy 0.75 magnitudes over one.',
+  ],
+  [
+    'Cadence',
+    'For a monitoring program: interval between visits and the total span. For a single epoch: the window it has to fall in.',
+  ],
+  [
+    'Constraints',
+    'Airmass limit, moon separation and phase, time window, and anything else that would make a frame useless if violated.',
+  ],
+  [
+    'Trigger criteria',
+    'Target-of-opportunity programs only: what event triggers the observation, which response mode, and how the alert reaches the scheduler.',
+  ],
+];
+
 const Index = () => {
   const { too, live, generatedAt } = useLoaderData<typeof loader>();
 
@@ -50,7 +87,21 @@ const Index = () => {
         questions were answered in a panel at the foot of the page, which is a
         long way to read to find out the answer is "not yet, unless you are on
         a working group". */}
-    <Section eyebrow="Eligibility" title="Who may propose">
+    {/* Two parts, in the order the questions arrive: may I, and how much is
+        there — then, once the answer is yes, how to write the request. */}
+    <Section eyebrow="Part one" title="General information">
+      <p className="prose">
+        Who may ask for time on 7DT, how much of it there is and when it can be
+        asked for, and what happens to the data afterward.
+      </p>
+      <div className="chip-row" style={{ marginTop: '1.5rem' }}>
+        <a className="chip" href="#eligibility">Who may propose</a>
+        <a className="chip" href="#time">Time available</a>
+        <a className="chip" href="#policy">Data and authorship</a>
+      </div>
+    </Section>
+
+    <Section id="eligibility" eyebrow="General · Eligibility" title="Who may propose" alt>
       <div className="split split--wide-text">
         <div className="prose">
           <p>
@@ -103,7 +154,7 @@ const Index = () => {
       </div>
     </Section>
 
-    <Section eyebrow="Time" title="How much time there is, and when" alt>
+    <Section id="time" eyebrow="General · Time" title="How much time there is, and when">
       <div className="prose">
         <p>
           Two hundred hours of 7DT time are allocated to the Korea Astronomy and Space Science
@@ -136,7 +187,7 @@ const Index = () => {
         The detail is not settled yet, so this states what is decided, names
         what is still open, and sends the reader to the policy page rather than
         filling the gaps with plausible-sounding rules. */}
-    <Section eyebrow="Policy" title="Data rights and authorship">
+    <Section id="policy" eyebrow="General · Policy" title="Data rights and authorship" alt>
       <div className="split split--wide-text">
         <div className="prose">
           <p>
@@ -193,7 +244,22 @@ const Index = () => {
       </div>
     </Section>
 
-    <Section eyebrow="Modes" title="Four observing modes" alt>
+    <Section eyebrow="Part two" title="Guidelines for a proposal">
+      <p className="prose">
+        What the array can be asked to do, and how to specify it. An observation
+        is described by a mode, a target, a filter set, an exposure and a
+        cadence; the sections below take those in the order a proposal is
+        normally written.
+      </p>
+      <div className="chip-row" style={{ marginTop: '1.5rem' }}>
+        <a className="chip" href="#modes">Observing modes</a>
+        <a className="chip" href="#specifying">What to specify</a>
+        <a className="chip" href="#too">Target of opportunity</a>
+        <a className="chip" href="#checks">Before you write</a>
+      </div>
+    </Section>
+
+    <Section id="modes" eyebrow="Guidelines · Modes" title="Four observing modes" alt>
       <p className="prose">{modeText}</p>
 
       <ul className="feature-list" style={{ marginTop: '2rem' }}>
@@ -226,61 +292,44 @@ const Index = () => {
       </ul>
     </Section>
 
-    <Section eyebrow="Specifying" title="What an observation request contains">
-      <div className="split split--wide-text">
-        <div>
-          <p className="prose">
-            An observation is specified by target position, observing mode, exposure time and the
-            number of repetitions, together with any constraint on airmass, moon separation or
-            time window. Positions on the survey tiling are preferred where the science allows,
-            because data taken on a tile coadd directly with existing survey data and can be
-            differenced against the reference image without an additional calibration step.
-          </p>
-          <p className="prose">
-            Before requesting time, check the target is observable from El Sauce in the intended
-            window, and check what already exists: much of the southern sky already has a
-            medium-band reference image, and the tile under a given position may already carry the
-            bands needed.
-          </p>
-        </div>
-        <div className="panel">
-          <div className="panel__title">Before you write</div>
-          <ul className="feature-list" style={{ borderTop: 0, margin: 0 }}>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-              <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  Check visibility and existing coverage — the{' '}
-                  <Link to="/users/access">data access page</Link> reports the bands and frame
-                  counts held for any position.
-                </p>
-              </div>
-            </li>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-              <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  Estimate depth from the measured{' '}
-                  <Link to="/users/performance">limiting magnitudes</Link> rather than from the
-                  aperture.
-                </p>
-              </div>
-            </li>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-              <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  Target visibility and filter response can be computed with{' '}
-                  <Link to="/users/software">
-                    <code>supy</code>
-                  </Link>
-                  .
-                </p>
-              </div>
-            </li>
-          </ul>
-        </div>
+    <Section id="specifying" eyebrow="Guidelines · Specifying" title="What an observation request contains">
+      <p className="prose">
+        An observation is a mode, a target, a filter set, an exposure and a cadence, plus whatever
+        constraints the science imposes. Positions on the survey tiling are preferred wherever the
+        science allows: data taken on a tile coadd directly with the survey data already there, and
+        difference against the existing reference image without a separate calibration step.
+      </p>
+
+      <div className="table-wrap" style={{ marginTop: '2rem' }}>
+        <table className="spec-table">
+          <caption>Parameters of an observation request</caption>
+          <thead>
+            <tr>
+              <th scope="col">Parameter</th>
+              <th scope="col">What to give</th>
+            </tr>
+          </thead>
+          <tbody>
+            {REQUEST_PARAMETERS.map((row) => (
+              <tr key={row[0]}>
+                <th scope="row">{row[0]}</th>
+                <td>{row[1]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+
+      <p className="footnote" style={{ marginTop: '1.25rem' }}>
+        Camera gain and binning are set by the observatory rather than chosen per proposal, and are
+        recorded per frame — the pipeline matches calibration masters by camera, gain, binning,
+        unit, night and filter, so a frame always carries the settings it was taken with. If a
+        program requires a specific gain, say so and why; the selectable settings are not published
+        here.
+      </p>
     </Section>
 
-    <Section eyebrow="Response" title="Target of opportunity" alt>
+    <Section id="too" eyebrow="Guidelines · Response" title="Target of opportunity" alt>
       <p className="prose">
         When a transient alert arrives — a gamma-ray burst, a gravitational-wave candidate — the
         scheduler interrupts the observing plan and repoints. Two response modes are available: a
@@ -316,22 +365,77 @@ const Index = () => {
       </p>
     </Section>
 
-    <Section eyebrow="Applying" title="Requesting observing time">
-      <div className="panel" style={{ maxWidth: '68ch' }}>
-        <div className="panel__title">No open call at present</div>
-        <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
-          Outside the KASI and KAS allocations described at the top of this page, observing time
-          is allocated within the collaboration and its partner institutions, and there is no
-          general call for proposals. Inquiries should be addressed to the project directly.
-        </p>
+    <Section id="checks" eyebrow="Guidelines · Submitting" title="Writing and submitting the request">
+      <div className="split split--wide-text">
+        <div className="prose">
+          <p>
+            Three things are worth settling before the request is written, because each of them
+            can make a program unnecessary or unworkable, and all three can be checked from this
+            site.
+          </p>
+          <p>
+            Outside the KASI and KAS allocations described in the first part of this page,
+            observing time is allocated within the collaboration and its partner institutions, and
+            there is no general call for proposals. A proposal template and an exposure time
+            calculator will be published here when a call opens. Until then, and for anything
+            outside the survey program, write to the project directly.
+          </p>
+        </div>
+        <div className="panel">
+          <div className="panel__title">Before you write</div>
+          <ul className="feature-list" style={{ borderTop: 0, margin: 0 }}>
+            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+              <div>
+                <p className="feature-list__body" style={{ margin: 0 }}>
+                  <b>Check what already exists.</b> Much of the southern sky already has a
+                  medium-band reference image, and the tile under your position may already carry
+                  the bands you need — the <Link to="/users/access">data access page</Link> reports
+                  the bands and frame counts held for any position.
+                </p>
+              </div>
+            </li>
+            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+              <div>
+                <p className="feature-list__body" style={{ margin: 0 }}>
+                  <b>Estimate depth from measurements, not aperture.</b> The measured{' '}
+                  <Link to="/users/performance">limiting magnitudes</Link> per band, for the
+                  fiducial 100-second exposure, are what a coadded depth should be scaled from.
+                </p>
+              </div>
+            </li>
+            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+              <div>
+                <p className="feature-list__body" style={{ margin: 0 }}>
+                  <b>Check the target is observable.</b> Visibility from El Sauce in the intended
+                  window, and the filter response over the wavelengths that matter, can both be
+                  computed with{' '}
+                  <Link to="/users/software">
+                    <code>supy</code>
+                  </Link>
+                  .
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="btn-row" style={{ marginTop: '2rem' }}>
         <a
           className="btn btn--primary"
           href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20inquiry"
         >
           Contact the project
         </a>
+        <Link className="btn btn--secondary" to="/users/performance">
+          Measured performance
+        </Link>
+        <Link className="btn btn--secondary" to="/users/access">
+          Check coverage
+        </Link>
       </div>
     </Section>
+
   </PageLayout>
   );
 };
