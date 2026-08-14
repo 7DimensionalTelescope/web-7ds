@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { TileMap } from '../lib/portal.server';
-import { spectrum, rgb } from './colors';
+import { sequential, rgb } from './colors';
 import { TileDetail, degLabel as deg } from './tiledetail';
 
 /* ---------------------------------------------------------------------------
@@ -314,7 +314,7 @@ export default function SkyMap({
     ctx.clip();
     // A touch deeper than the card it sits on, so the sky reads as an object
     // and the palest tiles still have something to sit against.
-    ctx.fillStyle = dark ? 'rgba(255,255,255,0.05)' : '#e7edf5';
+    ctx.fillStyle = dark ? 'rgba(255,255,255,0.05)' : '#eceff4';
     ctx.fillRect(0, 0, width, height);
 
     // Tiles. Each is drawn at its true angular footprint so that contiguous
@@ -345,7 +345,7 @@ export default function SkyMap({
           ? dark
             ? 'rgba(255,255,255,0.12)'
             : 'rgba(10,16,28,0.10)'
-          : rgb(spectrum(value(i)));
+          : rgb(sequential(value(i), dark));
       ctx.fillRect(px(x) - w / 2, py(y) - h / 2, w, h);
     }
     ctx.restore();
@@ -472,7 +472,7 @@ export default function SkyMap({
 
   const legendStops = useMemo(
     () =>
-      Array.from({ length: 12 }, (_, i) => rgb(spectrum(i / 11))).join(', '),
+      Array.from({ length: 12 }, (_, i) => rgb(sequential(i / 11, dark))).join(', '),
     []
   );
 

@@ -2897,7 +2897,7 @@ table[class*='w-full'] thead {
 
 .skymap--dark .skymap__ramp {
   border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 24px -6px rgba(120, 200, 160, 0.35);
+  box-shadow: 0 0 24px -6px rgba(124, 184, 255, 0.35);
 }
 
 /* --- Coordinate query ------------------------------------------------------ */
