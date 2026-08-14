@@ -42,7 +42,7 @@ const COLUMNS = [
     ],
   },
   {
-    title: 'Telescope',
+    title: 'Facilities',
     links: [
       { label: 'Overview', href: '/telescope/overview' },
       { label: 'Instrument', href: '/telescope/instrument' },

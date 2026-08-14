@@ -40,7 +40,7 @@ const MENU = [
   },
   {
     key: 'manu7dt',
-    label: 'Telescope',
+    label: 'Facilities',
     href: '/telescope/overview',
     items: [
       { label: 'Overview', href: '/telescope/overview' },
