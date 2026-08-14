@@ -64,25 +64,6 @@ export async function loader() {
   );
 }
 
-const CODE = [
-  ['7DimensionalTelescope', GITHUB, 'The project organization on GitHub — every repository below lives here'],
-  ['pipeline', `${GITHUB}/pipeline`, 'Py7DT — the data reduction pipeline, from preprocessing through difference imaging'],
-  ['supy', `${GITHUB}/supy`, 'Target visibility, tile lookup and filter response simulation for 7DT users'],
-  ['tcspy', `${GITHUB}/tcspy`, 'RTCSpy — telescope control and scheduling for the array'],
-  ['Spec7DT', `${GITHUB}/Spec7DT`, 'Spectral image handling tools for 7DT users'],
-  ['Spec7plot', `${GITHUB}/Spec7plot`, 'Plotting and image handling tools for 7DT users'],
-  ['tract7dt', `${GITHUB}/tract7dt`, 'Tractor-based photometry pipeline for 7DT images'],
-  ['gcn_bot', `${GITHUB}/gcn_bot`, 'Real-time GCN alert monitoring feeding target-of-opportunity response'],
-  ['gppy', `${GITHUB}/gppy`, 'Automatic processing and transient search'],
-];
-
-const DOCS = [
-  ['supy documentation', 'https://sdt-supy.readthedocs.io/en/latest/', 'Installation, module reference and worked examples'],
-  ['supy examples — Observer', 'https://sdt-supy.readthedocs.io/en/latest/examples/observer.html', 'Target visibility and altitude from El Sauce'],
-  ['supy examples — Tiles', 'https://sdt-supy.readthedocs.io/en/latest/examples/tiles.html', 'Tile lookup by coordinate and matching a localization region'],
-  ['supy examples — Simulator', 'https://sdt-supy.readthedocs.io/en/latest/examples/simulator.html', 'Filter and detector response simulation'],
-];
-
 const Index = () => {
   const { services } = useLoaderData<typeof loader>();
   const linked = services.filter((service) => service.url);
@@ -96,7 +77,7 @@ const Index = () => {
             Useful <em>links</em>
           </>
         }
-        lede="Project services, code and documentation. For partner surveys, vendors and institutions, see the site-wide links page."
+        lede="The services that support work with 7DT data. For partner surveys, vendors and institutions, see the site-wide links page."
         image="/img/hero/computer.jpg"
       />
 
@@ -142,58 +123,6 @@ const Index = () => {
         )}
       </Section>
 
-      <Section eyebrow="Code" title="Repositories" alt>
-        <p className="prose">
-          All 7DT software is developed in the open on GitHub. What to install as a user, and what
-          each package is for, is set out under{' '}
-          <Link to="/users/software">available software</Link>.
-        </p>
-        <ul className="feature-list" style={{ marginTop: '2rem' }}>
-          {CODE.map((item) => (
-            <li key={item[0]}>
-              <span className="feature-list__key" style={{ fontFamily: 'var(--font-mono)' }}>
-                ↗
-              </span>
-              <div>
-                <h3 className="feature-list__title" style={{ fontFamily: 'var(--font-mono)', fontSize: '1rem' }}>
-                  <a href={item[1]} target="_blank" rel="noreferrer">
-                    {item[0]}
-                  </a>
-                </h3>
-                <p className="feature-list__body">{item[2]}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <div className="btn-row" style={{ marginTop: '1.5rem' }}>
-          <a className="btn btn--secondary" href={GITHUB} target="_blank" rel="noreferrer">
-            All repositories
-          </a>
-        </div>
-      </Section>
-
-      <Section eyebrow="Documentation" title="Manuals and examples">
-        <ul className="feature-list">
-          {DOCS.map((item) => (
-            <li key={item[0]}>
-              <span className="feature-list__key">↗</span>
-              <div>
-                <h3 className="feature-list__title">
-                  <a href={item[1]} target="_blank" rel="noreferrer">
-                    {item[0]}
-                  </a>
-                </h3>
-                <p className="feature-list__body">{item[2]}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <p className="footnote" style={{ marginTop: '1.5rem' }}>
-          Instrument and pipeline papers are listed under{' '}
-          <Link to="/publication/list">publications</Link>. Partner surveys, facilities, vendors
-          and institutions are on the <Link to="/links">links page</Link>.
-        </p>
-      </Section>
     </PageLayout>
   );
 };
