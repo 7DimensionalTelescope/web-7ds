@@ -53,7 +53,8 @@ const COLUMNS = [
   {
     title: 'For Users',
     links: [
-      { label: 'Status & Overview', href: '/users/status' },
+      { label: 'Overview', href: '/users/overview' },
+      { label: 'Status', href: '/users/status' },
       { label: 'Performance', href: '/users/performance' },
       { label: 'How to Propose', href: '/users/propose' },
       { label: 'Data Access', href: '/users/access' },

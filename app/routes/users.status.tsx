@@ -48,7 +48,7 @@ const Index = () => {
         eyebrow="For users"
         title={
           <>
-            Status &amp; <em>overview</em>
+            Status 
           </>
         }
         lede="What the array can observe at the moment, and what data already exist. Start here before planning an observation or a data request."
