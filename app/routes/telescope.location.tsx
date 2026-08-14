@@ -67,7 +67,7 @@ const Index = () => {
   return (
     <PageLayout menu="manu7dt">
       <PageHero
-        eyebrow="Telescope"
+        eyebrow="Facilities"
         title={
           <>
             7DT in <em>Chile</em>

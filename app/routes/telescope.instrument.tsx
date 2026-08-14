@@ -63,7 +63,7 @@ const Index = () => {
   return (
     <PageLayout menu="manu7dt">
       <PageHero
-        eyebrow="Telescope"
+        eyebrow="Facilities"
         title={
           <>
             Instrument <em>specification</em>

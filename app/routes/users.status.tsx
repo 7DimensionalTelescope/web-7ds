@@ -99,14 +99,18 @@ function CoverageMap({
           </label>
         ))}
         <span className="map-layers__item map-layers__item--off" aria-disabled="true">
-          <input type="checkbox" disabled />
+          <input type="checkbox" disabled aria-label="WTS layer, unavailable: not started" />
           <span>
             WTS
             <span className="map-layers__note">not started</span>
           </span>
         </span>
         <span className="map-layers__item map-layers__item--off" aria-disabled="true">
-          <input type="checkbox" disabled />
+          <input
+            type="checkbox"
+            disabled
+            aria-label="Target of opportunity layer, unavailable: positions not published"
+          />
           <span>
             Target of opportunity
             <span className="map-layers__note">positions not published</span>

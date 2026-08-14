@@ -2,7 +2,14 @@ import React from 'react';
 import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
+import specs from './content/specs.json';
 import QuestionForm from '../components/questionform';
+
+/* The three depths quoted below live in specs.json, which the performance page
+   also reads. Looked up rather than retyped so the two can never disagree. */
+const depthOf = (label: string) =>
+  specs.depths.rows.find((row) => row[0] === label)?.[1] ?? '—';
+
 
 export const meta: MetaFunction = () => [
   { title: 'Questions · 7DT for users' },
@@ -54,8 +61,9 @@ const GROUPS: { group: string; items: { q: string; a: React.ReactNode }[] }[] = 
         q: 'What depth should I expect?',
         a: (
           <>
-            A single 100 s exposure reaches 19.06 mag at m400 and 19.61 mag at m475, where
-            throughput peaks; Sloan g reaches 20.59 mag. Cumulative depths for each survey
+            A single 100 s exposure reaches {depthOf('m400 (bluest medium band)')} at m400 and{' '}
+            {depthOf('m475 (peak throughput)')} at m475, where throughput peaks; Sloan g reaches{' '}
+            {depthOf('Sloan g')}. Cumulative depths for each
             survey and the conditions these assume are on the{' '}
             <Link to="/users/performance">performance page</Link>.
           </>

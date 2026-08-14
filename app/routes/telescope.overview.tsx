@@ -17,7 +17,7 @@ export const meta: MetaFunction = () => [
 const Index = () => (
   <PageLayout menu="manu7dt">
     <PageHero
-      eyebrow="Telescope"
+      eyebrow="Facilities"
       title={
         <>
           The <em>7DT</em> array
