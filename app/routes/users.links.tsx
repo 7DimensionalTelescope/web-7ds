@@ -17,23 +17,24 @@ export const meta: MetaFunction = () => [
 const CACHE = 'public, max-age=3600';
 export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
 
-/* The operational services sit on project infrastructure and their addresses
-   are configuration, not source — the same rule the portal API follows, and for
-   the same reason. Set these in .env and the entries appear; leave them unset
-   and the page says the service exists but is not linked publicly. */
-const SERVICES: { key: string; name: string; note: string }[] = [
+/* Three of these are published by decision of the project and are written here.
+   The data server is not: its address stays configuration, in LINK_PORTAL,
+   the same rule the portal API follows and for the same reason. A service with
+   a `url` is always shown; one with a `key` appears only when that variable is
+   set, and otherwise the page says the service exists but is not linked. */
+const SERVICES: { key?: string; url?: string; name: string; note: string }[] = [
   {
-    key: 'LINK_WIKI',
+    url: 'https://proton.snu.ac.kr',
     name: 'Project wiki',
     note: 'User manuals, quality-assurance criteria and operating procedures for internal and external users of 7DT data.',
   },
   {
-    key: 'LINK_PIPELINE',
+    url: 'https://proton.snu.ac.kr/pipeline',
     name: 'Pipeline status',
     note: 'Real-time progress of the nightly reduction, with quality-assurance summaries per night and per unit.',
   },
   {
-    key: 'LINK_TOO',
+    url: 'https://proton.snu.ac.kr/too',
     name: 'Target-of-opportunity page',
     note: 'Observation requests and the history of follow-up campaigns, including gravitational-wave events.',
   },
@@ -47,7 +48,10 @@ const SERVICES: { key: string; name: string; note: string }[] = [
 export async function loader() {
   return json(
     {
-      services: SERVICES.map((service) => ({ ...service, url: readEnv(service.key) ?? null })),
+      services: SERVICES.map((service) => ({
+        ...service,
+        url: service.url ?? (service.key ? readEnv(service.key) : null) ?? null,
+      })),
     },
     { headers: { 'Cache-Control': CACHE } }
   );
@@ -56,6 +60,7 @@ export async function loader() {
 const GITHUB = 'https://github.com/7DimensionalTelescope';
 
 const CODE = [
+  ['7DimensionalTelescope', GITHUB, 'The project organization on GitHub — every repository below lives here'],
   ['pipeline', `${GITHUB}/pipeline`, 'Py7DT — the data reduction pipeline, from preprocessing through difference imaging'],
   ['supy', `${GITHUB}/supy`, 'Target visibility, tile lookup and filter response simulation for 7DT users'],
   ['tcspy', `${GITHUB}/tcspy`, 'RTCSpy — telescope control and scheduling for the array'],
@@ -94,7 +99,7 @@ const Index = () => {
         {linked.length > 0 ? (
           <ul className="feature-list">
             {linked.map((service) => (
-              <li key={service.key}>
+              <li key={service.name}>
                 <span className="feature-list__key">↗</span>
                 <div>
                   <h3 className="feature-list__title">

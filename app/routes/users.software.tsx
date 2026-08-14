@@ -29,16 +29,61 @@ const Index = () => (
   <PageLayout menu="manuUsers">
     <PageHero
       eyebrow="For users"
-      title={
-        <>
-          Available <em>software</em>
-        </>
-      }
+      title="Software"
       lede="What to install to plan an observation or work with 7DT data, and what produced the data in the first place."
       image="/img/hero/computer.jpg"
     />
 
-    <Section eyebrow="Analysis" title="supy">
+    {/* Three packages carry almost everything a user touches. Naming them
+        together at the top saves a reader working out which of the systems
+        further down they are supposed to install. */}
+    <Section eyebrow="Start here" title="The three packages">
+      <div className="table-wrap">
+        <table className="spec-table">
+          <caption>What each one is for</caption>
+          <thead>
+            <tr>
+              <th scope="col">Package</th>
+              <th scope="col">What it does</th>
+              <th scope="col">Who installs it</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">
+                <a href="#supy">supy</a>
+              </th>
+              <td>
+                Target visibility from El Sauce, tile lookup by coordinate, and filter and detector
+                response simulation for the 7DT bands.
+              </td>
+              <td>Anyone planning an observation or interpreting a band</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <a href="#py7dt">Py7DT</a>
+              </th>
+              <td>
+                The reduction pipeline: preprocessing, astrometry, photometric calibration,
+                coaddition and difference imaging, at survey throughput.
+              </td>
+              <td>Anyone reprocessing data rather than using the products</td>
+            </tr>
+            <tr>
+              <th scope="row">uniphot</th>
+              <td>
+                Not yet described here. It is not in the project&rsquo;s public GitHub
+                organization, and this page will carry it once its purpose and repository are
+                confirmed.
+              </td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </Section>
+
+    <Section id="supy" eyebrow="Analysis" title="supy">
       <div className="split split--wide-text">
         <div>
           <p className="prose">
@@ -107,7 +152,7 @@ const Index = () => (
       </div>
     </Section>
 
-    <Section eyebrow="Reprocessing" title="Running the pipeline yourself" alt>
+    <Section id="py7dt" eyebrow="Reprocessing" title="Py7DT: running the pipeline yourself" alt>
       <p className="prose">{softwareReuseText}</p>
       <p className="note" style={{ marginTop: '1rem' }}>
         Py7DT uses a rolling-release version scheme in which the last digit is incremented whenever
