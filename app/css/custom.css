@@ -601,7 +601,9 @@ html {
 }
 
 .theme-chips a {
-  display: inline-block;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4375rem;
   padding: 0.375rem 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
@@ -611,6 +613,20 @@ html {
   text-decoration: none;
   transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease),
     background-color var(--dur) var(--ease);
+}
+
+/* The number ties a chip to the same theme's card on the science overview,
+   where it also reads as 01–07. Dimmer than the title so it stays a marker. */
+.theme-chips__n {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.theme-chips a:hover .theme-chips__n,
+.theme-chips a:focus-visible .theme-chips__n {
+  color: var(--accent-on-dark);
 }
 
 .theme-chips a:hover,

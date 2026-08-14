@@ -291,7 +291,10 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
                 <ul className="theme-chips">
                   {science.themes.map((theme) => (
                     <li key={theme.id}>
-                      <Link to={`/science/${theme.id}`}>{theme.title}</Link>
+                      <Link to={`/science/${theme.id}`}>
+                        <span className="theme-chips__n">{theme.n}</span>
+                        {theme.title}
+                      </Link>
                     </li>
                   ))}
                 </ul>
