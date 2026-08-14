@@ -23,22 +23,22 @@ const COLUMNS = [
     title: 'Survey',
     links: [
       { label: 'Overview', href: '/survey/overview' },
-      { label: 'Reference Imaging (RIS)', href: '/survey/ris' },
-      { label: 'Wide-area Time-domain (WTS)', href: '/survey/wts' },
-      { label: 'Intensive Monitoring (IMS)', href: '/survey/ims' },
+      { label: 'Reference (RIS)', href: '/survey/ris' },
+      { label: 'Time-domain (WTS)', href: '/survey/wts' },
+      { label: 'Monitoring (IMS)', href: '/survey/ims' },
     ],
   },
   {
     title: 'Science',
     links: [
       { label: 'Overview', href: '/science/overview' },
-      { label: 'Multi-messenger Astronomy', href: '/science/mma' },
+      { label: 'Multi-messenger', href: '/science/mma' },
       { label: 'Transients', href: '/science/transients' },
-      { label: 'Galaxy Formation & Evolution', href: '/science/galaxies' },
+      { label: 'Galaxy Evolution', href: '/science/galaxies' },
       { label: 'Cosmology', href: '/science/cosmology' },
       { label: 'Active Galactic Nuclei', href: '/science/agn' },
-      { label: 'Galactic Science & Exoplanets', href: '/science/galactic' },
-      { label: 'Solar System Objects', href: '/science/solar' },
+      { label: 'Galactic & Exoplanets', href: '/science/galactic' },
+      { label: 'Solar System', href: '/science/solar' },
     ],
   },
   {
@@ -47,7 +47,7 @@ const COLUMNS = [
       { label: 'Overview', href: '/telescope/overview' },
       { label: 'Instrument', href: '/telescope/instrument' },
       { label: 'Location', href: '/telescope/location' },
-      { label: 'Computational Resources', href: '/telescope/computer' },
+      { label: 'Computing', href: '/telescope/computer' },
     ],
   },
   {
@@ -56,7 +56,7 @@ const COLUMNS = [
       { label: 'Status & Overview', href: '/users/status' },
       { label: 'Performance', href: '/users/performance' },
       { label: 'How to Propose', href: '/users/propose' },
-      { label: 'Data Access & Format', href: '/users/access' },
+      { label: 'Data Access', href: '/users/access' },
       { label: 'Using the Data', href: '/users/data' },
       { label: 'Available Software', href: '/users/software' },
       { label: 'Useful Links', href: '/users/links' },
@@ -75,14 +75,11 @@ const FooterBar = () => {
           <div className="site-footer__grid">
             <div className="site-footer__contact">
               <h3 className="site-footer__heading">Contact</h3>
-              <p className="site-footer__name">Prof. Myungshin Im</p>
-              <p>Principal Investigator</p>
-              <p>Dept. of Physics &amp; Astronomy</p>
-              <p>Seoul National University</p>
-              <p>1 Gwanak-ro, Gwanak-gu</p>
-              <p>Seoul 08826, Republic of Korea</p>
+              <p className="site-footer__name">Prof. Myungshin Im · Principal Investigator</p>
+              <p>Dept. of Physics &amp; Astronomy, Seoul National University</p>
+              <p>1 Gwanak-ro, Gwanak-gu, Seoul 08826, Republic of Korea</p>
               <p>+82-2-880-6585 / 6761</p>
-              <p style={{ marginTop: '0.75rem' }}>
+              <p style={{ marginTop: '0.5rem' }}>
                 <a href="mailto:mim@astro.snu.ac.kr">mim@astro.snu.ac.kr</a>
               </p>
             </div>
