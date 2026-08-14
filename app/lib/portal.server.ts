@@ -434,7 +434,7 @@ function runningId(deltas: number[], index: number) {
 
 /**
  * Every observed tile within `radius` degrees of a position. Used to draw a
- * field with its neighbours around it, so a small survey area is shown in the
+ * field with its neighbors around it, so a small survey area is shown in the
  * context of the tiling rather than floating on an empty plot.
  */
 export async function getTilesNear(

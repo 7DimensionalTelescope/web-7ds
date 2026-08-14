@@ -6,7 +6,7 @@ import { sequential, rgb, isDark } from './colors';
 
    The all-sky map is the wrong figure for a field of a few square degrees:
    seven tiles out of fifteen thousand are a speck on it. This draws just the
-   field, on a tangent plane centred on it, which is the projection a small
+   field, on a tangent plane centered on it, which is the projection a small
    region is normally shown in — straight lines stay straight and the tiles
    keep their shape.
 
@@ -23,7 +23,7 @@ export type FieldTile = {
   dec: number;
   /** The number shown under the tile name — cycles, visits, frames. */
   value: number;
-  /** Drawn emphasised; everything else is context around it. */
+  /** Drawn emphasized; everything else is context around it. */
   highlight?: boolean;
 };
 
@@ -65,14 +65,14 @@ export default function FieldMap({
 }) {
   if (tiles.length === 0) return null;
 
-  /* Centre the plane on the tiles that matter, not on all of them: the
-     neighbours are context and should not pull the field off centre. */
+  /* Center the plane on the tiles that matter, not on all of them: the
+     neighbors are context and should not pull the field off center. */
   const focus = tiles.some((t) => t.highlight) ? tiles.filter((t) => t.highlight) : tiles;
   const ra0 = focus.reduce((sum, t) => sum + t.ra, 0) / focus.length;
   const dec0 = focus.reduce((sum, t) => sum + t.dec, 0) / focus.length;
 
   /* Each tile is a quadrilateral: its four sky corners projected separately,
-     rather than a rectangle drawn at the centre. Half a degree of declination
+     rather than a rectangle drawn at the center. Half a degree of declination
      changes the width of a tile in right ascension appreciably at Dec −61. */
   const corners = (t: FieldTile) => {
     const halfLat = fovLat / 2;
@@ -202,7 +202,7 @@ export default function FieldMap({
           </text>
         </g>
 
-        {/* The tiles, each labelled in place — there are few enough that a
+        {/* The tiles, each labeled in place — there are few enough that a
             legend or a separate table would only move the reading elsewhere. */}
         <g>
           {[...shapes]

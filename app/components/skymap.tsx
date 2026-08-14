@@ -147,7 +147,7 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 
 type Mode = 'date' | 'visits' | 'exposure' | 'depth';
 
-/** What a tile is coloured by, and how its value reads in the legend. */
+/** What a tile is colored by, and how its value reads in the legend. */
 type DepthRef = {
   /** 5σ limiting magnitude reached by a single reference visit. */
   mag: number;
@@ -198,7 +198,7 @@ export default function SkyMap({
   /** Mean seconds per science frame, used to estimate integration time. */
   exposureSec?: number | null;
   /**
-   * Tile names to draw in colour, with everything else muted. Used by the
+   * Tile names to draw in color, with everything else muted. Used by the
    * per-survey pages to show one component against the whole footprint
    * rather than on an empty sky, which would lose all sense of scale.
    */
@@ -214,7 +214,7 @@ export default function SkyMap({
   /** False draws the designed tiling alone, with no observation record on it. */
   showObserved?: boolean;
   /**
-   * Show the colour-by toggle even on a non-interactive map. A figure can
+   * Show the color-by toggle even on a non-interactive map. A figure can
    * still be worth asking a second question of — what has been reached, not
    * only where — without becoming a tool with hover cards.
    */
@@ -274,7 +274,7 @@ export default function SkyMap({
     [ids, tiles]
   );
 
-  /* Which tiles are drawn in colour. Built from names rather than indices so
+  /* Which tiles are drawn in color. Built from names rather than indices so
      a page can name the tiles it cares about without knowing their position
      in the arrays. */
   const emphasized = useMemo(() => {
@@ -285,7 +285,7 @@ export default function SkyMap({
     return mask;
   }, [emphasize, tiles, nameAt]);
 
-  /* Month index per tile, for the colour scale and its legend. Derived here
+  /* Month index per tile, for the color scale and its legend. Derived here
      rather than sent, because the exact dates are already on the wire and the
      month is a rounding of them. */
   const months = useMemo(() => {
@@ -310,7 +310,7 @@ export default function SkyMap({
   );
 
   /* Fifteen thousand trigonometric conversions are cheap but not free, and the
-     map repaints on resize and on every colour change. Convert once per frame
+     map repaints on resize and on every color change. Convert once per frame
      choice instead. Equatorial is the identity, so it costs nothing. */
   const coords = useMemo(() => {
     if (frame === 'equatorial') return { lon: tiles.ra, lat: tiles.dec };
@@ -325,7 +325,7 @@ export default function SkyMap({
   }, [frame, tiles]);
 
   /* The designed tiling, projected the same way. Built here rather than sent:
-     twenty-eight thousand tile centres follow from a 142-entry ring table, so
+     twenty-eight thousand tile centers follow from a 142-entry ring table, so
      computing them costs less than transferring them. */
   const plannedProjected = useMemo(() => {
     if (!planned) return null;
@@ -363,12 +363,12 @@ export default function SkyMap({
 
   // Visit counts are long-tailed: a handful of IMS tiles sit in the hundreds
   // while most of the sky has been seen once. A linear ramp would render the
-  // survey as a single flat colour, so the scale is logarithmic.
+  // survey as a single flat color, so the scale is logarithmic.
   const visitScale = useMemo(() => Math.log(tiles.visitsMax + 1), [tiles.visitsMax]);
 
   /* Integration time per tile. The portal records open-shutter time for the
      survey as a whole rather than per tile, so it is the frame count times the
-     survey mean — an estimate, and labelled as one wherever it is shown. */
+     survey mean — an estimate, and labeled as one wherever it is shown. */
   const exposureScale = useMemo(
     () => (hasExposure ? Math.log(tiles.framesMax * (exposureSec as number) + 1) : 1),
     [hasExposure, tiles.framesMax, exposureSec]
@@ -503,7 +503,7 @@ export default function SkyMap({
     ctx.fillRect(0, 0, width, height);
 
     /* The designed tiling, under everything else. Drawn faintly and without a
-       colour scale: it is the shape of the survey, not a measurement, and it
+       color scale: it is the shape of the survey, not a measurement, and it
        has to stay legible as background beneath the tiles that carry data. */
     if (plannedProjected) {
       ctx.fillStyle = dark ? 'rgba(255,255,255,0.13)' : 'rgba(10,16,28,0.13)';
@@ -587,7 +587,7 @@ export default function SkyMap({
     ctx.stroke();
 
     // Labels. Right ascension is conventionally read in hours, galactic
-    // longitude in degrees, so the two frames are labelled differently.
+    // longitude in degrees, so the two frames are labeled differently.
     ctx.fillStyle = dark ? 'rgba(255,255,255,0.62)' : '#4d5b71';
     ctx.font = '11px ui-monospace, "JetBrains Mono", monospace';
     ctx.textAlign = 'center';
@@ -628,7 +628,7 @@ export default function SkyMap({
       return;
     }
 
-    /* Nearest tile centre, accepted only within about a tile's own width so
+    /* Nearest tile center, accepted only within about a tile's own width so
        that empty sky reads as empty rather than snapping to a distant tile.
        A degree is scale·(2/π)·(π/180) pixels at the equator of the map. */
     const perDegree = scale * (2 / 180);
@@ -645,7 +645,7 @@ export default function SkyMap({
       }
     }
 
-    // Report the pointer in both frames: the tile's own catalogued position
+    // Report the pointer in both frames: the tile's own cataloged position
     // when there is one, and the inverted projection when there is not.
     const [lon, lat] = sky;
     const equatorial: [number, number] =
@@ -693,8 +693,8 @@ export default function SkyMap({
     });
   };
 
-  /* The colour-by toggle is offered wherever there is more than one thing to
-     colour by, and can be asked for on a figure that is otherwise not a tool. */
+  /* The color-by toggle is offered wherever there is more than one thing to
+     color by, and can be asked for on a figure that is otherwise not a tool. */
   const showModes = (modeToggle ?? interactive) && modes.length > 1;
 
   const legendStops = useMemo(

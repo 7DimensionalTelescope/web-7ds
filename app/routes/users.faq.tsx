@@ -45,7 +45,7 @@ const GROUPS: { group: string; items: { q: string; a: React.ReactNode }[] }[] = 
         a: (
           <>
             There is no general call for proposals yet; time is allocated within the collaboration
-            and its partner institutions. Enquiries about observations outside the survey program
+            and its partner institutions. Inquiries about observations outside the survey program
             are handled directly by the project.
           </>
         ),

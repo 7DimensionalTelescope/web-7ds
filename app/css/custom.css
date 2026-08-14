@@ -632,7 +632,7 @@ html {
 }
 
 /* Read as tags rather than as a menu: the hash is the marker, in the accent
-   colour so it carries the eye down the list. */
+   color so it carries the eye down the list. */
 .theme-chips__hash {
   font-family: var(--font-mono);
   color: var(--accent-on-dark);
@@ -2235,7 +2235,7 @@ html.fullpage-active { overflow: hidden; }
   position: relative;
   /* The home page suppresses the document scrollbar because it scrolls this
      element instead, so if this one were hidden the deck would have no
-     scrollbar at all. Its Firefox colours are set in the @supports block near
+     scrollbar at all. Its Firefox colors are set in the @supports block near
      the top of this file — see the note there for why they cannot be set
      here. */
   scrollbar-gutter: stable;
@@ -2704,7 +2704,7 @@ table[class*='w-full'] thead {
 .notice svg { flex-shrink: 0; color: var(--slate-400); }
 
 /* Used when a live figure could not be fetched and the page is showing a
-   stored copy. It has to be visible without relying on colour alone. */
+   stored copy. It has to be visible without relying on color alone. */
 .notice--warn {
   color: #7a4b00;
   background: #fff6e6;
@@ -2801,7 +2801,7 @@ table[class*='w-full'] thead {
 .home-survey__bg .skymap__controls { display: none; }
 
 /* White veil over the map, heaviest behind the copy on the left and clearing
-   towards the right where the tiles are worth seeing. */
+   toward the right where the tiles are worth seeing. */
 .home-survey-panel::before {
   content: '';
   position: absolute;
@@ -2887,7 +2887,7 @@ table[class*='w-full'] thead {
 /* --- Map layer switches ---------------------------------------------------- */
 
 /* Above the map rather than inside it: they change what the figure contains,
-   where the toggles in the map's own bar only change how it is coloured. */
+   where the toggles in the map's own bar only change how it is colored. */
 .map-layers {
   display: flex;
   flex-wrap: wrap;

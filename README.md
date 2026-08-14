@@ -101,7 +101,7 @@ Rebuild and restart after any change: the JSON is compiled into the bundle, not 
   as first differences (they are ascending `T#####`, with a fallback to raw strings if the
   portal ever breaks that pattern), and the per-filter frame counts are deduplicated into a
   table of ~950 distinct patterns that the tiles index into. Anything derivable on the client —
-  the month index used for the colour scale, a tile's first night — is derived there rather
+  the month index used for the color scale, a tile's first night — is derived there rather
   than sent.
 
 ---

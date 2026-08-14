@@ -1,10 +1,10 @@
 /* ---------------------------------------------------------------------------
-   Colour scales shared by the sky map and the field map, so the two never
+   Color scales shared by the sky map and the field map, so the two never
    disagree about what a given number looks like.
 --------------------------------------------------------------------------- */
 
 /* The site's medium-band motif, 400 to 900 nm. This is a real spectrum — it
-   maps a wavelength to the colour of that wavelength — so it is used only
+   maps a wavelength to the color of that wavelength — so it is used only
    where the quantity being drawn is a wavelength. Ordered quantities such as
    visit counts use the single-hue scale below instead. */
 const SPECTRUM: [number, [number, number, number]][] = [
@@ -47,7 +47,7 @@ function sample(stops: [number, [number, number, number]][], t: number): [number
 
    Both ends are pulled in from pure white and pure black: the lightest step
    still has to separate from the empty sky drawn beneath it, and the darkest
-   still has to show its edges against its neighbours.
+   still has to show its edges against its neighbors.
 --------------------------------------------------------------------------- */
 
 const RAMP_LIGHT: [number, [number, number, number]][] = [
@@ -67,7 +67,7 @@ const RAMP_DARK: [number, [number, number, number]][] = [
 ];
 
 /**
- * Value in [0, 1] to a colour on the single-hue scale.
+ * Value in [0, 1] to a color on the single-hue scale.
  *
  * On a light surface the scale runs pale to deep, so the most-observed sky is
  * the darkest. On a dark one it runs dim to bright, so the same sky is the
@@ -81,7 +81,7 @@ export function sequential(t: number, dark = false): [number, number, number] {
 export const isDark = (c: [number, number, number]) =>
   0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2] < 140;
 
-/** Colour for a central wavelength in nm, sampled off the spectrum motif. */
+/** Color for a central wavelength in nm, sampled off the spectrum motif. */
 export function wavelengthColor(nm: number): string {
   return rgb(sample(SPECTRUM, (nm - 400) / 500));
 }

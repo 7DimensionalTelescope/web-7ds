@@ -62,7 +62,7 @@ const Index = () => {
           <p>
             Team membership carries two rights. The first is early access to 7DS data during its
             proprietary period, before it is released more widely. The second is the right to
-            propose an independent observing programme of your own on 7DT, rather than working
+            propose an independent observing program of your own on 7DT, rather than working
             only from what the surveys happen to collect.
           </p>
           <p>
@@ -114,7 +114,7 @@ const Index = () => {
         <p>
           No call for proposals has opened against either allocation. The schedule will be
           announced here when it is fixed, together with a proposal template and an exposure time
-          calculator. Until then, enquiries about observations outside the survey programme — and
+          calculator. Until then, inquiries about observations outside the survey program — and
           target-of-opportunity requests, which are handled separately and continuously — should
           go to the project directly.
         </p>
@@ -122,7 +122,7 @@ const Index = () => {
       <div className="btn-row" style={{ marginTop: '1.5rem' }}>
         <a
           className="btn btn--primary"
-          href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20enquiry"
+          href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20inquiry"
         >
           Contact the project
         </a>
@@ -140,7 +140,7 @@ const Index = () => {
       <div className="split split--wide-text">
         <div className="prose">
           <p>
-            Data taken for the surveys and for approved programmes carry a proprietary period
+            Data taken for the surveys and for approved programs carry a proprietary period
             during which they are available to the 7DS team before wider release. Team membership
             is what grants that access, which is the practical reason the working groups matter as
             much as the allocations do.
@@ -322,11 +322,11 @@ const Index = () => {
         <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
           Outside the KASI and KAS allocations described at the top of this page, observing time
           is allocated within the collaboration and its partner institutions, and there is no
-          general call for proposals. Enquiries should be addressed to the project directly.
+          general call for proposals. Inquiries should be addressed to the project directly.
         </p>
         <a
           className="btn btn--primary"
-          href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20enquiry"
+          href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20inquiry"
         >
           Contact the project
         </a>

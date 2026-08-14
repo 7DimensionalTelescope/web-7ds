@@ -82,7 +82,7 @@ function CoverageMap({
   const BOXES: { key: keyof Layers; label: string; note: string }[] = [
     { key: 'grid', label: 'RIS reference grid', note: `${RIS_TILES.toLocaleString('en-US')} tiles` },
     { key: 'ext', label: 'Northern extension', note: 'to Dec +30°' },
-    { key: 'observed', label: 'Observed', note: 'coloured by the scale below' },
+    { key: 'observed', label: 'Observed', note: 'colored by the scale below' },
     { key: 'ims', label: 'IMS field', note: `${imsTiles.length} tiles` },
   ];
 
@@ -362,7 +362,7 @@ const Index = () => {
           every observed tile. WTS has not begun and has no footprint to draw yet. Target-of-
           opportunity observations are made across the whole grid, and the portal publishes their
           counts but not their positions, so they cannot be drawn as a layer; the{' '}
-          {num(data.too.followup_events)} follow-up campaigns to date are summarised under{' '}
+          {num(data.too.followup_events)} follow-up campaigns to date are summarized under{' '}
           <Link to="/users/propose">how to propose</Link>.
         </p>
 

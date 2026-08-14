@@ -19,12 +19,12 @@ export const meta: MetaFunction = () => [
 const CACHE = 'public, max-age=900, stale-while-revalidate=86400';
 export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
 
-/* Field centre, from the survey definition. */
+/* Field center, from the survey definition. */
 const CENTER = { ra: 78.28, dec: -60.47 };
 
 export async function loader() {
   const status = await getStatus();
-  /* The field and its neighbours, and nothing else. Shipping the whole tile
+  /* The field and its neighbors, and nothing else. Shipping the whole tile
      list to draw a few dozen would be fifty kilobytes to show a speck. */
   const field = await getTilesNear(CENTER.ra, CENTER.dec, 3.4);
 
@@ -94,7 +94,7 @@ const Index = () => {
               };
             })}
             valueLabel="cycles"
-            caption={`The ${ims.n_tiles} monitored tiles, dashed, against their neighbours on the survey tiling. Shading and the figure inside each monitored tile give the observing cycles completed on it, read from the observation database.`}
+            caption={`The ${ims.n_tiles} monitored tiles, dashed, against their neighbors on the survey tiling. Shading and the figure inside each monitored tile give the observing cycles completed on it, read from the observation database.`}
           />
         ),
         note:

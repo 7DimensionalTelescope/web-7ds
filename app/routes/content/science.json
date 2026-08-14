@@ -21,7 +21,7 @@
         "src": "/img/science/kilonova-vs-supernova.jpg",
         "alt": "Simulated spectra of a kilonova at 0.5 days and a Type Ia supernova at 35 days, sampled by 7DT medium bands and by broadband filters",
         "label": "Why medium bands settle it",
-        "caption": "A kilonova at 0.5 days (orange) and a Type Ia supernova at 35 days (grey) have nearly the same broadband colors — the three red points cannot separate them. The 7DT medium bands (blue) trace the continuum shape closely enough that the two are no longer confusable. Simulation by the 7DS team."
+        "caption": "A kilonova at 0.5 days (orange) and a Type Ia supernova at 35 days (gray) have nearly the same broadband colors — the three red points cannot separate them. The 7DT medium bands (blue) trace the continuum shape closely enough that the two are no longer confusable. Simulation by the 7DS team."
       }
     },
     {
@@ -50,10 +50,10 @@
       "summary": "Medium-band mapping over 1.25 square degrees is IFU-like data at survey scale. Star-forming clumps are identified through Hα emission in stellar-continuum-subtracted images, and pilot studies indicate that pixel-based SED fitting of 7DT and SPHEREx data can recover spatially resolved stellar populations approaching the quality of high-resolution IFU spectroscopy — for galaxies that would otherwise demand dedicated campaigns on much larger telescopes. Both studies are as yet unpublished (Shim et al., submitted; Lee et al., in prep).",
       "detail": [
         "Every pixel of a 7DT image carries a low-resolution spectrum, which makes a nearby galaxy an integral-field observation rather than a photometric one. Emission lines can be isolated from the stellar continuum band by band, and the stellar populations behind that continuum can be fitted pixel by pixel — age and metallicity as maps rather than as single numbers per galaxy.",
-        "At the other end of the scale, the same data address a gap in every existing redshift map. Behind the plane of the Milky Way, crowding and dust have left a zone of avoidance where few galaxies are catalogued at all. Because 7DS measures a spectrum for every source rather than a color for every source, galaxies and quasars can be picked out of those crowded fields."
+        "At the other end of the scale, the same data address a gap in every existing redshift map. Behind the plane of the Milky Way, crowding and dust have left a zone of avoidance where few galaxies are cataloged at all. Because 7DS measures a spectrum for every source rather than a color for every source, galaxies and quasars can be picked out of those crowded fields."
       ],
       "goals": [
-        "50 million galaxy spectra, forming a southern-sky catalogue",
+        "50 million galaxy spectra, forming a southern-sky catalog",
         "2 million galaxies with spatially resolved spectra",
         "5 million galaxies and 20,000 quasars recovered in the zone of avoidance",
         "More than 100,000 clusters and superclusters mapped out to redshift 1"

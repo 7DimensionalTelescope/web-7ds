@@ -94,7 +94,7 @@ export function findTileAt(
     const dRaSky = dRa * Math.cos(dec * (Math.PI / 180));
     if (Math.abs(dRaSky) > fovLon / 2) continue;
 
-    // Inside more than one overlapping tile, prefer the nearer centre.
+    // Inside more than one overlapping tile, prefer the nearer center.
     const score = dRaSky * dRaSky + dDec * dDec;
     if (score < bestScore) {
       bestScore = score;
@@ -118,7 +118,7 @@ export function TileDetail({
   tiles: TileMap;
   index: number;
   name: string;
-  /** Position to report — the tile's catalogued one, or the pointer's. */
+  /** Position to report — the tile's cataloged one, or the pointer's. */
   ra: number;
   dec: number;
   l: number;

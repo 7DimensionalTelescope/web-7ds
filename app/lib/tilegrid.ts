@@ -11,14 +11,14 @@
 
    Derived from the observed tile list and checked against it: reconstructing
    every one of the 15,579 observed tiles from its identifier alone reproduces
-   the catalogued RA and Dec exactly, with no mismatches, and the boundary
+   the cataloged RA and Dec exactly, with no mismatches, and the boundary
    between the original grid and the northern extension (`ris_tile_name_bound`
    = T25472 in the tiles payload) falls exactly on a ring boundary. To re-check
    after a change to the grid, compare `tileAt(id)` against the ra/dec of every
    tile the portal returns.
 --------------------------------------------------------------------------- */
 
-/** Declination of ring 0 — the tile centred on the south celestial pole. */
+/** Declination of ring 0 — the tile centered on the south celestial pole. */
 const DEC0 = -90;
 
 /** Ring separation in declination, degrees: 180° over 212 steps. */
@@ -66,7 +66,7 @@ export const RIS_TILES = EXTENSION_FROM;
 export type Grid = { ra: Float64Array; dec: Float64Array; count: number };
 
 /**
- * Tile centres for identifiers in [from, to).
+ * Tile centers for identifiers in [from, to).
  *
  * Returned as parallel typed arrays rather than objects: the whole grid is
  * twenty-eight thousand tiles and it is only ever iterated, never indexed by
@@ -92,7 +92,7 @@ export function tileGrid(from = 0, to = GRID_TILES): Grid {
   return { ra, dec, count };
 }
 
-/** Centre of one tile, by numeric identifier. */
+/** Center of one tile, by numeric identifier. */
 export function tileAt(id: number): { ra: number; dec: number } | null {
   if (!Number.isInteger(id) || id < 0 || id >= GRID_TILES) return null;
   let ring = 0;

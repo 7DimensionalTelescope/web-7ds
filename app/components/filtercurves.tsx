@@ -8,7 +8,7 @@ import filters from '../routes/content/filters.json';
    The curves are the project's own reference data (supy/refdata/7dt), so this
    is the same response the pipeline calibrates against — not a picture of a
    plot of it. Drawn as SVG: it stays sharp at any size, renders without
-   JavaScript, and each band can carry its own colour and label.
+   JavaScript, and each band can carry its own color and label.
 --------------------------------------------------------------------------- */
 
 type Curve = { name: string; center: number; pts: number[][] };

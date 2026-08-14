@@ -162,7 +162,7 @@ const Index = () => (
         <div>
           <p className="footnote">
             One hundred seconds is the fiducial 7DS exposure: every survey visit is built from it,
-            so a depth quoted for any programme is this number scaled by the number of frames
+            so a depth quoted for any program is this number scaled by the number of frames
             coadded. Background-limited, so four frames buy 0.75 mag.
           </p>
           <p className="footnote" style={{ marginTop: '1rem' }}>
