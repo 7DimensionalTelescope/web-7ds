@@ -14,6 +14,8 @@ export const meta: MetaFunction = () => [
   },
 ];
 
+const GITHUB = 'https://github.com/7DimensionalTelescope';
+
 const CACHE = 'public, max-age=3600';
 export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
 
@@ -43,6 +45,11 @@ const SERVICES: { key?: string; url?: string; name: string; note: string }[] = [
     name: 'Data server',
     note: 'The observation database of record: images, catalogs, processing state and data quality.',
   },
+  {
+    url: GITHUB,
+    name: '7DT on GitHub',
+    note: 'The project organization. Every repository listed below lives here, including the pipeline, the control system and supy.',
+  },
 ];
 
 export async function loader() {
@@ -56,8 +63,6 @@ export async function loader() {
     { headers: { 'Cache-Control': CACHE } }
   );
 }
-
-const GITHUB = 'https://github.com/7DimensionalTelescope';
 
 const CODE = [
   ['7DimensionalTelescope', GITHUB, 'The project organization on GitHub — every repository below lives here'],
@@ -95,7 +100,7 @@ const Index = () => {
         image="/img/hero/computer.jpg"
       />
 
-      <Section eyebrow="Services" title="Operational services">
+      <Section eyebrow="Services" title="Project services">
         {linked.length > 0 ? (
           <ul className="feature-list">
             {linked.map((service) => (
