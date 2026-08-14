@@ -138,7 +138,25 @@ function monthLabel(index: number, epoch: [number, number]) {
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-type Mode = 'date' | 'visits';
+type Mode = 'date' | 'visits' | 'exposure' | 'depth';
+
+/** What a tile is coloured by, and how its value reads in the legend. */
+type DepthRef = {
+  /** 5σ limiting magnitude reached by a single reference visit. */
+  mag: number;
+  /** Integration time of that reference visit, seconds. */
+  sec: number;
+  /** Band the reference depth was measured in. */
+  band: string;
+};
+
+/** Seconds as a short label: the legend has room for four characters. */
+function shortDuration(seconds: number) {
+  if (seconds >= 3600) return `${(seconds / 3600).toFixed(seconds >= 36000 ? 0 : 1)} h`;
+  if (seconds >= 60) return `${Math.round(seconds / 60)} min`;
+  return `${Math.round(seconds)} s`;
+}
+
 type Frame = 'equatorial' | 'galactic';
 
 /** What sits under the pointer: a tile, or bare sky, or nothing at all. */
@@ -159,6 +177,8 @@ export default function SkyMap({
   exposureSec,
   emphasize,
   interactive = true,
+  modeToggle,
+  depthRef,
   caption,
   theme = 'light',
 }: {
@@ -173,6 +193,19 @@ export default function SkyMap({
   emphasize?: string[] | null;
   /** False strips the controls and the pointer readout: a figure, not a tool. */
   interactive?: boolean;
+  /**
+   * Show the colour-by toggle even on a non-interactive map. A figure can
+   * still be worth asking a second question of — what has been reached, not
+   * only where — without becoming a tool with hover cards.
+   */
+  modeToggle?: boolean;
+  /**
+   * Enables the estimated-depth scale. Depth is not recorded per tile, so it
+   * is derived from integration time against a measured reference visit,
+   * which only makes sense on a page whose tiles were taken in one band —
+   * hence a page-level opt-in rather than a default.
+   */
+  depthRef?: DepthRef | null;
   /** Replaces the tile count in the readout line. */
   caption?: string;
   /** 'dark' drops the card chrome and inverts the sky, for dark sections. */
@@ -181,7 +214,14 @@ export default function SkyMap({
   const dark = theme === 'dark';
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
-  const [mode, setMode] = useState<Mode>('date');
+  /* Which scales this map can offer is known before the first paint, so the
+     opening mode is chosen here rather than corrected in an effect — the
+     server would otherwise render one map and the client immediately swap it
+     for another. Depth first, then exposure: what was reached matters more
+     than when it was reached. */
+  const hasExposure = Boolean(exposureSec && exposureSec > 0 && tiles.frames);
+  const canDepth = Boolean(depthRef && hasExposure && tiles.filters && tiles.patterns);
+  const [mode, setMode] = useState<Mode>(canDepth ? 'depth' : hasExposure ? 'exposure' : 'date');
   const [frame, setFrame] = useState<Frame>('equatorial');
   const [width, setWidth] = useState(960);
   const [probe, setProbe] = useState<Probe | null>(null);
@@ -261,14 +301,95 @@ export default function SkyMap({
   // survey as a single flat colour, so the scale is logarithmic.
   const visitScale = useMemo(() => Math.log(tiles.visitsMax + 1), [tiles.visitsMax]);
 
+  /* Integration time per tile. The portal records open-shutter time for the
+     survey as a whole rather than per tile, so it is the frame count times the
+     survey mean — an estimate, and labelled as one wherever it is shown. */
+  const exposureScale = useMemo(
+    () => (hasExposure ? Math.log(tiles.framesMax * (exposureSec as number) + 1) : 1),
+    [hasExposure, tiles.framesMax, exposureSec]
+  );
+
+  /* Frames taken in the reference band alone. Depth has to be counted per
+     band: a tile visited in twenty filters has twenty times the frames of a
+     single-band tile and is no deeper in any one of them, so totalling across
+     the set would overstate it by more than a magnitude. Without the
+     per-filter table there is no honest depth to draw, and the mode is simply
+     not offered. */
+  const bandFrames = useMemo(() => {
+    if (!depthRef || !tiles.filters || !tiles.pattern || !tiles.patterns) return null;
+    const band = tiles.filters.indexOf(depthRef.band);
+    if (band < 0) return null;
+    const perPattern = tiles.patterns.map((flat) => {
+      for (let k = 0; k < flat.length; k += 2) if (flat[k] === band) return flat[k + 1];
+      return 0;
+    });
+    const out = new Int32Array(tiles.count);
+    for (let i = 0; i < tiles.count; i += 1) out[i] = perPattern[tiles.pattern[i]] ?? 0;
+    return out;
+  }, [depthRef, tiles]);
+
+  /* Depth from integration time: background-limited, so the 5σ limit improves
+     as 2.5·log10(√t), against a reference visit whose depth was measured. The
+     spread across the survey is a couple of magnitudes, so this one is linear —
+     a log ramp on top of a logarithmic quantity would flatten it. */
+  const depthOf = useCallback(
+    (i: number) => {
+      if (!depthRef || !hasExposure || !bandFrames) return NaN;
+      const seconds = bandFrames[i] * (exposureSec as number);
+      if (seconds <= 0) return NaN;
+      return depthRef.mag + 1.25 * Math.log10(seconds / depthRef.sec);
+    },
+    [depthRef, hasExposure, bandFrames, exposureSec]
+  );
+
+  const depthRange = useMemo(() => {
+    if (!depthRef || !hasExposure || !bandFrames) return null;
+    let lo = Infinity;
+    let hi = -Infinity;
+    for (let i = 0; i < tiles.count; i += 1) {
+      const d = depthOf(i);
+      if (!Number.isFinite(d)) continue;
+      if (d < lo) lo = d;
+      if (d > hi) hi = d;
+    }
+    if (!Number.isFinite(lo)) return null;
+    // A survey that is uniform by design can come out flat; keep a range so
+    // the scale never divides by zero.
+    return hi - lo < 0.05 ? { lo: lo - 0.25, hi: hi + 0.25 } : { lo, hi };
+  }, [depthRef, hasExposure, bandFrames, tiles.count, depthOf]);
+
+  const modes = useMemo(() => {
+    const out: { key: Mode; label: string }[] = [];
+    if (depthRange) out.push({ key: 'depth', label: 'Depth' });
+    if (hasExposure) out.push({ key: 'exposure', label: 'Exposure time' });
+    out.push({ key: 'date', label: 'Last visit' });
+    out.push({ key: 'visits', label: 'Visits' });
+    return out;
+  }, [depthRange, hasExposure]);
+
+  /* Depth, then exposure, then the calendar: what was reached matters more
+     than when it was reached, and the first mode offered is the one the map
+     opens on. */
+  useEffect(() => {
+    if (!modes.some((m) => m.key === mode)) setMode(modes[0].key);
+  }, [modes, mode]);
+
   const value = useCallback(
-    (i: number) =>
-      mode === 'date'
-        ? months.max > 0
-          ? months.index[i] / months.max
-          : 1
-        : Math.log(tiles.visits[i] + 1) / visitScale,
-    [mode, tiles, visitScale]
+    (i: number) => {
+      if (mode === 'depth' && depthRange) {
+        const d = depthOf(i);
+        if (!Number.isFinite(d)) return 0;
+        return (d - depthRange.lo) / (depthRange.hi - depthRange.lo);
+      }
+
+      if (mode === 'exposure' && hasExposure) {
+        const seconds = (tiles.frames?.[i] ?? 0) * (exposureSec as number);
+        return Math.log(seconds + 1) / exposureScale;
+      }
+      if (mode === 'date') return months.max > 0 ? months.index[i] / months.max : 1;
+      return Math.log(tiles.visits[i] + 1) / visitScale;
+    },
+    [mode, tiles, visitScale, months, depthRange, depthOf, hasExposure, exposureSec, exposureScale]
   );
 
   useEffect(() => {
@@ -470,6 +591,10 @@ export default function SkyMap({
     });
   };
 
+  /* The colour-by toggle is offered wherever there is more than one thing to
+     colour by, and can be asked for on a figure that is otherwise not a tool. */
+  const showModes = (modeToggle ?? interactive) && modes.length > 1;
+
   const legendStops = useMemo(
     () =>
       Array.from({ length: 12 }, (_, i) => rgb(sequential(i / 11, dark))).join(', '),
@@ -477,6 +602,12 @@ export default function SkyMap({
   );
 
   const legendTicks = useMemo(() => {
+    if (mode === 'depth' && depthRange) {
+      return [0, 0.5, 1].map((t) => (depthRange.lo + t * (depthRange.hi - depthRange.lo)).toFixed(1));
+    }
+    if (mode === 'exposure') {
+      return [0, 0.5, 1].map((t) => shortDuration(Math.exp(t * exposureScale) - 1));
+    }
     if (mode === 'date') {
       return [0, 0.5, 1].map((t) => monthLabel(Math.round(t * months.max), epoch));
     }
@@ -484,12 +615,22 @@ export default function SkyMap({
       const visits = Math.round(Math.exp(t * visitScale) - 1);
       return `${visits.toLocaleString('en-US')}`;
     });
-  }, [mode, tiles, visitScale]);
+  }, [mode, tiles, visitScale, months, epoch, depthRange, exposureScale]);
+
+  const legendTitle =
+    mode === 'depth'
+      ? `Estimated 5σ depth${depthRef ? ` · ${depthRef.band}` : ''}`
+      : mode === 'exposure'
+        ? 'Estimated integration time'
+        : mode === 'date'
+          ? 'Last observed'
+          : 'Visits per tile';
 
   return (
     <div className={`skymap${dark ? ' skymap--dark' : ''}`}>
-      {interactive && (
+      {(interactive || showModes) && (
       <div className="skymap__controls">
+        {interactive && (
         <div className="skymap__modes" role="group" aria-label="Coordinate system">
           <button
             type="button"
@@ -508,24 +649,23 @@ export default function SkyMap({
             Galactic
           </button>
         </div>
+        )}
+        {showModes && (
         <div className="skymap__modes" role="group" aria-label="Color the map by">
-          <button
-            type="button"
-            className="toggle-btn"
-            aria-pressed={mode === 'date'}
-            onClick={() => setMode('date')}
-          >
-            Latest observation
-          </button>
-          <button
-            type="button"
-            className="toggle-btn"
-            aria-pressed={mode === 'visits'}
-            onClick={() => setMode('visits')}
-          >
-            Number of visits
-          </button>
+          {modes.map((option) => (
+            <button
+              key={option.key}
+              type="button"
+              className="toggle-btn"
+              aria-pressed={mode === option.key}
+              onClick={() => setMode(option.key)}
+            >
+              {option.label}
+            </button>
+          ))}
         </div>
+        )}
+        {interactive && (
         <span className="skymap__readout" role="status">
           {probe === null ? (
             caption ?? `${tiles.count.toLocaleString('en-US')} tiles observed`
@@ -551,6 +691,7 @@ export default function SkyMap({
             </>
           )}
         </span>
+        )}
       </div>
       )}
 
@@ -566,7 +707,13 @@ export default function SkyMap({
           )} observed 7DS tiles in ${
             frame === 'equatorial' ? 'equatorial' : 'galactic'
           } coordinates, colored by ${
-            mode === 'date' ? 'the date each was last observed' : 'the number of visits to each'
+            mode === 'depth'
+              ? 'the estimated depth reached on each'
+              : mode === 'exposure'
+                ? 'the estimated integration time on each'
+                : mode === 'date'
+                  ? 'the date each was last observed'
+                  : 'the number of visits to each'
           }. Longitude increases to the left.`}
         />
 
@@ -618,9 +765,7 @@ export default function SkyMap({
       </div>
 
       <div className="skymap__legend">
-        <span className="skymap__legend-title">
-          {mode === 'date' ? 'Last observed' : 'Visits per tile'}
-        </span>
+        <span className="skymap__legend-title">{legendTitle}</span>
         <div className="skymap__ramp" style={{ background: `linear-gradient(to right, ${legendStops})` }} />
         <div className="skymap__ticks">
           {legendTicks.map((tick, index) => (

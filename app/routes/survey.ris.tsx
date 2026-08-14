@@ -4,7 +4,7 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import SurveyPage from '../components/surveypage';
 import SkyMap from '../components/skymap';
-import { getStatus, getTileMapLite } from '../lib/portal.server';
+import { getStatus, getTileMap } from '../lib/portal.server';
 import surveys from './content/surveys.json';
 
 export const meta: MetaFunction = () => [
@@ -20,11 +20,24 @@ const CACHE = 'public, max-age=900, stale-while-revalidate=86400';
 export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
 
 export async function loader() {
-  const [tiles, status] = await Promise.all([getTileMapLite(), getStatus()]);
+  /* The full tile list rather than the lite one: the depth scale counts
+     frames in the reference band, which needs the per-filter table. */
+  const [tiles, status] = await Promise.all([getTileMap(), getStatus()]);
+
+  /* Open-shutter time is recorded for the survey as a whole, not per tile, so
+     integration time per tile is estimated from the frame count and this mean.
+     Everything derived from it is labeled as an estimate. */
+  const totals = status.data.totals;
+  const exposureSec =
+    totals && totals.science_frames > 0
+      ? (totals.exposure_hours * 3600) / totals.science_frames
+      : null;
+
   return json(
     {
       tiles: tiles.data,
       ris: status.data.ris,
+      exposureSec,
       live: status.live && tiles.live,
       generatedAt: status.generatedAt,
     },
@@ -37,7 +50,7 @@ const num = (value: number) => value.toLocaleString('en-US');
 const tier = surveys.tiers.find((t) => t.code === 'RIS')!;
 
 const Index = () => {
-  const { tiles, ris, live, generatedAt } = useLoaderData<typeof loader>();
+  const { tiles, ris, exposureSec, live, generatedAt } = useLoaderData<typeof loader>();
 
   return (
     <SurveyPage
@@ -65,15 +78,20 @@ const Index = () => {
       live={live}
       generatedAt={generatedAt}
       map={{
+        /* The full tool here, not the figure the home page uses: this is the
+           page where a reader comes to ask about a particular piece of sky, so
+           the map keeps its coordinate toggle, its pointer readout and its
+           per-tile cards. */
         node: (
           <SkyMap
             tiles={tiles}
-            interactive={false}
+            exposureSec={exposureSec}
+            depthRef={{ mag: 19.1, sec: 300, band: 'm600' }}
             caption={`${num(tiles.count)} tiles observed`}
           />
         ),
         note:
-          'Every tile with at least one science exposure, colored by the month it was last observed. Because RIS covers everything the array can reach, this map is also the footprint of the survey as a whole.',
+          'Every tile with at least one science exposure. Because RIS covers everything the array can reach, this map is also the footprint of the survey as a whole. Hover a tile for its own figures. Depth and integration time are estimates: open-shutter time is recorded for the survey rather than per tile, so time on a tile is its frame count times the survey mean, and depth follows from it against the measured 19.1 mag single-visit reference — background-limited, so the 5σ limit improves as the square root of the time. Depth counts only the frames taken in m600, since a tile visited in many filters is no deeper in any one of them.',
       }}
       coverage={[
         { value: num(ris.tiles_observed), label: 'Tiles observed', note: 'original grid' },

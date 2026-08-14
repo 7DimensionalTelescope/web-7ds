@@ -457,6 +457,9 @@ const lite = new Map<string, { from: string; value: Fetched<TileMap> }>();
  * The tile list without the per-filter breakdown. Pass `withNames` when the
  * page needs to pick tiles out by identifier — the identifiers are only 3 KB
  * gzipped, the filter tables are ten times that.
+ *
+ * `frames` is a single total per tile, not a breakdown, and it is what the
+ * maps derive integration time and estimated depth from, so it stays.
  */
 export async function getTileMapLite(withNames = false): Promise<Fetched<TileMap>> {
   const full = await getTileMap();
@@ -464,8 +467,7 @@ export async function getTileMapLite(withNames = false): Promise<Fetched<TileMap
   const held = lite.get(key);
   if (held && held.from === full.generatedAt) return held.value;
 
-  const { frames, span, pattern, filters, filterWave, patterns, name, nameDelta, ...rest } =
-    full.data;
+  const { span, pattern, filters, filterWave, patterns, name, nameDelta, ...rest } = full.data;
   const data = withNames ? ({ ...rest, name, nameDelta } as TileMap) : (rest as TileMap);
   const value = { ...full, data };
   lite.set(key, { from: full.generatedAt, value });

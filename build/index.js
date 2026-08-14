@@ -2774,7 +2774,7 @@ async function getTileMapLite(withNames = !1) {
   let full = await getTileMap(), key = withNames ? "named" : "bare", held = lite.get(key);
   if (held && held.from === full.generatedAt)
     return held.value;
-  let { frames, span, pattern, filters, filterWave, patterns, name, nameDelta, ...rest } = full.data, data = withNames ? { ...rest, name, nameDelta } : rest, value = { ...full, data };
+  let { span, pattern, filters, filterWave, patterns, name, nameDelta, ...rest } = full.data, data = withNames ? { ...rest, name, nameDelta } : rest, value = { ...full, data };
   return lite.set(key, { from: full.generatedAt, value }), value;
 }
 BASE && setTimeout(() => {
@@ -3160,15 +3160,20 @@ function monthLabel(index, epoch) {
   return `${MONTHS[(total % 12 + 12) % 12]} ${epoch[0] + Math.floor(total / 12)}`;
 }
 var DAY_MS3 = 24 * 60 * 60 * 1e3;
+function shortDuration(seconds) {
+  return seconds >= 3600 ? `${(seconds / 3600).toFixed(seconds >= 36e3 ? 0 : 1)} h` : seconds >= 60 ? `${Math.round(seconds / 60)} min` : `${Math.round(seconds)} s`;
+}
 function SkyMap({
   tiles,
   exposureSec,
   emphasize,
   interactive = !0,
+  modeToggle,
+  depthRef,
   caption,
   theme = "light"
 }) {
-  let dark = theme === "dark", canvasRef = useRef2(null), wrapRef = useRef2(null), [mode2, setMode] = useState4("date"), [frame, setFrame] = useState4("equatorial"), [width, setWidth] = useState4(960), [probe, setProbe] = useState4(null), hover = probe?.tile ?? null, ids2 = useMemo2(() => {
+  let dark = theme === "dark", canvasRef = useRef2(null), wrapRef = useRef2(null), hasExposure = Boolean(exposureSec && exposureSec > 0 && tiles.frames), canDepth = Boolean(depthRef && hasExposure && tiles.filters && tiles.patterns), [mode2, setMode] = useState4(canDepth ? "depth" : hasExposure ? "exposure" : "date"), [frame, setFrame] = useState4("equatorial"), [width, setWidth] = useState4(960), [probe, setProbe] = useState4(null), hover = probe?.tile ?? null, ids2 = useMemo2(() => {
     if (!tiles.nameDelta)
       return null;
     let out = new Int32Array(tiles.nameDelta.length), running = 0;
@@ -3204,9 +3209,61 @@ function SkyMap({
       lon[i] = l, lat[i] = b;
     }
     return { lon, lat };
-  }, [frame, tiles]), visitScale = useMemo2(() => Math.log(tiles.visitsMax + 1), [tiles.visitsMax]), value = useCallback(
-    (i) => mode2 === "date" ? months.max > 0 ? months.index[i] / months.max : 1 : Math.log(tiles.visits[i] + 1) / visitScale,
-    [mode2, tiles, visitScale]
+  }, [frame, tiles]), visitScale = useMemo2(() => Math.log(tiles.visitsMax + 1), [tiles.visitsMax]), exposureScale = useMemo2(
+    () => hasExposure ? Math.log(tiles.framesMax * exposureSec + 1) : 1,
+    [hasExposure, tiles.framesMax, exposureSec]
+  ), bandFrames = useMemo2(() => {
+    if (!depthRef || !tiles.filters || !tiles.pattern || !tiles.patterns)
+      return null;
+    let band = tiles.filters.indexOf(depthRef.band);
+    if (band < 0)
+      return null;
+    let perPattern = tiles.patterns.map((flat) => {
+      for (let k = 0; k < flat.length; k += 2)
+        if (flat[k] === band)
+          return flat[k + 1];
+      return 0;
+    }), out = new Int32Array(tiles.count);
+    for (let i = 0; i < tiles.count; i += 1)
+      out[i] = perPattern[tiles.pattern[i]] ?? 0;
+    return out;
+  }, [depthRef, tiles]), depthOf = useCallback(
+    (i) => {
+      if (!depthRef || !hasExposure || !bandFrames)
+        return NaN;
+      let seconds = bandFrames[i] * exposureSec;
+      return seconds <= 0 ? NaN : depthRef.mag + 1.25 * Math.log10(seconds / depthRef.sec);
+    },
+    [depthRef, hasExposure, bandFrames, exposureSec]
+  ), depthRange = useMemo2(() => {
+    if (!depthRef || !hasExposure || !bandFrames)
+      return null;
+    let lo = 1 / 0, hi = -1 / 0;
+    for (let i = 0; i < tiles.count; i += 1) {
+      let d = depthOf(i);
+      Number.isFinite(d) && (d < lo && (lo = d), d > hi && (hi = d));
+    }
+    return Number.isFinite(lo) ? hi - lo < 0.05 ? { lo: lo - 0.25, hi: hi + 0.25 } : { lo, hi } : null;
+  }, [depthRef, hasExposure, bandFrames, tiles.count, depthOf]), modes = useMemo2(() => {
+    let out = [];
+    return depthRange && out.push({ key: "depth", label: "Depth" }), hasExposure && out.push({ key: "exposure", label: "Exposure time" }), out.push({ key: "date", label: "Last visit" }), out.push({ key: "visits", label: "Visits" }), out;
+  }, [depthRange, hasExposure]);
+  useEffect3(() => {
+    modes.some((m) => m.key === mode2) || setMode(modes[0].key);
+  }, [modes, mode2]);
+  let value = useCallback(
+    (i) => {
+      if (mode2 === "depth" && depthRange) {
+        let d = depthOf(i);
+        return Number.isFinite(d) ? (d - depthRange.lo) / (depthRange.hi - depthRange.lo) : 0;
+      }
+      if (mode2 === "exposure" && hasExposure) {
+        let seconds = (tiles.frames?.[i] ?? 0) * exposureSec;
+        return Math.log(seconds + 1) / exposureScale;
+      }
+      return mode2 === "date" ? months.max > 0 ? months.index[i] / months.max : 1 : Math.log(tiles.visits[i] + 1) / visitScale;
+    },
+    [mode2, tiles, visitScale, months, depthRange, depthOf, hasExposure, exposureSec, exposureScale]
   );
   useEffect3(() => {
     let element = wrapRef.current;
@@ -3291,13 +3348,13 @@ function SkyMap({
       l: galactic[0],
       b: galactic[1]
     });
-  }, legendStops = useMemo2(
+  }, showModes = (modeToggle ?? interactive) && modes.length > 1, legendStops = useMemo2(
     () => Array.from({ length: 12 }, (_, i) => rgb(sequential(i / 11, dark))).join(", "),
     []
-  ), legendTicks = useMemo2(() => mode2 === "date" ? [0, 0.5, 1].map((t) => monthLabel(Math.round(t * months.max), epoch)) : [0, 0.5, 1].map((t) => `${Math.round(Math.exp(t * visitScale) - 1).toLocaleString("en-US")}`), [mode2, tiles, visitScale]);
+  ), legendTicks = useMemo2(() => mode2 === "depth" && depthRange ? [0, 0.5, 1].map((t) => (depthRange.lo + t * (depthRange.hi - depthRange.lo)).toFixed(1)) : mode2 === "exposure" ? [0, 0.5, 1].map((t) => shortDuration(Math.exp(t * exposureScale) - 1)) : mode2 === "date" ? [0, 0.5, 1].map((t) => monthLabel(Math.round(t * months.max), epoch)) : [0, 0.5, 1].map((t) => `${Math.round(Math.exp(t * visitScale) - 1).toLocaleString("en-US")}`), [mode2, tiles, visitScale, months, epoch, depthRange, exposureScale]), legendTitle = mode2 === "depth" ? `Estimated 5\u03C3 depth${depthRef ? ` \xB7 ${depthRef.band}` : ""}` : mode2 === "exposure" ? "Estimated integration time" : mode2 === "date" ? "Last observed" : "Visits per tile";
   return /* @__PURE__ */ jsxs19("div", { className: `skymap${dark ? " skymap--dark" : ""}`, children: [
-    interactive && /* @__PURE__ */ jsxs19("div", { className: "skymap__controls", children: [
-      /* @__PURE__ */ jsxs19("div", { className: "skymap__modes", role: "group", "aria-label": "Coordinate system", children: [
+    (interactive || showModes) && /* @__PURE__ */ jsxs19("div", { className: "skymap__controls", children: [
+      interactive && /* @__PURE__ */ jsxs19("div", { className: "skymap__modes", role: "group", "aria-label": "Coordinate system", children: [
         /* @__PURE__ */ jsx25(
           "button",
           {
@@ -3319,29 +3376,18 @@ function SkyMap({
           }
         )
       ] }),
-      /* @__PURE__ */ jsxs19("div", { className: "skymap__modes", role: "group", "aria-label": "Color the map by", children: [
-        /* @__PURE__ */ jsx25(
-          "button",
-          {
-            type: "button",
-            className: "toggle-btn",
-            "aria-pressed": mode2 === "date",
-            onClick: () => setMode("date"),
-            children: "Latest observation"
-          }
-        ),
-        /* @__PURE__ */ jsx25(
-          "button",
-          {
-            type: "button",
-            className: "toggle-btn",
-            "aria-pressed": mode2 === "visits",
-            onClick: () => setMode("visits"),
-            children: "Number of visits"
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsx25("span", { className: "skymap__readout", role: "status", children: probe === null ? caption ?? `${tiles.count.toLocaleString("en-US")} tiles observed` : hover === null ? /* @__PURE__ */ jsxs19(Fragment9, { children: [
+      showModes && /* @__PURE__ */ jsx25("div", { className: "skymap__modes", role: "group", "aria-label": "Color the map by", children: modes.map((option) => /* @__PURE__ */ jsx25(
+        "button",
+        {
+          type: "button",
+          className: "toggle-btn",
+          "aria-pressed": mode2 === option.key,
+          onClick: () => setMode(option.key),
+          children: option.label
+        },
+        option.key
+      )) }),
+      interactive && /* @__PURE__ */ jsx25("span", { className: "skymap__readout", role: "status", children: probe === null ? caption ?? `${tiles.count.toLocaleString("en-US")} tiles observed` : hover === null ? /* @__PURE__ */ jsxs19(Fragment9, { children: [
         "RA ",
         probe.ra.toFixed(1),
         "\xB0 Dec ",
@@ -3386,7 +3432,7 @@ function SkyMap({
           role: "img",
           "aria-label": `Mollweide all-sky map of ${tiles.count.toLocaleString(
             "en-US"
-          )} observed 7DS tiles in ${frame === "equatorial" ? "equatorial" : "galactic"} coordinates, colored by ${mode2 === "date" ? "the date each was last observed" : "the number of visits to each"}. Longitude increases to the left.`
+          )} observed 7DS tiles in ${frame === "equatorial" ? "equatorial" : "galactic"} coordinates, colored by ${mode2 === "depth" ? "the estimated depth reached on each" : mode2 === "exposure" ? "the estimated integration time on each" : mode2 === "date" ? "the date each was last observed" : "the number of visits to each"}. Longitude increases to the left.`
         }
       ),
       probe && /* @__PURE__ */ jsx25(
@@ -3433,7 +3479,7 @@ function SkyMap({
       )
     ] }),
     /* @__PURE__ */ jsxs19("div", { className: "skymap__legend", children: [
-      /* @__PURE__ */ jsx25("span", { className: "skymap__legend-title", children: mode2 === "date" ? "Last observed" : "Visits per tile" }),
+      /* @__PURE__ */ jsx25("span", { className: "skymap__legend-title", children: legendTitle }),
       /* @__PURE__ */ jsx25("div", { className: "skymap__ramp", style: { background: `linear-gradient(to right, ${legendStops})` } }),
       /* @__PURE__ */ jsx25("div", { className: "skymap__ticks", children: legendTicks.map((tick, index) => /* @__PURE__ */ jsx25("span", { children: tick }, tick + index)) })
     ] })
@@ -9290,11 +9336,12 @@ var meta26 = () => [
   }
 ], CACHE6 = "public, max-age=900, stale-while-revalidate=86400", headers6 = () => ({ "Cache-Control": CACHE6 });
 async function loader12() {
-  let [tiles, status] = await Promise.all([getTileMapLite(), getStatus()]);
+  let [tiles, status] = await Promise.all([getTileMap(), getStatus()]), totals = status.data.totals, exposureSec = totals && totals.science_frames > 0 ? totals.exposure_hours * 3600 / totals.science_frames : null;
   return json6(
     {
       tiles: tiles.data,
       ris: status.data.ris,
+      exposureSec,
       live: status.live && tiles.live,
       generatedAt: status.generatedAt
     },
@@ -9302,7 +9349,7 @@ async function loader12() {
   );
 }
 var num5 = (value) => value.toLocaleString("en-US"), tier2 = surveys_default.tiers.find((t) => t.code === "RIS"), Index26 = () => {
-  let { tiles, ris, live, generatedAt } = useLoaderData6();
+  let { tiles, ris, exposureSec, live, generatedAt } = useLoaderData6();
   return /* @__PURE__ */ jsx38(
     SurveyPage,
     {
@@ -9330,15 +9377,20 @@ var num5 = (value) => value.toLocaleString("en-US"), tier2 = surveys_default.tie
       live,
       generatedAt,
       map: {
+        /* The full tool here, not the figure the home page uses: this is the
+           page where a reader comes to ask about a particular piece of sky, so
+           the map keeps its coordinate toggle, its pointer readout and its
+           per-tile cards. */
         node: /* @__PURE__ */ jsx38(
           SkyMap,
           {
             tiles,
-            interactive: !1,
+            exposureSec,
+            depthRef: { mag: 19.1, sec: 300, band: "m600" },
             caption: `${num5(tiles.count)} tiles observed`
           }
         ),
-        note: "Every tile with at least one science exposure, colored by the month it was last observed. Because RIS covers everything the array can reach, this map is also the footprint of the survey as a whole."
+        note: "Every tile with at least one science exposure. Because RIS covers everything the array can reach, this map is also the footprint of the survey as a whole. Hover a tile for its own figures. Depth and integration time are estimates: open-shutter time is recorded for the survey rather than per tile, so time on a tile is its frame count times the survey mean, and depth follows from it against the measured 19.1 mag single-visit reference \u2014 background-limited, so the 5\u03C3 limit improves as the square root of the time. Depth counts only the frames taken in m600, since a tile visited in many filters is no deeper in any one of them."
       },
       coverage: [
         { value: num5(ris.tiles_observed), label: "Tiles observed", note: "original grid" },
@@ -10328,7 +10380,7 @@ var meta33 = () => [
 }, news_default2 = Index33;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-OFW4XQ2G.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-GABS3WG5.js", imports: ["/build/_shared/chunk-ASW5SBYO.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-62DQO32I.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-G6R7SRBE.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-AGWPMFB6.js", imports: ["/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-CEVW4J4Q.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-RNH3WBAN.js", imports: ["/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-QGAXOE23.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-E2GXLQF2.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-VB5QOJMN.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-66FEISGY.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-KINMSEIL.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-WIST7ATZ.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-TKY3PHZU.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-UQOW2PRA.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-UT4M7P3C.js", imports: ["/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-CGA3MZSR.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-HANGZMXW.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-Q6JXHO2X.js", imports: ["/build/_shared/chunk-6BDX2NXC.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-T6SEM4L4.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-QPZJLPBW.js", imports: ["/build/_shared/chunk-6BDX2NXC.js", "/build/_shared/chunk-ASW5SBYO.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-7BIMPF6H.js", imports: ["/build/_shared/chunk-6BDX2NXC.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-GOETLRG2.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-T432UXFF.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-ZS6EIS4G.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-KHHQAOP3.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-Q5CQBVZO.js", imports: ["/build/_shared/chunk-ASW5SBYO.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-KN4PJYLL.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-KMVYKB33.js", imports: ["/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-E7CQG7IZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-U4AKC2BT.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-MTROOIHL.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-ECUCZL5A.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-LDMZGDNK.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-NLK36E3Q.js", imports: ["/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "dda15a8f", hmr: void 0, url: "/build/manifest-DDA15A8F.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-OFW4XQ2G.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-QV5FLXUD.js", imports: ["/build/_shared/chunk-PO7JPLLH.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-62DQO32I.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-G6R7SRBE.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-AGWPMFB6.js", imports: ["/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-CEVW4J4Q.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-RNH3WBAN.js", imports: ["/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-QGAXOE23.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-E2GXLQF2.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-VB5QOJMN.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-66FEISGY.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-KINMSEIL.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-WIST7ATZ.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-TKY3PHZU.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-UQOW2PRA.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-UT4M7P3C.js", imports: ["/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-CGA3MZSR.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-HANGZMXW.js", imports: ["/build/_shared/chunk-2253NLSJ.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-Q6JXHO2X.js", imports: ["/build/_shared/chunk-6BDX2NXC.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-T6SEM4L4.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-RGQ46MEF.js", imports: ["/build/_shared/chunk-6BDX2NXC.js", "/build/_shared/chunk-PO7JPLLH.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-7BIMPF6H.js", imports: ["/build/_shared/chunk-6BDX2NXC.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-GOETLRG2.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-T432UXFF.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-ZS6EIS4G.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-KHHQAOP3.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-DOUC2GC4.js", imports: ["/build/_shared/chunk-PO7JPLLH.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-KN4PJYLL.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-KMVYKB33.js", imports: ["/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-E7CQG7IZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-U4AKC2BT.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-MTROOIHL.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-ECUCZL5A.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-LDMZGDNK.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-NLK36E3Q.js", imports: ["/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-DCS5WJ36.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "35f5ca1a", hmr: void 0, url: "/build/manifest-35F5CA1A.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
