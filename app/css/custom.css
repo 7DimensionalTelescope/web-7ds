@@ -2720,8 +2720,12 @@ table[class*='w-full'] thead {
 
 /* The all-sky footprint fills the panel behind the copy. It is decorative
    here — the readable version, with per-tile detail, is the coverage page —
-   so it is dimmed, stripped of its legend, and never intercepts a click. */
-.home-survey-panel { overflow: hidden; }
+   so it is stripped of its card chrome and its legend, veiled in white so the
+   text stays legible over it, and never intercepts a click. */
+.home-survey-panel {
+  overflow: hidden;
+  background-color: #fff;
+}
 
 .home-survey__bg {
   position: absolute;
@@ -2731,7 +2735,6 @@ table[class*='w-full'] thead {
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  opacity: 0.9;
 }
 
 .home-survey__bg .skymap {
@@ -2739,36 +2742,47 @@ table[class*='w-full'] thead {
      sitting in the middle like a pasted figure. */
   width: 116%;
   max-width: none;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
+.home-survey__bg .skymap__canvas { padding: 0; }
 .home-survey__bg .skymap__legend,
 .home-survey__bg .skymap__controls { display: none; }
 
-/* The scrim has to sit above the map but below the copy. `.container` is
-   z-index 1 and comes later in the document, so it still wins. */
+/* White veil over the map, heaviest behind the copy on the left and clearing
+   towards the right where the tiles are worth seeing. */
 .home-survey-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   z-index: 1;
-  background: linear-gradient(
-    to bottom,
-    rgba(5, 8, 15, 0.86) 0%,
-    rgba(5, 8, 15, 0.62) 50%,
-    rgba(5, 8, 15, 0.92) 100%
-  );
+  background:
+    linear-gradient(to right, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.72) 55%, rgba(255, 255, 255, 0.6) 100%);
+}
+
+/* Freshness of the live tile data, in the corner the ellipse leaves empty. */
+.home-survey__stamp {
+  position: absolute;
+  top: 6rem;
+  /* Lined up with the container's content edge rather than the window's. */
+  right: max(var(--space-xl), calc(50% - 640px + var(--space-xl)));
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+  text-align: right;
 }
 
 .home-survey__count {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  color: rgba(255, 255, 255, 0.62);
+  color: var(--slate-500);
 }
 
-.home-survey__meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
+.home-survey__meta { margin-top: 1.5rem; }
 
 /* Three cards in a row under the copy. Kept deliberately short: this section
    has to fit one viewport on a laptop, and the cards are an index to the
@@ -2785,24 +2799,14 @@ table[class*='w-full'] thead {
   display: flex;
   flex-direction: column;
   padding: 1rem 1.125rem;
-  /* Translucent rather than paper-white: a solid card would punch three holes
-     in the map behind it. */
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(8px);
+  /* Slightly translucent: three solid cards would punch holes in the map. */
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(6px);
 }
-
-.home-survey__tiers .tier-card:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.28);
-}
-
-.home-survey__tiers .tier-card__code { color: var(--accent-on-dark); }
 
 .home-survey__tiers .tier-card__name {
   font-size: 0.9375rem;
-  color: #fff;
-  margin: 0.35rem 0 0.35rem;
+  margin: 0.35rem 0;
 }
 
 /* The card is a flex column, so a block-level pill would stretch the full
@@ -2813,7 +2817,17 @@ table[class*='w-full'] thead {
   margin: 0 0 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.62);
+  color: var(--slate-600);
+}
+
+@media (max-width: 976px) {
+  /* The stamp would sit over the heading once the copy spans the panel. */
+  .home-survey__stamp {
+    position: static;
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 1rem;
+  }
 }
 
 @media (max-width: 720px) {

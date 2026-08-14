@@ -11,7 +11,7 @@ import FooterBar from './footer';
 
 /* Which snap sections carry a dark background — the dot navigation and the
    scroll cue invert against it. The last entry is the footer. */
-const SECTION_IS_DARK = [true, false, true, true, true, false, true];
+const SECTION_IS_DARK = [true, false, true, false, true, false, true];
 const SECTION_COUNT = SECTION_IS_DARK.length;
 const SECTION_NAMES = [
   'Introduction',
@@ -312,28 +312,36 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
             section: it is the one thing here that is worth looking at, and as
             a panel beside the cards it forced the section past one viewport.
             The interactive map, with per-tile detail, is on the coverage page. */}
-        <section className="fullpage-section fullpage-section--dark home-survey-panel">
+        <section className="fullpage-section home-survey-panel">
           {tiles && tiles.count > 0 ? (
             <div className="home-survey__bg" aria-hidden="true">
-              <SkyMap tiles={tiles} interactive={false} theme="dark" />
+              <SkyMap tiles={tiles} interactive={false} />
+            </div>
+          ) : null}
+
+          {/* The freshness of the map belongs on the map, not in the prose:
+              it qualifies what is drawn behind everything else. Top right,
+              where the Mollweide ellipse leaves the corner empty. */}
+          {tiles && tiles.count > 0 ? (
+            <div className="home-survey__stamp">
+              <LiveBadge live={tilesLive} updated={generatedAt} />
+              <span className="home-survey__count">
+                {tiles.count.toLocaleString('en-US')} tiles observed
+              </span>
             </div>
           ) : null}
 
           <div className="container container--wide">
             <div className="reveal">
-              <span className="eyebrow eyebrow--on-dark">7-Dimensional Sky Survey</span>
+              <span className="eyebrow">7-Dimensional Sky Survey</span>
               <h2>Three surveys over the southern sky</h2>
-              <p className="prose" style={{ maxWidth: '62ch', color: 'rgba(255,255,255,.78)' }}>
+              <p className="prose" style={{ maxWidth: '62ch' }}>
                 {mainText3}
               </p>
 
               {tiles && tiles.count > 0 ? (
                 <div className="home-survey__meta">
-                  <LiveBadge live={tilesLive} updated={generatedAt} onDark />
-                  <span className="home-survey__count">
-                    {tiles.count.toLocaleString('en-US')} tiles observed
-                  </span>
-                  <Link className="link-arrow" to="/users/access" style={{ color: 'var(--accent-on-dark)' }}>
+                  <Link className="link-arrow" to="/users/access">
                     Explore the coverage map
                   </Link>
                 </div>
