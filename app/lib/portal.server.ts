@@ -231,6 +231,13 @@ export type TileMap = {
    * share fewer than a thousand of these, so they are sent once and indexed.
    */
   patterns?: number[][];
+  /**
+   * How much of the sky each filter has reached: one entry per filter the
+   * survey has used, ordered by central wavelength. Aggregated by the portal
+   * rather than derived here, so it counts every tile including any the map
+   * drops.
+   */
+  perFilter?: { name: string; nm: number; tiles: number; tilesRis: number; frames: number }[];
   /** Calendar day `lastDay` and `span` count from, ISO. */
   epochDate: string;
   visitsMax: number;
@@ -257,7 +264,11 @@ function filterWavelength(name: string): number {
 
 export function getTileMap(): Promise<Fetched<TileMap>> {
   return cached('tiles', async () => {
-    const raw = await getJson<{ generated_at: string; tiles: RawTile[] }>('/tiles/', 'tiles');
+    const raw = await getJson<{
+      generated_at: string;
+      tiles: RawTile[];
+      per_filter?: Record<string, { tiles_observed: number; tiles_observed_ris: number; n_frames: number }>;
+    }>('/tiles/', 'tiles');
     const tiles = raw.tiles
       .filter((t) => Number.isFinite(t.ra) && Number.isFinite(t.dec))
       // Sorted by identifier so the difference encoding below holds whatever
@@ -328,6 +339,15 @@ export function getTileMap(): Promise<Fetched<TileMap>> {
       // thousands of times and costs almost nothing to send.
       span: tiles.map((t) => dayIndex(t.last_night, epochMs) - dayIndex(t.first_night, epochMs)),
       pattern: tiles.map(patternFor),
+      perFilter: Object.entries(raw.per_filter ?? {})
+        .map(([name, v]) => ({
+          name,
+          nm: filterWavelength(name),
+          tiles: v.tiles_observed,
+          tilesRis: v.tiles_observed_ris,
+          frames: v.n_frames,
+        }))
+        .sort((a, b) => a.nm - b.nm),
       filters,
       filterWave: filters.map(filterWavelength),
       patterns,

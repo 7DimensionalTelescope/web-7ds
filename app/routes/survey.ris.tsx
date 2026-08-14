@@ -5,6 +5,7 @@ import { useLoaderData } from '@remix-run/react';
 import SurveyPage from '../components/surveypage';
 import SkyMap from '../components/skymap';
 import { getStatus, getTileMap } from '../lib/portal.server';
+import { RIS_TILES } from '../lib/tilegrid';
 import surveys from './content/surveys.json';
 
 export const meta: MetaFunction = () => [
@@ -85,13 +86,14 @@ const Index = () => {
         node: (
           <SkyMap
             tiles={tiles}
+            planned={{ to: RIS_TILES }}
             exposureSec={exposureSec}
             depthRef={{ mag: 19.1, sec: 300, band: 'm600' }}
-            caption={`${num(tiles.count)} tiles observed`}
+            caption={`${num(ris.tiles_observed)} of ${num(ris.tiles_defined)} tiles observed`}
           />
         ),
         note:
-          'Every tile with at least one science exposure. Because RIS covers everything the array can reach, this map is also the footprint of the survey as a whole. Hover a tile for its own figures. Depth and integration time are estimates: open-shutter time is recorded for the survey rather than per tile, so time on a tile is its frame count times the survey mean, and depth follows from it against the measured 19.1 mag single-visit reference — background-limited, so the 5σ limit improves as the square root of the time. Depth counts only the frames taken in m600, since a tile visited in many filters is no deeper in any one of them.',
+          'The survey as designed: all 25,472 tiles of the reference grid are drawn in grey, and the ones with science exposures are coloured over them, so what is left to observe is the grey. Because RIS covers everything the array can reach, this grid is also the footprint of the survey as a whole. Hover a tile for its own figures. Depth and integration time are estimates: open-shutter time is recorded for the survey rather than per tile, so time on a tile is its frame count times the survey mean, and depth follows from it against the measured 19.1 mag single-visit reference — background-limited, so the 5σ limit improves as the square root of the time. Depth counts only the frames taken in m600, since a tile visited in many filters is no deeper in any one of them.',
       }}
       coverage={[
         { value: num(ris.tiles_observed), label: 'Tiles observed', note: 'original grid' },

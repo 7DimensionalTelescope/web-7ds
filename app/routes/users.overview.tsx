@@ -77,30 +77,30 @@ const Index = () => (
       </div>
 
       <div style={{ marginTop: '2.5rem' }}>
-        <FilterCurves />
-        <p className="footnote" style={{ marginTop: '0.75rem' }}>
-          <b>The complete set</b> Response of all 35 medium bands together with Sloan u, g, r, i
-          and z, so the medium bands can be read against the broad ones that overlap them. Each
-          curve is drawn in the colour of its own central wavelength.
-        </p>
+        <Figure
+          src="/img/images/filter-transmission.png"
+          alt="System response of the 7DT medium bands in two panels, the original twenty above and the fifteen added in 2025 below, each shown against detector quantum efficiency, sky transmission and telescope throughput"
+          label="Total system response, decomposed"
+          caption="What actually reaches the detector: filter transmission multiplied by CMOS quantum efficiency, atmospheric transmission and telescope throughput. The original twenty bands are in the upper panel, the fifteen added in 2025 in the lower one, each drawn against the three curves that shape it. Peak system response is about 65 percent near 475 nm and falls away redward of 775 nm as quantum efficiency drops — which is why the reddest bands are the shallowest and the least well calibrated."
+        />
       </div>
 
       <div style={{ marginTop: '3rem' }}>
         <FilterCurves showBroad={false} />
         <p className="footnote" style={{ marginTop: '0.75rem' }}>
-          <b>Medium bands alone</b> The same data with the broad bands removed. The broad bands
-          are several times wider and sit over the medium set; without them the 25 nm spacing of
-          the original twenty, and where the fifteen added in 2025 fall between them, are legible.
+          <b>The medium-band set alone</b> The same response with the broad bands removed, drawn
+          from the reference data shipped with{' '}
+          <Link to="/users/software"><code>supy</code></Link>, which is what its simulator module
+          computes with — a response derived there matches this figure exactly. Without the broad
+          bands over them, the regular 25 nm spacing of the original twenty is legible, and so is
+          where the fifteen added in 2025 fall between them.
         </p>
       </div>
 
       <p className="footnote" style={{ marginTop: '1.5rem' }}>
-        Curves are the system response — filter transmission folded with detector quantum
-        efficiency, telescope optics and atmospheric transmission — read from the reference data
-        shipped with <Link to="/users/software"><code>supy</code></Link>, which is what its
-        simulator module computes with. A response derived there matches these figures exactly.
         Which bands exist on a particular tile is reported on the{' '}
-        <Link to="/users/access">data access page</Link>.
+        <Link to="/users/access">data access page</Link>, and how much of the sky each band has
+        reached so far is on the <Link to="/users/status">status page</Link>.
       </p>
     </Section>
 
@@ -120,10 +120,19 @@ const Index = () => (
 
       <div style={{ marginTop: '2.5rem' }}>
         <Figure
-          src="/img/images/psf-starfield.jpg"
-          alt="A crop of a 7DT frame showing a field of stars, each recorded as a round compact point source"
-          label="Point sources on a 7DT frame"
-          caption="A crop of a 7DT exposure of the field around the Helix Nebula, at full resolution and without further processing. Stars are round and compact across the crop; the numbers beside it are what that looks like measured — 2.0 arcseconds FWHM at the array median, ellipticity under 0.1 over the central 80 percent of the field."
+          src="/img/images/Seeing_2025-2026.png"
+          alt="Violin plot of the delivered seeing distribution in each 7DT band over 2025 and 2026, with the median marked for each"
+          label="Delivered seeing, by band"
+          caption="Distribution of measured seeing in every band over the 2025–2026 seasons, with the median marked on each. Medians run from 2.0 arcseconds in r, m700 and m775 to 2.7 in m575: the variation is the observing conditions the band happened to be taken in, not a property of the filter. The width of each violin is the number of exposures reaching that seeing."
+        />
+      </div>
+
+      <div style={{ marginTop: '2.5rem' }}>
+        <Figure
+          src="/img/images/Seeing_by_unit_2025-2026.png"
+          alt="Violin plot of the delivered seeing distribution for each of the sixteen operational 7DT units over 2025 and 2026"
+          label="Delivered seeing, by unit"
+          caption="The same measurements grouped by telescope rather than by band, over all sixteen operational units. Medians lie between 2.0 and 2.8 arcseconds, so the array behaves as a coherent set of instruments rather than sixteen separate ones — which is what makes coadding across units sound."
         />
       </div>
 
@@ -137,6 +146,15 @@ const Index = () => (
         <p className="prose">{photometryText}</p>
         <SimpleTable caption="Calibration" rows={ZEROPOINT} />
       </div>
+      <div style={{ marginTop: '2.5rem' }}>
+        <Figure
+          src="/img/images/zeropoint.png"
+          alt="Violin plot of the spatial zero-point RMSE in each band across 1167 deep-stack tiles, rising from about 0.010 magnitudes in the blue to 0.064 in m875"
+          label="Zero-point uniformity across a stack"
+          caption="Spatial zero-point RMSE within DP2 deep stacks, measured in a 5-arcsecond aperture over 1,167 tiles — how much the calibration varies from place to place inside one image, which is a different quantity from the overall zero-point uncertainty quoted above. Medians run from 0.010 mag in r to 0.064 mag in m875, flat across the blue and green bands and climbing steadily redward of 775 nm with falling detector quantum efficiency."
+        />
+      </div>
+
       <p className="footnote" style={{ marginTop: '1.5rem' }}>
         Zero points are determined per image by Py7DT with 3σ clipping across multiple aperture
         sizes, against corrected synthetic photometry of matched Gaia sources. The fifteen filters
@@ -170,7 +188,7 @@ const Index = () => (
           src="/img/images/depth-distribution.png"
           alt="Violin plot of the 5-sigma limiting magnitude distribution for each 7DT band in a 100-second exposure"
           label="Measured depth per band"
-          caption="Distribution of single-exposure 5σ point-source depths for the twenty original medium bands and Sloan g, r, i and z, measured from individual 100-second exposures taken in routine survey operation. The width of each violin is proportional to the number of exposures reaching that magnitude; the spread within a band is the variation in seeing, airmass and sky brightness across real nights. The fifteen filters added in late 2025 are not included, their spectrophotometric calibration being incomplete. From Kim et al., Proc. SPIE 14147-84."
+          caption="Distribution of single-exposure 5σ point-source depths for the twenty original medium bands and Sloan g, r, i and z, measured from individual 100-second exposures taken in routine survey operation, with the median marked on each. They run from 20.59 mag in Sloan g down to 16.60 in m875, following the system response above. The width of each violin is the number of exposures reaching that magnitude; the spread within a band is the variation in seeing, airmass and sky brightness across real nights. The fifteen filters added in late 2025 are not included, their spectrophotometric calibration being incomplete."
         />
       </div>
     </Section>
@@ -226,8 +244,8 @@ const Index = () => (
         El Sauce.
       </p>
       <div className="btn-row" style={{ marginTop: '1.5rem' }}>
-        <Link className="btn btn--primary" to="/users/performance">
-          Performance in detail
+        <Link className="btn btn--primary" to="/users/status">
+          Current status
         </Link>
         <Link className="btn btn--secondary" to="/users/software">
           Software

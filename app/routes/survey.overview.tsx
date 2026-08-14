@@ -105,7 +105,7 @@ const Index = () => {
           Depths are 5σ point-source limits in the m600 band. The RIS figure is the depth of one
           visit (3 × 100 s); the WTS and IMS figures are cumulative over the planned five-year
           operation. Measured performance is reported on the{' '}
-          <Link to="/users/performance">performance page</Link>, and current progress on each
+          <Link to="/users/overview">overview page</Link>, and current progress on each
           survey page.
         </p>
       </Section>

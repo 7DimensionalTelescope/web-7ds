@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import type { HeadersFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import { PageLayout, PageHero, Section, StatGrid, LiveBadge } from '../components/site';
 import FilterCurves from '../components/filtercurves';
-import { getStatus } from '../lib/portal.server';
+import SkyMap from '../components/skymap';
+import { getStatus, getTileMapLite } from '../lib/portal.server';
+import { RIS_TILES, GRID_TILES } from '../lib/tilegrid';
 
 export const meta: MetaFunction = () => [
   { title: 'Status & overview · 7DT for users' },
@@ -19,8 +21,21 @@ const CACHE = 'public, max-age=900, stale-while-revalidate=86400';
 export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
 
 export async function loader() {
-  const status = await getStatus();
-  return json(status, { headers: { 'Cache-Control': CACHE } });
+  /* Names are asked for because the IMS layer picks its seven tiles out by
+     identifier; they are 3 KB gzipped. The per-filter breakdown is not, so the
+     lite copy is enough for the map. */
+  const [status, tiles] = await Promise.all([getStatus(), getTileMapLite(true)]);
+
+  const totals = status.data.totals;
+  const exposureSec =
+    totals && totals.science_frames > 0
+      ? (totals.exposure_hours * 3600) / totals.science_frames
+      : null;
+
+  return json(
+    { ...status, tiles: tiles.data, tilesLive: tiles.live, exposureSec },
+    { headers: { 'Cache-Control': CACHE } }
+  );
 }
 
 /* The medium-band set as installed. The original twenty are on a regular 25 nm
@@ -32,6 +47,84 @@ const BANDS_ORIGINAL = [
 ];
 const BANDS_ADDED = [375, 386, 412, 438, 462, 483, 512, 534, 561, 586, 615, 640, 661, 769, 832];
 
+/* ---------------------------------------------------------------------------
+   Coverage map with its layers.
+
+   Four things could be drawn on this sky and only two of them exist as data.
+   The reference grid and the northern extension follow from the tiling rule;
+   the observation record comes from the portal; IMS is seven named tiles. WTS
+   has not started and the portal publishes no positions for target-of-
+   opportunity work, so those two are shown as unavailable rather than left
+   off — a reader looking for them should find out why they are missing.
+--------------------------------------------------------------------------- */
+
+type Layers = { grid: boolean; ext: boolean; observed: boolean; ims: boolean };
+
+function CoverageMap({
+  tiles,
+  exposureSec,
+  imsTiles,
+}: {
+  tiles: any;
+  exposureSec: number | null;
+  imsTiles: string[];
+}) {
+  const [on, setOn] = useState<Layers>({ grid: true, ext: false, observed: true, ims: false });
+  const toggle = (key: keyof Layers) => setOn((was) => ({ ...was, [key]: !was[key] }));
+
+  const planned = useMemo(() => {
+    if (on.grid && on.ext) return { from: 0, to: GRID_TILES };
+    if (on.grid) return { to: RIS_TILES };
+    if (on.ext) return { from: RIS_TILES, to: GRID_TILES };
+    return null;
+  }, [on.grid, on.ext]);
+
+  const BOXES: { key: keyof Layers; label: string; note: string }[] = [
+    { key: 'grid', label: 'RIS reference grid', note: `${RIS_TILES.toLocaleString('en-US')} tiles` },
+    { key: 'ext', label: 'Northern extension', note: 'to Dec +30°' },
+    { key: 'observed', label: 'Observed', note: 'coloured by the scale below' },
+    { key: 'ims', label: 'IMS field', note: `${imsTiles.length} tiles` },
+  ];
+
+  return (
+    <>
+      <div className="map-layers">
+        {BOXES.map((box) => (
+          <label className="map-layers__item" key={box.key}>
+            <input type="checkbox" checked={on[box.key]} onChange={() => toggle(box.key)} />
+            <span>
+              {box.label}
+              <span className="map-layers__note">{box.note}</span>
+            </span>
+          </label>
+        ))}
+        <span className="map-layers__item map-layers__item--off" aria-disabled="true">
+          <input type="checkbox" disabled />
+          <span>
+            WTS
+            <span className="map-layers__note">not started</span>
+          </span>
+        </span>
+        <span className="map-layers__item map-layers__item--off" aria-disabled="true">
+          <input type="checkbox" disabled />
+          <span>
+            Target of opportunity
+            <span className="map-layers__note">positions not published</span>
+          </span>
+        </span>
+      </div>
+
+      <SkyMap
+        tiles={tiles}
+        planned={planned}
+        showObserved={on.observed}
+        emphasize={on.ims ? imsTiles : null}
+        exposureSec={exposureSec}
+      />
+    </>
+  );
+}
+
 const num = (value: number, digits = 0) =>
   value.toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
 
@@ -39,8 +132,10 @@ const day = (iso: string) =>
   new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
 const Index = () => {
-  const { data, live, generatedAt } = useLoaderData<typeof loader>();
-  const { telescopes, ris, nightly, totals } = data;
+  const { data, live, generatedAt, tiles, tilesLive, exposureSec } =
+    useLoaderData<typeof loader>();
+  const { telescopes, ris, nightly, totals, ims } = data;
+  const imsTiles = Object.keys(ims.cycles_per_tile ?? {});
 
   return (
     <PageLayout menu="manuUsers">
@@ -193,7 +288,49 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Response" title="Filter response curves" alt wide>
+      <Section eyebrow="Availability" title="How much sky each band has reached" alt wide>
+        <p className="prose">
+          A band is only useful where it has been taken. Because each unit carries nine slots out
+          of the {tiles.perFilter?.length ?? 37} bands in use, the array works through the set over
+          many nights, and coverage runs well ahead in some bands and behind in others. The count
+          below is tiles with at least one science frame in that band.
+        </p>
+        <div className="table-wrap" style={{ marginTop: '1.5rem' }}>
+          <table className="spec-table">
+            <caption>Tiles observed per band, of {num(ris.tiles_defined)} in the reference grid</caption>
+            <thead>
+              <tr>
+                <th scope="col">Band</th>
+                <th scope="col">Central λ</th>
+                <th scope="col">Tiles in the grid</th>
+                <th scope="col">Of the grid</th>
+                <th scope="col">Frames</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(tiles.perFilter ?? []).map((f) => (
+                <tr key={f.name}>
+                  <th scope="row" style={{ fontFamily: 'var(--font-mono)' }}>
+                    {f.name}
+                  </th>
+                  <td>{Number.isFinite(f.nm) ? `${f.nm} nm` : '—'}</td>
+                  <td>{num(f.tilesRis)}</td>
+                  <td>{((f.tilesRis / ris.tiles_defined) * 100).toFixed(1)}%</td>
+                  <td>{num(f.frames)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="footnote" style={{ marginTop: '1rem' }}>
+          Counted over the original reference grid, so the percentages are comparable with the{' '}
+          {ris.coverage_pct}% figure above. Broad bands are listed at their effective wavelength.
+          Which bands a particular tile carries is reported on the{' '}
+          <Link to="/users/access">data access page</Link>.
+        </p>
+      </Section>
+
+      <Section eyebrow="Response" title="Filter response curves" wide>
         <FilterCurves />
         <p className="footnote" style={{ marginTop: '1rem' }}>
           Curves are read from the reference data shipped with{' '}
@@ -205,22 +342,36 @@ const Index = () => {
         </p>
       </Section>
 
-      <Section eyebrow="Coverage" title="What has been observed">
+      <Section eyebrow="Coverage" title="What has been observed" wide>
         <p className="prose">
           {ris.coverage_pct} percent of the reference tiling has been observed at least once:{' '}
-          {num(ris.tiles_observed)} of {num(ris.tiles_defined)} tiles. A tile with data has
-          calibrated images and a source catalog. Coverage per tile, including which bands were
-          taken and how many frames exist, is on the sky coverage map.
+          {num(ris.tiles_observed)} of {num(ris.tiles_defined)} tiles, or{' '}
+          {num(ris.tiles_observed_extended)} of {num(ris.tiles_extended)} counting the northern
+          extension. A tile with data has calibrated images and a source catalog.
         </p>
+
+        <div style={{ margin: '1.5rem 0' }}>
+          <LiveBadge live={tilesLive} updated={generatedAt} interval="daily" />
+        </div>
+
+        <CoverageMap tiles={tiles} exposureSec={exposureSec} imsTiles={imsTiles} />
+
+        <p className="footnote" style={{ marginTop: '1rem' }}>
+          The reference grid is the survey as designed — every tile the array intends to reach —
+          reconstructed from the tiling rule rather than published as a list, and checked against
+          every observed tile. WTS has not begun and has no footprint to draw yet. Target-of-
+          opportunity observations are made across the whole grid, and the portal publishes their
+          counts but not their positions, so they cannot be drawn as a layer; the{' '}
+          {num(data.too.followup_events)} follow-up campaigns to date are summarised under{' '}
+          <Link to="/users/propose">how to propose</Link>.
+        </p>
+
         <div className="btn-row" style={{ marginTop: '1.5rem' }}>
           <Link className="btn btn--primary" to="/users/access">
-            Search coverage
+            Search coverage by position
           </Link>
-          <Link className="btn btn--secondary" to="/users/performance">
+          <Link className="btn btn--secondary" to="/users/overview">
             Measured depths
-          </Link>
-          <Link className="btn btn--secondary" to="/users/access">
-            Requesting data
           </Link>
         </div>
       </Section>

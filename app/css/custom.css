@@ -2884,6 +2884,46 @@ table[class*='w-full'] thead {
   .home-survey__bg .skymap { width: 160%; }
 }
 
+/* --- Map layer switches ---------------------------------------------------- */
+
+/* Above the map rather than inside it: they change what the figure contains,
+   where the toggles in the map's own bar only change how it is coloured. */
+.map-layers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  border: var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--slate-50);
+}
+
+.map-layers__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--ink-900);
+  cursor: pointer;
+}
+
+.map-layers__item input { accent-color: var(--accent); }
+
+.map-layers__note {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--slate-500);
+}
+
+/* Shown, not hidden: a reader looking for WTS or a target-of-opportunity
+   layer should find out that it does not exist yet, and why. */
+.map-layers__item--off {
+  cursor: default;
+  color: var(--slate-500);
+}
+
 /* --- Sky map on a dark section -------------------------------------------- */
 
 /* The card chrome is dropped entirely: on the landing page the map should read

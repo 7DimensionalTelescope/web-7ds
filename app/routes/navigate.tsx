@@ -56,7 +56,6 @@ const MENU = [
     items: [
       { label: 'Overview', href: '/users/overview' },
       { label: 'Status', href: '/users/status' },
-      { label: 'Performance', href: '/users/performance' },
       { label: 'How to Propose', href: '/users/propose' },
       { label: 'Data Access & Format', href: '/users/access' },
       { label: 'Using the Data', href: '/users/data' },

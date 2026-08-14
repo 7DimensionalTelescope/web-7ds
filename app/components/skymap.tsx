@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { TileMap } from '../lib/portal.server';
 import { sequential, rgb } from './colors';
 import { TileDetail, degLabel as deg } from './tiledetail';
+import { tileGrid, GRID_TILES } from '../lib/tilegrid';
 
 /* ---------------------------------------------------------------------------
    All-sky map of observed 7DS tiles.
@@ -185,6 +186,8 @@ export default function SkyMap({
   exposureSec,
   emphasize,
   interactive = true,
+  planned,
+  showObserved = true,
   modeToggle,
   depthRef,
   defaultMode,
@@ -202,6 +205,14 @@ export default function SkyMap({
   emphasize?: string[] | null;
   /** False strips the controls and the pointer readout: a figure, not a tool. */
   interactive?: boolean;
+  /**
+   * Draw the designed tiling underneath, for identifiers in [from, to). The
+   * survey's planned footprint is not something the portal publishes, so it is
+   * reconstructed from the tiling rule — see lib/tilegrid.
+   */
+  planned?: { from?: number; to?: number } | null;
+  /** False draws the designed tiling alone, with no observation record on it. */
+  showObserved?: boolean;
   /**
    * Show the colour-by toggle even on a non-interactive map. A figure can
    * still be worth asking a second question of — what has been reached, not
@@ -312,6 +323,27 @@ export default function SkyMap({
     }
     return { lon, lat };
   }, [frame, tiles]);
+
+  /* The designed tiling, projected the same way. Built here rather than sent:
+     twenty-eight thousand tile centres follow from a 142-entry ring table, so
+     computing them costs less than transferring them. */
+  const plannedProjected = useMemo(() => {
+    if (!planned) return null;
+    const grid = tileGrid(planned.from ?? 0, planned.to ?? GRID_TILES);
+    const xs = new Float64Array(grid.count);
+    const ys = new Float64Array(grid.count);
+    const lat = new Float64Array(grid.count);
+    for (let i = 0; i < grid.count; i += 1) {
+      let lon = grid.ra[i];
+      let b = grid.dec[i];
+      if (frame === 'galactic') [lon, b] = equatorialToGalactic(lon, b);
+      const [x, y] = project(lon, b);
+      xs[i] = x;
+      ys[i] = y;
+      lat[i] = b;
+    }
+    return { xs, ys, lat, count: grid.count };
+  }, [planned?.from, planned?.to, frame]);
 
   /* Mollweide coordinates per tile, in the projection's own units. The pointer
      test runs over every tile on every move; projecting them there meant
@@ -470,11 +502,33 @@ export default function SkyMap({
     ctx.fillStyle = dark ? 'rgba(255,255,255,0.05)' : '#eceff4';
     ctx.fillRect(0, 0, width, height);
 
+    /* The designed tiling, under everything else. Drawn faintly and without a
+       colour scale: it is the shape of the survey, not a measurement, and it
+       has to stay legible as background beneath the tiles that carry data. */
+    if (plannedProjected) {
+      ctx.fillStyle = dark ? 'rgba(255,255,255,0.13)' : 'rgba(10,16,28,0.13)';
+      for (let i = 0; i < plannedProjected.count; i += 1) {
+        const lat = plannedProjected.lat[i];
+        const t = theta(lat);
+        const dLon = FOV_LON / Math.max(0.02, Math.cos(lat * DEG));
+        const w = Math.max(1.1, (2 / Math.PI) * dLon * DEG * Math.cos(t) * scale);
+        const hi = Math.min(90, lat + FOV_LAT / 2);
+        const lo = Math.max(-90, lat - FOV_LAT / 2);
+        const h = Math.max(1.1, (Math.sin(theta(hi)) - Math.sin(theta(lo))) * scale);
+        ctx.fillRect(
+          px(plannedProjected.xs[i]) - w / 2,
+          py(plannedProjected.ys[i]) - h / 2,
+          w,
+          h
+        );
+      }
+    }
+
     // Tiles. Each is drawn at its true angular footprint so that contiguous
     // survey areas read as solid regions rather than as a dot scatter. The
     // footprint is derived analytically from the projection rather than by
     // re-projecting an offset point, which would wrap across the RA=180 seam.
-    for (let i = 0; i < tiles.count; i += 1) {
+    for (let i = 0; showObserved && i < tiles.count; i += 1) {
       const lat = coords.lat[i];
       const t = theta(lat);
       const [x, y] = project(coords.lon[i], lat);
@@ -555,7 +609,7 @@ export default function SkyMap({
       const [x, y] = projectLon(-180, lat);
       ctx.fillText(`${lat > 0 ? '+' : ''}${lat}°`, px(x) - 7, py(y));
     }
-  }, [tiles, coords, projected, frame, width, value, emphasized, dark]);
+  }, [tiles, coords, projected, plannedProjected, showObserved, frame, width, value, emphasized, dark]);
 
   const onMove = (event: React.PointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;

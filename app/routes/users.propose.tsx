@@ -111,7 +111,7 @@ const Index = () => {
               <div>
                 <p className="feature-list__body" style={{ margin: 0 }}>
                   Estimate depth from the measured{' '}
-                  <Link to="/users/performance">limiting magnitudes</Link> rather than from the
+                  <Link to="/users/overview">limiting magnitudes</Link> rather than from the
                   aperture.
                 </p>
               </div>

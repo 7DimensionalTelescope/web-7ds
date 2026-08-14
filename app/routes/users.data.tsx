@@ -81,7 +81,7 @@ const Index = () => (
               The original twenty medium bands are the calibrated set. The fifteen filters added in
               late 2025 are in operational use but their spectrophotometric calibration is still in
               preparation. Measured depths per band are on the{' '}
-              <Link to="/users/performance">performance page</Link>.
+              <Link to="/users/overview">overview page</Link>.
             </p>
           </div>
         </li>
@@ -112,7 +112,7 @@ const Index = () => (
         <Link className="btn btn--secondary" to="/users/software">
           Software
         </Link>
-        <Link className="btn btn--secondary" to="/users/performance">
+        <Link className="btn btn--secondary" to="/users/overview">
           Measured performance
         </Link>
       </div>

@@ -67,7 +67,7 @@ const Index = () => (
           <p className="note" style={{ marginTop: '1rem' }}>
             Each subsystem is described in full under{' '}
             <Link to="/telescope/instrument">instrument</Link>. Measured on-sky performance is
-            reported on the <Link to="/users/performance">performance page</Link>.
+            reported on the <Link to="/users/overview">overview page</Link>.
           </p>
         </div>
         <figure className="figure">
@@ -113,7 +113,7 @@ const Index = () => (
             { label: 'Instrument', href: '/telescope/instrument' },
             { label: 'Location', href: '/telescope/location' },
             { label: 'Computational resources', href: '/telescope/computer' },
-            { label: 'Measured performance', href: '/users/performance' },
+            { label: 'Measured performance', href: '/users/overview' },
           ]}
         />
       </div>
