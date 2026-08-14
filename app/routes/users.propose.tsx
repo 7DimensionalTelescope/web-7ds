@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'Who may propose for 7DT time, how much is available and when: team membership through the science working groups, the KASI and KAS allocations, observing modes and target-of-opportunity response.',
+      'Who may propose for 7DT time, how much is available and when: team membership through the science working groups, the KASI and KAS allocations, the data policy, and how an observation is specified.',
   },
 ];
 
@@ -34,7 +34,7 @@ const num = (value: number) => value.toLocaleString('en-US');
 const REQUEST_PARAMETERS: string[][] = [
   [
     'Observing mode',
-    'Spec, Deep, Color or Search — described above. The mode decides how the array divides itself between filters and fields.',
+    'Spec, Deep, Color or Search. The mode decides how the array divides itself between filters and fields.',
   ],
   [
     'Target',
@@ -50,7 +50,7 @@ const REQUEST_PARAMETERS: string[][] = [
   ],
   [
     'Repetitions',
-    'Frames per visit, and visits per target. Depth in the coadd goes as the square root of the total time, so four frames buy 0.75 magnitudes over one.',
+    'Frames per visit, and visits per target. Depth in the coadd goes as the square root of total time, so four frames buy 0.75 magnitudes over one.',
   ],
   [
     'Cadence',
@@ -70,345 +70,303 @@ const Index = () => {
   const { too, live, generatedAt } = useLoaderData<typeof loader>();
 
   return (
-  <PageLayout menu="manuUsers">
-    <PageHero
-      eyebrow="For users"
-      title={
-        <>
-          How to <em>Propose</em>
-        </>
-      }
-      lede="Who may ask for time on 7DT, how much of it there is, and what the array can be asked to do with it."
-      image="/img/hero/telescope.jpg"
-    />
+    <PageLayout menu="manuUsers">
+      <PageHero
+        eyebrow="For users"
+        title={
+          <>
+            How to <em>propose</em>
+          </>
+        }
+        lede="Who may ask for time on 7DT, how much of it there is, and what the array can be asked to do with it."
+        image="/img/hero/telescope.jpg"
+      />
 
-    {/* Before the modes and the mechanics: whether a reader is eligible at all,
-        how much time exists, and when they can ask for it. Those three
-        questions were answered in a panel at the foot of the page, which is a
-        long way to read to find out the answer is "not yet, unless you are on
-        a working group". */}
-    {/* Two parts, in the order the questions arrive: may I, and how much is
-        there — then, once the answer is yes, how to write the request. */}
-    <Section eyebrow="Part one" title="General information">
-      <p className="prose">
-        Who may ask for time on 7DT, how much of it there is and when it can be
-        asked for, and what happens to the data afterward.
-      </p>
-      <div className="chip-row" style={{ marginTop: '1.5rem' }}>
-        <a className="chip" href="#eligibility">Who may propose</a>
-        <a className="chip" href="#time">Time available</a>
-        <a className="chip" href="#policy">Data and authorship</a>
-      </div>
-    </Section>
-
-    <Section id="eligibility" eyebrow="General · Eligibility" title="Who may propose" alt>
-      <div className="split split--wide-text">
-        <div className="prose">
-          <p>
-            The 7DS team is being formally constituted. Anyone taking part in a 7DS Science
-            Working Group becomes a member of the team automatically, without having to ask —
-            opting out is the action that requires notice, not joining. The working groups follow
-            the <Link to="/science/overview">seven science themes</Link>.
-          </p>
-          <p>
-            Team membership carries two rights. The first is early access to 7DS data during its
-            proprietary period, before it is released more widely. The second is the right to
-            propose an independent observing program of your own on 7DT, rather than working
-            only from what the surveys happen to collect.
-          </p>
-          <p>
-            Publication rules for collaborative work using 7DS data are still being settled. They
-            will include a co-authorship policy under which the initial core members of the 7DS
-            team — seven people at present — are included in the author list. The rules will be
-            published under <Link to="/publication/policy">publication policy</Link> once agreed.
-          </p>
-        </div>
-        <div className="panel">
-          <div className="panel__title">In short</div>
-          <ul className="feature-list" style={{ borderTop: 0, margin: 0 }}>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-              <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  <b>Who</b> Members of the 7DS team. Joining a science working group makes you
-                  one.
-                </p>
-              </div>
-            </li>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-              <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  <b>How much</b> 200 hours for KASI and 200 hours for the Korean Astronomical
-                  Society.
-                </p>
-              </div>
-            </li>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-              <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  <b>When</b> No call has opened yet. It will be announced on this page.
-                </p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </Section>
-
-    <Section id="time" eyebrow="General · Time" title="How much time there is, and when">
-      <div className="prose">
-        <p>
-          Two hundred hours of 7DT time are allocated to the Korea Astronomy and Space Science
-          Institute, and a further two hundred hours to the Korean Astronomical Society — four
-          hundred hours in total, held separately and awarded through their own routes. This is
-          time on the array outside the three surveys, which otherwise occupy the night.
-        </p>
-        <p>
-          No call for proposals has opened against either allocation. The schedule will be
-          announced here when it is fixed, together with a proposal template and an exposure time
-          calculator. Until then, inquiries about observations outside the survey program — and
-          target-of-opportunity requests, which are handled separately and continuously — should
-          go to the project directly.
-        </p>
-      </div>
-      <div className="btn-row" style={{ marginTop: '1.5rem' }}>
-        <a
-          className="btn btn--primary"
-          href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20inquiry"
-        >
-          Contact the project
-        </a>
-        <Link className="btn btn--secondary" to="/science/overview">
-          Science working groups
-        </Link>
-      </div>
-    </Section>
-
-    {/* Third of the general questions: what happens to the data afterwards.
-        The detail is not settled yet, so this states what is decided, names
-        what is still open, and sends the reader to the policy page rather than
-        filling the gaps with plausible-sounding rules. */}
-    <Section id="policy" eyebrow="General · Policy" title="Data rights and authorship" alt>
-      <div className="split split--wide-text">
-        <div className="prose">
-          <p>
-            Data taken for the surveys and for approved programs carry a proprietary period
-            during which they are available to the 7DS team before wider release. Team membership
-            is what grants that access, which is the practical reason the working groups matter as
-            much as the allocations do.
-          </p>
-          <p>
-            Authorship on work using 7DS data is governed by a policy still under discussion. What
-            is settled is that it will include the initial core members of the 7DS team — seven
-            people at present — in the author list of collaborative papers drawing on 7DS data.
-            Anyone intending to publish is asked to contact the principal investigator first, so
-            that authors and acknowledgments are agreed before submission rather than after.
-          </p>
-          <p>
-            The full policy — proprietary period, terms for sharing data outside the team, the
-            public release schedule and authorship for external collaborators — is being prepared
-            by the collaboration and will be posted under{' '}
-            <Link to="/publication/policy">publication policy</Link> once ratified. This page will
-            point to it.
-          </p>
-        </div>
-        <div className="panel">
-          <div className="panel__title">Settled, and not</div>
-          <ul className="feature-list" style={{ borderTop: 0, margin: 0 }}>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-              <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  <b>Decided</b> Team members have proprietary-period access; the seven core
-                  members appear on collaborative papers.
-                </p>
-              </div>
-            </li>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-              <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  <b>Still open</b> How long the proprietary period runs, how data may be shared
-                  outside the team, when it becomes public, and authorship for collaborators
-                  outside the team.
-                </p>
-              </div>
-            </li>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-              <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  <b>Meanwhile</b> Contact the PI before submitting, and acknowledge the funders
-                  listed on the <Link to="/about/funding">funding page</Link>.
-                </p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </Section>
-
-    <Section eyebrow="Part two" title="Guidelines for a proposal">
-      <p className="prose">
-        What the array can be asked to do, and how to specify it. An observation
-        is described by a mode, a target, a filter set, an exposure and a
-        cadence; the sections below take those in the order a proposal is
-        normally written.
-      </p>
-      <div className="chip-row" style={{ marginTop: '1.5rem' }}>
-        <a className="chip" href="#modes">Observing modes</a>
-        <a className="chip" href="#specifying">What to specify</a>
-        <a className="chip" href="#too">Target of opportunity</a>
-        <a className="chip" href="#checks">Before you write</a>
-      </div>
-    </Section>
-
-    <Section id="modes" eyebrow="Guidelines · Modes" title="Four observing modes" alt>
-      <p className="prose">{modeText}</p>
-
-      <ul className="feature-list" style={{ marginTop: '2rem' }}>
-        {surveys.modes.map((mode, index) => (
-          <li key={mode.name}>
-            <span className="feature-list__key">{String(index + 1).padStart(2, '0')}</span>
-            <div>
-              <h3 className="feature-list__title" style={{ fontSize: '1.125rem' }}>
-                {mode.name}
-                <span
-                  style={{
-                    marginLeft: '0.75rem',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.6875rem',
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: 'var(--slate-500)',
-                    fontWeight: 400,
-                  }}
-                >
-                  {mode.tagline}
-                </span>
-              </h3>
-              <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
-                {mode.body}
+      {/* Three headings, in the order the questions arrive: may I and on what
+          terms, how do I write it, and where does it go. Everything else is a
+          titled block inside one of them — as nine equal sections a reader
+          could not tell which headings decided their eligibility and which
+          only described the mechanics. */}
+      <Section eyebrow="Before you start" title="General information">
+        <div className="subsection">
+          <h3>Who may propose</h3>
+          <div className="split split--wide-text">
+            <div className="prose">
+              <p>
+                The 7DS team is being formally constituted. Anyone taking part in a 7DS Science
+                Working Group becomes a member of the team automatically, without having to ask —
+                opting out is the action that requires notice, not joining. The working groups
+                follow the <Link to="/science/overview">seven science themes</Link>.
+              </p>
+              <p>
+                Team membership carries two rights. The first is early access to 7DS data during
+                its proprietary period, before it is released more widely. The second is the right
+                to propose an independent observing program of your own on 7DT, rather than working
+                only from what the surveys happen to collect.
               </p>
             </div>
-          </li>
-        ))}
-      </ul>
-    </Section>
+            <div className="panel">
+              <div className="panel__title">In short</div>
+              <ul className="feature-list" style={{ borderTop: 0, margin: 0 }}>
+                <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+                  <div>
+                    <p className="feature-list__body" style={{ margin: 0 }}>
+                      <b>Who</b> Members of the 7DS team. Joining a science working group makes you
+                      one.
+                    </p>
+                  </div>
+                </li>
+                <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+                  <div>
+                    <p className="feature-list__body" style={{ margin: 0 }}>
+                      <b>How much</b> 200 hours for KASI and 200 hours for the Korean Astronomical
+                      Society.
+                    </p>
+                  </div>
+                </li>
+                <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+                  <div>
+                    <p className="feature-list__body" style={{ margin: 0 }}>
+                      <b>When</b> No call has opened yet. It will be announced on this page.
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-    <Section id="specifying" eyebrow="Guidelines · Specifying" title="What an observation request contains">
-      <p className="prose">
-        An observation is a mode, a target, a filter set, an exposure and a cadence, plus whatever
-        constraints the science imposes. Positions on the survey tiling are preferred wherever the
-        science allows: data taken on a tile coadd directly with the survey data already there, and
-        difference against the existing reference image without a separate calibration step.
-      </p>
+        <div className="subsection">
+          <h3>Time available, and when</h3>
+          <div className="prose">
+            <p>
+              Two hundred hours of 7DT time are allocated to the Korea Astronomy and Space Science
+              Institute, and a further two hundred hours to the Korean Astronomical Society — four
+              hundred hours in total, held separately and awarded through their own routes. This is
+              time on the array outside the three surveys, which otherwise occupy the night.
+            </p>
+            <p>
+              No call for proposals has opened against either allocation. The schedule will be
+              announced here when it is fixed, together with a proposal template and an exposure
+              time calculator. Target-of-opportunity requests are handled separately and
+              continuously, and do not wait for a call.
+            </p>
+          </div>
+        </div>
 
-      <div className="table-wrap" style={{ marginTop: '2rem' }}>
-        <table className="spec-table">
-          <caption>Parameters of an observation request</caption>
-          <thead>
-            <tr>
-              <th scope="col">Parameter</th>
-              <th scope="col">What to give</th>
-            </tr>
-          </thead>
-          <tbody>
-            {REQUEST_PARAMETERS.map((row) => (
-              <tr key={row[0]}>
-                <th scope="row">{row[0]}</th>
-                <td>{row[1]}</td>
-              </tr>
+        <div className="subsection">
+          <h3>Data rights and authorship</h3>
+          <div className="split split--wide-text">
+            <div className="prose">
+              <p>
+                Data taken for the surveys and for approved programs carry a proprietary period
+                during which they are available to the 7DS team before wider release. Team
+                membership is what grants that access, which is the practical reason the working
+                groups matter as much as the allocations do.
+              </p>
+              <p>
+                Authorship on work using 7DS data is governed by a policy still under discussion.
+                What is settled is that it will include the initial core members of the 7DS team —
+                seven people at present — in the author list of collaborative papers drawing on 7DS
+                data. Anyone intending to publish is asked to contact the principal investigator
+                first, so that authors and acknowledgments are agreed before submission rather than
+                after.
+              </p>
+              <p>
+                The full policy — proprietary period, terms for sharing data outside the team, the
+                public release schedule and authorship for external collaborators — is being
+                prepared by the collaboration and will be posted under{' '}
+                <Link to="/publication/policy">publication policy</Link> once ratified.
+              </p>
+            </div>
+            <div className="panel">
+              <div className="panel__title">Settled, and not</div>
+              <ul className="feature-list" style={{ borderTop: 0, margin: 0 }}>
+                <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+                  <div>
+                    <p className="feature-list__body" style={{ margin: 0 }}>
+                      <b>Decided</b> Team members have proprietary-period access; the seven core
+                      members appear on collaborative papers.
+                    </p>
+                  </div>
+                </li>
+                <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+                  <div>
+                    <p className="feature-list__body" style={{ margin: 0 }}>
+                      <b>Still open</b> How long the proprietary period runs, how data may be
+                      shared outside the team, when it becomes public, and authorship for
+                      collaborators outside the team.
+                    </p>
+                  </div>
+                </li>
+                <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+                  <div>
+                    <p className="feature-list__body" style={{ margin: 0 }}>
+                      <b>Meanwhile</b> Contact the PI before submitting, and acknowledge the
+                      funders listed on the <Link to="/about/funding">funding page</Link>.
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      <Section eyebrow="Writing" title="Guidelines" alt>
+        <div className="subsection">
+          <h3>Observing modes</h3>
+          <p className="prose">{modeText}</p>
+
+          <ul className="feature-list" style={{ marginTop: '2rem' }}>
+            {surveys.modes.map((mode, index) => (
+              <li key={mode.name}>
+                <span className="feature-list__key">{String(index + 1).padStart(2, '0')}</span>
+                <div>
+                  <h4 className="feature-list__title" style={{ fontSize: '1.125rem' }}>
+                    {mode.name}
+                    <span
+                      style={{
+                        marginLeft: '0.75rem',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: '0.6875rem',
+                        letterSpacing: '0.1em',
+                        textTransform: 'uppercase',
+                        color: 'var(--slate-500)',
+                        fontWeight: 400,
+                      }}
+                    >
+                      {mode.tagline}
+                    </span>
+                  </h4>
+                  <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
+                    {mode.body}
+                  </p>
+                </div>
+              </li>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </ul>
+        </div>
 
-      <p className="footnote" style={{ marginTop: '1.25rem' }}>
-        Camera gain and binning are set by the observatory rather than chosen per proposal, and are
-        recorded per frame — the pipeline matches calibration masters by camera, gain, binning,
-        unit, night and filter, so a frame always carries the settings it was taken with. If a
-        program requires a specific gain, say so and why; the selectable settings are not published
-        here.
-      </p>
-    </Section>
-
-    <Section id="too" eyebrow="Guidelines · Response" title="Target of opportunity" alt>
-      <p className="prose">
-        When a transient alert arrives — a gamma-ray burst, a gravitational-wave candidate — the
-        scheduler interrupts the observing plan and repoints. Two response modes are available: a
-        regular mode that completes the current exposure block before switching, and a rapid mode
-        that interrupts immediately. Once the follow-up finishes, the array returns to the queue
-        and resumes the interrupted target if it is still observable. Time from alert ingestion to
-        the start of a follow-up exposure is under one minute.
-      </p>
-      <p className="prose">
-        Target-of-opportunity data are processed at elevated priority and the requester is notified
-        when raw data arrive, as each filter set completes, and on completion with a spectral
-        energy distribution plot and magnitude table attached.
-      </p>
-
-      <div style={{ margin: '2rem 0 1.25rem' }}>
-        <LiveBadge live={live} updated={generatedAt} interval="every 30 minutes" />
-      </div>
-      <p className="prose">
-        {num(too.followup_events)} follow-up campaigns have been carried out since automated
-        target-of-opportunity response entered service, {num(too.gw_campaigns)} of them on
-        gravitational-wave events.
-      </p>
-      <div className="chip-row" style={{ marginTop: '1.25rem' }}>
-        {too.gw_event_ids.map((id: string) => (
-          <span className="chip chip--static" key={id}>
-            {id}
-          </span>
-        ))}
-      </div>
-      <p className="footnote" style={{ marginTop: '1rem' }}>
-        LVK superevent identifiers as issued in the public alert stream. Target-level details are
-        not published here.
-      </p>
-    </Section>
-
-    <Section id="checks" eyebrow="Guidelines · Submitting" title="Writing and submitting the request">
-      <div className="split split--wide-text">
-        <div className="prose">
-          <p>
-            Three things are worth settling before the request is written, because each of them
-            can make a program unnecessary or unworkable, and all three can be checked from this
-            site.
+        <div className="subsection">
+          <h3>What a request contains</h3>
+          <p className="prose">
+            An observation is a mode, a target, a filter set, an exposure and a cadence, plus
+            whatever constraints the science imposes. Positions on the survey tiling are preferred
+            wherever the science allows: data taken on a tile coadd directly with the survey data
+            already there, and difference against the existing reference image without a separate
+            calibration step.
           </p>
-          <p>
-            Outside the KASI and KAS allocations described in the first part of this page,
-            observing time is allocated within the collaboration and its partner institutions, and
-            there is no general call for proposals. A proposal template and an exposure time
-            calculator will be published here when a call opens. Until then, and for anything
-            outside the survey program, write to the project directly.
+
+          <div className="table-wrap" style={{ marginTop: '2rem' }}>
+            <table className="spec-table">
+              <caption>Parameters of an observation request</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Parameter</th>
+                  <th scope="col">What to give</th>
+                </tr>
+              </thead>
+              <tbody>
+                {REQUEST_PARAMETERS.map((row) => (
+                  <tr key={row[0]}>
+                    <th scope="row">{row[0]}</th>
+                    <td>{row[1]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="footnote" style={{ marginTop: '1.25rem' }}>
+            Camera gain and binning are set by the observatory rather than chosen per proposal, and
+            are recorded per frame — the pipeline matches calibration masters by camera, gain,
+            binning, unit, night and filter, so a frame always carries the settings it was taken
+            with. If a program requires a specific gain, say so and why; the selectable settings
+            are not published here.
           </p>
         </div>
-        <div className="panel">
-          <div className="panel__title">Before you write</div>
-          <ul className="feature-list" style={{ borderTop: 0, margin: 0 }}>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+
+        <div className="subsection">
+          <h3>Target of opportunity</h3>
+          <p className="prose">
+            When a transient alert arrives — a gamma-ray burst, a gravitational-wave candidate —
+            the scheduler interrupts the observing plan and repoints. Two response modes are
+            available: a regular mode that completes the current exposure block before switching,
+            and a rapid mode that interrupts immediately. Once the follow-up finishes, the array
+            returns to the queue and resumes the interrupted target if it is still observable. Time
+            from alert ingestion to the start of a follow-up exposure is under one minute.
+          </p>
+          <p className="prose">
+            Target-of-opportunity data are processed at elevated priority and the requester is
+            notified when raw data arrive, as each filter set completes, and on completion with a
+            spectral energy distribution plot and magnitude table attached.
+          </p>
+
+          <div style={{ margin: '2rem 0 1.25rem' }}>
+            <LiveBadge live={live} updated={generatedAt} interval="every 30 minutes" />
+          </div>
+          <p className="prose">
+            {num(too.followup_events)} follow-up campaigns have been carried out since automated
+            target-of-opportunity response entered service, {num(too.gw_campaigns)} of them on
+            gravitational-wave events.
+          </p>
+          <div className="chip-row" style={{ marginTop: '1.25rem' }}>
+            {too.gw_event_ids.map((id: string) => (
+              <span className="chip chip--static" key={id}>
+                {id}
+              </span>
+            ))}
+          </div>
+          <p className="footnote" style={{ marginTop: '1rem' }}>
+            LVK superevent identifiers as issued in the public alert stream. Target-level details
+            are not published here.
+          </p>
+        </div>
+
+        <div className="subsection">
+          <h3>Before you write</h3>
+          <p className="prose">
+            Three things are worth settling first, because each of them can make a program
+            unnecessary or unworkable, and all three can be checked from this site.
+          </p>
+          <ul className="feature-list" style={{ marginTop: '1.5rem' }}>
+            <li>
+              <span className="feature-list__key">01</span>
               <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  <b>Check what already exists.</b> Much of the southern sky already has a
-                  medium-band reference image, and the tile under your position may already carry
-                  the bands you need — the <Link to="/users/access">data access page</Link> reports
-                  the bands and frame counts held for any position.
+                <h4 className="feature-list__title" style={{ fontSize: '1rem' }}>
+                  Check what already exists
+                </h4>
+                <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
+                  Much of the southern sky already has a medium-band reference image, and the tile
+                  under your position may already carry the bands you need. The{' '}
+                  <Link to="/users/access">data access page</Link> reports the bands and frame
+                  counts held for any position.
                 </p>
               </div>
             </li>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+            <li>
+              <span className="feature-list__key">02</span>
               <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  <b>Estimate depth from measurements, not aperture.</b> The measured{' '}
-                  <Link to="/users/performance">limiting magnitudes</Link> per band, for the
-                  fiducial 100-second exposure, are what a coadded depth should be scaled from.
+                <h4 className="feature-list__title" style={{ fontSize: '1rem' }}>
+                  Estimate depth from measurements, not aperture
+                </h4>
+                <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
+                  The measured <Link to="/users/performance">limiting magnitudes</Link> per band,
+                  for the fiducial 100-second exposure, are what a coadded depth should be scaled
+                  from.
                 </p>
               </div>
             </li>
-            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+            <li>
+              <span className="feature-list__key">03</span>
               <div>
-                <p className="feature-list__body" style={{ margin: 0 }}>
-                  <b>Check the target is observable.</b> Visibility from El Sauce in the intended
-                  window, and the filter response over the wavelengths that matter, can both be
-                  computed with{' '}
+                <h4 className="feature-list__title" style={{ fontSize: '1rem' }}>
+                  Check the target is observable
+                </h4>
+                <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
+                  Visibility from El Sauce in the intended window, and the filter response over the
+                  wavelengths that matter, can both be computed with{' '}
                   <Link to="/users/software">
                     <code>supy</code>
                   </Link>
@@ -418,25 +376,39 @@ const Index = () => {
             </li>
           </ul>
         </div>
-      </div>
+      </Section>
 
-      <div className="btn-row" style={{ marginTop: '2rem' }}>
-        <a
-          className="btn btn--primary"
-          href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20inquiry"
-        >
-          Contact the project
-        </a>
-        <Link className="btn btn--secondary" to="/users/performance">
-          Measured performance
-        </Link>
-        <Link className="btn btn--secondary" to="/users/access">
-          Check coverage
-        </Link>
-      </div>
-    </Section>
+      <Section eyebrow="Submitting" title="Requesting observing time">
+        <div className="panel" style={{ maxWidth: '68ch' }}>
+          <div className="panel__title">No open call at present</div>
+          <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
+            Outside the KASI and KAS allocations described above, observing time is allocated
+            within the collaboration and its partner institutions, and there is no general call for
+            proposals. A proposal template and an exposure time calculator will be published here
+            when a call opens. Until then, and for anything outside the survey program — including
+            target-of-opportunity requests — write to the project directly.
+          </p>
+          <a
+            className="btn btn--primary"
+            href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20inquiry"
+          >
+            Contact the project
+          </a>
+        </div>
 
-  </PageLayout>
+        <div className="btn-row" style={{ marginTop: '2rem' }}>
+          <Link className="btn btn--secondary" to="/users/performance">
+            Measured performance
+          </Link>
+          <Link className="btn btn--secondary" to="/users/access">
+            Check coverage
+          </Link>
+          <Link className="btn btn--secondary" to="/science/overview">
+            Science working groups
+          </Link>
+        </div>
+      </Section>
+    </PageLayout>
   );
 };
 

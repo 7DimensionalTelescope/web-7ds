@@ -118,7 +118,7 @@ import {
 var app_default = "/build/_assets/app-EXTMYON2.css";
 
 // app/css/custom.css
-var custom_default = "/build/_assets/custom-6XYDKEHW.css";
+var custom_default = "/build/_assets/custom-APK6IHRQ.css";
 
 // app/root.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
@@ -2913,7 +2913,7 @@ var meta17 = () => [
   { title: "How to propose \xB7 7DT for users" },
   {
     name: "description",
-    content: "Who may propose for 7DT time, how much is available and when: team membership through the science working groups, the KASI and KAS allocations, observing modes and target-of-opportunity response."
+    content: "Who may propose for 7DT time, how much is available and when: team membership through the science working groups, the KASI and KAS allocations, the data policy, and how an observation is specified."
   }
 ], CACHE = "public, max-age=900, stale-while-revalidate=86400", headers = () => ({ "Cache-Control": CACHE });
 async function loader6() {
@@ -2926,7 +2926,7 @@ async function loader6() {
 var num = (value) => value.toLocaleString("en-US"), REQUEST_PARAMETERS = [
   [
     "Observing mode",
-    "Spec, Deep, Color or Search \u2014 described above. The mode decides how the array divides itself between filters and fields."
+    "Spec, Deep, Color or Search. The mode decides how the array divides itself between filters and fields."
   ],
   [
     "Target",
@@ -2942,7 +2942,7 @@ var num = (value) => value.toLocaleString("en-US"), REQUEST_PARAMETERS = [
   ],
   [
     "Repetitions",
-    "Frames per visit, and visits per target. Depth in the coadd goes as the square root of the total time, so four frames buy 0.75 magnitudes over one."
+    "Frames per visit, and visits per target. Depth in the coadd goes as the square root of total time, so four frames buy 0.75 magnitudes over one."
   ],
   [
     "Cadence",
@@ -2965,197 +2965,190 @@ var num = (value) => value.toLocaleString("en-US"), REQUEST_PARAMETERS = [
         eyebrow: "For users",
         title: /* @__PURE__ */ jsxs17(Fragment7, { children: [
           "How to ",
-          /* @__PURE__ */ jsx23("em", { children: "Propose" })
+          /* @__PURE__ */ jsx23("em", { children: "propose" })
         ] }),
         lede: "Who may ask for time on 7DT, how much of it there is, and what the array can be asked to do with it.",
         image: "/img/hero/telescope.jpg"
       }
     ),
-    /* @__PURE__ */ jsxs17(Section, { eyebrow: "Part one", title: "General information", children: [
-      /* @__PURE__ */ jsx23("p", { className: "prose", children: "Who may ask for time on 7DT, how much of it there is and when it can be asked for, and what happens to the data afterward." }),
-      /* @__PURE__ */ jsxs17("div", { className: "chip-row", style: { marginTop: "1.5rem" }, children: [
-        /* @__PURE__ */ jsx23("a", { className: "chip", href: "#eligibility", children: "Who may propose" }),
-        /* @__PURE__ */ jsx23("a", { className: "chip", href: "#time", children: "Time available" }),
-        /* @__PURE__ */ jsx23("a", { className: "chip", href: "#policy", children: "Data and authorship" })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx23(Section, { id: "eligibility", eyebrow: "General \xB7 Eligibility", title: "Who may propose", alt: !0, children: /* @__PURE__ */ jsxs17("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsxs17("div", { className: "prose", children: [
-        /* @__PURE__ */ jsxs17("p", { children: [
-          "The 7DS team is being formally constituted. Anyone taking part in a 7DS Science Working Group becomes a member of the team automatically, without having to ask \u2014 opting out is the action that requires notice, not joining. The working groups follow the ",
-          /* @__PURE__ */ jsx23(Link13, { to: "/science/overview", children: "seven science themes" }),
-          "."
-        ] }),
-        /* @__PURE__ */ jsx23("p", { children: "Team membership carries two rights. The first is early access to 7DS data during its proprietary period, before it is released more widely. The second is the right to propose an independent observing program of your own on 7DT, rather than working only from what the surveys happen to collect." }),
-        /* @__PURE__ */ jsxs17("p", { children: [
-          "Publication rules for collaborative work using 7DS data are still being settled. They will include a co-authorship policy under which the initial core members of the 7DS team \u2014 seven people at present \u2014 are included in the author list. The rules will be published under ",
-          /* @__PURE__ */ jsx23(Link13, { to: "/publication/policy", children: "publication policy" }),
-          " once agreed."
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxs17("div", { className: "panel", children: [
-        /* @__PURE__ */ jsx23("div", { className: "panel__title", children: "In short" }),
-        /* @__PURE__ */ jsxs17("ul", { className: "feature-list", style: { borderTop: 0, margin: 0 }, children: [
-          /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-            /* @__PURE__ */ jsx23("b", { children: "Who" }),
-            " Members of the 7DS team. Joining a science working group makes you one."
-          ] }) }) }),
-          /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-            /* @__PURE__ */ jsx23("b", { children: "How much" }),
-            " 200 hours for KASI and 200 hours for the Korean Astronomical Society."
-          ] }) }) }),
-          /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-            /* @__PURE__ */ jsx23("b", { children: "When" }),
-            " No call has opened yet. It will be announced on this page."
-          ] }) }) })
-        ] })
-      ] })
-    ] }) }),
-    /* @__PURE__ */ jsxs17(Section, { id: "time", eyebrow: "General \xB7 Time", title: "How much time there is, and when", children: [
-      /* @__PURE__ */ jsxs17("div", { className: "prose", children: [
-        /* @__PURE__ */ jsx23("p", { children: "Two hundred hours of 7DT time are allocated to the Korea Astronomy and Space Science Institute, and a further two hundred hours to the Korean Astronomical Society \u2014 four hundred hours in total, held separately and awarded through their own routes. This is time on the array outside the three surveys, which otherwise occupy the night." }),
-        /* @__PURE__ */ jsx23("p", { children: "No call for proposals has opened against either allocation. The schedule will be announced here when it is fixed, together with a proposal template and an exposure time calculator. Until then, inquiries about observations outside the survey program \u2014 and target-of-opportunity requests, which are handled separately and continuously \u2014 should go to the project directly." })
-      ] }),
-      /* @__PURE__ */ jsxs17("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
-        /* @__PURE__ */ jsx23(
-          "a",
-          {
-            className: "btn btn--primary",
-            href: "mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20inquiry",
-            children: "Contact the project"
-          }
-        ),
-        /* @__PURE__ */ jsx23(Link13, { className: "btn btn--secondary", to: "/science/overview", children: "Science working groups" })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx23(Section, { id: "policy", eyebrow: "General \xB7 Policy", title: "Data rights and authorship", alt: !0, children: /* @__PURE__ */ jsxs17("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsxs17("div", { className: "prose", children: [
-        /* @__PURE__ */ jsx23("p", { children: "Data taken for the surveys and for approved programs carry a proprietary period during which they are available to the 7DS team before wider release. Team membership is what grants that access, which is the practical reason the working groups matter as much as the allocations do." }),
-        /* @__PURE__ */ jsx23("p", { children: "Authorship on work using 7DS data is governed by a policy still under discussion. What is settled is that it will include the initial core members of the 7DS team \u2014 seven people at present \u2014 in the author list of collaborative papers drawing on 7DS data. Anyone intending to publish is asked to contact the principal investigator first, so that authors and acknowledgments are agreed before submission rather than after." }),
-        /* @__PURE__ */ jsxs17("p", { children: [
-          "The full policy \u2014 proprietary period, terms for sharing data outside the team, the public release schedule and authorship for external collaborators \u2014 is being prepared by the collaboration and will be posted under",
-          " ",
-          /* @__PURE__ */ jsx23(Link13, { to: "/publication/policy", children: "publication policy" }),
-          " once ratified. This page will point to it."
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxs17("div", { className: "panel", children: [
-        /* @__PURE__ */ jsx23("div", { className: "panel__title", children: "Settled, and not" }),
-        /* @__PURE__ */ jsxs17("ul", { className: "feature-list", style: { borderTop: 0, margin: 0 }, children: [
-          /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-            /* @__PURE__ */ jsx23("b", { children: "Decided" }),
-            " Team members have proprietary-period access; the seven core members appear on collaborative papers."
-          ] }) }) }),
-          /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-            /* @__PURE__ */ jsx23("b", { children: "Still open" }),
-            " How long the proprietary period runs, how data may be shared outside the team, when it becomes public, and authorship for collaborators outside the team."
-          ] }) }) }),
-          /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-            /* @__PURE__ */ jsx23("b", { children: "Meanwhile" }),
-            " Contact the PI before submitting, and acknowledge the funders listed on the ",
-            /* @__PURE__ */ jsx23(Link13, { to: "/about/funding", children: "funding page" }),
-            "."
-          ] }) }) })
-        ] })
-      ] })
-    ] }) }),
-    /* @__PURE__ */ jsxs17(Section, { eyebrow: "Part two", title: "Guidelines for a proposal", children: [
-      /* @__PURE__ */ jsx23("p", { className: "prose", children: "What the array can be asked to do, and how to specify it. An observation is described by a mode, a target, a filter set, an exposure and a cadence; the sections below take those in the order a proposal is normally written." }),
-      /* @__PURE__ */ jsxs17("div", { className: "chip-row", style: { marginTop: "1.5rem" }, children: [
-        /* @__PURE__ */ jsx23("a", { className: "chip", href: "#modes", children: "Observing modes" }),
-        /* @__PURE__ */ jsx23("a", { className: "chip", href: "#specifying", children: "What to specify" }),
-        /* @__PURE__ */ jsx23("a", { className: "chip", href: "#too", children: "Target of opportunity" }),
-        /* @__PURE__ */ jsx23("a", { className: "chip", href: "#checks", children: "Before you write" })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxs17(Section, { id: "modes", eyebrow: "Guidelines \xB7 Modes", title: "Four observing modes", alt: !0, children: [
-      /* @__PURE__ */ jsx23("p", { className: "prose", children: modeText }),
-      /* @__PURE__ */ jsx23("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: surveys_default.modes.map((mode2, index) => /* @__PURE__ */ jsxs17("li", { children: [
-        /* @__PURE__ */ jsx23("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
-        /* @__PURE__ */ jsxs17("div", { children: [
-          /* @__PURE__ */ jsxs17("h3", { className: "feature-list__title", style: { fontSize: "1.125rem" }, children: [
-            mode2.name,
-            /* @__PURE__ */ jsx23(
-              "span",
-              {
-                style: {
-                  marginLeft: "0.75rem",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.6875rem",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: "var(--slate-500)",
-                  fontWeight: 400
-                },
-                children: mode2.tagline
-              }
-            )
-          ] }),
-          /* @__PURE__ */ jsx23("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: mode2.body })
-        ] })
-      ] }, mode2.name)) })
-    ] }),
-    /* @__PURE__ */ jsxs17(Section, { id: "specifying", eyebrow: "Guidelines \xB7 Specifying", title: "What an observation request contains", children: [
-      /* @__PURE__ */ jsx23("p", { className: "prose", children: "An observation is a mode, a target, a filter set, an exposure and a cadence, plus whatever constraints the science imposes. Positions on the survey tiling are preferred wherever the science allows: data taken on a tile coadd directly with the survey data already there, and difference against the existing reference image without a separate calibration step." }),
-      /* @__PURE__ */ jsx23("div", { className: "table-wrap", style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsxs17("table", { className: "spec-table", children: [
-        /* @__PURE__ */ jsx23("caption", { children: "Parameters of an observation request" }),
-        /* @__PURE__ */ jsx23("thead", { children: /* @__PURE__ */ jsxs17("tr", { children: [
-          /* @__PURE__ */ jsx23("th", { scope: "col", children: "Parameter" }),
-          /* @__PURE__ */ jsx23("th", { scope: "col", children: "What to give" })
-        ] }) }),
-        /* @__PURE__ */ jsx23("tbody", { children: REQUEST_PARAMETERS.map((row) => /* @__PURE__ */ jsxs17("tr", { children: [
-          /* @__PURE__ */ jsx23("th", { scope: "row", children: row[0] }),
-          /* @__PURE__ */ jsx23("td", { children: row[1] })
-        ] }, row[0])) })
-      ] }) }),
-      /* @__PURE__ */ jsx23("p", { className: "footnote", style: { marginTop: "1.25rem" }, children: "Camera gain and binning are set by the observatory rather than chosen per proposal, and are recorded per frame \u2014 the pipeline matches calibration masters by camera, gain, binning, unit, night and filter, so a frame always carries the settings it was taken with. If a program requires a specific gain, say so and why; the selectable settings are not published here." })
-    ] }),
-    /* @__PURE__ */ jsxs17(Section, { id: "too", eyebrow: "Guidelines \xB7 Response", title: "Target of opportunity", alt: !0, children: [
-      /* @__PURE__ */ jsx23("p", { className: "prose", children: "When a transient alert arrives \u2014 a gamma-ray burst, a gravitational-wave candidate \u2014 the scheduler interrupts the observing plan and repoints. Two response modes are available: a regular mode that completes the current exposure block before switching, and a rapid mode that interrupts immediately. Once the follow-up finishes, the array returns to the queue and resumes the interrupted target if it is still observable. Time from alert ingestion to the start of a follow-up exposure is under one minute." }),
-      /* @__PURE__ */ jsx23("p", { className: "prose", children: "Target-of-opportunity data are processed at elevated priority and the requester is notified when raw data arrive, as each filter set completes, and on completion with a spectral energy distribution plot and magnitude table attached." }),
-      /* @__PURE__ */ jsx23("div", { style: { margin: "2rem 0 1.25rem" }, children: /* @__PURE__ */ jsx23(LiveBadge, { live, updated: generatedAt, interval: "every 30 minutes" }) }),
-      /* @__PURE__ */ jsxs17("p", { className: "prose", children: [
-        num(too.followup_events),
-        " follow-up campaigns have been carried out since automated target-of-opportunity response entered service, ",
-        num(too.gw_campaigns),
-        " of them on gravitational-wave events."
-      ] }),
-      /* @__PURE__ */ jsx23("div", { className: "chip-row", style: { marginTop: "1.25rem" }, children: too.gw_event_ids.map((id) => /* @__PURE__ */ jsx23("span", { className: "chip chip--static", children: id }, id)) }),
-      /* @__PURE__ */ jsx23("p", { className: "footnote", style: { marginTop: "1rem" }, children: "LVK superevent identifiers as issued in the public alert stream. Target-level details are not published here." })
-    ] }),
-    /* @__PURE__ */ jsxs17(Section, { id: "checks", eyebrow: "Guidelines \xB7 Submitting", title: "Writing and submitting the request", children: [
-      /* @__PURE__ */ jsxs17("div", { className: "split split--wide-text", children: [
-        /* @__PURE__ */ jsxs17("div", { className: "prose", children: [
-          /* @__PURE__ */ jsx23("p", { children: "Three things are worth settling before the request is written, because each of them can make a program unnecessary or unworkable, and all three can be checked from this site." }),
-          /* @__PURE__ */ jsx23("p", { children: "Outside the KASI and KAS allocations described in the first part of this page, observing time is allocated within the collaboration and its partner institutions, and there is no general call for proposals. A proposal template and an exposure time calculator will be published here when a call opens. Until then, and for anything outside the survey program, write to the project directly." })
-        ] }),
-        /* @__PURE__ */ jsxs17("div", { className: "panel", children: [
-          /* @__PURE__ */ jsx23("div", { className: "panel__title", children: "Before you write" }),
-          /* @__PURE__ */ jsxs17("ul", { className: "feature-list", style: { borderTop: 0, margin: 0 }, children: [
-            /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-              /* @__PURE__ */ jsx23("b", { children: "Check what already exists." }),
-              " Much of the southern sky already has a medium-band reference image, and the tile under your position may already carry the bands you need \u2014 the ",
-              /* @__PURE__ */ jsx23(Link13, { to: "/users/access", children: "data access page" }),
-              " reports the bands and frame counts held for any position."
-            ] }) }) }),
-            /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-              /* @__PURE__ */ jsx23("b", { children: "Estimate depth from measurements, not aperture." }),
-              " The measured",
-              " ",
-              /* @__PURE__ */ jsx23(Link13, { to: "/users/performance", children: "limiting magnitudes" }),
-              " per band, for the fiducial 100-second exposure, are what a coadded depth should be scaled from."
-            ] }) }) }),
-            /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-              /* @__PURE__ */ jsx23("b", { children: "Check the target is observable." }),
-              " Visibility from El Sauce in the intended window, and the filter response over the wavelengths that matter, can both be computed with",
-              " ",
-              /* @__PURE__ */ jsx23(Link13, { to: "/users/software", children: /* @__PURE__ */ jsx23("code", { children: "supy" }) }),
+    /* @__PURE__ */ jsxs17(Section, { eyebrow: "Before you start", title: "General information", children: [
+      /* @__PURE__ */ jsxs17("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx23("h3", { children: "Who may propose" }),
+        /* @__PURE__ */ jsxs17("div", { className: "split split--wide-text", children: [
+          /* @__PURE__ */ jsxs17("div", { className: "prose", children: [
+            /* @__PURE__ */ jsxs17("p", { children: [
+              "The 7DS team is being formally constituted. Anyone taking part in a 7DS Science Working Group becomes a member of the team automatically, without having to ask \u2014 opting out is the action that requires notice, not joining. The working groups follow the ",
+              /* @__PURE__ */ jsx23(Link13, { to: "/science/overview", children: "seven science themes" }),
               "."
-            ] }) }) })
+            ] }),
+            /* @__PURE__ */ jsx23("p", { children: "Team membership carries two rights. The first is early access to 7DS data during its proprietary period, before it is released more widely. The second is the right to propose an independent observing program of your own on 7DT, rather than working only from what the surveys happen to collect." })
+          ] }),
+          /* @__PURE__ */ jsxs17("div", { className: "panel", children: [
+            /* @__PURE__ */ jsx23("div", { className: "panel__title", children: "In short" }),
+            /* @__PURE__ */ jsxs17("ul", { className: "feature-list", style: { borderTop: 0, margin: 0 }, children: [
+              /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+                /* @__PURE__ */ jsx23("b", { children: "Who" }),
+                " Members of the 7DS team. Joining a science working group makes you one."
+              ] }) }) }),
+              /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+                /* @__PURE__ */ jsx23("b", { children: "How much" }),
+                " 200 hours for KASI and 200 hours for the Korean Astronomical Society."
+              ] }) }) }),
+              /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+                /* @__PURE__ */ jsx23("b", { children: "When" }),
+                " No call has opened yet. It will be announced on this page."
+              ] }) }) })
+            ] })
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs17("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
+      /* @__PURE__ */ jsxs17("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx23("h3", { children: "Time available, and when" }),
+        /* @__PURE__ */ jsxs17("div", { className: "prose", children: [
+          /* @__PURE__ */ jsx23("p", { children: "Two hundred hours of 7DT time are allocated to the Korea Astronomy and Space Science Institute, and a further two hundred hours to the Korean Astronomical Society \u2014 four hundred hours in total, held separately and awarded through their own routes. This is time on the array outside the three surveys, which otherwise occupy the night." }),
+          /* @__PURE__ */ jsx23("p", { children: "No call for proposals has opened against either allocation. The schedule will be announced here when it is fixed, together with a proposal template and an exposure time calculator. Target-of-opportunity requests are handled separately and continuously, and do not wait for a call." })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs17("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx23("h3", { children: "Data rights and authorship" }),
+        /* @__PURE__ */ jsxs17("div", { className: "split split--wide-text", children: [
+          /* @__PURE__ */ jsxs17("div", { className: "prose", children: [
+            /* @__PURE__ */ jsx23("p", { children: "Data taken for the surveys and for approved programs carry a proprietary period during which they are available to the 7DS team before wider release. Team membership is what grants that access, which is the practical reason the working groups matter as much as the allocations do." }),
+            /* @__PURE__ */ jsx23("p", { children: "Authorship on work using 7DS data is governed by a policy still under discussion. What is settled is that it will include the initial core members of the 7DS team \u2014 seven people at present \u2014 in the author list of collaborative papers drawing on 7DS data. Anyone intending to publish is asked to contact the principal investigator first, so that authors and acknowledgments are agreed before submission rather than after." }),
+            /* @__PURE__ */ jsxs17("p", { children: [
+              "The full policy \u2014 proprietary period, terms for sharing data outside the team, the public release schedule and authorship for external collaborators \u2014 is being prepared by the collaboration and will be posted under",
+              " ",
+              /* @__PURE__ */ jsx23(Link13, { to: "/publication/policy", children: "publication policy" }),
+              " once ratified."
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs17("div", { className: "panel", children: [
+            /* @__PURE__ */ jsx23("div", { className: "panel__title", children: "Settled, and not" }),
+            /* @__PURE__ */ jsxs17("ul", { className: "feature-list", style: { borderTop: 0, margin: 0 }, children: [
+              /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+                /* @__PURE__ */ jsx23("b", { children: "Decided" }),
+                " Team members have proprietary-period access; the seven core members appear on collaborative papers."
+              ] }) }) }),
+              /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+                /* @__PURE__ */ jsx23("b", { children: "Still open" }),
+                " How long the proprietary period runs, how data may be shared outside the team, when it becomes public, and authorship for collaborators outside the team."
+              ] }) }) }),
+              /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+                /* @__PURE__ */ jsx23("b", { children: "Meanwhile" }),
+                " Contact the PI before submitting, and acknowledge the funders listed on the ",
+                /* @__PURE__ */ jsx23(Link13, { to: "/about/funding", children: "funding page" }),
+                "."
+              ] }) }) })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs17(Section, { eyebrow: "Writing", title: "Guidelines", alt: !0, children: [
+      /* @__PURE__ */ jsxs17("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx23("h3", { children: "Observing modes" }),
+        /* @__PURE__ */ jsx23("p", { className: "prose", children: modeText }),
+        /* @__PURE__ */ jsx23("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: surveys_default.modes.map((mode2, index) => /* @__PURE__ */ jsxs17("li", { children: [
+          /* @__PURE__ */ jsx23("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
+          /* @__PURE__ */ jsxs17("div", { children: [
+            /* @__PURE__ */ jsxs17("h4", { className: "feature-list__title", style: { fontSize: "1.125rem" }, children: [
+              mode2.name,
+              /* @__PURE__ */ jsx23(
+                "span",
+                {
+                  style: {
+                    marginLeft: "0.75rem",
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.6875rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "var(--slate-500)",
+                    fontWeight: 400
+                  },
+                  children: mode2.tagline
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsx23("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: mode2.body })
+          ] })
+        ] }, mode2.name)) })
+      ] }),
+      /* @__PURE__ */ jsxs17("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx23("h3", { children: "What a request contains" }),
+        /* @__PURE__ */ jsx23("p", { className: "prose", children: "An observation is a mode, a target, a filter set, an exposure and a cadence, plus whatever constraints the science imposes. Positions on the survey tiling are preferred wherever the science allows: data taken on a tile coadd directly with the survey data already there, and difference against the existing reference image without a separate calibration step." }),
+        /* @__PURE__ */ jsx23("div", { className: "table-wrap", style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsxs17("table", { className: "spec-table", children: [
+          /* @__PURE__ */ jsx23("caption", { children: "Parameters of an observation request" }),
+          /* @__PURE__ */ jsx23("thead", { children: /* @__PURE__ */ jsxs17("tr", { children: [
+            /* @__PURE__ */ jsx23("th", { scope: "col", children: "Parameter" }),
+            /* @__PURE__ */ jsx23("th", { scope: "col", children: "What to give" })
+          ] }) }),
+          /* @__PURE__ */ jsx23("tbody", { children: REQUEST_PARAMETERS.map((row) => /* @__PURE__ */ jsxs17("tr", { children: [
+            /* @__PURE__ */ jsx23("th", { scope: "row", children: row[0] }),
+            /* @__PURE__ */ jsx23("td", { children: row[1] })
+          ] }, row[0])) })
+        ] }) }),
+        /* @__PURE__ */ jsx23("p", { className: "footnote", style: { marginTop: "1.25rem" }, children: "Camera gain and binning are set by the observatory rather than chosen per proposal, and are recorded per frame \u2014 the pipeline matches calibration masters by camera, gain, binning, unit, night and filter, so a frame always carries the settings it was taken with. If a program requires a specific gain, say so and why; the selectable settings are not published here." })
+      ] }),
+      /* @__PURE__ */ jsxs17("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx23("h3", { children: "Target of opportunity" }),
+        /* @__PURE__ */ jsx23("p", { className: "prose", children: "When a transient alert arrives \u2014 a gamma-ray burst, a gravitational-wave candidate \u2014 the scheduler interrupts the observing plan and repoints. Two response modes are available: a regular mode that completes the current exposure block before switching, and a rapid mode that interrupts immediately. Once the follow-up finishes, the array returns to the queue and resumes the interrupted target if it is still observable. Time from alert ingestion to the start of a follow-up exposure is under one minute." }),
+        /* @__PURE__ */ jsx23("p", { className: "prose", children: "Target-of-opportunity data are processed at elevated priority and the requester is notified when raw data arrive, as each filter set completes, and on completion with a spectral energy distribution plot and magnitude table attached." }),
+        /* @__PURE__ */ jsx23("div", { style: { margin: "2rem 0 1.25rem" }, children: /* @__PURE__ */ jsx23(LiveBadge, { live, updated: generatedAt, interval: "every 30 minutes" }) }),
+        /* @__PURE__ */ jsxs17("p", { className: "prose", children: [
+          num(too.followup_events),
+          " follow-up campaigns have been carried out since automated target-of-opportunity response entered service, ",
+          num(too.gw_campaigns),
+          " of them on gravitational-wave events."
+        ] }),
+        /* @__PURE__ */ jsx23("div", { className: "chip-row", style: { marginTop: "1.25rem" }, children: too.gw_event_ids.map((id) => /* @__PURE__ */ jsx23("span", { className: "chip chip--static", children: id }, id)) }),
+        /* @__PURE__ */ jsx23("p", { className: "footnote", style: { marginTop: "1rem" }, children: "LVK superevent identifiers as issued in the public alert stream. Target-level details are not published here." })
+      ] }),
+      /* @__PURE__ */ jsxs17("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx23("h3", { children: "Before you write" }),
+        /* @__PURE__ */ jsx23("p", { className: "prose", children: "Three things are worth settling first, because each of them can make a program unnecessary or unworkable, and all three can be checked from this site." }),
+        /* @__PURE__ */ jsxs17("ul", { className: "feature-list", style: { marginTop: "1.5rem" }, children: [
+          /* @__PURE__ */ jsxs17("li", { children: [
+            /* @__PURE__ */ jsx23("span", { className: "feature-list__key", children: "01" }),
+            /* @__PURE__ */ jsxs17("div", { children: [
+              /* @__PURE__ */ jsx23("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Check what already exists" }),
+              /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
+                "Much of the southern sky already has a medium-band reference image, and the tile under your position may already carry the bands you need. The",
+                " ",
+                /* @__PURE__ */ jsx23(Link13, { to: "/users/access", children: "data access page" }),
+                " reports the bands and frame counts held for any position."
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs17("li", { children: [
+            /* @__PURE__ */ jsx23("span", { className: "feature-list__key", children: "02" }),
+            /* @__PURE__ */ jsxs17("div", { children: [
+              /* @__PURE__ */ jsx23("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Estimate depth from measurements, not aperture" }),
+              /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
+                "The measured ",
+                /* @__PURE__ */ jsx23(Link13, { to: "/users/performance", children: "limiting magnitudes" }),
+                " per band, for the fiducial 100-second exposure, are what a coadded depth should be scaled from."
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs17("li", { children: [
+            /* @__PURE__ */ jsx23("span", { className: "feature-list__key", children: "03" }),
+            /* @__PURE__ */ jsxs17("div", { children: [
+              /* @__PURE__ */ jsx23("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Check the target is observable" }),
+              /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
+                "Visibility from El Sauce in the intended window, and the filter response over the wavelengths that matter, can both be computed with",
+                " ",
+                /* @__PURE__ */ jsx23(Link13, { to: "/users/software", children: /* @__PURE__ */ jsx23("code", { children: "supy" }) }),
+                "."
+              ] })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs17(Section, { eyebrow: "Submitting", title: "Requesting observing time", children: [
+      /* @__PURE__ */ jsxs17("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
+        /* @__PURE__ */ jsx23("div", { className: "panel__title", children: "No open call at present" }),
+        /* @__PURE__ */ jsx23("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: "Outside the KASI and KAS allocations described above, observing time is allocated within the collaboration and its partner institutions, and there is no general call for proposals. A proposal template and an exposure time calculator will be published here when a call opens. Until then, and for anything outside the survey program \u2014 including target-of-opportunity requests \u2014 write to the project directly." }),
         /* @__PURE__ */ jsx23(
           "a",
           {
@@ -3163,9 +3156,12 @@ var num = (value) => value.toLocaleString("en-US"), REQUEST_PARAMETERS = [
             href: "mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20inquiry",
             children: "Contact the project"
           }
-        ),
+        )
+      ] }),
+      /* @__PURE__ */ jsxs17("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
         /* @__PURE__ */ jsx23(Link13, { className: "btn btn--secondary", to: "/users/performance", children: "Measured performance" }),
-        /* @__PURE__ */ jsx23(Link13, { className: "btn btn--secondary", to: "/users/access", children: "Check coverage" })
+        /* @__PURE__ */ jsx23(Link13, { className: "btn btn--secondary", to: "/users/access", children: "Check coverage" }),
+        /* @__PURE__ */ jsx23(Link13, { className: "btn btn--secondary", to: "/science/overview", children: "Science working groups" })
       ] })
     ] })
   ] });
@@ -10967,7 +10963,7 @@ var meta33 = () => [
 }, news_default2 = Index33;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-ZLCV5WBI.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-4C3XSWGH.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-36QIYG2M.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-QPQZOPJV.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-XTPYQ4EF.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-FPNQT7BG.js", imports: ["/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-FRWO2DI6.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-RBDFIP3M.js", imports: ["/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-HJKAIE5A.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-36QIYG2M.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-NWKRPGRO.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-36QIYG2M.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-SW3LYMQE.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-QN522MUL.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-6RKWOKGD.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-OL4R2UD5.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-L2AVPVML.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-DM3ZRKEN.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-FGWAAVKQ.js", imports: ["/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-CKGXL2BE.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-GXZIBKRY.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-HLYTCOAS.js", imports: ["/build/_shared/chunk-M6QKJM2M.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-DYRYIUGY.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-UAWIHBW5.js", imports: ["/build/_shared/chunk-M6QKJM2M.js", "/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-D7E3NC74.js", imports: ["/build/_shared/chunk-M6QKJM2M.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-T7VB46HN.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-PHERCSYD.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-PUNP7SVJ.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-K7C3GQ6Z.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-LFRR5ZPQ.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-7745SEIN.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-E7NTJRDY.js", imports: ["/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-E7CQG7IZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-LVBRWNXP.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-TJJZS57D.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-HLMRP3C5.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-NEG37S2S.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-VCGOEWB3.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-N747BGXQ.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "ea085cc8", hmr: void 0, url: "/build/manifest-EA085CC8.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-7PBKICBE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-4C3XSWGH.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-36QIYG2M.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-QPQZOPJV.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-XTPYQ4EF.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-FPNQT7BG.js", imports: ["/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-FRWO2DI6.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-RBDFIP3M.js", imports: ["/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-HJKAIE5A.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-36QIYG2M.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-NWKRPGRO.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-36QIYG2M.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-SW3LYMQE.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-QN522MUL.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-6RKWOKGD.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-OL4R2UD5.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-L2AVPVML.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-DM3ZRKEN.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-FGWAAVKQ.js", imports: ["/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-CKGXL2BE.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-GXZIBKRY.js", imports: ["/build/_shared/chunk-S4UXJXWU.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-HLYTCOAS.js", imports: ["/build/_shared/chunk-M6QKJM2M.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-DYRYIUGY.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-UAWIHBW5.js", imports: ["/build/_shared/chunk-M6QKJM2M.js", "/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-D7E3NC74.js", imports: ["/build/_shared/chunk-M6QKJM2M.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-T7VB46HN.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-PHERCSYD.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-PUNP7SVJ.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-K7C3GQ6Z.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-LFRR5ZPQ.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-7745SEIN.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-E7NTJRDY.js", imports: ["/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-E7CQG7IZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-LVBRWNXP.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-TJJZS57D.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-HLMRP3C5.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-6XNIUDIL.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-VCGOEWB3.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-N747BGXQ.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-E7DD3YPR.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "b26297d8", hmr: void 0, url: "/build/manifest-B26297D8.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
