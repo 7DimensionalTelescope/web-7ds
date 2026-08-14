@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'Observing modes, target-of-opportunity response and how observing time on 7DT is requested.',
+      'Who may propose for 7DT time, how much is available and when: team membership through the science working groups, the KASI and KAS allocations, observing modes and target-of-opportunity response.',
   },
 ];
 
@@ -41,9 +41,96 @@ const Index = () => {
           How to <em>propose</em>
         </>
       }
-      lede="What the array can be asked to do, how an observation is specified, and how time is requested."
+      lede="Who may ask for time on 7DT, how much of it there is, and what the array can be asked to do with it."
       image="/img/hero/telescope.jpg"
     />
+
+    {/* Before the modes and the mechanics: whether a reader is eligible at all,
+        how much time exists, and when they can ask for it. Those three
+        questions were answered in a panel at the foot of the page, which is a
+        long way to read to find out the answer is "not yet, unless you are on
+        a working group". */}
+    <Section eyebrow="Eligibility" title="Who may propose">
+      <div className="split split--wide-text">
+        <div className="prose">
+          <p>
+            The 7DS team is being formally constituted. Anyone taking part in a 7DS Science
+            Working Group becomes a member of the team automatically, without having to ask —
+            opting out is the action that requires notice, not joining. The working groups follow
+            the <Link to="/science/overview">seven science themes</Link>.
+          </p>
+          <p>
+            Team membership carries two rights. The first is early access to 7DS data during its
+            proprietary period, before it is released more widely. The second is the right to
+            propose an independent observing programme of your own on 7DT, rather than working
+            only from what the surveys happen to collect.
+          </p>
+          <p>
+            Publication rules for collaborative work using 7DS data are still being settled. They
+            will include a co-authorship policy under which the initial core members of the 7DS
+            team — seven people at present — are included in the author list. The rules will be
+            published under <Link to="/publication/policy">publication policy</Link> once agreed.
+          </p>
+        </div>
+        <div className="panel">
+          <div className="panel__title">In short</div>
+          <ul className="feature-list" style={{ borderTop: 0, margin: 0 }}>
+            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+              <div>
+                <p className="feature-list__body" style={{ margin: 0 }}>
+                  <b>Who</b> Members of the 7DS team. Joining a science working group makes you
+                  one.
+                </p>
+              </div>
+            </li>
+            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+              <div>
+                <p className="feature-list__body" style={{ margin: 0 }}>
+                  <b>How much</b> 200 hours for KASI and 200 hours for the Korean Astronomical
+                  Society.
+                </p>
+              </div>
+            </li>
+            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+              <div>
+                <p className="feature-list__body" style={{ margin: 0 }}>
+                  <b>When</b> No call has opened yet. It will be announced on this page.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </Section>
+
+    <Section eyebrow="Time" title="How much time there is, and when" alt>
+      <div className="prose">
+        <p>
+          Two hundred hours of 7DT time are allocated to the Korea Astronomy and Space Science
+          Institute, and a further two hundred hours to the Korean Astronomical Society — four
+          hundred hours in total, held separately and awarded through their own routes. This is
+          time on the array outside the three surveys, which otherwise occupy the night.
+        </p>
+        <p>
+          No call for proposals has opened against either allocation. The schedule will be
+          announced here when it is fixed, together with a proposal template and an exposure time
+          calculator. Until then, enquiries about observations outside the survey programme — and
+          target-of-opportunity requests, which are handled separately and continuously — should
+          go to the project directly.
+        </p>
+      </div>
+      <div className="btn-row" style={{ marginTop: '1.5rem' }}>
+        <a
+          className="btn btn--primary"
+          href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20enquiry"
+        >
+          Contact the project
+        </a>
+        <Link className="btn btn--secondary" to="/science/overview">
+          Science working groups
+        </Link>
+      </div>
+    </Section>
 
     <Section eyebrow="Modes" title="Four observing modes">
       <p className="prose">{modeText}</p>
@@ -172,11 +259,9 @@ const Index = () => {
       <div className="panel" style={{ maxWidth: '68ch' }}>
         <div className="panel__title">No open call at present</div>
         <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
-          Observing time is currently allocated within the collaboration and its partner
-          institutions; there is no general call for proposals yet. A proposal template and an
-          exposure time calculator will be published on this page when one opens. Enquiries about
-          observations outside the survey program, including target-of-opportunity requests, should
-          be addressed to the project directly.
+          Outside the KASI and KAS allocations described at the top of this page, observing time
+          is allocated within the collaboration and its partner institutions, and there is no
+          general call for proposals. Enquiries should be addressed to the project directly.
         </p>
         <a
           className="btn btn--primary"
