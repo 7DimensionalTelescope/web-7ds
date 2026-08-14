@@ -286,44 +286,23 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
                 <p className="prose" style={{ color: 'rgba(255,255,255,.78)' }}>
                   {mainText2}
                 </p>
-                {/* The themes are listed rather than described: the point of this
-                    section is the breadth, not any one result. */}
-                <ul className="theme-chips">
-                  {science.themes.map((theme) => (
-                    <li key={theme.id}>
-                      <Link to={`/science/${theme.id}`}>
-                        <span className="theme-chips__n">{theme.n}</span>
-                        {theme.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
                 <p style={{ marginTop: '1.5rem' }}>
                   <Link className="link-arrow" to="/science/overview" style={{ color: 'var(--accent-on-dark)' }}>Science program</Link>
                 </p>
               </div>
-              <div className="stat-grid stat-grid--2x2 stat-grid--on-dark">
-                <div className="stat">
-                  <span className="stat__value">{telescopes?.total ?? 20}</span>
-                  <span className="stat__label">Telescopes in the array</span>
-                  <span className="stat__note stat__note--live">
-                    {telescopes ? `${telescopes.online} online` : '16 online'}
-                  </span>
-                </div>
-                <div className="stat">
-                  <span className="stat__value">40</span>
-                  <span className="stat__label">Medium-band filters</span>
-                  <span className="stat__note">35 installed</span>
-                </div>
-                <div className="stat">
-                  <span className="stat__value">30–70</span>
-                  <span className="stat__label">Spectral resolution R</span>
-                </div>
-                <div className="stat">
-                  <span className="stat__value">1.25<span className="stat__unit">deg²</span></span>
-                  <span className="stat__label">Per pointing</span>
-                </div>
-              </div>
+              {/* The themes are listed rather than described: the point of this
+                  section is the breadth, not any one result. They sit opposite
+                  the copy so the seven read as a set at a glance. */}
+              <ul className="theme-chips theme-chips--panel">
+                {science.themes.map((theme) => (
+                  <li key={theme.id}>
+                    <Link to={`/science/${theme.id}`}>
+                      <span className="theme-chips__hash" aria-hidden="true">#</span>
+                      {theme.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
@@ -417,46 +396,31 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
                   </Link>
                 </p>
               </div>
-              <ul className="feature-list feature-list--on-dark">
-                <li>
-                  <span className="feature-list__key">Hardware</span>
-                  <div>
-                    <h3 className="feature-list__title">PlaneWave DeltaRho 500 × 20</h3>
-                    <p className="feature-list__body">
-                      A 508 mm corrected Cassegrain at f/3.0 on an L-500 direct-drive mount, with a
-                      Moravian C3-61000 PRO CMOS camera and a nine-slot filter wheel — 1.34° × 0.90°
-                      at 0.5″ per pixel, 1.25 deg² per unit.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <span className="feature-list__key">Site</span>
-                  <div>
-                    <h3 className="feature-list__title">El Sauce Observatory, Chile</h3>
-                    <p className="feature-list__body">
-                      1.5″ median seeing, over 300 clear nights a year, next to Rubin and Gemini-South.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <span className="feature-list__key">Operation</span>
-                  <div>
-                    <h3 className="feature-list__title">Robotic, unattended</h3>
-                    <p className="feature-list__body">
-                      RTCSpy runs the night end to end and interrupts it for an alert in under a minute.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <span className="feature-list__key">Pipeline</span>
-                  <div>
-                    <h3 className="feature-list__title">Same-night reduction</h3>
-                    <p className="feature-list__body">
-                      Py7DT clears a 3,000-image night in about five hours on 128 cores and two A100s.
-                    </p>
-                  </div>
-                </li>
-              </ul>
+              {/* The four numbers that fix the scale of the facility. The
+                  hardware, site and pipeline detail they replace is set out in
+                  full on the telescope pages. */}
+              <div className="stat-grid stat-grid--2x2 stat-grid--on-dark">
+                <div className="stat">
+                  <span className="stat__value">{telescopes?.total ?? 20}</span>
+                  <span className="stat__label">Telescopes in the array</span>
+                  <span className="stat__note stat__note--live">
+                    {telescopes ? `${telescopes.online} online` : '16 online'}
+                  </span>
+                </div>
+                <div className="stat">
+                  <span className="stat__value">40</span>
+                  <span className="stat__label">Medium-band filters</span>
+                  <span className="stat__note">35 installed</span>
+                </div>
+                <div className="stat">
+                  <span className="stat__value">30–70</span>
+                  <span className="stat__label">Spectral resolution R</span>
+                </div>
+                <div className="stat">
+                  <span className="stat__value">1.25<span className="stat__unit">deg²</span></span>
+                  <span className="stat__label">Per pointing</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>

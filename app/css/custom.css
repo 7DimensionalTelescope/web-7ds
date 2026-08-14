@@ -615,18 +615,36 @@ html {
     background-color var(--dur) var(--ease);
 }
 
-/* The number ties a chip to the same theme's card on the science overview,
-   where it also reads as 01–07. Dimmer than the title so it stays a marker. */
-.theme-chips__n {
+/* Read as tags rather than as a menu: the hash is the marker, in the accent
+   colour so it carries the eye down the list. */
+.theme-chips__hash {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--accent-on-dark);
+  opacity: 0.75;
 }
 
-.theme-chips a:hover .theme-chips__n,
-.theme-chips a:focus-visible .theme-chips__n {
-  color: var(--accent-on-dark);
+.theme-chips a:hover .theme-chips__hash,
+.theme-chips a:focus-visible .theme-chips__hash {
+  opacity: 1;
+}
+
+/* Beside the copy rather than under it, the chips are the column's whole
+   content — larger, and packed right so the ragged edge faces the text. */
+.theme-chips--panel {
+  margin-top: 0;
+  justify-content: flex-end;
+  gap: 0.625rem;
+}
+
+.theme-chips--panel a {
+  padding: 0.5rem 0.9375rem;
+  font-size: 0.9375rem;
+}
+
+@media (max-width: 976px) {
+  .theme-chips--panel {
+    justify-content: flex-start;
+  }
 }
 
 .theme-chips a:hover,
