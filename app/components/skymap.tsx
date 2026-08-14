@@ -153,6 +153,15 @@ type DepthRef = {
   mag: number;
   /** Integration time of that reference visit, seconds. */
   sec: number;
+  /**
+   * Seconds in one science frame of the program this scale describes.
+   *
+   * Not the survey-wide mean: that averages over every program the array has
+   * run, and using it here made the scale disagree with its own anchor — a
+   * tile with exactly one reference visit came out 0.12 mag shallower than the
+   * measured reference depth it is calibrated against.
+   */
+  frameSec: number;
   /** Band the reference depth was measured in. */
   band: string;
 };
@@ -400,7 +409,7 @@ export default function SkyMap({
   const depthOf = useCallback(
     (i: number) => {
       if (!depthRef || !hasExposure || !bandFrames) return NaN;
-      const seconds = bandFrames[i] * (exposureSec as number);
+      const seconds = bandFrames[i] * depthRef.frameSec;
       if (seconds <= 0) return NaN;
       return depthRef.mag + 1.25 * Math.log10(seconds / depthRef.sec);
     },

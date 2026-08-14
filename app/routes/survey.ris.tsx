@@ -88,12 +88,12 @@ const Index = () => {
             tiles={tiles}
             planned={{ to: RIS_TILES }}
             exposureSec={exposureSec}
-            depthRef={{ mag: 19.1, sec: 300, band: 'm600' }}
+            depthRef={{ mag: 19.1, sec: 300, frameSec: 100, band: 'm600' }}
             caption={`${num(ris.tiles_observed)} of ${num(ris.tiles_defined)} tiles observed`}
           />
         ),
         note:
-          'The survey as designed: all 25,472 tiles of the reference grid are drawn in gray, and the ones with science exposures are colored over them, so what is left to observe is the gray. Because RIS covers everything the array can reach, this grid is also the footprint of the survey as a whole. Hover a tile for its own figures. Depth and integration time are estimates: open-shutter time is recorded for the survey rather than per tile, so time on a tile is its frame count times the survey mean, and depth follows from it against the measured 19.1 mag single-visit reference — background-limited, so the 5σ limit improves as the square root of the time. Depth counts only the frames taken in m600, since a tile visited in many filters is no deeper in any one of them.',
+          'The survey as designed: all 25,472 tiles of the reference grid are drawn in gray, and the ones with science exposures are colored over them, so what is left to observe is the gray. Because RIS covers everything the array can reach, this grid is also the footprint of the survey as a whole. Hover a tile for its own figures. Depth and integration time are estimates: open-shutter time is recorded for the survey rather than per tile, so integration time on a tile is its frame count times the survey mean. Depth is counted differently, against the RIS visit itself: frames in m600 at the fiducial 100 s each, measured against the 19.1 mag reached by one 3 × 100 s visit — background-limited, so the 5σ limit improves as the square root of the time. Depth counts only the frames taken in m600, since a tile visited in many filters is no deeper in any one of them.',
       }}
       coverage={[
         { value: num(ris.tiles_observed), label: 'Tiles observed', note: 'original grid' },

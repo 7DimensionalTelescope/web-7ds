@@ -34,14 +34,22 @@ export const meta: MetaFunction = () => [
    is still one source for each number and they cannot drift apart.
 --------------------------------------------------------------------------- */
 
+/* The four rows that also appear in specs.json are read from it rather than
+   retyped: this page renders that same file as a StatGrid a few lines below,
+   and two copies of one number on one page will disagree eventually. */
+const spec = (label: string) => {
+  const it = specs.performance.find((row) => row.label === label);
+  return it ? `${it.value}${it.unit ?? ''}` : '—';
+};
+
 const PSF = [
-  ['Pixel scale', '0.5″ per pixel'],
+  ['Pixel scale', '0.505″ per pixel'],
   ['Field of view per unit', '1.34° × 0.90° (1.25 deg²)'],
-  ['PSF FWHM at field center', '1.4″ – 2.2″'],
-  ['Array median FWHM', '2.0″'],
-  ['Unit-to-unit scatter', '0.2″'],
+  ['PSF FWHM at field center', spec('PSF FWHM at center')],
+  ['Array median FWHM', spec('Array median FWHM')],
+  ['Unit-to-unit scatter', spec('Unit-to-unit scatter')],
   ['Center-to-corner growth', '+0.3″'],
-  ['Ellipticity, central 80% of field', '< 0.1'],
+  ['Ellipticity, central 80% of field', spec('PSF ellipticity')],
   ['Median site seeing', '1.5″'],
 ];
 
@@ -49,7 +57,7 @@ const ZEROPOINT = [
   ['Reference', 'Gaia DR3 BP/RP synthetic photometry'],
   ['Homogenization', 'Color- and magnitude-dependent residuals corrected'],
   ['Established on', '68 spectrophotometric standards, incl. CALSPEC'],
-  ['Zero-point uncertainty', '15 – 25 mmag'],
+  ['Zero-point uncertainty', `${spec('Zero-point uncertainty')}`],
   ['Redward of 775 nm', 'Toward the upper end of that range'],
   ['Calibrated set', 'The original 20 medium bands'],
 ];

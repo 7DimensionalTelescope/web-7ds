@@ -202,8 +202,8 @@ const Index = () => (
         <Link className="btn btn--secondary" to="/users/access">
           Data access
         </Link>
-        <Link className="btn btn--secondary" to="/users/data">
-          Using the data
+        <Link className="btn btn--secondary" to="/users/performance">
+          Measured performance
         </Link>
       </div>
     </Section>

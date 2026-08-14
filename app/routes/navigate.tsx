@@ -59,10 +59,8 @@ const MENU = [
       { label: 'How to Propose', href: '/users/propose' },
       { label: 'Data Format', href: '/users/format' },
       { label: 'Data Access', href: '/users/access' },
-      { label: 'Using the Data', href: '/users/data' },
       { label: 'Software', href: '/users/software' },
       { label: 'Useful Links', href: '/users/links' },
-      { label: 'Questions', href: '/users/faq' },
     ],
   },
 ];

@@ -145,15 +145,16 @@ advances, grep for the old value before assuming one edit is enough.
 /survey/…             overview (design + parameters + tiling), ris, wts, ims,
                       coverage (interactive map), status (array operations)
 /telescope/…          overview (hardware first), instrument, location, computer
-/users/…              performance (what one exposure delivers: filter transmission,
-                      PSF, zero point, 100 s depth, survey depths), status
-                      (coverage map with layer switches, per-band coverage),
-                      propose, data, format, access, software, faq
+/users/…              status (coverage map with layer switches, position search,
+                      per-band coverage), performance (filter transmission, PSF,
+                      zero point, 100 s depth, survey depths), propose, format
+                      (the data format specification), access, software, links
 /publication/…        list, policy          /news  /gallery  /links
 ```
 
 Redirects are kept for URLs that moved: `/data/*` → the For Users pages, `/survey/design` →
-`/survey/overview`, `/telescope/mode` → `/users/propose`, `/users/overview` → `/users/performance`.
+`/survey/overview`, `/telescope/mode` → `/users/propose`, `/users/overview` → `/users/performance`,
+`/users/data` → `/users/format`, `/users/faq` → `/users/status`.
 Do not delete these — they were public.
 
 ---
