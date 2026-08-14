@@ -38,7 +38,7 @@ const Index = () => {
       eyebrow="For users"
       title={
         <>
-          How to <em>propose</em>
+          How to <em>Propose</em>
         </>
       }
       lede="Who may ask for time on 7DT, how much of it there is, and what the array can be asked to do with it."
@@ -132,7 +132,68 @@ const Index = () => {
       </div>
     </Section>
 
-    <Section eyebrow="Modes" title="Four observing modes">
+    {/* Third of the general questions: what happens to the data afterwards.
+        The detail is not settled yet, so this states what is decided, names
+        what is still open, and sends the reader to the policy page rather than
+        filling the gaps with plausible-sounding rules. */}
+    <Section eyebrow="Policy" title="Data rights and authorship">
+      <div className="split split--wide-text">
+        <div className="prose">
+          <p>
+            Data taken for the surveys and for approved programmes carry a proprietary period
+            during which they are available to the 7DS team before wider release. Team membership
+            is what grants that access, which is the practical reason the working groups matter as
+            much as the allocations do.
+          </p>
+          <p>
+            Authorship on work using 7DS data is governed by a policy still under discussion. What
+            is settled is that it will include the initial core members of the 7DS team — seven
+            people at present — in the author list of collaborative papers drawing on 7DS data.
+            Anyone intending to publish is asked to contact the principal investigator first, so
+            that authors and acknowledgments are agreed before submission rather than after.
+          </p>
+          <p>
+            The full policy — proprietary period, terms for sharing data outside the team, the
+            public release schedule and authorship for external collaborators — is being prepared
+            by the collaboration and will be posted under{' '}
+            <Link to="/publication/policy">publication policy</Link> once ratified. This page will
+            point to it.
+          </p>
+        </div>
+        <div className="panel">
+          <div className="panel__title">Settled, and not</div>
+          <ul className="feature-list" style={{ borderTop: 0, margin: 0 }}>
+            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+              <div>
+                <p className="feature-list__body" style={{ margin: 0 }}>
+                  <b>Decided</b> Team members have proprietary-period access; the seven core
+                  members appear on collaborative papers.
+                </p>
+              </div>
+            </li>
+            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+              <div>
+                <p className="feature-list__body" style={{ margin: 0 }}>
+                  <b>Still open</b> How long the proprietary period runs, how data may be shared
+                  outside the team, when it becomes public, and authorship for collaborators
+                  outside the team.
+                </p>
+              </div>
+            </li>
+            <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+              <div>
+                <p className="feature-list__body" style={{ margin: 0 }}>
+                  <b>Meanwhile</b> Contact the PI before submitting, and acknowledge the funders
+                  listed on the <Link to="/about/funding">funding page</Link>.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </Section>
+
+    <Section eyebrow="Modes" title="Four observing modes" alt>
       <p className="prose">{modeText}</p>
 
       <ul className="feature-list" style={{ marginTop: '2rem' }}>
@@ -165,7 +226,7 @@ const Index = () => {
       </ul>
     </Section>
 
-    <Section eyebrow="Specifying" title="What an observation request contains" alt>
+    <Section eyebrow="Specifying" title="What an observation request contains">
       <div className="split split--wide-text">
         <div>
           <p className="prose">
@@ -219,7 +280,7 @@ const Index = () => {
       </div>
     </Section>
 
-    <Section eyebrow="Response" title="Target of opportunity">
+    <Section eyebrow="Response" title="Target of opportunity" alt>
       <p className="prose">
         When a transient alert arrives — a gamma-ray burst, a gravitational-wave candidate — the
         scheduler interrupts the observing plan and repoints. Two response modes are available: a
@@ -255,7 +316,7 @@ const Index = () => {
       </p>
     </Section>
 
-    <Section eyebrow="Applying" title="Requesting observing time" alt>
+    <Section eyebrow="Applying" title="Requesting observing time">
       <div className="panel" style={{ maxWidth: '68ch' }}>
         <div className="panel__title">No open call at present</div>
         <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
