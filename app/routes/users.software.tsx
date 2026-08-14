@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
-import { PageLayout, PageHero, Section, StatGrid } from '../components/site';
+import { PageLayout, PageHero, Section } from '../components/site';
 import { softwareReuseText } from './content/text';
-import software from './content/software.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Software · 7DT for users' },
@@ -158,42 +157,17 @@ const Index = () => (
         Py7DT uses a rolling-release version scheme in which the last digit is incremented whenever
         a scientific decision changes how data are processed. That version is recorded in every
         configuration file and in the process status database, so any product can be traced to the
-        code that made it and reprocessed in bulk when the code changes. What each stage does is
-        described under <Link to="/users/format">using the data</Link>.
+        code that made it and reprocessed in bulk when the code changes. What a reduced file
+        contains, keyword by keyword, is on the{' '}
+        <Link to="/users/format">data format page</Link>.
+      </p>
+      <p className="note" style={{ marginTop: '1rem' }}>
+        The full technical description is in Hyun et al., <i>Py7DT: Data Reduction Pipeline of the
+        7-Dimensional Telescope</i> (Proc. SPIE 14155-12) — see{' '}
+        <Link to="/publication/list">publications</Link>.
       </p>
     </Section>
 
-    <Section eyebrow="Operations" title="The systems that produce the data">
-      <p className="prose">
-        Three systems close observation, reduction and analysis into a nightly loop. They are not
-        installed by external users, but knowing which one recorded a given quantity is often
-        useful when interpreting it.
-      </p>
-
-      <div className="stack-lg" style={{ marginTop: '2rem' }}>
-        {software.systems.map((system) => (
-          <div className="panel" key={system.name} id={system.name.toLowerCase()}>
-            <div className="rationale__head">
-              <span className="tier-card__code">{system.name}</span>
-              <h3>{system.role}</h3>
-            </div>
-            <p className="eyebrow" style={{ marginBottom: '0.5rem' }}>
-              {system.expansion}
-            </p>
-            <p className="prose" style={{ fontSize: '1rem' }}>
-              {system.body}
-            </p>
-            <StatGrid items={system.stats} />
-          </div>
-        ))}
-      </div>
-
-      <p className="note" style={{ marginTop: '2rem' }}>
-        Full technical descriptions are in Hyun et al., <i>Py7DT: Data Reduction Pipeline of the
-        7-Dimensional Telescope</i> (Proc. SPIE 14155-12), and Choi et al., Proc. SPIE 14151-12,
-        which covers RTCSpy. See <Link to="/publication/list">publications</Link>.
-      </p>
-    </Section>
   </PageLayout>
 );
 
