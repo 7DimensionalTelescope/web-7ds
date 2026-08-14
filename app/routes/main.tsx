@@ -315,7 +315,10 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
         <section className="fullpage-section home-survey-panel">
           {tiles && tiles.count > 0 ? (
             <div className="home-survey__bg" aria-hidden="true">
-              <SkyMap tiles={tiles} interactive={false} />
+              {/* Coloured by date: behind a veil this is texture rather than a
+                  reading, and the seasonal bands of the observing record are
+                  the part of it with any shape to them. */}
+              <SkyMap tiles={tiles} interactive={false} defaultMode="date" />
             </div>
           ) : null}
 

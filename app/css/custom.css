@@ -3185,6 +3185,23 @@ table[class*='w-full'] thead {
 /* Pointer card. Placed at the cursor and flipped away from the edges by the
    component, so it never runs off the map. It cannot take the pointer or the
    hover would flicker between the card and the canvas beneath it. */
+/* Outline of the tile under the pointer. Sized to the tile's own footprint,
+   so on a crowded part of the sky it shows exactly which one is being read. */
+.skymap__mark {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  border: 1.5px solid var(--ink-900);
+  border-radius: 1px;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.75);
+  pointer-events: none;
+}
+
+.skymap--dark .skymap__mark {
+  border-color: #fff;
+  box-shadow: 0 0 0 1.5px rgba(10, 16, 28, 0.6);
+}
+
 .skymap__tip {
   --tx: 14px;
   --ty: 14px;

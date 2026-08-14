@@ -14,6 +14,12 @@ import { TileDetail, degLabel as deg } from './tiledetail';
 --------------------------------------------------------------------------- */
 
 const DEG = Math.PI / 180;
+
+/* One camera's footprint on the sky, degrees. Used both to draw a tile and to
+   put the highlight ring on the one under the pointer, so it lives here rather
+   than inside the paint. */
+const FOV_LON = 1.34;
+const FOV_LAT = 0.9;
 const RATIO = 0.52; // canvas height / width, leaving room around the ellipse
 
 /* Mollweide needs 2θ + sin2θ = π sin φ solved per point. Solving it fifteen
@@ -166,6 +172,8 @@ type Probe = {
   y: number;
   /** Index into the tile arrays, or null where nothing has been observed. */
   tile: number | null;
+  /** The tile's own rectangle on screen, for the highlight ring. */
+  mark: { x: number; y: number; w: number; h: number } | null;
   ra: number;
   dec: number;
   l: number;
@@ -179,6 +187,7 @@ export default function SkyMap({
   interactive = true,
   modeToggle,
   depthRef,
+  defaultMode,
   caption,
   theme = 'light',
 }: {
@@ -206,6 +215,12 @@ export default function SkyMap({
    * hence a page-level opt-in rather than a default.
    */
   depthRef?: DepthRef | null;
+  /**
+   * Overrides which scale the map opens on. Only needed where the map is a
+   * backdrop rather than a reading: a decorative map wants the scale with the
+   * most texture in it, not the most useful one.
+   */
+  defaultMode?: Mode;
   /** Replaces the tile count in the readout line. */
   caption?: string;
   /** 'dark' drops the card chrome and inverts the sky, for dark sections. */
@@ -217,11 +232,13 @@ export default function SkyMap({
   /* Which scales this map can offer is known before the first paint, so the
      opening mode is chosen here rather than corrected in an effect — the
      server would otherwise render one map and the client immediately swap it
-     for another. Depth first, then exposure: what was reached matters more
-     than when it was reached. */
+     for another. Depth first, then exposure, then how often a tile was
+     revisited: what was reached matters more than when it was reached. */
   const hasExposure = Boolean(exposureSec && exposureSec > 0 && tiles.frames);
   const canDepth = Boolean(depthRef && hasExposure && tiles.filters && tiles.patterns);
-  const [mode, setMode] = useState<Mode>(canDepth ? 'depth' : hasExposure ? 'exposure' : 'date');
+  const [mode, setMode] = useState<Mode>(
+    defaultMode ?? (canDepth ? 'depth' : hasExposure ? 'exposure' : 'visits')
+  );
   const [frame, setFrame] = useState<Frame>('equatorial');
   const [width, setWidth] = useState(960);
   const [probe, setProbe] = useState<Probe | null>(null);
@@ -296,6 +313,22 @@ export default function SkyMap({
     return { lon, lat };
   }, [frame, tiles]);
 
+  /* Mollweide coordinates per tile, in the projection's own units. The pointer
+     test runs over every tile on every move; projecting them there meant
+     fifteen thousand table lookups per mouse movement, which is what made the
+     map feel heavy under the pointer. Scale and centring are cheap arithmetic
+     applied afterwards, so this survives a resize. */
+  const projected = useMemo(() => {
+    const xs = new Float64Array(tiles.count);
+    const ys = new Float64Array(tiles.count);
+    for (let i = 0; i < tiles.count; i += 1) {
+      const [x, y] = project(coords.lon[i], coords.lat[i]);
+      xs[i] = x;
+      ys[i] = y;
+    }
+    return { xs, ys };
+  }, [coords, tiles.count]);
+
   // Visit counts are long-tailed: a handful of IMS tiles sit in the hundreds
   // while most of the sky has been seen once. A linear ramp would render the
   // survey as a single flat colour, so the scale is logarithmic.
@@ -362,14 +395,13 @@ export default function SkyMap({
     const out: { key: Mode; label: string }[] = [];
     if (depthRange) out.push({ key: 'depth', label: 'Depth' });
     if (hasExposure) out.push({ key: 'exposure', label: 'Exposure time' });
-    out.push({ key: 'date', label: 'Last visit' });
     out.push({ key: 'visits', label: 'Visits' });
+    out.push({ key: 'date', label: 'Last visit' });
     return out;
   }, [depthRange, hasExposure]);
 
-  /* Depth, then exposure, then the calendar: what was reached matters more
-     than when it was reached, and the first mode offered is the one the map
-     opens on. */
+  /* The first mode offered is the one the map opens on; this only fires if the
+     data the current mode needs went away under it. */
   useEffect(() => {
     if (!modes.some((m) => m.key === mode)) setMode(modes[0].key);
   }, [modes, mode]);
@@ -442,8 +474,6 @@ export default function SkyMap({
     // survey areas read as solid regions rather than as a dot scatter. The
     // footprint is derived analytically from the projection rather than by
     // re-projecting an offset point, which would wrap across the RA=180 seam.
-    const FOV_LON = 1.34;
-    const FOV_LAT = 0.9;
     for (let i = 0; i < tiles.count; i += 1) {
       const lat = coords.lat[i];
       const t = theta(lat);
@@ -525,7 +555,7 @@ export default function SkyMap({
       const [x, y] = projectLon(-180, lat);
       ctx.fillText(`${lat > 0 ? '+' : ''}${lat}°`, px(x) - 7, py(y));
     }
-  }, [tiles, coords, frame, width, value, emphasized, dark]);
+  }, [tiles, coords, projected, frame, width, value, emphasized, dark]);
 
   const onMove = (event: React.PointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -552,9 +582,8 @@ export default function SkyMap({
     let best = -1;
     let bestDistance = tolerance * tolerance;
     for (let i = 0; i < tiles.count; i += 1) {
-      const [x, y] = project(coords.lon[i], coords.lat[i]);
-      const dx = rect.width / 2 + x * scale - mx;
-      const dy = height / 2 - y * scale - my;
+      const dx = rect.width / 2 + projected.xs[i] * scale - mx;
+      const dy = height / 2 - projected.ys[i] * scale - my;
       const distance = dx * dx + dy * dy;
       if (distance < bestDistance) {
         bestDistance = distance;
@@ -580,10 +609,29 @@ export default function SkyMap({
           ? [lon, lat]
           : equatorialToGalactic(lon, lat);
 
+    /* The ring is drawn as an element rather than into the canvas: repainting
+       fifteen thousand tiles on every pointer move to move one outline would
+       cost far more than it shows. */
+    let mark: Probe['mark'] = null;
+    if (best >= 0) {
+      const lat = coords.lat[best];
+      const t = theta(lat);
+      const dLon = FOV_LON / Math.max(0.02, Math.cos(lat * DEG));
+      const hiLat = Math.min(90, lat + FOV_LAT / 2);
+      const loLat = Math.max(-90, lat - FOV_LAT / 2);
+      mark = {
+        x: rect.width / 2 + projected.xs[best] * scale,
+        y: height / 2 - projected.ys[best] * scale,
+        w: Math.max(5, (2 / Math.PI) * dLon * DEG * Math.cos(t) * scale),
+        h: Math.max(5, (Math.sin(theta(hiLat)) - Math.sin(theta(loLat))) * scale),
+      };
+    }
+
     setProbe({
       x: mx,
       y: my,
       tile: best >= 0 ? best : null,
+      mark,
       ra: equatorial[0],
       dec: equatorial[1],
       l: galactic[0],
@@ -716,6 +764,21 @@ export default function SkyMap({
                   : 'the number of visits to each'
           }. Longitude increases to the left.`}
         />
+
+        {/* The tile under the pointer, outlined. A single-hue map gives no other
+            cue as to which of fifteen thousand tiles the card is describing. */}
+        {probe?.mark && (
+          <span
+            className="skymap__mark"
+            aria-hidden="true"
+            style={{
+              left: probe.mark.x,
+              top: probe.mark.y,
+              width: probe.mark.w,
+              height: probe.mark.h,
+            }}
+          />
+        )}
 
         {/* The pointer card. Hidden from assistive technology because the
             readout above is the same information in a live region, and having
