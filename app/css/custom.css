@@ -248,8 +248,24 @@ hr {
 html {
   overflow-y: scroll;
   scrollbar-gutter: stable;
-  scrollbar-width: auto;
-  scrollbar-color: var(--slate-500) var(--slate-100);
+}
+
+/* `scrollbar-width` and `scrollbar-color` are what Firefox understands, but
+   Chrome 121+ and Safari 18+ IGNORE every ::-webkit-scrollbar rule on any
+   element that sets either of them. Setting both, as this file used to, meant
+   the styled bar below was silently dropped in Chrome — and on macOS that
+   leaves the fading overlay scrollbar, which is to say no visible scrollbar at
+   all. So the standard properties are given to Firefox alone. */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: auto;
+    scrollbar-color: var(--slate-500) var(--slate-100);
+  }
+
+  .fullpage-wrapper {
+    scrollbar-width: auto;
+    scrollbar-color: var(--slate-300) rgba(10, 16, 28, 0.55);
+  }
 }
 
 /* Wide enough to grab and dark enough to find. Styling ::-webkit-scrollbar at
@@ -2206,7 +2222,9 @@ html.fullpage-active { overflow: hidden; }
 .fullpage-wrapper {
   height: 100vh;
   height: 100dvh;
-  overflow-y: auto;
+  /* `scroll`, not `auto`: the track is then drawn even while the deck is
+     settling, so the bar never blinks out mid-scroll. */
+  overflow-y: scroll;
   overflow-x: hidden;
   /* Proximity, never mandatory. Mandatory snapping makes the scrollbar thumb
      unusable — it is pulled back to the nearest section on every step of a
@@ -2215,12 +2233,12 @@ html.fullpage-active { overflow: hidden; }
   scroll-snap-type: y proximity;
   scroll-behavior: smooth;
   position: relative;
-  /* Shown here too. The home page suppresses the document scrollbar because it
-     scrolls this element instead, so if this one were hidden the deck would
-     have no scrollbar at all. */
-  scrollbar-width: auto;
+  /* The home page suppresses the document scrollbar because it scrolls this
+     element instead, so if this one were hidden the deck would have no
+     scrollbar at all. Its Firefox colours are set in the @supports block near
+     the top of this file — see the note there for why they cannot be set
+     here. */
   scrollbar-gutter: stable;
-  scrollbar-color: var(--slate-300) rgba(10, 16, 28, 0.55);
 }
 
 .fullpage-wrapper::-webkit-scrollbar { width: 14px; height: 14px; }
