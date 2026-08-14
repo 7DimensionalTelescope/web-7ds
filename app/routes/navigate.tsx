@@ -52,9 +52,9 @@ const MENU = [
   {
     key: 'manuUsers',
     label: 'For Users',
-    href: '/users/overview',
+    href: '/users/performance',
     items: [
-      { label: 'Overview', href: '/users/overview' },
+      { label: 'Performance', href: '/users/performance' },
       { label: 'Status', href: '/users/status' },
       { label: 'How to Propose', href: '/users/propose' },
       { label: 'Data Access & Format', href: '/users/access' },

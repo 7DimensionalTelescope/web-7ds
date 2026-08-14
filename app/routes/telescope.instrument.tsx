@@ -108,7 +108,7 @@ const Index = () => {
           at 400 nm. System response curves, which fold in detector quantum efficiency, sky
           transmission and telescope optics, are shown under{' '}
           <Link to="/users/status">status and overview</Link>; photometric calibration and its
-          accuracy are reported on the <Link to="/users/overview">overview page</Link>.
+          accuracy are reported on the <Link to="/users/performance">performance page</Link>.
         </p>
       </Section>
 

@@ -370,7 +370,7 @@ const Index = () => {
           <Link className="btn btn--primary" to="/users/access">
             Search coverage by position
           </Link>
-          <Link className="btn btn--secondary" to="/users/overview">
+          <Link className="btn btn--secondary" to="/users/performance">
             Measured depths
           </Link>
         </div>

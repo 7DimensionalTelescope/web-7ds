@@ -57,7 +57,7 @@ const GROUPS: { group: string; items: { q: string; a: React.ReactNode }[] }[] = 
             A single 100 s exposure reaches 19.06 mag at m400 and 19.61 mag at m475, where
             throughput peaks; Sloan g reaches 20.59 mag. Cumulative depths for each survey
             survey and the conditions these assume are on the{' '}
-            <Link to="/users/overview">overview page</Link>.
+            <Link to="/users/performance">performance page</Link>.
           </>
         ),
       },

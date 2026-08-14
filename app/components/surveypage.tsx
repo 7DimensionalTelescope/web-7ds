@@ -158,7 +158,7 @@ export default function SurveyPage(props: SurveyPageProps) {
           <Link className="chip" to="/users/status">
             Array operations
           </Link>
-          <Link className="chip" to="/users/overview">
+          <Link className="chip" to="/users/performance">
             Measured performance
           </Link>
         </div>

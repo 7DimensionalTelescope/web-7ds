@@ -294,9 +294,9 @@ var MENU = [
   {
     key: "manuUsers",
     label: "For Users",
-    href: "/users/overview",
+    href: "/users/performance",
     items: [
-      { label: "Overview", href: "/users/overview" },
+      { label: "Performance", href: "/users/performance" },
       { label: "Status", href: "/users/status" },
       { label: "How to Propose", href: "/users/propose" },
       { label: "Data Access & Format", href: "/users/access" },
@@ -493,7 +493,7 @@ var PARTNERS = [
   {
     title: "For Users",
     links: [
-      { label: "Overview", href: "/users/overview" },
+      { label: "Performance", href: "/users/performance" },
       { label: "Status", href: "/users/status" },
       { label: "How to Propose", href: "/users/propose" },
       { label: "Data Access", href: "/users/access" },
@@ -777,7 +777,7 @@ var meta = () => [
       " ",
       /* @__PURE__ */ jsx6(Link4, { to: "/users/status", children: "status and overview" }),
       "; photometric calibration and its accuracy are reported on the ",
-      /* @__PURE__ */ jsx6(Link4, { to: "/users/overview", children: "overview page" }),
+      /* @__PURE__ */ jsx6(Link4, { to: "/users/performance", children: "performance page" }),
       "."
     ] })
   ] }),
@@ -1453,7 +1453,7 @@ var meta6 = () => [
         " ",
         /* @__PURE__ */ jsx12(Link8, { to: "/telescope/instrument", children: "instrument" }),
         ". Measured on-sky performance is reported on the ",
-        /* @__PURE__ */ jsx12(Link8, { to: "/users/overview", children: "overview page" }),
+        /* @__PURE__ */ jsx12(Link8, { to: "/users/performance", children: "performance page" }),
         "."
       ] })
     ] }),
@@ -1502,7 +1502,7 @@ var meta6 = () => [
           { label: "Instrument", href: "/telescope/instrument" },
           { label: "Location", href: "/telescope/location" },
           { label: "Computational resources", href: "/telescope/computer" },
-          { label: "Measured performance", href: "/users/overview" }
+          { label: "Measured performance", href: "/users/performance" }
         ]
       }
     ) })
@@ -1521,18 +1521,299 @@ var meta7 = () => topicMeta("cosmology"), Index7 = () => /* @__PURE__ */ jsx13(S
 // app/routes/users.performance.tsx
 var users_performance_exports = {};
 __export(users_performance_exports, {
-  loader: () => loader
+  default: () => users_performance_default,
+  meta: () => meta8
 });
-import { redirect } from "@remix-run/node";
-function loader() {
-  return redirect("/users/overview", 301);
-}
+import { Link as Link9 } from "@remix-run/react";
+
+// app/routes/content/surveys.json
+var surveys_default = {
+  note: "The three tiers of the 7-Dimensional Sky Survey. Design parameters from Kim et al., Proc. SPIE 14147-84, Sec. 4 and Table 2. Progress figures are NOT stored here \u2014 they are read live from the portal by app/lib/portal.server.ts, so nothing in this file goes stale as the survey advances.",
+  depthFootnote: "*WTS and IMS depths are cumulative over the planned five-year operation, not the depth of a single visit. RIS depth is that of one visit.",
+  tiers: [
+    {
+      code: "RIS",
+      name: "Reference Imaging Survey",
+      status: "live",
+      statusLabel: "Observing",
+      area: "23,000 deg\xB2",
+      region: "Dec < +20\xB0",
+      cadence: "Single visit",
+      depth: "19.1 mag",
+      depthNote: "5\u03C3 point source in m600, single visit (3 \xD7 100 s)",
+      started: "July 2024",
+      summary: "The wide-area survey of 7DS. Every tile of the southern sky is observed once with the full set of available medium bands, in three consecutive 100-second exposures. RIS images serve two purposes at once: reference frames against which transients are identified by difference imaging, and a homogeneous spectrophotometric map of the southern sky usable for galaxy population studies, photometric redshift catalogs and quasar identification. Full-cycle completion is anticipated by the end of 2027.",
+      depthRange: "5\u03C3 depths range from 19.7 mag at m400 to 17.2 mag at m875.",
+      tradeoff: "Area over depth and cadence",
+      goal: "Give every part of the southern sky a medium-band reference image, once.",
+      rationale: "Difference imaging requires an earlier image of the same sky in the same bands. RIS builds that reference, and its scale follows from the problem: a gravitational-wave localization can fall anywhere, so the reference must cover everything the array can reach. Covering 23,000 deg\xB2 limits the time available per tile to a single visit of 3 \xD7 100 s, which makes RIS the shallowest of the three surveys. A reference map built from forty medium bands is also a homogeneous spectrophotometric survey in its own right, so the same exposures support galaxy population studies, photometric redshifts and quasar identification."
+    },
+    {
+      code: "WTS",
+      name: "Wide-area Time-domain Survey",
+      status: "planned",
+      statusLabel: "Commencing 2026",
+      area: "800\u20131,200 deg\xB2",
+      region: "Fields with near-infrared ancillary data",
+      cadence: "10\u201314 days",
+      depth: "22.2 mag*",
+      depthNote: "*Cumulative over the planned five-year operation",
+      started: "2026",
+      summary: "WTS extends 7DS into the time domain over a moderately wide area, sustained over a five-year operational period. Field selection prioritizes regions with existing near-infrared coverage, including the VISTA Kilo-degree Infrared Galaxy (VIKING) survey footprint and the Vera C. Rubin Observatory Deep Drilling Fields, so that 7DT data are complemented at wavelengths the array cannot reach. Roughly 90 to 100 visits per tile accumulate to 22.0\u201322.5 mag in the majority of medium bands.",
+      depthRange: "Science cases include reverberation mapping of AGN, long-period variables and eclipsing systems, and slow-evolving extragalactic transients such as superluminous supernovae and tidal disruption events.",
+      tradeoff: "Cadence over area",
+      goal: "Follow what changes on timescales of weeks, and stack deep enough to reach faint galaxies.",
+      rationale: "A single epoch measures what is present, not what is changing. WTS covers a smaller area in order to revisit it every 10 to 14 days, an interval matched to what evolves on that timescale: reverberation in active galactic nuclei, long-period variable and eclipsing stars, and slow extragalactic transients such as superluminous supernovae and tidal disruption events. Repetition also accumulates depth: 90 to 100 visits per tile stack to 22.0\u201322.5 mag across most medium bands, sufficient for photometric redshifts on galaxies well below the single-visit limit. Fields are selected where near-infrared data already exist \u2014 the VIKING footprint and the Rubin Deep Drilling Fields \u2014 covering wavelengths 7DT cannot reach."
+    },
+    {
+      code: "IMS",
+      name: "Intensive Monitoring Survey",
+      status: "live",
+      statusLabel: "Observing",
+      area: "8.5 deg\xB2",
+      region: "AKARI / SPHEREx Deep Field South",
+      cadence: "1 day",
+      depth: "23.6 mag*",
+      depthNote: "*Cumulative over the planned five-year operation",
+      started: "April 2025",
+      summary: "The deep, high-cadence survey of 7DS. Seven tiles near the south ecliptic pole are observed every available night with the full medium-band set. The field was deliberately chosen to overlap the SPHEREx Deep Field South, so that 7DT optical medium-band photometry is co-located with SPHEREx near-infrared spectrophotometry within the same survey volume \u2014 a choice that maximizes the synergy between the two surveys for photometric redshifts and for spatially resolved studies of faint sources.",
+      depthRange: "Field center: RA 05h13m07.36s, Dec \u221260\xB028\u203211.71\u2033. Observing time budget of 20,000 minutes per year.",
+      tradeoff: "Depth and cadence over area",
+      goal: "Catch variability within a single night, and build the deepest photometry 7DS will produce.",
+      rationale: "Some sources vary faster than a wide survey can follow. IMS reduces area to about 8.5 deg\xB2 \u2014 seven tiles \u2014 in order to observe every available night, which is what is required to characterize short-period variables, active galactic nuclei on short timescales, and transients appearing within the field. Observing the same tiles nightly for five years also coadds to the deepest photometry the survey will produce, about 23.6 mag at peak sensitivity. The field position was chosen to overlap the SPHEREx Deep Field South, so that 7DT optical medium-band photometry and SPHEREx near-infrared spectrophotometry cover the same volume."
+    }
+  ],
+  modes: [
+    {
+      name: "Spec",
+      tagline: "Maximum spectral resolution",
+      body: "The default mode. Units rotate through every available medium and broad band, covering the full spectral range in as few exposures as the filter distribution allows. This is the mode in which 7DT delivers low-resolution spectroscopy over 1.25 square degrees."
+    },
+    {
+      name: "Deep",
+      tagline: "Maximum depth",
+      body: "A selected subset of filters is used, trading spectral sampling for signal-to-noise. Used when the question is detection rather than characterization."
+    },
+    {
+      name: "Color",
+      tagline: "Broadband, fast",
+      body: "Broad-band filters only. Used for faint, fast events such as gamma-ray bursts and young supernovae, where early detection on the light curve matters more than spectral detail."
+    },
+    {
+      name: "Search",
+      tagline: "Maximum sky coverage",
+      body: "Each unit points at a different region of sky. A gravitational-wave counterpart is localized only to a probable region covering a wide area, so covering that area quickly takes priority over observing any single field deeply."
+    }
+  ],
+  dimensions: [
+    {
+      n: "01",
+      label: "Right ascension"
+    },
+    {
+      n: "02",
+      label: "Declination"
+    },
+    {
+      n: "03",
+      label: "Distance"
+    },
+    {
+      n: "04",
+      label: "Radial velocity"
+    },
+    {
+      n: "05",
+      label: "Brightness"
+    },
+    {
+      n: "06",
+      label: "Wavelength"
+    },
+    {
+      n: "07",
+      label: "Time"
+    }
+  ],
+  designNote: "Area, cadence and depth cannot all be maximized from a fixed number of nights. Rather than adopt a single compromise, 7DS operates at three separate points in that trade, and ties them together by using one tiling for all three, so that data from any of them coadd directly with data from the others."
+};
+
+// app/routes/users.performance.tsx
+import { jsx as jsx14, jsxs as jsxs11 } from "react/jsx-runtime";
+var meta8 = () => [
+  { title: "Performance \xB7 7DT for users" },
+  {
+    name: "description",
+    content: "What a 7DT observation delivers: filter transmission, delivered PSF, photometric zero points, the depth of a 100-second exposure and the depth each survey reaches."
+  }
+], PSF = [
+  ["Pixel scale", "0.5\u2033 per pixel"],
+  ["Field of view per unit", "1.34\xB0 \xD7 0.90\xB0 (1.25 deg\xB2)"],
+  ["PSF FWHM at field center", "1.4\u2033 \u2013 2.2\u2033"],
+  ["Array median FWHM", "2.0\u2033"],
+  ["Unit-to-unit scatter", "0.2\u2033"],
+  ["Center-to-corner growth", "+0.3\u2033"],
+  ["Ellipticity, central 80% of field", "< 0.1"],
+  ["Median site seeing", "1.5\u2033"]
+], ZEROPOINT = [
+  ["Reference", "Gaia DR3 BP/RP synthetic photometry"],
+  ["Homogenization", "Color- and magnitude-dependent residuals corrected"],
+  ["Established on", "68 spectrophotometric standards, incl. CALSPEC"],
+  ["Zero-point uncertainty", "15 \u2013 25 mmag"],
+  ["Redward of 775 nm", "Toward the upper end of that range"],
+  ["Calibrated set", "The original 20 medium bands"]
+], Index8 = () => /* @__PURE__ */ jsxs11(PageLayout, { menu: "manuUsers", children: [
+  /* @__PURE__ */ jsx14(
+    PageHero,
+    {
+      eyebrow: "For users",
+      title: "Performance",
+      lede: "What one 7DT exposure delivers: which bands it can be taken in, how sharp it is, how well it is calibrated, and how deep it goes \u2014 the five numbers an observing plan starts from.",
+      image: "/img/hero/telescope.jpg",
+      meta: [
+        { value: "35", label: "Medium bands installed" },
+        { value: "2.0", unit: "\u2033", label: "Median PSF FWHM" },
+        { value: "15\u201325", unit: "mmag", label: "Zero-point uncertainty" },
+        { value: "19.6", unit: "mag", label: "Best 100 s depth" }
+      ]
+    }
+  ),
+  /* @__PURE__ */ jsxs11(Section, { eyebrow: "Filters", title: "Filter transmission", wide: !0, children: [
+    /* @__PURE__ */ jsxs11("div", { className: "prose", style: { maxWidth: "68ch" }, children: [
+      /* @__PURE__ */ jsx14("p", { children: filterText }),
+      /* @__PURE__ */ jsx14("p", { children: filterCaveatText })
+    ] }),
+    /* @__PURE__ */ jsx14("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx14(
+      Figure,
+      {
+        src: "/img/images/filter-transmission.png",
+        alt: "System response of the 7DT medium bands in two panels, the original twenty above and the fifteen added in 2025 below, each shown against detector quantum efficiency, sky transmission and telescope throughput",
+        label: "Total system response, decomposed",
+        caption: "What actually reaches the detector: filter transmission multiplied by CMOS quantum efficiency, atmospheric transmission and telescope throughput. The original twenty bands are in the upper panel, the fifteen added in 2025 in the lower one, each drawn against the three curves that shape it. Peak system response is about 65 percent near 475 nm and falls away redward of 775 nm as quantum efficiency drops \u2014 which is why the reddest bands are the shallowest and the least well calibrated."
+      }
+    ) }),
+    /* @__PURE__ */ jsxs11("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: [
+      "The same response is shipped as reference data with",
+      " ",
+      /* @__PURE__ */ jsx14(Link9, { to: "/users/software", children: /* @__PURE__ */ jsx14("code", { children: "supy" }) }),
+      " and is what its simulator module computes with, so a response derived there matches this figure. Which bands exist on a particular tile is reported on the ",
+      /* @__PURE__ */ jsx14(Link9, { to: "/users/access", children: "data access page" }),
+      ", and how much of the sky each band has reached is on the",
+      " ",
+      /* @__PURE__ */ jsx14(Link9, { to: "/users/status", children: "status page" }),
+      ", which draws the same curves."
+    ] })
+  ] }),
+  /* @__PURE__ */ jsxs11(Section, { eyebrow: "Image quality", title: "Point-spread function", alt: !0, children: [
+    /* @__PURE__ */ jsxs11("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsxs11("div", { children: [
+        /* @__PURE__ */ jsx14("p", { className: "prose", children: performanceText }),
+        /* @__PURE__ */ jsx14("p", { className: "footnote", style: { marginTop: "1rem" }, children: "Measured from the point-spread function across the field of view by the Py7DT pipeline as part of routine astrometric and photometric processing, so the figures are delivered image quality in survey operation rather than a specification. Image quality is monitored continuously; units are re-aligned individually as needed." })
+      ] }),
+      /* @__PURE__ */ jsx14(SimpleTable, { caption: "Delivered image quality", rows: PSF })
+    ] }),
+    /* @__PURE__ */ jsx14("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx14(
+      Figure,
+      {
+        src: "/img/images/Seeing_2025-2026.png",
+        alt: "Violin plot of the delivered seeing distribution in each 7DT band over 2025 and 2026, with the median marked for each",
+        label: "Delivered seeing, by band",
+        caption: "Distribution of measured seeing in every band over the 2025\u20132026 seasons, with the median marked on each. Medians run from 2.0 arcseconds in r, m700 and m775 to 2.7 in m575: the variation is the observing conditions the band happened to be taken in, not a property of the filter. The width of each violin is the number of exposures reaching that seeing."
+      }
+    ) }),
+    /* @__PURE__ */ jsx14("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx14(
+      Figure,
+      {
+        src: "/img/images/Seeing_by_unit_2025-2026.png",
+        alt: "Violin plot of the delivered seeing distribution for each of the sixteen operational 7DT units over 2025 and 2026",
+        label: "Delivered seeing, by unit",
+        caption: "The same measurements grouped by telescope rather than by band, over all sixteen operational units. Medians lie between 2.0 and 2.8 arcseconds, so the array behaves as a coherent set of instruments rather than sixteen separate ones \u2014 which is what makes coadding across units sound."
+      }
+    ) }),
+    /* @__PURE__ */ jsx14("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx14(StatGrid, { items: specs_default.performance }) })
+  ] }),
+  /* @__PURE__ */ jsxs11(Section, { eyebrow: "Photometry", title: "Photometric zero point", children: [
+    /* @__PURE__ */ jsxs11("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsx14("p", { className: "prose", children: photometryText }),
+      /* @__PURE__ */ jsx14(SimpleTable, { caption: "Calibration", rows: ZEROPOINT })
+    ] }),
+    /* @__PURE__ */ jsx14("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx14(
+      Figure,
+      {
+        src: "/img/images/zeropoint.png",
+        alt: "Violin plot of the spatial zero-point RMSE in each band across 1167 deep-stack tiles, rising from about 0.010 magnitudes in the blue to 0.064 in m875",
+        label: "Zero-point uniformity across a stack",
+        caption: "Spatial zero-point RMSE within DP2 deep stacks, measured in a 5-arcsecond aperture over 1,167 tiles \u2014 how much the calibration varies from place to place inside one image, which is a different quantity from the overall zero-point uncertainty quoted above. Medians run from 0.010 mag in r to 0.064 mag in m875, flat across the blue and green bands and climbing steadily redward of 775 nm with falling detector quantum efficiency."
+      }
+    ) }),
+    /* @__PURE__ */ jsx14("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: "Zero points are determined per image by Py7DT with 3\u03C3 clipping across multiple aperture sizes, against corrected synthetic photometry of matched Gaia sources. The fifteen filters installed in late 2025 are not yet spectrophotometrically calibrated and are excluded from the figures above; a calibration campaign following the same procedure is planned. Full methodology is in preparation (Paek et al.)." })
+  ] }),
+  /* @__PURE__ */ jsxs11(Section, { eyebrow: "Depth", title: "A 100-second exposure", alt: !0, children: [
+    /* @__PURE__ */ jsx14("p", { className: "prose", children: depthText }),
+    /* @__PURE__ */ jsxs11("div", { className: "split split--wide-text", style: { marginTop: "2rem" }, children: [
+      /* @__PURE__ */ jsx14(SimpleTable, { caption: specs_default.depths.caption, rows: specs_default.depths.rows }),
+      /* @__PURE__ */ jsxs11("div", { children: [
+        /* @__PURE__ */ jsx14("p", { className: "footnote", children: "One hundred seconds is the fiducial 7DS exposure: every survey visit is built from it, so a depth quoted for any programme is this number scaled by the number of frames coadded. Background-limited, so four frames buy 0.75 mag." }),
+        /* @__PURE__ */ jsx14("p", { className: "footnote", style: { marginTop: "1rem" }, children: "Nominal conditions: seeing better than 2.0 arcseconds, airmass below 1.5, and a non-bright night. The spread around each figure on a real night is the width of the violins below." })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx14("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx14(
+      Figure,
+      {
+        src: "/img/images/depth-distribution.png",
+        alt: "Violin plot of the 5-sigma limiting magnitude distribution for each 7DT band in a 100-second exposure",
+        label: "Measured depth per band",
+        caption: "Distribution of single-exposure 5\u03C3 point-source depths for the twenty original medium bands and Sloan g, r, i and z, measured from individual 100-second exposures taken in routine survey operation, with the median marked on each. They run from 20.59 mag in Sloan g down to 16.60 in m875, following the system response above. The width of each violin is the number of exposures reaching that magnitude; the spread within a band is the variation in seeing, airmass and sky brightness across real nights. The fifteen filters added in late 2025 are not included, their spectrophotometric calibration being incomplete."
+      }
+    ) })
+  ] }),
+  /* @__PURE__ */ jsxs11(Section, { eyebrow: "Depth", title: "What each survey reaches", children: [
+    /* @__PURE__ */ jsx14("p", { className: "prose", children: "The three surveys spend that fiducial exposure differently \u2014 over the whole southern sky once, over a smaller area every ten to fourteen days, or on one field every night \u2014 so they arrive at very different depths from the same instrument." }),
+    /* @__PURE__ */ jsx14("div", { className: "table-wrap", style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsxs11("table", { className: "spec-table", children: [
+      /* @__PURE__ */ jsx14("caption", { children: "Depth reached by each survey, 5\u03C3 in m600" }),
+      /* @__PURE__ */ jsx14("thead", { children: /* @__PURE__ */ jsxs11("tr", { children: [
+        /* @__PURE__ */ jsx14("th", { scope: "col", children: "Survey" }),
+        /* @__PURE__ */ jsx14("th", { scope: "col", children: "Area" }),
+        /* @__PURE__ */ jsx14("th", { scope: "col", children: "Cadence" }),
+        /* @__PURE__ */ jsx14("th", { scope: "col", children: "Depth" })
+      ] }) }),
+      /* @__PURE__ */ jsx14("tbody", { children: surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsxs11("tr", { children: [
+        /* @__PURE__ */ jsx14("th", { scope: "row", children: /* @__PURE__ */ jsx14(Link9, { to: `/survey/${tier4.code.toLowerCase()}`, children: tier4.code }) }),
+        /* @__PURE__ */ jsx14("td", { children: tier4.area }),
+        /* @__PURE__ */ jsx14("td", { children: tier4.cadence }),
+        /* @__PURE__ */ jsx14("td", { children: tier4.depth })
+      ] }, tier4.code)) })
+    ] }) }),
+    /* @__PURE__ */ jsxs11("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: [
+      "The RIS figure is one visit of 3 \xD7 100 s. Figures marked with an asterisk are cumulative over the planned operation rather than the depth of any single visit, and are targets:",
+      " ",
+      /* @__PURE__ */ jsx14(Link9, { to: "/users/status", children: "status and overview" }),
+      " reports what has actually been observed, and the coverage map on the",
+      " ",
+      /* @__PURE__ */ jsx14(Link9, { to: "/users/access", children: "data access page" }),
+      " gives the integration time and estimated depth reached on any individual tile."
+    ] })
+  ] }),
+  /* @__PURE__ */ jsxs11(Section, { eyebrow: "Next", title: "Planning an observation", alt: !0, children: [
+    /* @__PURE__ */ jsxs11("p", { className: "prose", children: [
+      "To turn these figures into an expected signal-to-noise, combine the depths with the response curves: the ",
+      /* @__PURE__ */ jsx14("code", { children: "supy" }),
+      " package has a simulator module that generates filter and detector response for the 7DT bands, and an observer module for target visibility from El Sauce."
+    ] }),
+    /* @__PURE__ */ jsxs11("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
+      /* @__PURE__ */ jsx14(Link9, { className: "btn btn--primary", to: "/users/status", children: "Current status" }),
+      /* @__PURE__ */ jsx14(Link9, { className: "btn btn--secondary", to: "/users/software", children: "Software" }),
+      /* @__PURE__ */ jsx14(Link9, { className: "btn btn--secondary", to: "/users/propose", children: "How to propose" }),
+      /* @__PURE__ */ jsx14(Link9, { className: "btn btn--secondary", to: "/telescope/instrument", children: "Instrument specification" })
+    ] })
+  ] })
+] }), users_performance_default = Index8;
 
 // app/routes/publication.list.tsx
 var publication_list_exports = {};
 __export(publication_list_exports, {
   default: () => publication_list_default,
-  meta: () => meta8
+  meta: () => meta9
 });
 import { useMemo, useState as useState3 } from "react";
 import { Pagination } from "flowbite-react";
@@ -1812,17 +2093,17 @@ var news_default = {
 };
 
 // app/routes/publication.list.tsx
-import { jsx as jsx14, jsxs as jsxs11 } from "react/jsx-runtime";
-var meta8 = () => [
+import { jsx as jsx15, jsxs as jsxs12 } from "react/jsx-runtime";
+var meta9 = () => [
   { title: "Publications \xB7 7-Dimensional Telescope" },
   { name: "description", content: "Refereed papers and conference proceedings from the 7DT collaboration." }
-], PER_PAGE = 6, Index8 = () => {
+], PER_PAGE = 6, Index9 = () => {
   let [currentPage, setCurrentPage] = useState3(1), [showAbstract, setShowAbstract] = useState3(!1), pubs = useMemo(
     () => news_default.news.filter((item) => item.type === "publication"),
     []
   ), totalPages = Math.max(1, Math.ceil(pubs.length / PER_PAGE)), page = Math.min(currentPage, totalPages), shown = pubs.slice((page - 1) * PER_PAGE, page * PER_PAGE);
-  return /* @__PURE__ */ jsxs11(PageLayout, { menu: "manuPaper", children: [
-    /* @__PURE__ */ jsx14(
+  return /* @__PURE__ */ jsxs12(PageLayout, { menu: "manuPaper", children: [
+    /* @__PURE__ */ jsx15(
       PageHero,
       {
         eyebrow: "Publications",
@@ -1832,28 +2113,28 @@ var meta8 = () => [
         meta: [{ value: String(pubs.length), label: "Listed works" }]
       }
     ),
-    /* @__PURE__ */ jsxs11("div", { className: "notice", children: [
-      /* @__PURE__ */ jsxs11("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.7", "aria-hidden": "true", children: [
-        /* @__PURE__ */ jsx14("circle", { cx: "12", cy: "12", r: "9" }),
-        /* @__PURE__ */ jsx14("path", { d: "M12 8h.01M11 12h1v5h1", strokeLinecap: "round" })
+    /* @__PURE__ */ jsxs12("div", { className: "notice", children: [
+      /* @__PURE__ */ jsxs12("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.7", "aria-hidden": "true", children: [
+        /* @__PURE__ */ jsx15("circle", { cx: "12", cy: "12", r: "9" }),
+        /* @__PURE__ */ jsx15("path", { d: "M12 8h.01M11 12h1v5h1", strokeLinecap: "round" })
       ] }),
-      /* @__PURE__ */ jsxs11("span", { children: [
+      /* @__PURE__ */ jsxs12("span", { children: [
         "Publishing with 7DT data? Please read the",
         " ",
-        /* @__PURE__ */ jsx14("a", { href: "/publication/policy", children: "publication policy" }),
+        /* @__PURE__ */ jsx15("a", { href: "/publication/policy", children: "publication policy" }),
         " first."
       ] })
     ] }),
-    /* @__PURE__ */ jsxs11(Section, { eyebrow: "Bibliography", title: "Meet our work", children: [
-      /* @__PURE__ */ jsxs11("div", { className: "toolbar", children: [
-        /* @__PURE__ */ jsxs11("span", { className: "toolbar__label", children: [
+    /* @__PURE__ */ jsxs12(Section, { eyebrow: "Bibliography", title: "Meet our work", children: [
+      /* @__PURE__ */ jsxs12("div", { className: "toolbar", children: [
+        /* @__PURE__ */ jsxs12("span", { className: "toolbar__label", children: [
           pubs.length,
           " publications \xB7 page ",
           page,
           " of ",
           totalPages
         ] }),
-        /* @__PURE__ */ jsx14(
+        /* @__PURE__ */ jsx15(
           "button",
           {
             type: "button",
@@ -1864,72 +2145,72 @@ var meta8 = () => [
           }
         )
       ] }),
-      /* @__PURE__ */ jsx14("ul", { className: "pub-list", children: shown.map((pub, index) => /* @__PURE__ */ jsxs11("li", { className: "pub", children: [
-        /* @__PURE__ */ jsx14("h2", { className: "pub__title", children: pub.webpage ? /* @__PURE__ */ jsx14("a", { href: pub.webpage, target: "_blank", rel: "noreferrer", children: pub.title }) : pub.title }),
-        /* @__PURE__ */ jsx14("p", { className: "pub__authors", children: pub.author }),
-        /* @__PURE__ */ jsxs11("div", { className: "pub__meta", children: [
-          pub.journal && /* @__PURE__ */ jsxs11("span", { children: [
-            /* @__PURE__ */ jsx14("b", { children: "Journal" }),
+      /* @__PURE__ */ jsx15("ul", { className: "pub-list", children: shown.map((pub, index) => /* @__PURE__ */ jsxs12("li", { className: "pub", children: [
+        /* @__PURE__ */ jsx15("h2", { className: "pub__title", children: pub.webpage ? /* @__PURE__ */ jsx15("a", { href: pub.webpage, target: "_blank", rel: "noreferrer", children: pub.title }) : pub.title }),
+        /* @__PURE__ */ jsx15("p", { className: "pub__authors", children: pub.author }),
+        /* @__PURE__ */ jsxs12("div", { className: "pub__meta", children: [
+          pub.journal && /* @__PURE__ */ jsxs12("span", { children: [
+            /* @__PURE__ */ jsx15("b", { children: "Journal" }),
             pub.journal
           ] }),
-          pub.date && /* @__PURE__ */ jsxs11("span", { children: [
-            /* @__PURE__ */ jsx14("b", { children: "Date" }),
+          pub.date && /* @__PURE__ */ jsxs12("span", { children: [
+            /* @__PURE__ */ jsx15("b", { children: "Date" }),
             pub.date
           ] }),
-          pub.doi && /* @__PURE__ */ jsxs11("span", { children: [
-            /* @__PURE__ */ jsx14("b", { children: "doi" }),
-            /* @__PURE__ */ jsx14("a", { href: pub.webpage, target: "_blank", rel: "noreferrer", children: pub.doi })
+          pub.doi && /* @__PURE__ */ jsxs12("span", { children: [
+            /* @__PURE__ */ jsx15("b", { children: "doi" }),
+            /* @__PURE__ */ jsx15("a", { href: pub.webpage, target: "_blank", rel: "noreferrer", children: pub.doi })
           ] }),
-          pub.preprint && /* @__PURE__ */ jsxs11("span", { children: [
-            /* @__PURE__ */ jsx14("b", { children: "Preprint" }),
-            /* @__PURE__ */ jsx14("a", { href: pub.webpage2, target: "_blank", rel: "noreferrer", children: pub.preprint })
+          pub.preprint && /* @__PURE__ */ jsxs12("span", { children: [
+            /* @__PURE__ */ jsx15("b", { children: "Preprint" }),
+            /* @__PURE__ */ jsx15("a", { href: pub.webpage2, target: "_blank", rel: "noreferrer", children: pub.preprint })
           ] }),
-          !pub.doi && !pub.preprint && pub.ref && /* @__PURE__ */ jsxs11("span", { children: [
-            /* @__PURE__ */ jsx14("b", { children: "Ref" }),
+          !pub.doi && !pub.preprint && pub.ref && /* @__PURE__ */ jsxs12("span", { children: [
+            /* @__PURE__ */ jsx15("b", { children: "Ref" }),
             pub.ref
           ] })
         ] }),
-        showAbstract && pub.abstract && /* @__PURE__ */ jsx14("p", { className: "pub__abstract", children: pub.abstract })
+        showAbstract && pub.abstract && /* @__PURE__ */ jsx15("p", { className: "pub__abstract", children: pub.abstract })
       ] }, `${pub.title}-${index}`)) }),
-      totalPages > 1 && /* @__PURE__ */ jsx14("div", { className: "pagination-wrap", children: /* @__PURE__ */ jsx14(Pagination, { currentPage: page, totalPages, onPageChange: setCurrentPage }) })
+      totalPages > 1 && /* @__PURE__ */ jsx15("div", { className: "pagination-wrap", children: /* @__PURE__ */ jsx15(Pagination, { currentPage: page, totalPages, onPageChange: setCurrentPage }) })
     ] })
   ] });
-}, publication_list_default = Index8;
+}, publication_list_default = Index9;
 
 // app/routes/science.galactic.tsx
 var science_galactic_exports = {};
 __export(science_galactic_exports, {
   default: () => science_galactic_default,
-  meta: () => meta9
+  meta: () => meta10
 });
-import { jsx as jsx15 } from "react/jsx-runtime";
-var meta9 = () => topicMeta("galactic"), Index9 = () => /* @__PURE__ */ jsx15(ScienceTopic, { id: "galactic" }), science_galactic_default = Index9;
+import { jsx as jsx16 } from "react/jsx-runtime";
+var meta10 = () => topicMeta("galactic"), Index10 = () => /* @__PURE__ */ jsx16(ScienceTopic, { id: "galactic" }), science_galactic_default = Index10;
 
 // app/routes/science.galaxies.tsx
 var science_galaxies_exports = {};
 __export(science_galaxies_exports, {
   default: () => science_galaxies_default,
-  meta: () => meta10
+  meta: () => meta11
 });
-import { jsx as jsx16 } from "react/jsx-runtime";
-var meta10 = () => topicMeta("galaxies"), Index10 = () => /* @__PURE__ */ jsx16(ScienceTopic, { id: "galaxies" }), science_galaxies_default = Index10;
+import { jsx as jsx17 } from "react/jsx-runtime";
+var meta11 = () => topicMeta("galaxies"), Index11 = () => /* @__PURE__ */ jsx17(ScienceTopic, { id: "galaxies" }), science_galaxies_default = Index11;
 
 // app/routes/science.overview.tsx
 var science_overview_exports = {};
 __export(science_overview_exports, {
   default: () => science_overview_default,
-  meta: () => meta11
+  meta: () => meta12
 });
-import { Link as Link9 } from "@remix-run/react";
-import { jsx as jsx17, jsxs as jsxs12 } from "react/jsx-runtime";
-var meta11 = () => [
+import { Link as Link10 } from "@remix-run/react";
+import { jsx as jsx18, jsxs as jsxs13 } from "react/jsx-runtime";
+var meta12 = () => [
   { title: "Science \xB7 7-Dimensional Telescope" },
   {
     name: "description",
     content: "What 7DS is built to measure: spectral mapping and the time domain, and the science themes that follow from them."
   }
-], Index11 = () => /* @__PURE__ */ jsxs12(PageLayout, { menu: "manuScience", children: [
-  /* @__PURE__ */ jsx17(
+], Index12 = () => /* @__PURE__ */ jsxs13(PageLayout, { menu: "manuScience", children: [
+  /* @__PURE__ */ jsx18(
     PageHero,
     {
       eyebrow: "Science",
@@ -1943,32 +2224,32 @@ var meta11 = () => [
       ]
     }
   ),
-  /* @__PURE__ */ jsxs12(Section, { eyebrow: "Spectral mapping", title: "A spectrum for every source in the field", children: [
-    /* @__PURE__ */ jsx17("p", { className: "prose", children: scienceOverviewText }),
-    /* @__PURE__ */ jsxs12("p", { className: "prose", children: [
+  /* @__PURE__ */ jsxs13(Section, { eyebrow: "Spectral mapping", title: "A spectrum for every source in the field", children: [
+    /* @__PURE__ */ jsx18("p", { className: "prose", children: scienceOverviewText }),
+    /* @__PURE__ */ jsxs13("p", { className: "prose", children: [
       "The practical consequence is that classification does not depend on follow-up. A source detected in a 7DS image already carries the information needed to estimate a photometric redshift, separate a quasar from a star, or distinguish a kilonova from the supernovae and detector artifacts that outnumber it \u2014 at the moment of detection, for every object in 1.25 square degrees. The filter set that makes this possible, and which bands exist on a given tile, are described under ",
-      /* @__PURE__ */ jsx17(Link9, { to: "/users/status", children: "status and overview" }),
+      /* @__PURE__ */ jsx18(Link10, { to: "/users/status", children: "status and overview" }),
       "."
     ] })
   ] }),
-  /* @__PURE__ */ jsxs12(Section, { eyebrow: "Time domain", title: "Repeating the measurement", alt: !0, children: [
-    /* @__PURE__ */ jsx17("p", { className: "prose", children: scienceOverviewText2 }),
-    /* @__PURE__ */ jsxs12("p", { className: "prose", children: [
+  /* @__PURE__ */ jsxs13(Section, { eyebrow: "Time domain", title: "Repeating the measurement", alt: !0, children: [
+    /* @__PURE__ */ jsx18("p", { className: "prose", children: scienceOverviewText2 }),
+    /* @__PURE__ */ jsxs13("p", { className: "prose", children: [
       "The three surveys exist to put that repetition at different cadences: one visit everywhere, a revisit every 10 to 14 days over a smaller area, and nightly observation of a single deep field. Which cadence a question needs is what determines which survey serves it \u2014 set out under ",
-      /* @__PURE__ */ jsx17(Link9, { to: "/survey/overview", children: "survey design" }),
+      /* @__PURE__ */ jsx18(Link10, { to: "/survey/overview", children: "survey design" }),
       "."
     ] })
   ] }),
-  /* @__PURE__ */ jsxs12(Section, { eyebrow: "Reach", title: "What the questions require", children: [
-    /* @__PURE__ */ jsxs12("div", { className: "prose", children: [
-      /* @__PURE__ */ jsx17("p", { children: "Spectral information is only useful as far out as the survey can detect a source, and the depth reached at each wavelength is what decides which of the questions below are answerable. Sampling the spectrum in many narrow steps costs depth per band relative to a broadband survey of the same aperture, and the survey design trades that against the three cadences." }),
-      /* @__PURE__ */ jsxs12("p", { children: [
+  /* @__PURE__ */ jsxs13(Section, { eyebrow: "Reach", title: "What the questions require", children: [
+    /* @__PURE__ */ jsxs13("div", { className: "prose", children: [
+      /* @__PURE__ */ jsx18("p", { children: "Spectral information is only useful as far out as the survey can detect a source, and the depth reached at each wavelength is what decides which of the questions below are answerable. Sampling the spectrum in many narrow steps costs depth per band relative to a broadband survey of the same aperture, and the survey design trades that against the three cadences." }),
+      /* @__PURE__ */ jsxs13("p", { children: [
         "The comparison below also shows why 7DS and SPHEREx are complementary rather than redundant: they reach similar depth over overlapping wavelengths, but 7DS resolves the sky roughly ten times more finely, so a 7DS pixel is a measurement of one source where a SPHEREx pixel is a blend of several. Measured per-band depths for the current filter set are on the ",
-        /* @__PURE__ */ jsx17(Link9, { to: "/users/overview", children: "overview page" }),
+        /* @__PURE__ */ jsx18(Link10, { to: "/users/performance", children: "performance page" }),
         "."
       ] })
     ] }),
-    /* @__PURE__ */ jsx17("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx17(
+    /* @__PURE__ */ jsx18("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx18(
       Figure,
       {
         src: "/img/science/survey-depth.jpg",
@@ -1978,150 +2259,36 @@ var meta11 = () => [
       }
     ) })
   ] }),
-  /* @__PURE__ */ jsxs12(Section, { eyebrow: "Program", title: "Seven science themes", alt: !0, children: [
-    /* @__PURE__ */ jsx17("p", { className: "prose", children: "Each theme below draws on the same data product: a medium-band spectral energy distribution for every source in the field, measured repeatedly." }),
-    /* @__PURE__ */ jsx17("div", { className: "grid grid-cols-2", style: { marginTop: "2rem" }, children: science_default.themes.map((theme) => /* @__PURE__ */ jsxs12(Link9, { className: "theme-card", to: `/science/${theme.id}`, children: [
-      /* @__PURE__ */ jsx17("span", { className: "theme-card__index", children: theme.n }),
-      /* @__PURE__ */ jsx17("h3", { className: "theme-card__title", children: theme.title }),
-      /* @__PURE__ */ jsx17("p", { className: "theme-card__body", children: theme.question ?? theme.summary })
+  /* @__PURE__ */ jsxs13(Section, { eyebrow: "Program", title: "Seven science themes", alt: !0, children: [
+    /* @__PURE__ */ jsx18("p", { className: "prose", children: "Each theme below draws on the same data product: a medium-band spectral energy distribution for every source in the field, measured repeatedly." }),
+    /* @__PURE__ */ jsx18("div", { className: "grid grid-cols-2", style: { marginTop: "2rem" }, children: science_default.themes.map((theme) => /* @__PURE__ */ jsxs13(Link10, { className: "theme-card", to: `/science/${theme.id}`, children: [
+      /* @__PURE__ */ jsx18("span", { className: "theme-card__index", children: theme.n }),
+      /* @__PURE__ */ jsx18("h3", { className: "theme-card__title", children: theme.title }),
+      /* @__PURE__ */ jsx18("p", { className: "theme-card__body", children: theme.question ?? theme.summary })
     ] }, theme.id)) }),
-    /* @__PURE__ */ jsx17("div", { className: "btn-row", style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx17(Link9, { className: "btn btn--secondary", to: "/publication/list", children: "Publications" }) })
+    /* @__PURE__ */ jsx18("div", { className: "btn-row", style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx18(Link10, { className: "btn btn--secondary", to: "/publication/list", children: "Publications" }) })
   ] })
-] }), science_overview_default = Index11;
+] }), science_overview_default = Index12;
 
 // app/routes/survey.coverage.tsx
 var survey_coverage_exports = {};
 __export(survey_coverage_exports, {
-  loader: () => loader2
+  loader: () => loader
 });
-import { redirect as redirect2 } from "@remix-run/node";
-function loader2() {
-  return redirect2("/users/access", 301);
+import { redirect } from "@remix-run/node";
+function loader() {
+  return redirect("/users/access", 301);
 }
 
 // app/routes/survey.overview.tsx
 var survey_overview_exports = {};
 __export(survey_overview_exports, {
   default: () => survey_overview_default,
-  meta: () => meta12
+  meta: () => meta13
 });
-import { Link as Link10 } from "@remix-run/react";
-
-// app/routes/content/surveys.json
-var surveys_default = {
-  note: "The three tiers of the 7-Dimensional Sky Survey. Design parameters from Kim et al., Proc. SPIE 14147-84, Sec. 4 and Table 2. Progress figures are NOT stored here \u2014 they are read live from the portal by app/lib/portal.server.ts, so nothing in this file goes stale as the survey advances.",
-  depthFootnote: "*WTS and IMS depths are cumulative over the planned five-year operation, not the depth of a single visit. RIS depth is that of one visit.",
-  tiers: [
-    {
-      code: "RIS",
-      name: "Reference Imaging Survey",
-      status: "live",
-      statusLabel: "Observing",
-      area: "23,000 deg\xB2",
-      region: "Dec < +20\xB0",
-      cadence: "Single visit",
-      depth: "19.1 mag",
-      depthNote: "5\u03C3 point source in m600, single visit (3 \xD7 100 s)",
-      started: "July 2024",
-      summary: "The wide-area survey of 7DS. Every tile of the southern sky is observed once with the full set of available medium bands, in three consecutive 100-second exposures. RIS images serve two purposes at once: reference frames against which transients are identified by difference imaging, and a homogeneous spectrophotometric map of the southern sky usable for galaxy population studies, photometric redshift catalogs and quasar identification. Full-cycle completion is anticipated by the end of 2027.",
-      depthRange: "5\u03C3 depths range from 19.7 mag at m400 to 17.2 mag at m875.",
-      tradeoff: "Area over depth and cadence",
-      goal: "Give every part of the southern sky a medium-band reference image, once.",
-      rationale: "Difference imaging requires an earlier image of the same sky in the same bands. RIS builds that reference, and its scale follows from the problem: a gravitational-wave localization can fall anywhere, so the reference must cover everything the array can reach. Covering 23,000 deg\xB2 limits the time available per tile to a single visit of 3 \xD7 100 s, which makes RIS the shallowest of the three surveys. A reference map built from forty medium bands is also a homogeneous spectrophotometric survey in its own right, so the same exposures support galaxy population studies, photometric redshifts and quasar identification."
-    },
-    {
-      code: "WTS",
-      name: "Wide-area Time-domain Survey",
-      status: "planned",
-      statusLabel: "Commencing 2026",
-      area: "800\u20131,200 deg\xB2",
-      region: "Fields with near-infrared ancillary data",
-      cadence: "10\u201314 days",
-      depth: "22.2 mag*",
-      depthNote: "*Cumulative over the planned five-year operation",
-      started: "2026",
-      summary: "WTS extends 7DS into the time domain over a moderately wide area, sustained over a five-year operational period. Field selection prioritizes regions with existing near-infrared coverage, including the VISTA Kilo-degree Infrared Galaxy (VIKING) survey footprint and the Vera C. Rubin Observatory Deep Drilling Fields, so that 7DT data are complemented at wavelengths the array cannot reach. Roughly 90 to 100 visits per tile accumulate to 22.0\u201322.5 mag in the majority of medium bands.",
-      depthRange: "Science cases include reverberation mapping of AGN, long-period variables and eclipsing systems, and slow-evolving extragalactic transients such as superluminous supernovae and tidal disruption events.",
-      tradeoff: "Cadence over area",
-      goal: "Follow what changes on timescales of weeks, and stack deep enough to reach faint galaxies.",
-      rationale: "A single epoch measures what is present, not what is changing. WTS covers a smaller area in order to revisit it every 10 to 14 days, an interval matched to what evolves on that timescale: reverberation in active galactic nuclei, long-period variable and eclipsing stars, and slow extragalactic transients such as superluminous supernovae and tidal disruption events. Repetition also accumulates depth: 90 to 100 visits per tile stack to 22.0\u201322.5 mag across most medium bands, sufficient for photometric redshifts on galaxies well below the single-visit limit. Fields are selected where near-infrared data already exist \u2014 the VIKING footprint and the Rubin Deep Drilling Fields \u2014 covering wavelengths 7DT cannot reach."
-    },
-    {
-      code: "IMS",
-      name: "Intensive Monitoring Survey",
-      status: "live",
-      statusLabel: "Observing",
-      area: "8.5 deg\xB2",
-      region: "AKARI / SPHEREx Deep Field South",
-      cadence: "1 day",
-      depth: "23.6 mag*",
-      depthNote: "*Cumulative over the planned five-year operation",
-      started: "April 2025",
-      summary: "The deep, high-cadence survey of 7DS. Seven tiles near the south ecliptic pole are observed every available night with the full medium-band set. The field was deliberately chosen to overlap the SPHEREx Deep Field South, so that 7DT optical medium-band photometry is co-located with SPHEREx near-infrared spectrophotometry within the same survey volume \u2014 a choice that maximizes the synergy between the two surveys for photometric redshifts and for spatially resolved studies of faint sources.",
-      depthRange: "Field center: RA 05h13m07.36s, Dec \u221260\xB028\u203211.71\u2033. Observing time budget of 20,000 minutes per year.",
-      tradeoff: "Depth and cadence over area",
-      goal: "Catch variability within a single night, and build the deepest photometry 7DS will produce.",
-      rationale: "Some sources vary faster than a wide survey can follow. IMS reduces area to about 8.5 deg\xB2 \u2014 seven tiles \u2014 in order to observe every available night, which is what is required to characterize short-period variables, active galactic nuclei on short timescales, and transients appearing within the field. Observing the same tiles nightly for five years also coadds to the deepest photometry the survey will produce, about 23.6 mag at peak sensitivity. The field position was chosen to overlap the SPHEREx Deep Field South, so that 7DT optical medium-band photometry and SPHEREx near-infrared spectrophotometry cover the same volume."
-    }
-  ],
-  modes: [
-    {
-      name: "Spec",
-      tagline: "Maximum spectral resolution",
-      body: "The default mode. Units rotate through every available medium and broad band, covering the full spectral range in as few exposures as the filter distribution allows. This is the mode in which 7DT delivers low-resolution spectroscopy over 1.25 square degrees."
-    },
-    {
-      name: "Deep",
-      tagline: "Maximum depth",
-      body: "A selected subset of filters is used, trading spectral sampling for signal-to-noise. Used when the question is detection rather than characterization."
-    },
-    {
-      name: "Color",
-      tagline: "Broadband, fast",
-      body: "Broad-band filters only. Used for faint, fast events such as gamma-ray bursts and young supernovae, where early detection on the light curve matters more than spectral detail."
-    },
-    {
-      name: "Search",
-      tagline: "Maximum sky coverage",
-      body: "Each unit points at a different region of sky. A gravitational-wave counterpart is localized only to a probable region covering a wide area, so covering that area quickly takes priority over observing any single field deeply."
-    }
-  ],
-  dimensions: [
-    {
-      n: "01",
-      label: "Right ascension"
-    },
-    {
-      n: "02",
-      label: "Declination"
-    },
-    {
-      n: "03",
-      label: "Distance"
-    },
-    {
-      n: "04",
-      label: "Radial velocity"
-    },
-    {
-      n: "05",
-      label: "Brightness"
-    },
-    {
-      n: "06",
-      label: "Wavelength"
-    },
-    {
-      n: "07",
-      label: "Time"
-    }
-  ],
-  designNote: "Area, cadence and depth cannot all be maximized from a fixed number of nights. Rather than adopt a single compromise, 7DS operates at three separate points in that trade, and ties them together by using one tiling for all three, so that data from any of them coadd directly with data from the others."
-};
-
-// app/routes/survey.overview.tsx
-import { Fragment as Fragment5, jsx as jsx18, jsxs as jsxs13 } from "react/jsx-runtime";
-var meta12 = () => [
+import { Link as Link11 } from "@remix-run/react";
+import { Fragment as Fragment5, jsx as jsx19, jsxs as jsxs14 } from "react/jsx-runtime";
+var meta13 = () => [
   { title: "7-Dimensional Sky Survey \xB7 7DT" },
   {
     name: "description",
@@ -2138,14 +2305,14 @@ var meta12 = () => [
   RIS: "/survey/ris",
   WTS: "/survey/wts",
   IMS: "/survey/ims"
-}, Index12 = () => /* @__PURE__ */ jsxs13(PageLayout, { menu: "manu7ds", children: [
-  /* @__PURE__ */ jsx18(
+}, Index13 = () => /* @__PURE__ */ jsxs14(PageLayout, { menu: "manu7ds", children: [
+  /* @__PURE__ */ jsx19(
     PageHero,
     {
       eyebrow: "Survey",
-      title: /* @__PURE__ */ jsxs13(Fragment5, { children: [
+      title: /* @__PURE__ */ jsxs14(Fragment5, { children: [
         "The 7-Dimensional ",
-        /* @__PURE__ */ jsx18("em", { children: "Sky Survey" })
+        /* @__PURE__ */ jsx19("em", { children: "Sky Survey" })
       ] }),
       lede: "7DS is the science program of 7DT. It comprises three surveys that differ in area, cadence and depth, and that share one tiling of the sky.",
       image: "/img/hero/survey.jpg",
@@ -2157,87 +2324,717 @@ var meta12 = () => [
       ]
     }
   ),
-  /* @__PURE__ */ jsxs13(Section, { eyebrow: "Overview", title: "Three surveys on one tiling", children: [
-    /* @__PURE__ */ jsx18("p", { className: "prose", children: surveyOverviewText }),
-    /* @__PURE__ */ jsx18("div", { className: "table-wrap", style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsxs13("table", { className: "tier-table", children: [
-      /* @__PURE__ */ jsx18("caption", { children: "Design parameters of the three surveys" }),
-      /* @__PURE__ */ jsx18("thead", { children: /* @__PURE__ */ jsxs13("tr", { children: [
-        /* @__PURE__ */ jsx18("th", { scope: "col", children: "Property" }),
-        surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx18("th", { scope: "col", children: /* @__PURE__ */ jsx18(Link10, { to: PAGES[tier4.code], children: tier4.code }) }, tier4.code))
+  /* @__PURE__ */ jsxs14(Section, { eyebrow: "Overview", title: "Three surveys on one tiling", children: [
+    /* @__PURE__ */ jsx19("p", { className: "prose", children: surveyOverviewText }),
+    /* @__PURE__ */ jsx19("div", { className: "table-wrap", style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsxs14("table", { className: "tier-table", children: [
+      /* @__PURE__ */ jsx19("caption", { children: "Design parameters of the three surveys" }),
+      /* @__PURE__ */ jsx19("thead", { children: /* @__PURE__ */ jsxs14("tr", { children: [
+        /* @__PURE__ */ jsx19("th", { scope: "col", children: "Property" }),
+        surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx19("th", { scope: "col", children: /* @__PURE__ */ jsx19(Link11, { to: PAGES[tier4.code], children: tier4.code }) }, tier4.code))
       ] }) }),
-      /* @__PURE__ */ jsxs13("tbody", { children: [
-        /* @__PURE__ */ jsxs13("tr", { children: [
-          /* @__PURE__ */ jsx18("th", { scope: "row", children: "Survey area" }),
-          surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx18("td", { children: tier4.area }, tier4.code))
+      /* @__PURE__ */ jsxs14("tbody", { children: [
+        /* @__PURE__ */ jsxs14("tr", { children: [
+          /* @__PURE__ */ jsx19("th", { scope: "row", children: "Survey area" }),
+          surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx19("td", { children: tier4.area }, tier4.code))
         ] }),
-        /* @__PURE__ */ jsxs13("tr", { children: [
-          /* @__PURE__ */ jsx18("th", { scope: "row", children: "Target region" }),
-          surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx18("td", { children: tier4.region }, tier4.code))
+        /* @__PURE__ */ jsxs14("tr", { children: [
+          /* @__PURE__ */ jsx19("th", { scope: "row", children: "Target region" }),
+          surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx19("td", { children: tier4.region }, tier4.code))
         ] }),
-        /* @__PURE__ */ jsxs13("tr", { children: [
-          /* @__PURE__ */ jsx18("th", { scope: "row", children: "Cadence" }),
-          surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx18("td", { children: tier4.cadence }, tier4.code))
+        /* @__PURE__ */ jsxs14("tr", { children: [
+          /* @__PURE__ */ jsx19("th", { scope: "row", children: "Cadence" }),
+          surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx19("td", { children: tier4.cadence }, tier4.code))
         ] }),
-        /* @__PURE__ */ jsxs13("tr", { children: [
-          /* @__PURE__ */ jsx18("th", { scope: "row", children: "Depth" }),
-          surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx18("td", { children: tier4.depth }, tier4.code))
+        /* @__PURE__ */ jsxs14("tr", { children: [
+          /* @__PURE__ */ jsx19("th", { scope: "row", children: "Depth" }),
+          surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx19("td", { children: tier4.depth }, tier4.code))
         ] }),
-        /* @__PURE__ */ jsxs13("tr", { children: [
-          /* @__PURE__ */ jsx18("th", { scope: "row", children: "Status" }),
-          surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx18("td", { children: tier4.statusLabel }, tier4.code))
+        /* @__PURE__ */ jsxs14("tr", { children: [
+          /* @__PURE__ */ jsx19("th", { scope: "row", children: "Status" }),
+          surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsx19("td", { children: tier4.statusLabel }, tier4.code))
         ] })
       ] })
     ] }) }),
-    /* @__PURE__ */ jsxs13("p", { className: "footnote", style: { marginTop: "0.75rem" }, children: [
+    /* @__PURE__ */ jsxs14("p", { className: "footnote", style: { marginTop: "0.75rem" }, children: [
       "Depths are 5\u03C3 point-source limits in the m600 band. The RIS figure is the depth of one visit (3 \xD7 100 s); the WTS and IMS figures are cumulative over the planned five-year operation. Measured performance is reported on the",
       " ",
-      /* @__PURE__ */ jsx18(Link10, { to: "/users/overview", children: "overview page" }),
+      /* @__PURE__ */ jsx19(Link11, { to: "/users/performance", children: "performance page" }),
       ", and current progress on each survey page."
     ] })
   ] }),
-  /* @__PURE__ */ jsx18(Section, { eyebrow: "Tiling", title: "One tile pattern for the whole program", alt: !0, children: /* @__PURE__ */ jsxs13("div", { className: "split split--wide-text", children: [
-    /* @__PURE__ */ jsxs13("div", { children: [
-      /* @__PURE__ */ jsx18("p", { className: "prose", children: surveyTilingText }),
-      /* @__PURE__ */ jsx18("p", { className: "prose", children: surveyTilingText2 })
+  /* @__PURE__ */ jsx19(Section, { eyebrow: "Tiling", title: "One tile pattern for the whole program", alt: !0, children: /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsxs14("div", { children: [
+      /* @__PURE__ */ jsx19("p", { className: "prose", children: surveyTilingText }),
+      /* @__PURE__ */ jsx19("p", { className: "prose", children: surveyTilingText2 })
     ] }),
-    /* @__PURE__ */ jsx18("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs13("table", { className: "spec-table", children: [
-      /* @__PURE__ */ jsx18("caption", { children: "Tiling and exposure" }),
-      /* @__PURE__ */ jsx18("tbody", { children: TILING.map((row) => /* @__PURE__ */ jsxs13("tr", { children: [
-        /* @__PURE__ */ jsx18("th", { scope: "row", children: row[0] }),
-        /* @__PURE__ */ jsx18("td", { children: row[1] })
+    /* @__PURE__ */ jsx19("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs14("table", { className: "spec-table", children: [
+      /* @__PURE__ */ jsx19("caption", { children: "Tiling and exposure" }),
+      /* @__PURE__ */ jsx19("tbody", { children: TILING.map((row) => /* @__PURE__ */ jsxs14("tr", { children: [
+        /* @__PURE__ */ jsx19("th", { scope: "row", children: row[0] }),
+        /* @__PURE__ */ jsx19("td", { children: row[1] })
       ] }, row[0])) })
     ] }) })
   ] }) }),
-  /* @__PURE__ */ jsxs13(Section, { eyebrow: "Rationale", title: "Why three surveys and not one", children: [
-    /* @__PURE__ */ jsx18("p", { className: "prose", children: surveys_default.designNote }),
-    /* @__PURE__ */ jsx18("div", { className: "grid grid-cols-3", style: { marginTop: "2rem" }, children: surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsxs13(Link10, { className: "tier-card tier-card--link", to: PAGES[tier4.code], children: [
-      /* @__PURE__ */ jsx18("span", { className: "tier-card__code", children: tier4.code }),
-      /* @__PURE__ */ jsx18("h3", { className: "tier-card__name", children: tier4.name }),
-      /* @__PURE__ */ jsx18("p", { className: "rationale__tradeoff", style: { marginBottom: "0.75rem" }, children: tier4.tradeoff }),
-      /* @__PURE__ */ jsx18("p", { className: "tier-card__note", children: tier4.goal }),
-      /* @__PURE__ */ jsx18("span", { className: `pill pill--${tier4.status}`, children: tier4.statusLabel })
+  /* @__PURE__ */ jsxs14(Section, { eyebrow: "Rationale", title: "Why three surveys and not one", children: [
+    /* @__PURE__ */ jsx19("p", { className: "prose", children: surveys_default.designNote }),
+    /* @__PURE__ */ jsx19("div", { className: "grid grid-cols-3", style: { marginTop: "2rem" }, children: surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsxs14(Link11, { className: "tier-card tier-card--link", to: PAGES[tier4.code], children: [
+      /* @__PURE__ */ jsx19("span", { className: "tier-card__code", children: tier4.code }),
+      /* @__PURE__ */ jsx19("h3", { className: "tier-card__name", children: tier4.name }),
+      /* @__PURE__ */ jsx19("p", { className: "rationale__tradeoff", style: { marginBottom: "0.75rem" }, children: tier4.tradeoff }),
+      /* @__PURE__ */ jsx19("p", { className: "tier-card__note", children: tier4.goal }),
+      /* @__PURE__ */ jsx19("span", { className: `pill pill--${tier4.status}`, children: tier4.statusLabel })
     ] }, tier4.code)) }),
-    /* @__PURE__ */ jsx18("p", { className: "note", style: { marginTop: "1.5rem" }, children: "Each survey page carries its own strategy, sky map, coverage and current status." })
+    /* @__PURE__ */ jsx19("p", { className: "note", style: { marginTop: "1.5rem" }, children: "Each survey page carries its own strategy, sky map, coverage and current status." })
   ] })
-] }), survey_overview_default = Index12;
+] }), survey_overview_default = Index13;
 
 // app/routes/telescope.mode.tsx
 var telescope_mode_exports = {};
 __export(telescope_mode_exports, {
-  loader: () => loader3
+  loader: () => loader2
 });
-import { redirect as redirect3 } from "@remix-run/node";
-function loader3() {
-  return redirect3("/users/propose", 301);
+import { redirect as redirect2 } from "@remix-run/node";
+function loader2() {
+  return redirect2("/users/propose", 301);
 }
 
 // app/routes/users.overview.tsx
 var users_overview_exports = {};
 __export(users_overview_exports, {
-  default: () => users_overview_default,
-  meta: () => meta13
+  loader: () => loader3
 });
-import { Link as Link11 } from "@remix-run/react";
+import { redirect as redirect3 } from "@remix-run/node";
+function loader3() {
+  return redirect3("/users/performance", 301);
+}
+
+// app/routes/users.software.tsx
+var users_software_exports = {};
+__export(users_software_exports, {
+  default: () => users_software_default,
+  meta: () => meta14
+});
+import { Link as Link12 } from "@remix-run/react";
+
+// app/routes/content/software.json
+var software_default = {
+  note: "Operations and reduction software. Source: Kim et al., Proc. SPIE 14147-84, Sec. 2.4; Hyun et al., Proc. SPIE 14155-12.",
+  systems: [
+    {
+      name: "RTCSpy",
+      expansion: "Robotic Telescope Control System with Python",
+      role: "Array control, scheduling and target-of-opportunity response",
+      since: "Operational since August 2024",
+      body: "The autonomous operations framework that drives the array. Built on the TCSpy control layer, RTCSpy automates the whole night \u2014 startup, target selection, science observation, calibration acquisition, data transfer and shutdown \u2014 while coordinating all sixteen operational units over real-time network communication. A dedicated Target of Opportunity manager watches external alerts and can interrupt an ongoing observation, giving a response time of less than one minute between alert ingestion and the start of a follow-up exposure.",
+      layers: [
+        ["Control layer", "Device interfaces to mounts, cameras, focusers and filter wheels through ASCOM Alpaca and the PWI4 HTTP API."],
+        ["Support layer", "A MySQL dynamic target database holding targets, status and precomputed observability; an observation queue manager that ranks candidates in real time; a data transfer manager; and a weather monitor that suspends and resumes operation."],
+        ["Application layer", "Composes those components into the high-level applications executed during routine nightly operation."]
+      ],
+      stats: [
+        { value: "1.75", unit: "M", label: "Images acquired unattended" },
+        { value: "< 1", unit: "min", label: "Alert to first exposure" },
+        { value: "\u2248 100", unit: "", label: "ToO follow-ups" }
+      ]
+    },
+    {
+      name: "Py7DT",
+      expansion: "7DT data reduction pipeline",
+      role: "Preprocessing through difference imaging, at survey throughput",
+      since: "Sole operational pipeline since January 2026",
+      body: "Py7DT reduces heterogeneous data from many telescope units, filters and observing modes while sustaining nightly survey throughput and minimizing latency for transient events. It succeeds gpPy-GPU, inheriting its scientific routines and choice of external engines but rebuilding the orchestration around them. Images are grouped by their properties into configurations, submitted to an SQLite-backed system queue, and dispatched in parallel according to priority and stage hierarchy \u2014 typically fifteen workers, three of them reserved for preprocessing.",
+      layers: [
+        ["Orchestration", "DataReduction, BluePrint and Scheduler convert observations into executable processing units and track their dependencies."],
+        ["Processing", "Preprocess, Astrometry, Photometry, ImCoadd and ImSubtract run the standard reduction on each group."],
+        ["Management", "Multi-level logging, a composite-error registry for structured exception handling, automatically generated quality-assessment flags carried in FITS headers, and a web-based monitoring interface."]
+      ],
+      stats: [
+        { value: "66 \xB1 24", unit: "GB/hr", label: "Median throughput" },
+        { value: "\u2248 5", unit: "hr", label: "Per 3,000-image night" },
+        { value: "3.3 \xB1 2.0", unit: "s", label: "Preprocessing per image" }
+      ]
+    },
+    {
+      name: "gwportal",
+      expansion: "7DS data and operations database",
+      role: "System of record for observations, processing state and data quality",
+      since: "In operational use",
+      body: "A Django and PostgreSQL database that manages all 7DT data and integrates the operations of RTCSpy and Py7DT. Its survey schema is synchronized in real time and mirrors the operational state of the pipeline: process_status records the progress of every product along with its software version and any error codes, while image_qa holds quality metrics \u2014 seeing, ellipticity, 5\u03C3 depth, astrometric precision \u2014 for every image produced. A companion dependency table traces the provenance of any output back through coadds, processed singles, master frames and raw exposures.",
+      layers: [
+        ["Pipeline status", "Real-time processing progress, QA summaries, logs, check plots and manual reprocessing triggers."],
+        ["ToO page", "Observation requests, the history of past events and the current status of the telescope units."],
+        ["Documentation wiki", "User manuals, event logs and QA criteria for internal team members and external users of 7DT data."]
+      ],
+      stats: [
+        { value: "3.6", unit: "PB", label: "Archive capacity" },
+        { value: "\u2248 3,000", unit: "", label: "Images ingested nightly" },
+        { value: "\u2248 30", unit: "", label: "Tiles observed nightly" }
+      ]
+    }
+  ],
+  stages: [
+    {
+      module: "Preprocess",
+      body: "Bias, dark and flat correction against master frames matched to the science data by camera, gain, binning, unit, night and filter. Raw frames sharing a master set are loaded as a cube and processed by array broadcasting, reducing per-image time to about one second under optimal conditions, and to 3.3 \xB1 2.0 s in routine operation; GPU preprocessing through CuPy is available as an option, though the throughput gain in this deployment is minimal. Master-frame selection quality is recorded as a bitmask in the FITS header so that a compromise is always visible downstream."
+    },
+    {
+      module: "Astrometry",
+      body: "World coordinate solutions against Gaia DR3, pre-cut to RIS tiles and to HEALPix cells for arbitrary pointings. SCAMP is the default engine, with Astrometry.net as a fallback for blind solves. This is also the first stage that extracts sources, so it generates the image-quality metrics: astrometric separation statistics, field vertices and position angle, PSF size and elongation in radial bins, and source counts against a magnitude-limited reference."
+    },
+    {
+      module: "Photometry",
+      body: "Flux-calibrated source catalogs from SExtractor, in fixed apertures and in the AUTO aperture. Zero points come from synthetic photometry integrated from Gaia XP spectra over each 7DT bandpass \u2014 an unusual advantage for an instrument with an unusual filter set. The module runs on single, coadd and difference images alike."
+    },
+    {
+      module: "ImCoadd",
+      body: "Background subtraction, zero-point scaling, weight maps, bad-pixel interpolation, PSF homogenization, reprojection and combination via SWarp with a LANCZOS3 kernel. Flux scaling is defined to put the coadd at a zero point of 23.9 AB, so that pixel values carry units of microjansky."
+    },
+    {
+      module: "ImSubtract",
+      body: "Difference image analysis with HOTPANTS against a reference of the same field. Because of the unusual filter set, 7DT uses homogeneous references from RIS taken with the same instrument; Pan-STARRS templates are available as an option for the broad bands. Difference imaging is skipped where no reference exists yet."
+    }
+  ],
+  external: [
+    ["SExtractor", "Source extraction and photometry"],
+    ["SCAMP", "Astrometric and photometric solution"],
+    ["SWarp", "Reprojection and coaddition"],
+    ["HOTPANTS", "Difference image analysis"],
+    ["Astrometry.net", "Blind astrometric fallback"],
+    ["CuPy", "GPU-accelerated preprocessing"],
+    ["Gaia DR3 / XP", "Astrometric and spectrophotometric reference"]
+  ]
+};
+
+// app/routes/users.software.tsx
+import { Fragment as Fragment6, jsx as jsx20, jsxs as jsxs15 } from "react/jsx-runtime";
+var meta14 = () => [
+  { title: "Software \xB7 7DT for users" },
+  {
+    name: "description",
+    content: "Software available to 7DT users: supy for analysis, Py7DT for reprocessing, and the operational systems that produce the data."
+  }
+], SUPY_MODULES = [
+  ["Observer", "Target visibility and altitude from El Sauce, including StarAlt-style plots"],
+  ["Tiles", "Tile lookup by coordinate, matching against a localization region, and tile plotting"],
+  ["Simulator", "Filter and detector response simulation for the 7DT bands"],
+  ["const", "Instrument and site constants used by the other modules"]
+], Index14 = () => /* @__PURE__ */ jsxs15(PageLayout, { menu: "manuUsers", children: [
+  /* @__PURE__ */ jsx20(
+    PageHero,
+    {
+      eyebrow: "For users",
+      title: /* @__PURE__ */ jsxs15(Fragment6, { children: [
+        "Available ",
+        /* @__PURE__ */ jsx20("em", { children: "software" })
+      ] }),
+      lede: "What to install to plan an observation or work with 7DT data, and what produced the data in the first place.",
+      image: "/img/hero/computer.jpg"
+    }
+  ),
+  /* @__PURE__ */ jsx20(Section, { eyebrow: "Analysis", title: "supy", children: /* @__PURE__ */ jsxs15("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsxs15("div", { children: [
+      /* @__PURE__ */ jsxs15("p", { className: "prose", children: [
+        /* @__PURE__ */ jsx20("code", { children: "supy" }),
+        " is a collection of Python utilities for members and users of the 7DT survey. It covers the tasks that come up before and after an observation rather than the reduction itself: working out whether a target is observable, finding which tiles cover a position or a gravitational-wave localization region, and simulating the response of the filter set."
+      ] }),
+      /* @__PURE__ */ jsxs15("p", { className: "prose", children: [
+        "It is installed from source. Documentation, including worked examples for each module, is published at ",
+        /* @__PURE__ */ jsx20("code", { children: "sdt-supy.readthedocs.io" }),
+        "."
+      ] }),
+      /* @__PURE__ */ jsxs15("div", { className: "panel panel--alt", style: { marginTop: "1.5rem" }, children: [
+        /* @__PURE__ */ jsx20("div", { className: "panel__title", children: "Install" }),
+        /* @__PURE__ */ jsx20(
+          "pre",
+          {
+            style: {
+              margin: 0,
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.8125rem",
+              lineHeight: 1.7,
+              overflowX: "auto"
+            },
+            children: /* @__PURE__ */ jsxs15("code", { children: [
+              "git clone https://github.com/7DimensionalTelescope/supy.git",
+              `
+`,
+              "cd supy",
+              `
+`,
+              "pip install ."
+            ] })
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs15("div", { className: "btn-row", style: { marginTop: "1.25rem" }, children: [
+        /* @__PURE__ */ jsx20(
+          "a",
+          {
+            className: "btn btn--primary",
+            href: "https://sdt-supy.readthedocs.io/en/latest/",
+            target: "_blank",
+            rel: "noreferrer",
+            children: "Documentation"
+          }
+        ),
+        /* @__PURE__ */ jsx20(
+          "a",
+          {
+            className: "btn btn--secondary",
+            href: "https://github.com/7DimensionalTelescope/supy",
+            target: "_blank",
+            rel: "noreferrer",
+            children: "Source"
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx20("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs15("table", { className: "spec-table", children: [
+      /* @__PURE__ */ jsx20("caption", { children: "Modules" }),
+      /* @__PURE__ */ jsx20("tbody", { children: SUPY_MODULES.map((row) => /* @__PURE__ */ jsxs15("tr", { children: [
+        /* @__PURE__ */ jsx20("th", { scope: "row", style: { fontFamily: "var(--font-mono)" }, children: row[0] }),
+        /* @__PURE__ */ jsx20("td", { children: row[1] })
+      ] }, row[0])) })
+    ] }) })
+  ] }) }),
+  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Reprocessing", title: "Running the pipeline yourself", alt: !0, children: [
+    /* @__PURE__ */ jsx20("p", { className: "prose", children: softwareReuseText }),
+    /* @__PURE__ */ jsxs15("p", { className: "note", style: { marginTop: "1rem" }, children: [
+      "Py7DT uses a rolling-release version scheme in which the last digit is incremented whenever a scientific decision changes how data are processed. That version is recorded in every configuration file and in the process status database, so any product can be traced to the code that made it and reprocessed in bulk when the code changes. What each stage does is described under ",
+      /* @__PURE__ */ jsx20(Link12, { to: "/users/access#format", children: "using the data" }),
+      "."
+    ] })
+  ] }),
+  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Operations", title: "The systems that produce the data", children: [
+    /* @__PURE__ */ jsx20("p", { className: "prose", children: "Three systems close observation, reduction and analysis into a nightly loop. They are not installed by external users, but knowing which one recorded a given quantity is often useful when interpreting it." }),
+    /* @__PURE__ */ jsx20("div", { className: "stack-lg", style: { marginTop: "2rem" }, children: software_default.systems.map((system) => /* @__PURE__ */ jsxs15("div", { className: "panel", id: system.name.toLowerCase(), children: [
+      /* @__PURE__ */ jsxs15("div", { className: "rationale__head", children: [
+        /* @__PURE__ */ jsx20("span", { className: "tier-card__code", children: system.name }),
+        /* @__PURE__ */ jsx20("h3", { children: system.role })
+      ] }),
+      /* @__PURE__ */ jsx20("p", { className: "eyebrow", style: { marginBottom: "0.5rem" }, children: system.expansion }),
+      /* @__PURE__ */ jsx20("p", { className: "prose", style: { fontSize: "1rem" }, children: system.body }),
+      /* @__PURE__ */ jsx20(StatGrid, { items: system.stats })
+    ] }, system.name)) }),
+    /* @__PURE__ */ jsxs15("p", { className: "note", style: { marginTop: "2rem" }, children: [
+      "Full technical descriptions are in Hyun et al., ",
+      /* @__PURE__ */ jsx20("i", { children: "Py7DT: Data Reduction Pipeline of the 7-Dimensional Telescope" }),
+      " (Proc. SPIE 14155-12), and Choi et al., Proc. SPIE 14151-12, which covers RTCSpy. See ",
+      /* @__PURE__ */ jsx20(Link12, { to: "/publication/list", children: "publications" }),
+      "."
+    ] })
+  ] })
+] }), users_software_default = Index14;
+
+// app/routes/about.funding.tsx
+var about_funding_exports = {};
+__export(about_funding_exports, {
+  default: () => about_funding_default,
+  meta: () => meta15
+});
+import { jsx as jsx21, jsxs as jsxs16 } from "react/jsx-runtime";
+var meta15 = () => [
+  { title: "Funding \xB7 7-Dimensional Telescope" },
+  {
+    name: "description",
+    content: "Grants and institutions supporting the 7-Dimensional Telescope and Sky Survey."
+  }
+], Index15 = () => /* @__PURE__ */ jsxs16(PageLayout, { menu: "manuAbout", children: [
+  /* @__PURE__ */ jsx21(
+    PageHero,
+    {
+      eyebrow: "About",
+      title: "Funding sources",
+      lede: "The bodies that fund the facility, its operation, and the network that carries its data.",
+      image: "/img/hero/about.jpg"
+    }
+  ),
+  /* @__PURE__ */ jsx21(Section, { eyebrow: "Host center", title: "Center for the Gravitational-wave Universe", children: /* @__PURE__ */ jsxs16("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsx21("p", { className: "prose", children: fundingGWText }),
+    /* @__PURE__ */ jsx21("figure", { className: "figure", children: /* @__PURE__ */ jsx21(
+      "img",
+      {
+        src: "/img/institutes/gwuniv.png",
+        alt: "Center for the Gravitational-wave Universe",
+        style: { padding: "2rem", background: "#fff" },
+        loading: "lazy"
+      }
+    ) })
+  ] }) }),
+  /* @__PURE__ */ jsx21(Section, { eyebrow: "Agencies", title: "Project support", alt: !0, children: /* @__PURE__ */ jsxs16("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsxs16("div", { children: [
+      /* @__PURE__ */ jsx21("p", { className: "prose", children: fundingNRFText }),
+      /* @__PURE__ */ jsx21("p", { className: "prose", children: fundingKASIText })
+    ] }),
+    /* @__PURE__ */ jsx21("figure", { className: "figure", children: /* @__PURE__ */ jsx21(
+      "img",
+      {
+        src: "/img/institutes/nrf.jpg",
+        alt: "National Research Foundation of Korea",
+        style: { padding: "2rem", background: "#fff" },
+        loading: "lazy"
+      }
+    ) })
+  ] }) }),
+  /* @__PURE__ */ jsx21(Section, { eyebrow: "Infrastructure", title: "KREONET / KISTI", children: /* @__PURE__ */ jsx21("p", { className: "prose", children: fundingKreonetText }) })
+] }), about_funding_default = Index15;
+
+// app/routes/science.solar.tsx
+var science_solar_exports = {};
+__export(science_solar_exports, {
+  default: () => science_solar_default,
+  meta: () => meta16
+});
+import { jsx as jsx22 } from "react/jsx-runtime";
+var meta16 = () => topicMeta("solar"), Index16 = () => /* @__PURE__ */ jsx22(ScienceTopic, { id: "solar" }), science_solar_default = Index16;
+
+// app/routes/survey.design.tsx
+var survey_design_exports = {};
+__export(survey_design_exports, {
+  loader: () => loader4
+});
+import { redirect as redirect4 } from "@remix-run/node";
+function loader4() {
+  return redirect4("/survey/overview", 301);
+}
+
+// app/routes/survey.status.tsx
+var survey_status_exports = {};
+__export(survey_status_exports, {
+  loader: () => loader5
+});
+import { redirect as redirect5 } from "@remix-run/node";
+function loader5() {
+  return redirect5("/users/status", 301);
+}
+
+// app/routes/users.propose.tsx
+var users_propose_exports = {};
+__export(users_propose_exports, {
+  default: () => users_propose_default,
+  headers: () => headers,
+  loader: () => loader6,
+  meta: () => meta17
+});
+import { Link as Link13, useLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
+
+// app/lib/portal.server.ts
+import fs from "node:fs";
+import path from "node:path";
+
+// app/routes/content/status-snapshot.json
+var status_snapshot_default = { version: "0.6", source: "7DT GW Portal", generated_at: "2026-08-03T04:36:33.310776+00:00", telescopes: { total: 20, online: 16, status_updated_at: "2026-07-14T13:56:17.111000+00:00" }, totals: { science_frames: 2199304, observing_nights: 754, exposure_hours: 48704.3 }, nightly: { basis: "all observing nights (nights with science frames)", n_nights: 754, first_night: "2023-10-10", last_night: "2026-07-12", tiles_per_night: { n: 599, mean: 36.2, median: 36, mode: 36, min: 1, max: 590 }, exposures_per_night: { n: 754, mean: 2916.8, median: 2595.5, mode: 2520, min: 7, max: 24570 }, raw_gb_per_night: { n: 754, mean: 382.7, median: 375.1, mode: 396, min: 0.8, max: 2185.4 } }, ris: { tiles_observed: 15513, tiles_defined: 25472, coverage_pct: 60.9, tiles_observed_extended: 15579, tiles_extended: 28520 }, ims: { n_tiles: 7, min_cycles_per_tile: 225, max_cycles_per_tile: 276, cycles_per_tile: { T02252: 244, T02385: 260, T02386: 276, T02523: 251, T02524: 257, T02665: 225, T02666: 241 } }, too: { followup_events: 178, gw_campaigns: 9, gw_event_ids: ["S251112cm", "S250830bp", "S250725j", "S250328ae", "S250206dm", "S241011k", "S240925n", "S240915b", "S240910ci"] }, notes: ["ris.tiles_defined/tiles_observed cover the original RIS grid (T00000-T25471); the *_extended fields cover the full grid including the northern extension.", "nightly stats cover all observing nights; nights where a metric is zero are excluded from that metric (each block's 'n' is its actual night count); mode is computed on integer-rounded values.", "raw_gb_per_night includes calibration (bias/dark/flat) frames.", "ims cycles count distinct observing nights per IMS tile.", "gw_event_ids are LVK superevent IDs (public alerts); no target-level details are published here.", "observing_nights and n_nights share one definition: nights with science frames.", "Aggregates only; payload refreshed at most every ~15 minutes."] };
+
+// app/lib/portal.server.ts
+function fromEnvFile(key) {
+  try {
+    let file = fs.readFileSync(path.join(process.cwd(), ".env"), "utf8");
+    for (let line of file.split(`
+`)) {
+      let trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#"))
+        continue;
+      let eq = trimmed.indexOf("=");
+      if (eq > 0 && trimmed.slice(0, eq).trim() === key)
+        return trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+    }
+  } catch {
+  }
+}
+function readEnv(key) {
+  let value = process.env[key] || fromEnvFile(key);
+  return value && value.trim() ? value.trim() : void 0;
+}
+var BASE = (process.env.PORTAL_API_BASE || fromEnvFile("PORTAL_API_BASE") || "").replace(/\/$/, ""), TIMEOUT_MS = { status: 6e3, tiles: 45e3 };
+function minutes(key, fallback) {
+  let raw = process.env[key] || fromEnvFile(key), parsed = raw ? Number(raw) : NaN;
+  return (Number.isFinite(parsed) && parsed > 0 ? parsed : fallback) * 60 * 1e3;
+}
+var TTL = {
+  status: minutes("PORTAL_TTL_STATUS_MIN", 30),
+  tiles: minutes("PORTAL_TTL_TILES_MIN", 24 * 60)
+}, cache = /* @__PURE__ */ new Map(), inFlight = /* @__PURE__ */ new Map(), RETRY_MS = 2 * 60 * 1e3;
+async function getJson(endpoint, key) {
+  if (!BASE)
+    throw new Error("PORTAL_API_BASE is not configured");
+  let response = await fetch(`${BASE}${endpoint}`, {
+    signal: AbortSignal.timeout(TIMEOUT_MS[key]),
+    headers: { accept: "application/json" }
+  });
+  if (!response.ok)
+    throw new Error(`${endpoint} responded ${response.status}`);
+  return await response.json();
+}
+function revalidate(key, load) {
+  let existing = inFlight.get(key);
+  if (existing)
+    return existing;
+  let task = load().then((value) => (cache.set(key, { at: Date.now(), value, failed: !1 }), value)).catch((error) => {
+    let hit = cache.get(key);
+    throw hit && cache.set(key, {
+      ...hit,
+      at: Date.now() - TTL[key] + RETRY_MS,
+      value: { ...hit.value, live: !1 },
+      failed: !0
+    }), error;
+  }).finally(() => inFlight.delete(key));
+  return inFlight.set(key, task), task;
+}
+async function cached(key, load) {
+  let hit = cache.get(key);
+  return hit && Date.now() - hit.at < TTL[key] ? hit.value : hit ? (revalidate(key, load).catch(() => {
+  }), cache.get(key).value) : revalidate(key, load);
+}
+function getStatus() {
+  return cached("status", async () => {
+    let data = await getJson("/status/", "status");
+    return { data, live: !0, generatedAt: data.generated_at };
+  }).catch(() => ({
+    data: status_snapshot_default,
+    live: !1,
+    generatedAt: status_snapshot_default.generated_at
+  }));
+}
+var DAY_MS = 24 * 60 * 60 * 1e3, dayIndex = (iso, epochMs) => Math.round((Date.parse(`${iso}T00:00:00Z`) - epochMs) / DAY_MS), BROADBAND_NM = { u: 355, g: 477, r: 623, i: 762, z: 913 };
+function filterWavelength(name) {
+  let medium = /^m(\d+)w?$/.exec(name);
+  return medium ? Number(medium[1]) : BROADBAND_NM[name] ?? Number.POSITIVE_INFINITY;
+}
+function getTileMap() {
+  return cached("tiles", async () => {
+    let raw = await getJson("/tiles/", "tiles"), tiles = raw.tiles.filter((t) => Number.isFinite(t.ra) && Number.isFinite(t.dec)).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0), firstNight = tiles[0]?.first_night ?? "", lastNight = tiles[0]?.last_night ?? "";
+    for (let tile of tiles)
+      tile.first_night < firstNight && (firstNight = tile.first_night), tile.last_night > lastNight && (lastNight = tile.last_night);
+    let epochMs = Date.parse(`${firstNight}T00:00:00Z`), numeric = tiles.map((t) => /^T\d{1,6}$/.test(t.name) ? Number(t.name.slice(1)) : NaN), nameDelta = numeric.every((n) => Number.isFinite(n)) && numeric.every((n, i) => i === 0 || n > numeric[i - 1]) ? numeric.map((n, i) => i === 0 ? n : n - numeric[i - 1]) : void 0, seen = /* @__PURE__ */ new Set();
+    for (let tile of tiles)
+      for (let name of Object.keys(tile.filters ?? {}))
+        seen.add(name);
+    let filters = [...seen].sort((a, b) => filterWavelength(a) - filterWavelength(b)), filterIndex = new Map(filters.map((name, i) => [name, i])), patterns = [], patternIndex = /* @__PURE__ */ new Map(), patternFor = (tile) => {
+      let flat = Object.entries(tile.filters ?? {}).map(([name, frames]) => [filterIndex.get(name) ?? -1, frames]).filter(([i]) => i >= 0).sort((a, b) => a[0] - b[0]).flatMap(([i, frames]) => [i, frames]), key = flat.join(","), at = patternIndex.get(key);
+      return at === void 0 && (at = patterns.push(flat) - 1, patternIndex.set(key, at)), at;
+    }, data = {
+      count: tiles.length,
+      ...nameDelta ? { nameDelta } : { name: tiles.map((t) => t.name) },
+      // One decimal is well below the ~1° tile pitch and halves the payload.
+      ra: tiles.map((t) => Math.round(t.ra * 10) / 10),
+      dec: tiles.map((t) => Math.round(t.dec * 10) / 10),
+      visits: tiles.map((t) => t.n_nights),
+      frames: tiles.map((t) => t.n_frames),
+      lastDay: tiles.map((t) => dayIndex(t.last_night, epochMs)),
+      // Most tiles were observed on a single night, so a span of zero repeats
+      // thousands of times and costs almost nothing to send.
+      span: tiles.map((t) => dayIndex(t.last_night, epochMs) - dayIndex(t.first_night, epochMs)),
+      pattern: tiles.map(patternFor),
+      perFilter: Object.entries(raw.per_filter ?? {}).map(([name, v]) => ({
+        name,
+        nm: filterWavelength(name),
+        tiles: v.tiles_observed,
+        tilesRis: v.tiles_observed_ris,
+        frames: v.n_frames
+      })).sort((a, b) => a.nm - b.nm),
+      filters,
+      filterWave: filters.map(filterWavelength),
+      patterns,
+      epochDate: firstNight,
+      visitsMax: 0,
+      framesMax: 0,
+      firstNight,
+      lastNight
+    };
+    return data.visitsMax = data.visits.reduce((a, b) => b > a ? b : a, 0), data.framesMax = (data.frames ?? []).reduce((a, b) => b > a ? b : a, 0), { data, live: !0, generatedAt: raw.generated_at };
+  }).catch(() => ({ data: EMPTY_TILES, live: !1, generatedAt: "" }));
+}
+var ids = null;
+function runningId(deltas, index) {
+  if (!ids || ids.from !== deltas) {
+    let out = new Int32Array(deltas.length), running = 0;
+    for (let i = 0; i < deltas.length; i += 1)
+      running += deltas[i], out[i] = running;
+    ids = { from: deltas, value: out };
+  }
+  return ids.value[index];
+}
+async function getTilesNear(ra, dec, radius) {
+  let full = await getTileMap(), { data } = full, found = [], cosDec = Math.cos(dec * (Math.PI / 180));
+  for (let i = 0; i < data.count; i += 1) {
+    let dDec = data.dec[i] - dec;
+    if (Math.abs(dDec) > radius)
+      continue;
+    let dRa = data.ra[i] - ra;
+    dRa > 180 && (dRa -= 360), dRa < -180 && (dRa += 360), !(Math.abs(dRa * cosDec) > radius) && found.push({
+      name: data.name ? data.name[i] : `T${String(runningId(data.nameDelta ?? [], i)).padStart(5, "0")}`,
+      ra: data.ra[i],
+      dec: data.dec[i],
+      visits: data.visits[i],
+      frames: data.frames?.[i] ?? 0,
+      lastDay: data.lastDay[i],
+      epochDate: data.epochDate
+    });
+  }
+  return { ...full, data: found };
+}
+var lite = /* @__PURE__ */ new Map();
+async function getTileMapLite(withNames = !1) {
+  let full = await getTileMap(), key = withNames ? "named" : "bare", held = lite.get(key);
+  if (held && held.from === full.generatedAt)
+    return held.value;
+  let { span, pattern, filters, filterWave, patterns, name, nameDelta, ...rest } = full.data, data = withNames ? { ...rest, name, nameDelta } : rest, value = { ...full, data };
+  return lite.set(key, { from: full.generatedAt, value }), value;
+}
+BASE && setTimeout(() => {
+  getStatus().catch(() => {
+  }), getTileMap().catch(() => {
+  });
+}, 500).unref?.();
+var EMPTY_TILES = {
+  count: 0,
+  name: [],
+  ra: [],
+  dec: [],
+  visits: [],
+  frames: [],
+  lastDay: [],
+  span: [],
+  pattern: [],
+  filters: [],
+  filterWave: [],
+  patterns: [],
+  epochDate: "2023-10-01",
+  visitsMax: 0,
+  framesMax: 0,
+  firstNight: "",
+  lastNight: ""
+};
+
+// app/routes/users.propose.tsx
+import { Fragment as Fragment7, jsx as jsx23, jsxs as jsxs17 } from "react/jsx-runtime";
+var meta17 = () => [
+  { title: "How to propose \xB7 7DT for users" },
+  {
+    name: "description",
+    content: "Observing modes, target-of-opportunity response and how observing time on 7DT is requested."
+  }
+], CACHE = "public, max-age=900, stale-while-revalidate=86400", headers = () => ({ "Cache-Control": CACHE });
+async function loader6() {
+  let status = await getStatus();
+  return json(
+    { too: status.data.too, live: status.live, generatedAt: status.generatedAt },
+    { headers: { "Cache-Control": CACHE } }
+  );
+}
+var num = (value) => value.toLocaleString("en-US"), Index17 = () => {
+  let { too, live, generatedAt } = useLoaderData();
+  return /* @__PURE__ */ jsxs17(PageLayout, { menu: "manuUsers", children: [
+    /* @__PURE__ */ jsx23(
+      PageHero,
+      {
+        eyebrow: "For users",
+        title: /* @__PURE__ */ jsxs17(Fragment7, { children: [
+          "How to ",
+          /* @__PURE__ */ jsx23("em", { children: "propose" })
+        ] }),
+        lede: "What the array can be asked to do, how an observation is specified, and how time is requested.",
+        image: "/img/hero/telescope.jpg"
+      }
+    ),
+    /* @__PURE__ */ jsxs17(Section, { eyebrow: "Modes", title: "Four observing modes", children: [
+      /* @__PURE__ */ jsx23("p", { className: "prose", children: modeText }),
+      /* @__PURE__ */ jsx23("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: surveys_default.modes.map((mode2, index) => /* @__PURE__ */ jsxs17("li", { children: [
+        /* @__PURE__ */ jsx23("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
+        /* @__PURE__ */ jsxs17("div", { children: [
+          /* @__PURE__ */ jsxs17("h3", { className: "feature-list__title", style: { fontSize: "1.125rem" }, children: [
+            mode2.name,
+            /* @__PURE__ */ jsx23(
+              "span",
+              {
+                style: {
+                  marginLeft: "0.75rem",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6875rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "var(--slate-500)",
+                  fontWeight: 400
+                },
+                children: mode2.tagline
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsx23("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: mode2.body })
+        ] })
+      ] }, mode2.name)) })
+    ] }),
+    /* @__PURE__ */ jsx23(Section, { eyebrow: "Specifying", title: "What an observation request contains", alt: !0, children: /* @__PURE__ */ jsxs17("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsxs17("div", { children: [
+        /* @__PURE__ */ jsx23("p", { className: "prose", children: "An observation is specified by target position, observing mode, exposure time and the number of repetitions, together with any constraint on airmass, moon separation or time window. Positions on the survey tiling are preferred where the science allows, because data taken on a tile coadd directly with existing survey data and can be differenced against the reference image without an additional calibration step." }),
+        /* @__PURE__ */ jsx23("p", { className: "prose", children: "Before requesting time, check the target is observable from El Sauce in the intended window, and check what already exists: much of the southern sky already has a medium-band reference image, and the tile under a given position may already carry the bands needed." })
+      ] }),
+      /* @__PURE__ */ jsxs17("div", { className: "panel", children: [
+        /* @__PURE__ */ jsx23("div", { className: "panel__title", children: "Before you write" }),
+        /* @__PURE__ */ jsxs17("ul", { className: "feature-list", style: { borderTop: 0, margin: 0 }, children: [
+          /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+            "Check visibility and existing coverage \u2014 the",
+            " ",
+            /* @__PURE__ */ jsx23(Link13, { to: "/users/access", children: "data access page" }),
+            " reports the bands and frame counts held for any position."
+          ] }) }) }),
+          /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+            "Estimate depth from the measured",
+            " ",
+            /* @__PURE__ */ jsx23(Link13, { to: "/users/performance", children: "limiting magnitudes" }),
+            " rather than from the aperture."
+          ] }) }) }),
+          /* @__PURE__ */ jsx23("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx23("div", { children: /* @__PURE__ */ jsxs17("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+            "Target visibility and filter response can be computed with",
+            " ",
+            /* @__PURE__ */ jsx23(Link13, { to: "/users/software", children: /* @__PURE__ */ jsx23("code", { children: "supy" }) }),
+            "."
+          ] }) }) })
+        ] })
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsxs17(Section, { eyebrow: "Response", title: "Target of opportunity", children: [
+      /* @__PURE__ */ jsx23("p", { className: "prose", children: "When a transient alert arrives \u2014 a gamma-ray burst, a gravitational-wave candidate \u2014 the scheduler interrupts the observing plan and repoints. Two response modes are available: a regular mode that completes the current exposure block before switching, and a rapid mode that interrupts immediately. Once the follow-up finishes, the array returns to the queue and resumes the interrupted target if it is still observable. Time from alert ingestion to the start of a follow-up exposure is under one minute." }),
+      /* @__PURE__ */ jsx23("p", { className: "prose", children: "Target-of-opportunity data are processed at elevated priority and the requester is notified when raw data arrive, as each filter set completes, and on completion with a spectral energy distribution plot and magnitude table attached." }),
+      /* @__PURE__ */ jsx23("div", { style: { margin: "2rem 0 1.25rem" }, children: /* @__PURE__ */ jsx23(LiveBadge, { live, updated: generatedAt, interval: "every 30 minutes" }) }),
+      /* @__PURE__ */ jsxs17("p", { className: "prose", children: [
+        num(too.followup_events),
+        " follow-up campaigns have been carried out since automated target-of-opportunity response entered service, ",
+        num(too.gw_campaigns),
+        " of them on gravitational-wave events."
+      ] }),
+      /* @__PURE__ */ jsx23("div", { className: "chip-row", style: { marginTop: "1.25rem" }, children: too.gw_event_ids.map((id) => /* @__PURE__ */ jsx23("span", { className: "chip chip--static", children: id }, id)) }),
+      /* @__PURE__ */ jsx23("p", { className: "footnote", style: { marginTop: "1rem" }, children: "LVK superevent identifiers as issued in the public alert stream. Target-level details are not published here." })
+    ] }),
+    /* @__PURE__ */ jsx23(Section, { eyebrow: "Applying", title: "Requesting observing time", alt: !0, children: /* @__PURE__ */ jsxs17("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
+      /* @__PURE__ */ jsx23("div", { className: "panel__title", children: "No open call at present" }),
+      /* @__PURE__ */ jsx23("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: "Observing time is currently allocated within the collaboration and its partner institutions; there is no general call for proposals yet. A proposal template and an exposure time calculator will be published on this page when one opens. Enquiries about observations outside the survey program, including target-of-opportunity requests, should be addressed to the project directly." }),
+      /* @__PURE__ */ jsx23(
+        "a",
+        {
+          className: "btn btn--primary",
+          href: "mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20enquiry",
+          children: "Contact the project"
+        }
+      )
+    ] }) })
+  ] });
+}, users_propose_default = Index17;
+
+// app/routes/users.access.tsx
+var users_access_exports = {};
+__export(users_access_exports, {
+  default: () => users_access_default,
+  headers: () => headers2,
+  loader: () => loader7,
+  meta: () => meta18
+});
+import { json as json2 } from "@remix-run/node";
+import { Link as Link14, useLoaderData as useLoaderData2 } from "@remix-run/react";
+
+// app/components/skymap.tsx
+import { useCallback, useEffect as useEffect3, useMemo as useMemo2, useRef as useRef2, useState as useState4 } from "react";
 
 // app/components/colors.ts
 var SPECTRUM = [
@@ -2282,6 +3079,1086 @@ var isDark = (c) => 0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2] < 140;
 function wavelengthColor(nm) {
   return rgb(sample(SPECTRUM, (nm - 400) / 500));
 }
+
+// app/components/tiledetail.tsx
+import { Fragment as Fragment8, jsx as jsx24, jsxs as jsxs18 } from "react/jsx-runtime";
+var DAY_MS2 = 24 * 60 * 60 * 1e3, degLabel = (value) => `${value >= 0 ? "+" : "\u2212"}${Math.abs(value).toFixed(1)}\xB0`;
+function dayLabel(index, epochDate) {
+  return new Date(Date.parse(`${epochDate}T00:00:00Z`) + index * DAY_MS2).toISOString().slice(0, 10);
+}
+function duration(seconds) {
+  let h = seconds / 3600;
+  return h < 1 ? `${Math.round(seconds / 60)} min` : h < 10 ? `${h.toFixed(1)} h` : `${Math.round(h).toLocaleString("en-US")} h`;
+}
+function breakdown(tiles, index) {
+  let { patterns, pattern, filters, filterWave } = tiles;
+  if (!patterns || !pattern || !filters || !filterWave)
+    return null;
+  let flat = patterns[pattern[index]] ?? [], bands = [], broad = [], peak = 0;
+  for (let i = 0; i < flat.length; i += 2) {
+    let name = filters[flat[i]], frames = flat[i + 1];
+    frames > peak && (peak = frames), name?.startsWith("m") ? bands.push({ name, nm: filterWave[flat[i]], frames }) : name && broad.push({ name, frames });
+  }
+  let byName = new Map(bands.map((band) => [band.name, band])), strip = filters.map((name, i) => ({ name, nm: filterWave[i] })).filter((f) => f.name.startsWith("m")).map((f) => ({ ...f, frames: byName.get(f.name)?.frames ?? 0 }));
+  return { broad, strip, peak, count: bands.length + broad.length };
+}
+function findTileAt(tiles, ra, dec, fovLon = 1.34, fovLat = 0.9) {
+  let wrapped = (ra % 360 + 360) % 360, best = -1, bestScore = 1 / 0;
+  for (let i = 0; i < tiles.count; i += 1) {
+    let dDec = tiles.dec[i] - dec;
+    if (Math.abs(dDec) > fovLat / 2)
+      continue;
+    let dRa = tiles.ra[i] - wrapped;
+    dRa > 180 && (dRa -= 360), dRa < -180 && (dRa += 360);
+    let dRaSky = dRa * Math.cos(dec * (Math.PI / 180));
+    if (Math.abs(dRaSky) > fovLon / 2)
+      continue;
+    let score = dRaSky * dRaSky + dDec * dDec;
+    score < bestScore && (bestScore = score, best = i);
+  }
+  return best >= 0 ? best : null;
+}
+function TileDetail({
+  tiles,
+  index,
+  name,
+  ra,
+  dec,
+  l,
+  b,
+  exposureSec
+}) {
+  let detail = breakdown(tiles, index), frames = tiles.frames?.[index] ?? 0, span = tiles.span?.[index] ?? 0;
+  return /* @__PURE__ */ jsxs18(Fragment8, { children: [
+    /* @__PURE__ */ jsxs18("div", { className: "skymap__tip-head", children: [
+      /* @__PURE__ */ jsx24("span", { className: "skymap__tip-name", children: name }),
+      /* @__PURE__ */ jsx24("span", { className: "skymap__tip-badge", children: "Observed" })
+    ] }),
+    /* @__PURE__ */ jsxs18("dl", { className: "skymap__tip-grid", children: [
+      /* @__PURE__ */ jsx24("dt", { children: "RA, Dec" }),
+      /* @__PURE__ */ jsxs18("dd", { children: [
+        ra.toFixed(1),
+        "\xB0, ",
+        degLabel(dec)
+      ] }),
+      /* @__PURE__ */ jsx24("dt", { children: "l, b" }),
+      /* @__PURE__ */ jsxs18("dd", { children: [
+        l.toFixed(1),
+        "\xB0, ",
+        degLabel(b)
+      ] }),
+      /* @__PURE__ */ jsx24("dt", { children: "Visits" }),
+      /* @__PURE__ */ jsxs18("dd", { children: [
+        tiles.visits[index].toLocaleString("en-US"),
+        " ",
+        tiles.visits[index] === 1 ? "night" : "nights"
+      ] }),
+      /* @__PURE__ */ jsx24("dt", { children: "Frames" }),
+      /* @__PURE__ */ jsx24("dd", { children: frames.toLocaleString("en-US") }),
+      exposureSec ? /* @__PURE__ */ jsxs18(Fragment8, { children: [
+        /* @__PURE__ */ jsx24("dt", { children: "Exposure" }),
+        /* @__PURE__ */ jsxs18("dd", { children: [
+          "\u2248 ",
+          duration(frames * exposureSec)
+        ] })
+      ] }) : null,
+      detail && /* @__PURE__ */ jsxs18(Fragment8, { children: [
+        /* @__PURE__ */ jsx24("dt", { children: "Filters" }),
+        /* @__PURE__ */ jsx24("dd", { children: detail.count })
+      ] }),
+      /* @__PURE__ */ jsx24("dt", { children: "Dates" }),
+      /* @__PURE__ */ jsxs18("dd", { children: [
+        dayLabel(tiles.lastDay[index] - span, tiles.epochDate),
+        span > 0 && /* @__PURE__ */ jsxs18(Fragment8, { children: [
+          " \u2013 ",
+          dayLabel(tiles.lastDay[index], tiles.epochDate)
+        ] })
+      ] })
+    ] }),
+    detail && /* @__PURE__ */ jsxs18(Fragment8, { children: [
+      /* @__PURE__ */ jsx24("div", { className: "skymap__tip-bands", children: detail.strip.map((band) => /* @__PURE__ */ jsx24(
+        "span",
+        {
+          className: "skymap__tip-band",
+          title: `${band.name}: ${band.frames} frames`,
+          children: /* @__PURE__ */ jsx24(
+            "span",
+            {
+              className: "skymap__tip-band-fill",
+              style: {
+                height: `${band.frames > 0 ? Math.max(12, Math.sqrt(band.frames) / Math.sqrt(detail.peak) * 100) : 0}%`,
+                background: wavelengthColor(band.nm)
+              }
+            }
+          )
+        },
+        band.name
+      )) }),
+      /* @__PURE__ */ jsxs18("div", { className: "skymap__tip-scale", children: [
+        /* @__PURE__ */ jsx24("span", { children: "400 nm" }),
+        /* @__PURE__ */ jsx24("span", { children: "frames per medium band" }),
+        /* @__PURE__ */ jsx24("span", { children: "875 nm" })
+      ] }),
+      detail.broad.length > 0 && /* @__PURE__ */ jsx24("p", { className: "skymap__tip-broad", children: detail.broad.map((band) => /* @__PURE__ */ jsxs18("span", { children: [
+        /* @__PURE__ */ jsx24("b", { children: band.name }),
+        " ",
+        band.frames.toLocaleString("en-US")
+      ] }, band.name)) })
+    ] })
+  ] });
+}
+
+// app/lib/tilegrid.ts
+var DEC_STEP = 0.8490566037735849, RING = [
+  1,
+  7,
+  11,
+  15,
+  19,
+  23,
+  27,
+  31,
+  36,
+  40,
+  44,
+  48,
+  52,
+  56,
+  60,
+  64,
+  68,
+  72,
+  76,
+  80,
+  84,
+  88,
+  92,
+  96,
+  100,
+  103,
+  107,
+  111,
+  115,
+  119,
+  122,
+  126,
+  130,
+  133,
+  137,
+  141,
+  144,
+  148,
+  151,
+  155,
+  158,
+  162,
+  165,
+  168,
+  171,
+  175,
+  178,
+  181,
+  184,
+  187,
+  190,
+  193,
+  196,
+  199,
+  202,
+  205,
+  208,
+  211,
+  213,
+  216,
+  219,
+  221,
+  224,
+  226,
+  228,
+  231,
+  233,
+  235,
+  238,
+  240,
+  242,
+  244,
+  246,
+  248,
+  250,
+  252,
+  253,
+  255,
+  257,
+  258,
+  260,
+  261,
+  263,
+  264,
+  266,
+  267,
+  268,
+  269,
+  270,
+  271,
+  272,
+  273,
+  274,
+  275,
+  276,
+  276,
+  277,
+  277,
+  278,
+  278,
+  279,
+  279,
+  279,
+  279,
+  280,
+  280,
+  280,
+  280,
+  280,
+  279,
+  279,
+  279,
+  279,
+  278,
+  278,
+  277,
+  277,
+  276,
+  276,
+  275,
+  274,
+  273,
+  272,
+  271,
+  270,
+  269,
+  268,
+  267,
+  266,
+  264,
+  263,
+  261,
+  260,
+  258,
+  257,
+  255,
+  253,
+  252,
+  250,
+  248,
+  246,
+  244
+], RING_START = (() => {
+  let out = [], at = 0;
+  for (let n of RING)
+    out.push(at), at += n;
+  return out;
+})(), GRID_TILES = RING_START[RING.length - 1] + RING[RING.length - 1], EXTENSION_FROM = 25472, RIS_TILES = EXTENSION_FROM;
+function tileGrid(from = 0, to = GRID_TILES) {
+  let start = Math.max(0, from), end = Math.min(GRID_TILES, to), count = Math.max(0, end - start), ra = new Float64Array(count), dec = new Float64Array(count), ring = 0;
+  for (; ring < RING.length - 1 && RING_START[ring + 1] <= start; )
+    ring += 1;
+  for (let i = 0; i < count; i += 1) {
+    let id = start + i;
+    for (; ring < RING.length - 1 && RING_START[ring + 1] <= id; )
+      ring += 1;
+    ra[i] = (id - RING_START[ring]) * 360 / RING[ring], dec[i] = -90 + ring * DEC_STEP;
+  }
+  return { ra, dec, count };
+}
+
+// app/components/skymap.tsx
+import { Fragment as Fragment9, jsx as jsx25, jsxs as jsxs19 } from "react/jsx-runtime";
+var DEG = Math.PI / 180, FOV_LON = 1.34, FOV_LAT = 0.9, RATIO = 0.52, TABLE_STEP = 0.1, TABLE = (() => {
+  let n = Math.round(180 / TABLE_STEP) + 1, table = new Float64Array(n);
+  for (let i = 0; i < n; i += 1) {
+    let lat = (-90 + i * TABLE_STEP) * DEG, theta2 = lat;
+    if (Math.abs(Math.abs(lat) - Math.PI / 2) < 1e-9)
+      theta2 = lat > 0 ? Math.PI / 2 : -Math.PI / 2;
+    else
+      for (let k = 0; k < 12; k += 1) {
+        let denominator = 2 + 2 * Math.cos(2 * theta2);
+        if (Math.abs(denominator) < 1e-12)
+          break;
+        let step2 = (2 * theta2 + Math.sin(2 * theta2) - Math.PI * Math.sin(lat)) / denominator;
+        if (theta2 -= step2, Math.abs(step2) < 1e-10)
+          break;
+      }
+    table[i] = theta2;
+  }
+  return table;
+})();
+function theta(latDeg) {
+  let position = (latDeg + 90) / TABLE_STEP, i = Math.max(0, Math.min(TABLE.length - 2, Math.floor(position))), f = position - i;
+  return TABLE[i] * (1 - f) + TABLE[i + 1] * f;
+}
+var toLon = (raDeg) => -(((raDeg + 180) % 360 + 360) % 360 - 180);
+function projectLon(lonDeg, decDeg) {
+  let t = theta(decDeg);
+  return [2 / Math.PI * lonDeg * DEG * Math.cos(t), Math.sin(t)];
+}
+function project(raDeg, decDeg) {
+  return projectLon(toLon(raDeg), decDeg);
+}
+function unproject(x, y) {
+  if (x * x / 4 + y * y > 1 + 1e-9)
+    return null;
+  let t = Math.asin(Math.max(-1, Math.min(1, y))), lat = Math.asin(Math.max(-1, Math.min(1, (2 * t + Math.sin(2 * t)) / Math.PI))) / DEG, cosT = Math.cos(t);
+  if (cosT < 1e-9)
+    return [0, lat > 0 ? 90 : -90];
+  let lon = Math.PI * x / (2 * cosT) / DEG;
+  return lon < -180.0001 || lon > 180.0001 ? null : [(-lon % 360 + 360) % 360, lat];
+}
+var NGP_RA = 192.85948 * DEG, NGP_DEC = 27.12825 * DEG, L_NCP = 122.93192 * DEG;
+function equatorialToGalactic(raDeg, decDeg) {
+  let ra = raDeg * DEG, dec = decDeg * DEG, sinDec = Math.sin(dec), cosDec = Math.cos(dec), dRa = ra - NGP_RA, sinB = Math.sin(NGP_DEC) * sinDec + Math.cos(NGP_DEC) * cosDec * Math.cos(dRa), b = Math.asin(Math.max(-1, Math.min(1, sinB))), y = cosDec * Math.sin(dRa), x = Math.cos(NGP_DEC) * sinDec - Math.sin(NGP_DEC) * cosDec * Math.cos(dRa), l = (L_NCP - Math.atan2(y, x)) / DEG;
+  return l = (l % 360 + 360) % 360, [l, b / DEG];
+}
+function galacticToEquatorial(lDeg, bDeg) {
+  let l = lDeg * DEG, b = bDeg * DEG, sinB = Math.sin(b), cosB = Math.cos(b), dL = L_NCP - l, sinDec = Math.sin(NGP_DEC) * sinB + Math.cos(NGP_DEC) * cosB * Math.cos(dL), dec = Math.asin(Math.max(-1, Math.min(1, sinDec))), y = cosB * Math.sin(dL), x = Math.cos(NGP_DEC) * sinB - Math.sin(NGP_DEC) * cosB * Math.cos(dL), ra = (NGP_RA + Math.atan2(y, x)) / DEG;
+  return ra = (ra % 360 + 360) % 360, [ra, dec / DEG];
+}
+var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+function monthLabel(index, epoch) {
+  let total = epoch[1] - 1 + index;
+  return `${MONTHS[(total % 12 + 12) % 12]} ${epoch[0] + Math.floor(total / 12)}`;
+}
+var DAY_MS3 = 24 * 60 * 60 * 1e3;
+function shortDuration(seconds) {
+  return seconds >= 3600 ? `${(seconds / 3600).toFixed(seconds >= 36e3 ? 0 : 1)} h` : seconds >= 60 ? `${Math.round(seconds / 60)} min` : `${Math.round(seconds)} s`;
+}
+function SkyMap({
+  tiles,
+  exposureSec,
+  emphasize,
+  interactive = !0,
+  planned,
+  showObserved = !0,
+  modeToggle,
+  depthRef,
+  defaultMode,
+  caption,
+  theme = "light"
+}) {
+  let dark = theme === "dark", canvasRef = useRef2(null), wrapRef = useRef2(null), hasExposure = Boolean(exposureSec && exposureSec > 0 && tiles.frames), canDepth = Boolean(depthRef && hasExposure && tiles.filters && tiles.patterns), [mode2, setMode] = useState4(
+    defaultMode ?? (canDepth ? "depth" : hasExposure ? "exposure" : "visits")
+  ), [frame, setFrame] = useState4("equatorial"), [width, setWidth] = useState4(960), [probe, setProbe] = useState4(null), hover = probe?.tile ?? null, ids2 = useMemo2(() => {
+    if (!tiles.nameDelta)
+      return null;
+    let out = new Int32Array(tiles.nameDelta.length), running = 0;
+    for (let i = 0; i < out.length; i += 1)
+      running += tiles.nameDelta[i], out[i] = running;
+    return out;
+  }, [tiles]), nameAt = useCallback(
+    (i) => ids2 ? `T${String(ids2[i]).padStart(5, "0")}` : tiles.name?.[i] ?? "",
+    [ids2, tiles]
+  ), emphasized = useMemo2(() => {
+    if (!emphasize || emphasize.length === 0)
+      return null;
+    let wanted = new Set(emphasize), mask = new Uint8Array(tiles.count);
+    for (let i = 0; i < tiles.count; i += 1)
+      mask[i] = wanted.has(nameAt(i)) ? 1 : 0;
+    return mask;
+  }, [emphasize, tiles, nameAt]), months = useMemo2(() => {
+    let epochMs = Date.parse(`${tiles.epochDate}T00:00:00Z`), index = new Int32Array(tiles.count), max = 0;
+    for (let i = 0; i < tiles.count; i += 1) {
+      let at = new Date(epochMs + tiles.lastDay[i] * DAY_MS3), m = (at.getUTCFullYear() - Number(tiles.epochDate.slice(0, 4))) * 12 + (at.getUTCMonth() + 1 - Number(tiles.epochDate.slice(5, 7)));
+      index[i] = m, m > max && (max = m);
+    }
+    return { index, max };
+  }, [tiles]), epoch = useMemo2(
+    () => [Number(tiles.epochDate.slice(0, 4)), Number(tiles.epochDate.slice(5, 7))],
+    [tiles.epochDate]
+  ), coords = useMemo2(() => {
+    if (frame === "equatorial")
+      return { lon: tiles.ra, lat: tiles.dec };
+    let lon = new Float64Array(tiles.count), lat = new Float64Array(tiles.count);
+    for (let i = 0; i < tiles.count; i += 1) {
+      let [l, b] = equatorialToGalactic(tiles.ra[i], tiles.dec[i]);
+      lon[i] = l, lat[i] = b;
+    }
+    return { lon, lat };
+  }, [frame, tiles]), plannedProjected = useMemo2(() => {
+    if (!planned)
+      return null;
+    let grid = tileGrid(planned.from ?? 0, planned.to ?? GRID_TILES), xs = new Float64Array(grid.count), ys = new Float64Array(grid.count), lat = new Float64Array(grid.count);
+    for (let i = 0; i < grid.count; i += 1) {
+      let lon = grid.ra[i], b = grid.dec[i];
+      frame === "galactic" && ([lon, b] = equatorialToGalactic(lon, b));
+      let [x, y] = project(lon, b);
+      xs[i] = x, ys[i] = y, lat[i] = b;
+    }
+    return { xs, ys, lat, count: grid.count };
+  }, [planned?.from, planned?.to, frame]), projected = useMemo2(() => {
+    let xs = new Float64Array(tiles.count), ys = new Float64Array(tiles.count);
+    for (let i = 0; i < tiles.count; i += 1) {
+      let [x, y] = project(coords.lon[i], coords.lat[i]);
+      xs[i] = x, ys[i] = y;
+    }
+    return { xs, ys };
+  }, [coords, tiles.count]), visitScale = useMemo2(() => Math.log(tiles.visitsMax + 1), [tiles.visitsMax]), exposureScale = useMemo2(
+    () => hasExposure ? Math.log(tiles.framesMax * exposureSec + 1) : 1,
+    [hasExposure, tiles.framesMax, exposureSec]
+  ), bandFrames = useMemo2(() => {
+    if (!depthRef || !tiles.filters || !tiles.pattern || !tiles.patterns)
+      return null;
+    let band = tiles.filters.indexOf(depthRef.band);
+    if (band < 0)
+      return null;
+    let perPattern = tiles.patterns.map((flat) => {
+      for (let k = 0; k < flat.length; k += 2)
+        if (flat[k] === band)
+          return flat[k + 1];
+      return 0;
+    }), out = new Int32Array(tiles.count);
+    for (let i = 0; i < tiles.count; i += 1)
+      out[i] = perPattern[tiles.pattern[i]] ?? 0;
+    return out;
+  }, [depthRef, tiles]), depthOf = useCallback(
+    (i) => {
+      if (!depthRef || !hasExposure || !bandFrames)
+        return NaN;
+      let seconds = bandFrames[i] * exposureSec;
+      return seconds <= 0 ? NaN : depthRef.mag + 1.25 * Math.log10(seconds / depthRef.sec);
+    },
+    [depthRef, hasExposure, bandFrames, exposureSec]
+  ), depthRange = useMemo2(() => {
+    if (!depthRef || !hasExposure || !bandFrames)
+      return null;
+    let lo = 1 / 0, hi = -1 / 0;
+    for (let i = 0; i < tiles.count; i += 1) {
+      let d = depthOf(i);
+      Number.isFinite(d) && (d < lo && (lo = d), d > hi && (hi = d));
+    }
+    return Number.isFinite(lo) ? hi - lo < 0.05 ? { lo: lo - 0.25, hi: hi + 0.25 } : { lo, hi } : null;
+  }, [depthRef, hasExposure, bandFrames, tiles.count, depthOf]), modes = useMemo2(() => {
+    let out = [];
+    return depthRange && out.push({ key: "depth", label: "Depth" }), hasExposure && out.push({ key: "exposure", label: "Exposure time" }), out.push({ key: "visits", label: "Visits" }), out.push({ key: "date", label: "Last visit" }), out;
+  }, [depthRange, hasExposure]);
+  useEffect3(() => {
+    modes.some((m) => m.key === mode2) || setMode(modes[0].key);
+  }, [modes, mode2]);
+  let value = useCallback(
+    (i) => {
+      if (mode2 === "depth" && depthRange) {
+        let d = depthOf(i);
+        return Number.isFinite(d) ? (d - depthRange.lo) / (depthRange.hi - depthRange.lo) : 0;
+      }
+      if (mode2 === "exposure" && hasExposure) {
+        let seconds = (tiles.frames?.[i] ?? 0) * exposureSec;
+        return Math.log(seconds + 1) / exposureScale;
+      }
+      return mode2 === "date" ? months.max > 0 ? months.index[i] / months.max : 1 : Math.log(tiles.visits[i] + 1) / visitScale;
+    },
+    [mode2, tiles, visitScale, months, depthRange, depthOf, hasExposure, exposureSec, exposureScale]
+  );
+  useEffect3(() => {
+    let element = wrapRef.current;
+    if (!element)
+      return;
+    let measure = () => setWidth(element.clientWidth || 960);
+    if (measure(), typeof ResizeObserver > "u")
+      return window.addEventListener("resize", measure), () => window.removeEventListener("resize", measure);
+    let observer = new ResizeObserver(measure);
+    return observer.observe(element), () => observer.disconnect();
+  }, []), useEffect3(() => {
+    let canvas = canvasRef.current;
+    if (!canvas)
+      return;
+    let height = Math.round(width * RATIO), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(width * dpr), canvas.height = Math.round(height * dpr), canvas.style.height = `${height}px`;
+    let ctx = canvas.getContext("2d");
+    if (!ctx)
+      return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0), ctx.clearRect(0, 0, width, height);
+    let pad = 40, scale = Math.min((width - pad * 2) / 4, (height - pad * 1.4) / 2), cx = width / 2, cy = height / 2, px = (x) => cx + x * scale, py = (y) => cy - y * scale;
+    if (ctx.save(), ctx.beginPath(), ctx.ellipse(cx, cy, 2 * scale, scale, 0, 0, Math.PI * 2), ctx.clip(), ctx.fillStyle = dark ? "rgba(255,255,255,0.05)" : "#eceff4", ctx.fillRect(0, 0, width, height), plannedProjected) {
+      ctx.fillStyle = dark ? "rgba(255,255,255,0.13)" : "rgba(10,16,28,0.13)";
+      for (let i = 0; i < plannedProjected.count; i += 1) {
+        let lat = plannedProjected.lat[i], t = theta(lat), dLon = FOV_LON / Math.max(0.02, Math.cos(lat * DEG)), w = Math.max(1.1, 2 / Math.PI * dLon * DEG * Math.cos(t) * scale), hi = Math.min(90, lat + FOV_LAT / 2), lo = Math.max(-90, lat - FOV_LAT / 2), h = Math.max(1.1, (Math.sin(theta(hi)) - Math.sin(theta(lo))) * scale);
+        ctx.fillRect(
+          px(plannedProjected.xs[i]) - w / 2,
+          py(plannedProjected.ys[i]) - h / 2,
+          w,
+          h
+        );
+      }
+    }
+    for (let i = 0; showObserved && i < tiles.count; i += 1) {
+      let lat = coords.lat[i], t = theta(lat), [x, y] = project(coords.lon[i], lat), dLon = FOV_LON / Math.max(0.02, Math.cos(lat * DEG)), w = Math.max(1.1, 2 / Math.PI * dLon * DEG * Math.cos(t) * scale), hi = Math.min(90, lat + FOV_LAT / 2), lo = Math.max(-90, lat - FOV_LAT / 2), h = Math.max(1.1, (Math.sin(theta(hi)) - Math.sin(theta(lo))) * scale);
+      ctx.fillStyle = emphasized && !emphasized[i] ? dark ? "rgba(255,255,255,0.12)" : "rgba(10,16,28,0.10)" : rgb(sequential(value(i), dark)), ctx.fillRect(px(x) - w / 2, py(y) - h / 2, w, h);
+    }
+    ctx.restore(), ctx.strokeStyle = dark ? "rgba(255,255,255,0.16)" : "rgba(10,16,28,0.18)", ctx.lineWidth = 0.6, ctx.setLineDash([2, 3]);
+    for (let dec = -75; dec <= 75; dec += 15) {
+      ctx.beginPath();
+      for (let lon = -180; lon <= 180; lon += 2) {
+        let [x, y] = projectLon(lon, dec);
+        lon === -180 ? ctx.moveTo(px(x), py(y)) : ctx.lineTo(px(x), py(y));
+      }
+      ctx.stroke();
+    }
+    for (let lon = -150; lon <= 150; lon += 30) {
+      ctx.beginPath();
+      for (let dec = -90; dec <= 90; dec += 1) {
+        let [x, y] = projectLon(lon, dec);
+        dec === -90 ? ctx.moveTo(px(x), py(y)) : ctx.lineTo(px(x), py(y));
+      }
+      ctx.stroke();
+    }
+    if (ctx.setLineDash([]), ctx.strokeStyle = dark ? "rgba(255,255,255,0.42)" : "#0a101c", ctx.lineWidth = 1.2, ctx.beginPath(), ctx.ellipse(cx, cy, 2 * scale, scale, 0, 0, Math.PI * 2), ctx.stroke(), ctx.fillStyle = dark ? "rgba(255,255,255,0.62)" : "#4d5b71", ctx.font = '11px ui-monospace, "JetBrains Mono", monospace', ctx.textAlign = "center", ctx.textBaseline = "middle", frame === "equatorial")
+      for (let hours = 2; hours <= 22; hours += 4) {
+        let [x, y] = project(hours * 15, 0);
+        ctx.fillText(`${String(hours).padStart(2, "0")}h`, px(x), py(y) - 9);
+      }
+    else
+      for (let l of [30, 90, 150, 210, 270, 330]) {
+        let [x, y] = project(l, 0);
+        ctx.fillText(`${l}\xB0`, px(x), py(y) - 9);
+      }
+    ctx.textAlign = "right";
+    for (let lat = -75; lat <= 75; lat += 15) {
+      let [x, y] = projectLon(-180, lat);
+      ctx.fillText(`${lat > 0 ? "+" : ""}${lat}\xB0`, px(x) - 7, py(y));
+    }
+  }, [tiles, coords, projected, plannedProjected, showObserved, frame, width, value, emphasized, dark]);
+  let onMove = (event) => {
+    let canvas = canvasRef.current;
+    if (!canvas)
+      return;
+    let rect = canvas.getBoundingClientRect(), height = rect.height, pad = 40, scale = Math.min((rect.width - pad * 2) / 4, (height - pad * 1.4) / 2), mx = event.clientX - rect.left, my = event.clientY - rect.top, sky = unproject((mx - rect.width / 2) / scale, (height / 2 - my) / scale);
+    if (!sky) {
+      setProbe(null);
+      return;
+    }
+    let perDegree = scale * (2 / 180), tolerance = Math.max(6, perDegree * 1.2), best = -1, bestDistance = tolerance * tolerance;
+    for (let i = 0; i < tiles.count; i += 1) {
+      let dx = rect.width / 2 + projected.xs[i] * scale - mx, dy = height / 2 - projected.ys[i] * scale - my, distance = dx * dx + dy * dy;
+      distance < bestDistance && (bestDistance = distance, best = i);
+    }
+    let [lon, lat] = sky, equatorial = best >= 0 ? [tiles.ra[best], tiles.dec[best]] : frame === "equatorial" ? [lon, lat] : galacticToEquatorial(lon, lat), galactic = best >= 0 ? frame === "galactic" ? [coords.lon[best], coords.lat[best]] : equatorialToGalactic(tiles.ra[best], tiles.dec[best]) : frame === "galactic" ? [lon, lat] : equatorialToGalactic(lon, lat), mark = null;
+    if (best >= 0) {
+      let lat2 = coords.lat[best], t = theta(lat2), dLon = FOV_LON / Math.max(0.02, Math.cos(lat2 * DEG)), hiLat = Math.min(90, lat2 + FOV_LAT / 2), loLat = Math.max(-90, lat2 - FOV_LAT / 2);
+      mark = {
+        x: rect.width / 2 + projected.xs[best] * scale,
+        y: height / 2 - projected.ys[best] * scale,
+        w: Math.max(5, 2 / Math.PI * dLon * DEG * Math.cos(t) * scale),
+        h: Math.max(5, (Math.sin(theta(hiLat)) - Math.sin(theta(loLat))) * scale)
+      };
+    }
+    setProbe({
+      x: mx,
+      y: my,
+      tile: best >= 0 ? best : null,
+      mark,
+      ra: equatorial[0],
+      dec: equatorial[1],
+      l: galactic[0],
+      b: galactic[1]
+    });
+  }, showModes = (modeToggle ?? interactive) && modes.length > 1, legendStops = useMemo2(
+    () => Array.from({ length: 12 }, (_, i) => rgb(sequential(i / 11, dark))).join(", "),
+    []
+  ), legendTicks = useMemo2(() => mode2 === "depth" && depthRange ? [0, 0.5, 1].map((t) => (depthRange.lo + t * (depthRange.hi - depthRange.lo)).toFixed(1)) : mode2 === "exposure" ? [0, 0.5, 1].map((t) => shortDuration(Math.exp(t * exposureScale) - 1)) : mode2 === "date" ? [0, 0.5, 1].map((t) => monthLabel(Math.round(t * months.max), epoch)) : [0, 0.5, 1].map((t) => `${Math.round(Math.exp(t * visitScale) - 1).toLocaleString("en-US")}`), [mode2, tiles, visitScale, months, epoch, depthRange, exposureScale]), legendTitle = mode2 === "depth" ? `Estimated 5\u03C3 depth${depthRef ? ` \xB7 ${depthRef.band}` : ""}` : mode2 === "exposure" ? "Estimated integration time" : mode2 === "date" ? "Last observed" : "Visits per tile";
+  return /* @__PURE__ */ jsxs19("div", { className: `skymap${dark ? " skymap--dark" : ""}`, children: [
+    (interactive || showModes) && /* @__PURE__ */ jsxs19("div", { className: "skymap__controls", children: [
+      interactive && /* @__PURE__ */ jsxs19("div", { className: "skymap__modes", role: "group", "aria-label": "Coordinate system", children: [
+        /* @__PURE__ */ jsx25(
+          "button",
+          {
+            type: "button",
+            className: "toggle-btn",
+            "aria-pressed": frame === "equatorial",
+            onClick: () => setFrame("equatorial"),
+            children: "RA / Dec"
+          }
+        ),
+        /* @__PURE__ */ jsx25(
+          "button",
+          {
+            type: "button",
+            className: "toggle-btn",
+            "aria-pressed": frame === "galactic",
+            onClick: () => setFrame("galactic"),
+            children: "Galactic"
+          }
+        )
+      ] }),
+      showModes && /* @__PURE__ */ jsx25("div", { className: "skymap__modes", role: "group", "aria-label": "Color the map by", children: modes.map((option) => /* @__PURE__ */ jsx25(
+        "button",
+        {
+          type: "button",
+          className: "toggle-btn",
+          "aria-pressed": mode2 === option.key,
+          onClick: () => setMode(option.key),
+          children: option.label
+        },
+        option.key
+      )) }),
+      interactive && /* @__PURE__ */ jsx25("span", { className: "skymap__readout", role: "status", children: probe === null ? caption ?? `${tiles.count.toLocaleString("en-US")} tiles observed` : hover === null ? /* @__PURE__ */ jsxs19(Fragment9, { children: [
+        "RA ",
+        probe.ra.toFixed(1),
+        "\xB0 Dec ",
+        degLabel(probe.dec),
+        " \xB7 not observed"
+      ] }) : /* @__PURE__ */ jsxs19(Fragment9, { children: [
+        /* @__PURE__ */ jsx25("b", { children: nameAt(hover) }),
+        " \xB7",
+        " ",
+        frame === "equatorial" ? /* @__PURE__ */ jsxs19(Fragment9, { children: [
+          "RA ",
+          probe.ra.toFixed(1),
+          "\xB0 Dec ",
+          degLabel(probe.dec)
+        ] }) : /* @__PURE__ */ jsxs19(Fragment9, { children: [
+          "l ",
+          probe.l.toFixed(1),
+          "\xB0 b ",
+          degLabel(probe.b)
+        ] }),
+        " ",
+        "\xB7 ",
+        tiles.visits[hover],
+        " ",
+        tiles.visits[hover] === 1 ? "visit" : "visits",
+        " \xB7",
+        " ",
+        (tiles.frames?.[hover] ?? 0).toLocaleString("en-US"),
+        " frames \xB7 last",
+        " ",
+        monthLabel(months.index[hover], epoch)
+      ] }) })
+    ] }),
+    /* @__PURE__ */ jsxs19("div", { className: "skymap__canvas", ref: wrapRef, children: [
+      /* @__PURE__ */ jsx25(
+        "canvas",
+        {
+          ref: canvasRef,
+          style: { width: "100%", display: "block" },
+          onPointerMove: interactive ? onMove : void 0,
+          onPointerLeave: interactive ? () => setProbe(null) : void 0,
+          role: "img",
+          "aria-label": `Mollweide all-sky map of ${tiles.count.toLocaleString(
+            "en-US"
+          )} observed 7DS tiles in ${frame === "equatorial" ? "equatorial" : "galactic"} coordinates, colored by ${mode2 === "depth" ? "the estimated depth reached on each" : mode2 === "exposure" ? "the estimated integration time on each" : mode2 === "date" ? "the date each was last observed" : "the number of visits to each"}. Longitude increases to the left.`
+        }
+      ),
+      probe?.mark && /* @__PURE__ */ jsx25(
+        "span",
+        {
+          className: "skymap__mark",
+          "aria-hidden": "true",
+          style: {
+            left: probe.mark.x,
+            top: probe.mark.y,
+            width: probe.mark.w,
+            height: probe.mark.h
+          }
+        }
+      ),
+      probe && /* @__PURE__ */ jsx25(
+        "div",
+        {
+          className: `skymap__tip${probe.x > width * 0.55 ? " skymap__tip--left" : ""}${probe.y > width * RATIO * 0.55 ? " skymap__tip--up" : ""}`,
+          style: { left: probe.x, top: probe.y },
+          "aria-hidden": "true",
+          children: hover === null ? /* @__PURE__ */ jsxs19(Fragment9, { children: [
+            /* @__PURE__ */ jsxs19("div", { className: "skymap__tip-head", children: [
+              /* @__PURE__ */ jsx25("span", { className: "skymap__tip-name", children: "No observation" }),
+              /* @__PURE__ */ jsx25("span", { className: "skymap__tip-badge skymap__tip-badge--none", children: "Not observed" })
+            ] }),
+            /* @__PURE__ */ jsxs19("dl", { className: "skymap__tip-grid", children: [
+              /* @__PURE__ */ jsx25("dt", { children: "RA" }),
+              /* @__PURE__ */ jsxs19("dd", { children: [
+                probe.ra.toFixed(1),
+                "\xB0"
+              ] }),
+              /* @__PURE__ */ jsx25("dt", { children: "Dec" }),
+              /* @__PURE__ */ jsx25("dd", { children: degLabel(probe.dec) }),
+              /* @__PURE__ */ jsx25("dt", { children: "l, b" }),
+              /* @__PURE__ */ jsxs19("dd", { children: [
+                probe.l.toFixed(1),
+                "\xB0, ",
+                degLabel(probe.b)
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx25("p", { className: "skymap__tip-note", children: "No science frames recorded at this position." })
+          ] }) : /* @__PURE__ */ jsx25(
+            TileDetail,
+            {
+              tiles,
+              index: hover,
+              name: nameAt(hover),
+              ra: probe.ra,
+              dec: probe.dec,
+              l: probe.l,
+              b: probe.b,
+              exposureSec
+            }
+          )
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxs19("div", { className: "skymap__legend", children: [
+      /* @__PURE__ */ jsx25("span", { className: "skymap__legend-title", children: legendTitle }),
+      /* @__PURE__ */ jsx25("div", { className: "skymap__ramp", style: { background: `linear-gradient(to right, ${legendStops})` } }),
+      /* @__PURE__ */ jsx25("div", { className: "skymap__ticks", children: legendTicks.map((tick, index) => /* @__PURE__ */ jsx25("span", { children: tick }, tick + index)) })
+    ] })
+  ] });
+}
+
+// app/components/tilequery.tsx
+import React6, { useMemo as useMemo3, useState as useState5 } from "react";
+import { Fragment as Fragment10, jsx as jsx26, jsxs as jsxs20 } from "react/jsx-runtime";
+var DEG2 = Math.PI / 180, NGP_RA2 = 192.85948 * DEG2, NGP_DEC2 = 27.12825 * DEG2, L_NCP2 = 122.93192 * DEG2;
+function equatorialToGalactic2(raDeg, decDeg) {
+  let ra = raDeg * DEG2, dec = decDeg * DEG2, sinDec = Math.sin(dec), cosDec = Math.cos(dec), dRa = ra - NGP_RA2, sinB = Math.sin(NGP_DEC2) * sinDec + Math.cos(NGP_DEC2) * cosDec * Math.cos(dRa), b = Math.asin(Math.max(-1, Math.min(1, sinB))), y = cosDec * Math.sin(dRa), x = Math.cos(NGP_DEC2) * sinDec - Math.sin(NGP_DEC2) * cosDec * Math.cos(dRa), l = (L_NCP2 - Math.atan2(y, x)) / DEG2;
+  return l = (l % 360 + 360) % 360, [l, b / DEG2];
+}
+function parseAngle(raw, hours) {
+  let text = raw.trim().replace(/[dhms°'"]/g, " ").replace(/:/g, " ").trim();
+  if (!text)
+    return null;
+  let parts = text.split(/\s+/);
+  if (parts.some((p) => !/^[+-]?\d*\.?\d+$/.test(p)))
+    return null;
+  let values = parts.map(Number);
+  if (values.some((v) => !Number.isFinite(v)))
+    return null;
+  if (values.length === 1)
+    return values[0];
+  let sign = /^\s*-/.test(raw) ? -1 : 1, magnitude = Math.abs(values[0]) + (values[1] ?? 0) / 60 + (values[2] ?? 0) / 3600;
+  return sign * magnitude * (hours ? 15 : 1);
+}
+var EXAMPLES = [
+  { label: "IMS field", ra: "05:13:07", dec: "-60:28:12" },
+  { label: "LMC", ra: "80.894", dec: "-69.756" },
+  { label: "Fornax cluster", ra: "54.62", dec: "-35.45" }
+];
+function TileQuery({
+  tiles,
+  exposureSec
+}) {
+  let [ra, setRa] = useState5(""), [dec, setDec] = useState5(""), [query, setQuery] = useState5(null), [error, setError] = useState5(null), ids2 = useMemo3(() => {
+    if (!tiles.nameDelta)
+      return null;
+    let out = new Int32Array(tiles.nameDelta.length), running = 0;
+    for (let i = 0; i < out.length; i += 1)
+      running += tiles.nameDelta[i], out[i] = running;
+    return out;
+  }, [tiles]), nameAt = (i) => ids2 ? `T${String(ids2[i]).padStart(5, "0")}` : tiles.name?.[i] ?? "", hit = useMemo3(
+    () => query ? findTileAt(tiles, query.ra, query.dec) : null,
+    [query, tiles]
+  ), submit = (event) => {
+    event.preventDefault();
+    let parsedRa = parseAngle(ra, ra.includes(":") || /\s/.test(ra.trim())), parsedDec = parseAngle(dec, !1);
+    if (parsedRa === null || parsedDec === null) {
+      setError("Enter a position as decimal degrees (78.83, \u221261.13) or sexagesimal (05:13:07, \u221260:28:12)."), setQuery(null);
+      return;
+    }
+    if (parsedDec < -90 || parsedDec > 90) {
+      setError("Declination must be between \u221290 and +90 degrees."), setQuery(null);
+      return;
+    }
+    setError(null), setQuery({ ra: (parsedRa % 360 + 360) % 360, dec: parsedDec });
+  }, useExample = (example) => {
+    setRa(example.ra), setDec(example.dec), setError(null);
+    let parsedRa = parseAngle(example.ra, example.ra.includes(":")), parsedDec = parseAngle(example.dec, !1);
+    parsedRa !== null && parsedDec !== null && setQuery({ ra: (parsedRa % 360 + 360) % 360, dec: parsedDec });
+  }, galactic = query ? equatorialToGalactic2(query.ra, query.dec) : null;
+  return /* @__PURE__ */ jsxs20("div", { className: "tilequery", children: [
+    /* @__PURE__ */ jsxs20("div", { children: [
+      /* @__PURE__ */ jsxs20("form", { className: "tilequery__form", onSubmit: submit, children: [
+        /* @__PURE__ */ jsxs20("div", { className: "tilequery__field", children: [
+          /* @__PURE__ */ jsx26("label", { htmlFor: "q-ra", children: "Right ascension" }),
+          /* @__PURE__ */ jsx26(
+            "input",
+            {
+              id: "q-ra",
+              type: "text",
+              inputMode: "decimal",
+              value: ra,
+              onChange: (e) => setRa(e.target.value),
+              placeholder: "78.83 or 05:13:07"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs20("div", { className: "tilequery__field", children: [
+          /* @__PURE__ */ jsx26("label", { htmlFor: "q-dec", children: "Declination" }),
+          /* @__PURE__ */ jsx26(
+            "input",
+            {
+              id: "q-dec",
+              type: "text",
+              inputMode: "decimal",
+              value: dec,
+              onChange: (e) => setDec(e.target.value),
+              placeholder: "-61.13 or -60:28:12"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsx26("button", { className: "btn btn--primary", type: "submit", children: "Check coverage" })
+      ] }),
+      error && /* @__PURE__ */ jsx26("p", { className: "tilequery__error", children: error }),
+      /* @__PURE__ */ jsxs20("p", { className: "tilequery__examples", children: [
+        "Try",
+        " ",
+        EXAMPLES.map((example, index) => /* @__PURE__ */ jsxs20(React6.Fragment, { children: [
+          index > 0 && ", ",
+          /* @__PURE__ */ jsx26("button", { type: "button", onClick: () => useExample(example), children: example.label })
+        ] }, example.label)),
+        ". Right ascension is read as hours when written with colons or spaces, and as degrees when written as a single number."
+      ] }),
+      query && /* @__PURE__ */ jsxs20("p", { className: "note", style: { marginTop: "1rem" }, children: [
+        "Queried RA ",
+        query.ra.toFixed(3),
+        "\xB0, Dec ",
+        degLabel(query.dec),
+        galactic && /* @__PURE__ */ jsxs20(Fragment10, { children: [
+          " ",
+          "\xB7 l ",
+          galactic[0].toFixed(2),
+          "\xB0, b ",
+          degLabel(galactic[1])
+        ] }),
+        hit !== null ? " \u2014 this position falls on an observed tile." : " \u2014 no observed tile covers this position."
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx26("div", { className: "tilequery__result", "aria-live": "polite", children: query === null ? /* @__PURE__ */ jsx26("p", { className: "tilequery__empty", children: "Enter a position to see whether it has been observed and what exists for it." }) : hit !== null && galactic ? /* @__PURE__ */ jsx26(
+      TileDetail,
+      {
+        tiles,
+        index: hit,
+        name: nameAt(hit),
+        ra: tiles.ra[hit],
+        dec: tiles.dec[hit],
+        l: galactic[0],
+        b: galactic[1],
+        exposureSec
+      }
+    ) : /* @__PURE__ */ jsxs20(Fragment10, { children: [
+      /* @__PURE__ */ jsxs20("div", { className: "skymap__tip-head", children: [
+        /* @__PURE__ */ jsx26("span", { className: "skymap__tip-name", children: "No observation" }),
+        /* @__PURE__ */ jsx26("span", { className: "skymap__tip-badge skymap__tip-badge--none", children: "Not observed" })
+      ] }),
+      /* @__PURE__ */ jsxs20("dl", { className: "skymap__tip-grid", children: [
+        /* @__PURE__ */ jsx26("dt", { children: "RA" }),
+        /* @__PURE__ */ jsxs20("dd", { children: [
+          query.ra.toFixed(3),
+          "\xB0"
+        ] }),
+        /* @__PURE__ */ jsx26("dt", { children: "Dec" }),
+        /* @__PURE__ */ jsx26("dd", { children: degLabel(query.dec) }),
+        galactic && /* @__PURE__ */ jsxs20(Fragment10, { children: [
+          /* @__PURE__ */ jsx26("dt", { children: "l, b" }),
+          /* @__PURE__ */ jsxs20("dd", { children: [
+            galactic[0].toFixed(1),
+            "\xB0, ",
+            degLabel(galactic[1])
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx26("p", { className: "skymap__tip-note", children: "No science frames are recorded on the tile at this position. It may be outside the observable declination range, or not yet reached by the survey." })
+    ] }) })
+  ] });
+}
+
+// app/routes/users.access.tsx
+import { Fragment as Fragment11, jsx as jsx27, jsxs as jsxs21 } from "react/jsx-runtime";
+var meta18 = () => [
+  { title: "Data access \xB7 7DT for users" },
+  {
+    name: "description",
+    content: "Search 7DS coverage by position or on an all-sky map, find out how to obtain the data, and what the pipeline produces and in what units."
+  }
+], CACHE2 = "public, max-age=3600, stale-while-revalidate=86400", headers2 = () => ({ "Cache-Control": CACHE2 });
+async function loader7() {
+  let [tiles, status] = await Promise.all([getTileMap(), getStatus().catch(() => null)]), totals = status?.data.totals, exposureSec = totals && totals.science_frames > 0 ? totals.exposure_hours * 3600 / totals.science_frames : null;
+  return json2(
+    {
+      tiles: tiles.data,
+      live: tiles.live,
+      generatedAt: tiles.generatedAt,
+      ris: status?.data.ris ?? null,
+      frames: totals?.science_frames ?? null,
+      exposureSec
+    },
+    { headers: { "Cache-Control": CACHE2 } }
+  );
+}
+var PRODUCTS = [
+  ["single", "A calibrated individual exposure, 100 s, with WCS and a source catalog"],
+  ["coadd", "Three singles combined to a 300 s frame \u2014 the basic survey product"],
+  ["difference", "A coadd minus its reference image, for transient detection"],
+  ["catalog", "A flux-calibrated source list attached to every image above"],
+  ["master frame", "Bias, dark and flat, generated nightly and matched by group key"]
+], CONVENTIONS = [
+  ["Photometric system", "AB magnitudes"],
+  ["Coadd zero point", "23.9 AB \u2014 pixel values in \xB5Jy"],
+  ["Astrometric reference", "Gaia DR3"],
+  ["Flux calibration", "Synthetic photometry from Gaia XP spectra"],
+  ["Tiling", "HEALPix-derived, T00000 \u2013 T28519"],
+  ["File format", "FITS, with QA metrics in the header"]
+], QA_KEYS = [
+  ["SANITY", "Boolean; false means the image should not be used for science"],
+  ["REJ_PROC", "The processing stage at which SANITY was set false"],
+  ["SEEING", "Measured PSF FWHM"],
+  ["UL5_5", "5\u03C3 limiting magnitude"],
+  ["ELLIP", "Point-source elongation"],
+  ["PPFLAG", "Bitmask recording compromises in master-frame selection"]
+], num2 = (value) => value.toLocaleString("en-US"), day = (iso) => new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }), Index18 = () => {
+  let { tiles, live, generatedAt, ris, frames, exposureSec } = useLoaderData2(), singleVisit = (tiles.visits ?? []).filter((v) => v === 1).length, repeated = tiles.count - singleVisit;
+  return /* @__PURE__ */ jsxs21(PageLayout, { menu: "manuUsers", children: [
+    /* @__PURE__ */ jsx27(
+      PageHero,
+      {
+        eyebrow: "For users",
+        title: /* @__PURE__ */ jsxs21(Fragment11, { children: [
+          "Data access & ",
+          /* @__PURE__ */ jsx27("em", { children: "format" })
+        ] }),
+        lede: "Find out whether a position has been observed, obtain the data, and know what arrives when you do.",
+        image: "/img/hero/data.jpg",
+        meta: [
+          { value: num2(tiles.count), label: "Tiles with data", live: !0 },
+          ...ris ? [{ value: String(ris.coverage_pct), unit: "%", label: "Sky referenced" }] : [],
+          { value: num2(tiles.visitsMax), label: "Most-visited tile" },
+          { value: day(tiles.lastNight), label: "Last observation" }
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxs21(Section, { eyebrow: "Search", title: "Is this position observed?", children: [
+      /* @__PURE__ */ jsx27("div", { style: { marginBottom: "1.5rem" }, children: /* @__PURE__ */ jsx27(LiveBadge, { live, updated: generatedAt, interval: "daily" }) }),
+      /* @__PURE__ */ jsx27("p", { className: "prose", children: "Enter a position to see whether a survey tile covers it and what the observation record holds \u2014 how many nights and frames, roughly how much open-shutter time, which medium bands were taken and over what date range. The search runs against the same database that drives the pipeline, so a tile reported as observed has calibrated images behind it." }),
+      /* @__PURE__ */ jsx27("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx27(TileQuery, { tiles, exposureSec }) }),
+      /* @__PURE__ */ jsxs21("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: [
+        "A position is matched to a tile when it falls within that tile's 1.34\xB0 \xD7 0.90\xB0 field. Frame counts and filters are exact. Exposure time is an estimate \u2014 the frame count times the survey mean of ",
+        exposureSec ? exposureSec.toFixed(0) : "\u224880",
+        " seconds per frame \u2014 and is marked \u2248 for that reason."
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs21(Section, { eyebrow: "Footprint", title: "Where 7DS has observed", alt: !0, wide: !0, children: [
+      /* @__PURE__ */ jsx27("p", { className: "prose", children: "The same record, drawn as a map. The projection is Mollweide and equal-area: a given area of the map corresponds to the same area of sky wherever it falls, so coverage near the pole is not exaggerated as it would be on a rectangular plot. Longitude increases to the left. Switch between equatorial and galactic coordinates, and point anywhere to read what exists at that position." }),
+      /* @__PURE__ */ jsx27("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx27(SkyMap, { tiles, exposureSec }) }),
+      /* @__PURE__ */ jsxs21("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
+        live ? `Generated ${day(generatedAt)}.` : "The database could not be reached; this map is a stored copy and may be out of date.",
+        " ",
+        "Only tiles with at least one science exposure are shown. Target-of-opportunity pointings at arbitrary coordinates are not on the tiling and do not appear."
+      ] }),
+      /* @__PURE__ */ jsx27("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx27(
+        StatGrid,
+        {
+          items: [
+            { value: num2(tiles.count), label: "Tiles with data" },
+            { value: num2(singleVisit), label: "Observed once", note: "RIS reference pass" },
+            { value: num2(repeated), label: "Revisited", note: "monitoring and ToO" },
+            ...frames ? [{ value: num2(frames), label: "Science frames" }] : []
+          ]
+        }
+      ) }),
+      /* @__PURE__ */ jsxs21("p", { className: "footnote", style: { marginTop: "1.25rem" }, children: [
+        "The broad wash across the southern sky is the",
+        " ",
+        /* @__PURE__ */ jsx27(Link14, { to: "/survey/ris", children: "Reference Imaging Survey" }),
+        "; the heavily repeated cluster near the south ecliptic pole is the",
+        " ",
+        /* @__PURE__ */ jsx27(Link14, { to: "/survey/ims", children: "Intensive Monitoring Survey" }),
+        ", which is why the visit scale is logarithmic. Isolated tiles elsewhere are target-of-opportunity follow-ups that fell on the tiling."
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx27(Section, { eyebrow: "Requesting", title: "Obtaining data", children: /* @__PURE__ */ jsxs21("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsxs21("div", { children: [
+        /* @__PURE__ */ jsx27("p", { className: "prose", children: "There is no public archive interface yet. A complete record of every image type and source catalog is held internally, with the provenance of any product traceable back to the raw frames it was built from, and requests are handled by the project directly until a public release is made." }),
+        /* @__PURE__ */ jsxs21("p", { className: "prose", children: [
+          "A request is quickest to fill if it states the tile identifier \u2014 or the coordinates \u2014 the filters, the epoch range, and which product is wanted: single exposures, coadds, difference images or catalogs. Terms of use and acknowledgment are set out under",
+          " ",
+          /* @__PURE__ */ jsx27(Link14, { to: "/users/data", children: "how to use the data" }),
+          "."
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs21("div", { className: "panel", children: [
+        /* @__PURE__ */ jsx27("div", { className: "panel__title", children: "Requesting data" }),
+        /* @__PURE__ */ jsx27("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: "Include the tile identifier or position, the bands, the epoch range and the product type." }),
+        /* @__PURE__ */ jsx27(
+          "a",
+          {
+            className: "btn btn--primary",
+            href: "mailto:mim@astro.snu.ac.kr?subject=7DT%20data%20request",
+            children: "Contact the project"
+          }
+        )
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsx27(Section, { id: "format", eyebrow: "Format", title: "What the pipeline produces", alt: !0, children: /* @__PURE__ */ jsxs21("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsxs21("div", { children: [
+        /* @__PURE__ */ jsx27("p", { className: "prose", children: dataProductText }),
+        /* @__PURE__ */ jsx27("ul", { className: "feature-list", style: { marginTop: "1.5rem" }, children: PRODUCTS.map((product) => /* @__PURE__ */ jsxs21("li", { children: [
+          /* @__PURE__ */ jsx27("span", { className: "feature-list__key", style: { fontFamily: "var(--font-mono)" }, children: product[0] }),
+          /* @__PURE__ */ jsx27("div", { children: /* @__PURE__ */ jsx27("p", { className: "feature-list__body", style: { margin: 0 }, children: product[1] }) })
+        ] }, product[0])) })
+      ] }),
+      /* @__PURE__ */ jsx27(SimpleTable, { caption: "Conventions", rows: CONVENTIONS })
+    ] }) }),
+    /* @__PURE__ */ jsx27(Section, { eyebrow: "Headers", title: "Header and catalog information", children: /* @__PURE__ */ jsxs21("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsx27("div", { children: /* @__PURE__ */ jsx27("p", { className: "prose", children: "Quality-assurance metrics are written into the FITS header of every product and ingested into the operations database, so the state of an image can be inspected without opening it. Each catalog is a flux-calibrated source list matched to its parent image, carrying positions on the Gaia DR3 frame and AB magnitudes in the band of the image it was extracted from. For a coadd this means one row per detected source per band; combining bands for a given source gives the medium-band spectral energy distribution that the survey exists to produce." }) }),
+      /* @__PURE__ */ jsx27(SimpleTable, { caption: "Selected header keywords", rows: QA_KEYS })
+    ] }) }),
+    /* @__PURE__ */ jsxs21(Section, { eyebrow: "Processing", title: "How a night is reduced", alt: !0, children: [
+      /* @__PURE__ */ jsx27("p", { className: "prose", children: "Images are grouped by their properties \u2014 unit, filter, observing mode, night \u2014 into configurations, and each group runs through the same sequence. Established astronomical software does the numerical work behind Python interfaces rather than being reimplemented, so the behavior of each stage is that of the underlying tool." }),
+      /* @__PURE__ */ jsx27("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: software_default.stages.map((stage, index) => /* @__PURE__ */ jsxs21("li", { children: [
+        /* @__PURE__ */ jsx27("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
+        /* @__PURE__ */ jsxs21("div", { children: [
+          /* @__PURE__ */ jsx27(
+            "h3",
+            {
+              className: "feature-list__title",
+              style: { fontFamily: "var(--font-mono)", fontSize: "1rem" },
+              children: stage.module
+            }
+          ),
+          /* @__PURE__ */ jsx27("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: stage.body })
+        ] })
+      ] }, stage.module)) }),
+      /* @__PURE__ */ jsxs21("div", { className: "panel panel--alt", style: { marginTop: "2rem" }, children: [
+        /* @__PURE__ */ jsx27("div", { className: "panel__title", children: "External engines" }),
+        /* @__PURE__ */ jsx27("div", { className: "table-wrap", style: { border: 0 }, children: /* @__PURE__ */ jsx27("table", { className: "spec-table", children: /* @__PURE__ */ jsx27("tbody", { children: software_default.external.map((tool) => /* @__PURE__ */ jsxs21("tr", { children: [
+          /* @__PURE__ */ jsx27("th", { scope: "row", style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children: tool[0] }),
+          /* @__PURE__ */ jsx27("td", { style: { fontFamily: "var(--font-sans)" }, children: tool[1] })
+        ] }, tool[0])) }) }) })
+      ] }),
+      /* @__PURE__ */ jsxs21("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
+        /* @__PURE__ */ jsx27(Link14, { className: "btn btn--primary", to: "/users/access", children: "Getting the data" }),
+        /* @__PURE__ */ jsx27(Link14, { className: "btn btn--secondary", to: "/users/software", children: "Reprocessing it yourself" })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx27(Section, { eyebrow: "Ahead", title: "Planned public release", children: /* @__PURE__ */ jsx27("p", { className: "prose", children: "A public release of survey products is being prepared alongside the completion of the Reference Imaging Survey, whose first full cycle is anticipated by the end of 2027. The release is intended to include a query interface over images and catalogs; this page will carry it when it exists." }) })
+  ] });
+}, users_access_default = Index18;
+
+// app/routes/users.format.tsx
+var users_format_exports = {};
+__export(users_format_exports, {
+  loader: () => loader8
+});
+import { redirect as redirect6 } from "@remix-run/node";
+function loader8() {
+  return redirect6("/users/access#format", 301);
+}
+
+// app/routes/users.status.tsx
+var users_status_exports = {};
+__export(users_status_exports, {
+  default: () => users_status_default,
+  headers: () => headers3,
+  loader: () => loader9,
+  meta: () => meta19
+});
+import { useMemo as useMemo4, useState as useState6 } from "react";
+import { json as json3 } from "@remix-run/node";
+import { Link as Link15, useLoaderData as useLoaderData3 } from "@remix-run/react";
 
 // app/routes/content/filters.json
 var filters_default = {
@@ -6612,7 +8489,7 @@ var filters_default = {
 };
 
 // app/components/filtercurves.tsx
-import { jsx as jsx19, jsxs as jsxs14 } from "react/jsx-runtime";
+import { jsx as jsx28, jsxs as jsxs22 } from "react/jsx-runtime";
 var W = 960, H = 300, L = 46, R = 12, T = 12, B = 34;
 function FilterCurves({
   showBroad = !0
@@ -6620,8 +8497,8 @@ function FilterCurves({
   let medium = filters_default.medium, broad = filters_default.broad, shown = showBroad ? [...broad, ...medium] : medium, lamMin = 300, lamMax = 950, respMax = 0.62, sx = (nm) => L + (nm - lamMin) / (lamMax - lamMin) * (W - L - R), sy = (r) => T + (1 - r / respMax) * (H - T - B), line = (pts) => pts.map((p, i) => `${i === 0 ? "M" : "L"}${sx(p[0]).toFixed(1)},${sy(p[1]).toFixed(1)}`).join(" "), area = (pts) => `${line(pts)} L${sx(pts[pts.length - 1][0]).toFixed(1)},${sy(0).toFixed(1)} L${sx(
     pts[0][0]
   ).toFixed(1)},${sy(0).toFixed(1)} Z`, xTicks = [400, 500, 600, 700, 800, 900], yTicks = [0, 0.2, 0.4, 0.6];
-  return /* @__PURE__ */ jsxs14("figure", { className: "curves", children: [
-    /* @__PURE__ */ jsxs14(
+  return /* @__PURE__ */ jsxs22("figure", { className: "curves", children: [
+    /* @__PURE__ */ jsxs22(
       "svg",
       {
         viewBox: `0 0 ${W} ${H}`,
@@ -6629,8 +8506,8 @@ function FilterCurves({
         role: "img",
         "aria-label": "Response curves of the 7DT filter set, from 300 to 950 nanometers.",
         children: [
-          /* @__PURE__ */ jsx19("g", { stroke: "var(--slate-200)", strokeWidth: "1", children: yTicks.map((t) => /* @__PURE__ */ jsx19("line", { x1: L, x2: W - R, y1: sy(t), y2: sy(t) }, t)) }),
-          showBroad && broad.map((f) => /* @__PURE__ */ jsx19(
+          /* @__PURE__ */ jsx28("g", { stroke: "var(--slate-200)", strokeWidth: "1", children: yTicks.map((t) => /* @__PURE__ */ jsx28("line", { x1: L, x2: W - R, y1: sy(t), y2: sy(t) }, t)) }),
+          showBroad && broad.map((f) => /* @__PURE__ */ jsx28(
             "path",
             {
               d: line(f.pts),
@@ -6642,21 +8519,21 @@ function FilterCurves({
             },
             f.name
           )),
-          medium.map((f) => /* @__PURE__ */ jsxs14("g", { children: [
-            /* @__PURE__ */ jsx19("path", { d: area(f.pts), fill: wavelengthColor(f.center), opacity: "0.22" }),
-            /* @__PURE__ */ jsx19("path", { d: line(f.pts), fill: "none", stroke: wavelengthColor(f.center), strokeWidth: "1.5" })
+          medium.map((f) => /* @__PURE__ */ jsxs22("g", { children: [
+            /* @__PURE__ */ jsx28("path", { d: area(f.pts), fill: wavelengthColor(f.center), opacity: "0.22" }),
+            /* @__PURE__ */ jsx28("path", { d: line(f.pts), fill: "none", stroke: wavelengthColor(f.center), strokeWidth: "1.5" })
           ] }, f.name)),
-          /* @__PURE__ */ jsxs14(
+          /* @__PURE__ */ jsxs22(
             "g",
             {
               fill: "var(--slate-500)",
               fontFamily: "ui-monospace, 'JetBrains Mono', monospace",
               fontSize: "11",
               children: [
-                xTicks.map((t) => /* @__PURE__ */ jsx19("text", { x: sx(t), y: H - B + 18, textAnchor: "middle", children: t }, t)),
-                yTicks.map((t) => /* @__PURE__ */ jsx19("text", { x: L - 8, y: sy(t) + 3.5, textAnchor: "end", children: t.toFixed(1) }, t)),
-                /* @__PURE__ */ jsx19("text", { x: (L + W - R) / 2, y: H - 2, textAnchor: "middle", children: "Wavelength (nm)" }),
-                /* @__PURE__ */ jsx19(
+                xTicks.map((t) => /* @__PURE__ */ jsx28("text", { x: sx(t), y: H - B + 18, textAnchor: "middle", children: t }, t)),
+                yTicks.map((t) => /* @__PURE__ */ jsx28("text", { x: L - 8, y: sy(t) + 3.5, textAnchor: "end", children: t.toFixed(1) }, t)),
+                /* @__PURE__ */ jsx28("text", { x: (L + W - R) / 2, y: H - 2, textAnchor: "middle", children: "Wavelength (nm)" }),
+                /* @__PURE__ */ jsx28(
                   "text",
                   {
                     x: -(T + (H - T - B) / 2),
@@ -6669,13 +8546,13 @@ function FilterCurves({
               ]
             }
           ),
-          /* @__PURE__ */ jsx19("line", { x1: L, x2: W - R, y1: sy(0), y2: sy(0), stroke: "var(--ink-900)", strokeWidth: "1" }),
-          /* @__PURE__ */ jsx19("line", { x1: L, x2: L, y1: T, y2: sy(0), stroke: "var(--ink-900)", strokeWidth: "1" })
+          /* @__PURE__ */ jsx28("line", { x1: L, x2: W - R, y1: sy(0), y2: sy(0), stroke: "var(--ink-900)", strokeWidth: "1" }),
+          /* @__PURE__ */ jsx28("line", { x1: L, x2: L, y1: T, y2: sy(0), stroke: "var(--ink-900)", strokeWidth: "1" })
         ]
       }
     ),
-    /* @__PURE__ */ jsxs14("figcaption", { children: [
-      /* @__PURE__ */ jsx19("b", { children: "Filter response" }),
+    /* @__PURE__ */ jsxs22("figcaption", { children: [
+      /* @__PURE__ */ jsx28("b", { children: "Filter response" }),
       " The ",
       medium.length,
       " regularly spaced medium bands",
@@ -6687,1891 +8564,7 @@ function FilterCurves({
   ] });
 }
 
-// app/routes/users.overview.tsx
-import { jsx as jsx20, jsxs as jsxs15 } from "react/jsx-runtime";
-var meta13 = () => [
-  { title: "Overview \xB7 7DT for users" },
-  {
-    name: "description",
-    content: "What a 7DT observation delivers: filter transmission, delivered PSF, photometric zero points, the depth of a 100-second exposure and the depth each survey reaches."
-  }
-], PSF = [
-  ["Pixel scale", "0.5\u2033 per pixel"],
-  ["Field of view per unit", "1.34\xB0 \xD7 0.90\xB0 (1.25 deg\xB2)"],
-  ["PSF FWHM at field center", "1.4\u2033 \u2013 2.2\u2033"],
-  ["Array median FWHM", "2.0\u2033"],
-  ["Unit-to-unit scatter", "0.2\u2033"],
-  ["Center-to-corner growth", "+0.3\u2033"],
-  ["Ellipticity, central 80% of field", "< 0.1"],
-  ["Median site seeing", "1.5\u2033"]
-], ZEROPOINT = [
-  ["Reference", "Gaia DR3 BP/RP synthetic photometry"],
-  ["Homogenization", "Color- and magnitude-dependent residuals corrected"],
-  ["Established on", "68 spectrophotometric standards, incl. CALSPEC"],
-  ["Zero-point uncertainty", "15 \u2013 25 mmag"],
-  ["Redward of 775 nm", "Toward the upper end of that range"],
-  ["Calibrated set", "The original 20 medium bands"]
-], Index13 = () => /* @__PURE__ */ jsxs15(PageLayout, { menu: "manuUsers", children: [
-  /* @__PURE__ */ jsx20(
-    PageHero,
-    {
-      eyebrow: "For users",
-      title: "Overview",
-      lede: "What one 7DT exposure delivers: which bands it can be taken in, how sharp it is, how well it is calibrated, and how deep it goes \u2014 the five numbers an observing plan starts from.",
-      image: "/img/hero/telescope.jpg",
-      meta: [
-        { value: "35", label: "Medium bands installed" },
-        { value: "2.0", unit: "\u2033", label: "Median PSF FWHM" },
-        { value: "15\u201325", unit: "mmag", label: "Zero-point uncertainty" },
-        { value: "19.6", unit: "mag", label: "Best 100 s depth" }
-      ]
-    }
-  ),
-  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Filters", title: "Filter transmission", wide: !0, children: [
-    /* @__PURE__ */ jsxs15("div", { className: "prose", style: { maxWidth: "68ch" }, children: [
-      /* @__PURE__ */ jsx20("p", { children: filterText }),
-      /* @__PURE__ */ jsx20("p", { children: filterCaveatText })
-    ] }),
-    /* @__PURE__ */ jsx20("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx20(
-      Figure,
-      {
-        src: "/img/images/filter-transmission.png",
-        alt: "System response of the 7DT medium bands in two panels, the original twenty above and the fifteen added in 2025 below, each shown against detector quantum efficiency, sky transmission and telescope throughput",
-        label: "Total system response, decomposed",
-        caption: "What actually reaches the detector: filter transmission multiplied by CMOS quantum efficiency, atmospheric transmission and telescope throughput. The original twenty bands are in the upper panel, the fifteen added in 2025 in the lower one, each drawn against the three curves that shape it. Peak system response is about 65 percent near 475 nm and falls away redward of 775 nm as quantum efficiency drops \u2014 which is why the reddest bands are the shallowest and the least well calibrated."
-      }
-    ) }),
-    /* @__PURE__ */ jsxs15("div", { style: { marginTop: "3rem" }, children: [
-      /* @__PURE__ */ jsx20(FilterCurves, { showBroad: !1 }),
-      /* @__PURE__ */ jsxs15("p", { className: "footnote", style: { marginTop: "0.75rem" }, children: [
-        /* @__PURE__ */ jsx20("b", { children: "The medium-band set alone" }),
-        " The same response with the broad bands removed, drawn from the reference data shipped with",
-        " ",
-        /* @__PURE__ */ jsx20(Link11, { to: "/users/software", children: /* @__PURE__ */ jsx20("code", { children: "supy" }) }),
-        ", which is what its simulator module computes with \u2014 a response derived there matches this figure exactly. Without the broad bands over them, the regular 25 nm spacing of the original twenty is legible, and so is where the fifteen added in 2025 fall between them."
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxs15("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: [
-      "Which bands exist on a particular tile is reported on the",
-      " ",
-      /* @__PURE__ */ jsx20(Link11, { to: "/users/access", children: "data access page" }),
-      ", and how much of the sky each band has reached so far is on the ",
-      /* @__PURE__ */ jsx20(Link11, { to: "/users/status", children: "status page" }),
-      "."
-    ] })
-  ] }),
-  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Image quality", title: "Point-spread function", alt: !0, children: [
-    /* @__PURE__ */ jsxs15("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsxs15("div", { children: [
-        /* @__PURE__ */ jsx20("p", { className: "prose", children: performanceText }),
-        /* @__PURE__ */ jsx20("p", { className: "footnote", style: { marginTop: "1rem" }, children: "Measured from the point-spread function across the field of view by the Py7DT pipeline as part of routine astrometric and photometric processing, so the figures are delivered image quality in survey operation rather than a specification. Image quality is monitored continuously; units are re-aligned individually as needed." })
-      ] }),
-      /* @__PURE__ */ jsx20(SimpleTable, { caption: "Delivered image quality", rows: PSF })
-    ] }),
-    /* @__PURE__ */ jsx20("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx20(
-      Figure,
-      {
-        src: "/img/images/Seeing_2025-2026.png",
-        alt: "Violin plot of the delivered seeing distribution in each 7DT band over 2025 and 2026, with the median marked for each",
-        label: "Delivered seeing, by band",
-        caption: "Distribution of measured seeing in every band over the 2025\u20132026 seasons, with the median marked on each. Medians run from 2.0 arcseconds in r, m700 and m775 to 2.7 in m575: the variation is the observing conditions the band happened to be taken in, not a property of the filter. The width of each violin is the number of exposures reaching that seeing."
-      }
-    ) }),
-    /* @__PURE__ */ jsx20("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx20(
-      Figure,
-      {
-        src: "/img/images/Seeing_by_unit_2025-2026.png",
-        alt: "Violin plot of the delivered seeing distribution for each of the sixteen operational 7DT units over 2025 and 2026",
-        label: "Delivered seeing, by unit",
-        caption: "The same measurements grouped by telescope rather than by band, over all sixteen operational units. Medians lie between 2.0 and 2.8 arcseconds, so the array behaves as a coherent set of instruments rather than sixteen separate ones \u2014 which is what makes coadding across units sound."
-      }
-    ) }),
-    /* @__PURE__ */ jsx20("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx20(StatGrid, { items: specs_default.performance }) })
-  ] }),
-  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Photometry", title: "Photometric zero point", children: [
-    /* @__PURE__ */ jsxs15("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsx20("p", { className: "prose", children: photometryText }),
-      /* @__PURE__ */ jsx20(SimpleTable, { caption: "Calibration", rows: ZEROPOINT })
-    ] }),
-    /* @__PURE__ */ jsx20("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx20(
-      Figure,
-      {
-        src: "/img/images/zeropoint.png",
-        alt: "Violin plot of the spatial zero-point RMSE in each band across 1167 deep-stack tiles, rising from about 0.010 magnitudes in the blue to 0.064 in m875",
-        label: "Zero-point uniformity across a stack",
-        caption: "Spatial zero-point RMSE within DP2 deep stacks, measured in a 5-arcsecond aperture over 1,167 tiles \u2014 how much the calibration varies from place to place inside one image, which is a different quantity from the overall zero-point uncertainty quoted above. Medians run from 0.010 mag in r to 0.064 mag in m875, flat across the blue and green bands and climbing steadily redward of 775 nm with falling detector quantum efficiency."
-      }
-    ) }),
-    /* @__PURE__ */ jsx20("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: "Zero points are determined per image by Py7DT with 3\u03C3 clipping across multiple aperture sizes, against corrected synthetic photometry of matched Gaia sources. The fifteen filters installed in late 2025 are not yet spectrophotometrically calibrated and are excluded from the figures above; a calibration campaign following the same procedure is planned. Full methodology is in preparation (Paek et al.)." })
-  ] }),
-  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Depth", title: "A 100-second exposure", alt: !0, children: [
-    /* @__PURE__ */ jsx20("p", { className: "prose", children: depthText }),
-    /* @__PURE__ */ jsxs15("div", { className: "split split--wide-text", style: { marginTop: "2rem" }, children: [
-      /* @__PURE__ */ jsx20(SimpleTable, { caption: specs_default.depths.caption, rows: specs_default.depths.rows }),
-      /* @__PURE__ */ jsxs15("div", { children: [
-        /* @__PURE__ */ jsx20("p", { className: "footnote", children: "One hundred seconds is the fiducial 7DS exposure: every survey visit is built from it, so a depth quoted for any programme is this number scaled by the number of frames coadded. Background-limited, so four frames buy 0.75 mag." }),
-        /* @__PURE__ */ jsx20("p", { className: "footnote", style: { marginTop: "1rem" }, children: "Nominal conditions: seeing better than 2.0 arcseconds, airmass below 1.5, and a non-bright night. The spread around each figure on a real night is the width of the violins below." })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx20("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx20(
-      Figure,
-      {
-        src: "/img/images/depth-distribution.png",
-        alt: "Violin plot of the 5-sigma limiting magnitude distribution for each 7DT band in a 100-second exposure",
-        label: "Measured depth per band",
-        caption: "Distribution of single-exposure 5\u03C3 point-source depths for the twenty original medium bands and Sloan g, r, i and z, measured from individual 100-second exposures taken in routine survey operation, with the median marked on each. They run from 20.59 mag in Sloan g down to 16.60 in m875, following the system response above. The width of each violin is the number of exposures reaching that magnitude; the spread within a band is the variation in seeing, airmass and sky brightness across real nights. The fifteen filters added in late 2025 are not included, their spectrophotometric calibration being incomplete."
-      }
-    ) })
-  ] }),
-  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Depth", title: "What each survey reaches", children: [
-    /* @__PURE__ */ jsx20("p", { className: "prose", children: "The three surveys spend that fiducial exposure differently \u2014 over the whole southern sky once, over a smaller area every ten to fourteen days, or on one field every night \u2014 so they arrive at very different depths from the same instrument." }),
-    /* @__PURE__ */ jsx20("div", { className: "table-wrap", style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsxs15("table", { className: "spec-table", children: [
-      /* @__PURE__ */ jsx20("caption", { children: "Depth reached by each survey, 5\u03C3 in m600" }),
-      /* @__PURE__ */ jsx20("thead", { children: /* @__PURE__ */ jsxs15("tr", { children: [
-        /* @__PURE__ */ jsx20("th", { scope: "col", children: "Survey" }),
-        /* @__PURE__ */ jsx20("th", { scope: "col", children: "Area" }),
-        /* @__PURE__ */ jsx20("th", { scope: "col", children: "Cadence" }),
-        /* @__PURE__ */ jsx20("th", { scope: "col", children: "Depth" })
-      ] }) }),
-      /* @__PURE__ */ jsx20("tbody", { children: surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsxs15("tr", { children: [
-        /* @__PURE__ */ jsx20("th", { scope: "row", children: /* @__PURE__ */ jsx20(Link11, { to: `/survey/${tier4.code.toLowerCase()}`, children: tier4.code }) }),
-        /* @__PURE__ */ jsx20("td", { children: tier4.area }),
-        /* @__PURE__ */ jsx20("td", { children: tier4.cadence }),
-        /* @__PURE__ */ jsx20("td", { children: tier4.depth })
-      ] }, tier4.code)) })
-    ] }) }),
-    /* @__PURE__ */ jsxs15("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: [
-      "The RIS figure is one visit of 3 \xD7 100 s. Figures marked with an asterisk are cumulative over the planned operation rather than the depth of any single visit, and are targets:",
-      " ",
-      /* @__PURE__ */ jsx20(Link11, { to: "/users/status", children: "status and overview" }),
-      " reports what has actually been observed, and the coverage map on the",
-      " ",
-      /* @__PURE__ */ jsx20(Link11, { to: "/users/access", children: "data access page" }),
-      " gives the integration time and estimated depth reached on any individual tile."
-    ] })
-  ] }),
-  /* @__PURE__ */ jsxs15(Section, { eyebrow: "Next", title: "Planning an observation", alt: !0, children: [
-    /* @__PURE__ */ jsxs15("p", { className: "prose", children: [
-      "To turn these figures into an expected signal-to-noise, combine the depths with the response curves: the ",
-      /* @__PURE__ */ jsx20("code", { children: "supy" }),
-      " package has a simulator module that generates filter and detector response for the 7DT bands, and an observer module for target visibility from El Sauce."
-    ] }),
-    /* @__PURE__ */ jsxs15("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
-      /* @__PURE__ */ jsx20(Link11, { className: "btn btn--primary", to: "/users/status", children: "Current status" }),
-      /* @__PURE__ */ jsx20(Link11, { className: "btn btn--secondary", to: "/users/software", children: "Software" }),
-      /* @__PURE__ */ jsx20(Link11, { className: "btn btn--secondary", to: "/users/propose", children: "How to propose" }),
-      /* @__PURE__ */ jsx20(Link11, { className: "btn btn--secondary", to: "/telescope/instrument", children: "Instrument specification" })
-    ] })
-  ] })
-] }), users_overview_default = Index13;
-
-// app/routes/users.software.tsx
-var users_software_exports = {};
-__export(users_software_exports, {
-  default: () => users_software_default,
-  meta: () => meta14
-});
-import { Link as Link12 } from "@remix-run/react";
-
-// app/routes/content/software.json
-var software_default = {
-  note: "Operations and reduction software. Source: Kim et al., Proc. SPIE 14147-84, Sec. 2.4; Hyun et al., Proc. SPIE 14155-12.",
-  systems: [
-    {
-      name: "RTCSpy",
-      expansion: "Robotic Telescope Control System with Python",
-      role: "Array control, scheduling and target-of-opportunity response",
-      since: "Operational since August 2024",
-      body: "The autonomous operations framework that drives the array. Built on the TCSpy control layer, RTCSpy automates the whole night \u2014 startup, target selection, science observation, calibration acquisition, data transfer and shutdown \u2014 while coordinating all sixteen operational units over real-time network communication. A dedicated Target of Opportunity manager watches external alerts and can interrupt an ongoing observation, giving a response time of less than one minute between alert ingestion and the start of a follow-up exposure.",
-      layers: [
-        ["Control layer", "Device interfaces to mounts, cameras, focusers and filter wheels through ASCOM Alpaca and the PWI4 HTTP API."],
-        ["Support layer", "A MySQL dynamic target database holding targets, status and precomputed observability; an observation queue manager that ranks candidates in real time; a data transfer manager; and a weather monitor that suspends and resumes operation."],
-        ["Application layer", "Composes those components into the high-level applications executed during routine nightly operation."]
-      ],
-      stats: [
-        { value: "1.75", unit: "M", label: "Images acquired unattended" },
-        { value: "< 1", unit: "min", label: "Alert to first exposure" },
-        { value: "\u2248 100", unit: "", label: "ToO follow-ups" }
-      ]
-    },
-    {
-      name: "Py7DT",
-      expansion: "7DT data reduction pipeline",
-      role: "Preprocessing through difference imaging, at survey throughput",
-      since: "Sole operational pipeline since January 2026",
-      body: "Py7DT reduces heterogeneous data from many telescope units, filters and observing modes while sustaining nightly survey throughput and minimizing latency for transient events. It succeeds gpPy-GPU, inheriting its scientific routines and choice of external engines but rebuilding the orchestration around them. Images are grouped by their properties into configurations, submitted to an SQLite-backed system queue, and dispatched in parallel according to priority and stage hierarchy \u2014 typically fifteen workers, three of them reserved for preprocessing.",
-      layers: [
-        ["Orchestration", "DataReduction, BluePrint and Scheduler convert observations into executable processing units and track their dependencies."],
-        ["Processing", "Preprocess, Astrometry, Photometry, ImCoadd and ImSubtract run the standard reduction on each group."],
-        ["Management", "Multi-level logging, a composite-error registry for structured exception handling, automatically generated quality-assessment flags carried in FITS headers, and a web-based monitoring interface."]
-      ],
-      stats: [
-        { value: "66 \xB1 24", unit: "GB/hr", label: "Median throughput" },
-        { value: "\u2248 5", unit: "hr", label: "Per 3,000-image night" },
-        { value: "3.3 \xB1 2.0", unit: "s", label: "Preprocessing per image" }
-      ]
-    },
-    {
-      name: "gwportal",
-      expansion: "7DS data and operations database",
-      role: "System of record for observations, processing state and data quality",
-      since: "In operational use",
-      body: "A Django and PostgreSQL database that manages all 7DT data and integrates the operations of RTCSpy and Py7DT. Its survey schema is synchronized in real time and mirrors the operational state of the pipeline: process_status records the progress of every product along with its software version and any error codes, while image_qa holds quality metrics \u2014 seeing, ellipticity, 5\u03C3 depth, astrometric precision \u2014 for every image produced. A companion dependency table traces the provenance of any output back through coadds, processed singles, master frames and raw exposures.",
-      layers: [
-        ["Pipeline status", "Real-time processing progress, QA summaries, logs, check plots and manual reprocessing triggers."],
-        ["ToO page", "Observation requests, the history of past events and the current status of the telescope units."],
-        ["Documentation wiki", "User manuals, event logs and QA criteria for internal team members and external users of 7DT data."]
-      ],
-      stats: [
-        { value: "3.6", unit: "PB", label: "Archive capacity" },
-        { value: "\u2248 3,000", unit: "", label: "Images ingested nightly" },
-        { value: "\u2248 30", unit: "", label: "Tiles observed nightly" }
-      ]
-    }
-  ],
-  stages: [
-    {
-      module: "Preprocess",
-      body: "Bias, dark and flat correction against master frames matched to the science data by camera, gain, binning, unit, night and filter. Raw frames sharing a master set are loaded as a cube and processed by array broadcasting, reducing per-image time to about one second under optimal conditions, and to 3.3 \xB1 2.0 s in routine operation; GPU preprocessing through CuPy is available as an option, though the throughput gain in this deployment is minimal. Master-frame selection quality is recorded as a bitmask in the FITS header so that a compromise is always visible downstream."
-    },
-    {
-      module: "Astrometry",
-      body: "World coordinate solutions against Gaia DR3, pre-cut to RIS tiles and to HEALPix cells for arbitrary pointings. SCAMP is the default engine, with Astrometry.net as a fallback for blind solves. This is also the first stage that extracts sources, so it generates the image-quality metrics: astrometric separation statistics, field vertices and position angle, PSF size and elongation in radial bins, and source counts against a magnitude-limited reference."
-    },
-    {
-      module: "Photometry",
-      body: "Flux-calibrated source catalogs from SExtractor, in fixed apertures and in the AUTO aperture. Zero points come from synthetic photometry integrated from Gaia XP spectra over each 7DT bandpass \u2014 an unusual advantage for an instrument with an unusual filter set. The module runs on single, coadd and difference images alike."
-    },
-    {
-      module: "ImCoadd",
-      body: "Background subtraction, zero-point scaling, weight maps, bad-pixel interpolation, PSF homogenization, reprojection and combination via SWarp with a LANCZOS3 kernel. Flux scaling is defined to put the coadd at a zero point of 23.9 AB, so that pixel values carry units of microjansky."
-    },
-    {
-      module: "ImSubtract",
-      body: "Difference image analysis with HOTPANTS against a reference of the same field. Because of the unusual filter set, 7DT uses homogeneous references from RIS taken with the same instrument; Pan-STARRS templates are available as an option for the broad bands. Difference imaging is skipped where no reference exists yet."
-    }
-  ],
-  external: [
-    ["SExtractor", "Source extraction and photometry"],
-    ["SCAMP", "Astrometric and photometric solution"],
-    ["SWarp", "Reprojection and coaddition"],
-    ["HOTPANTS", "Difference image analysis"],
-    ["Astrometry.net", "Blind astrometric fallback"],
-    ["CuPy", "GPU-accelerated preprocessing"],
-    ["Gaia DR3 / XP", "Astrometric and spectrophotometric reference"]
-  ]
-};
-
-// app/routes/users.software.tsx
-import { Fragment as Fragment6, jsx as jsx21, jsxs as jsxs16 } from "react/jsx-runtime";
-var meta14 = () => [
-  { title: "Software \xB7 7DT for users" },
-  {
-    name: "description",
-    content: "Software available to 7DT users: supy for analysis, Py7DT for reprocessing, and the operational systems that produce the data."
-  }
-], SUPY_MODULES = [
-  ["Observer", "Target visibility and altitude from El Sauce, including StarAlt-style plots"],
-  ["Tiles", "Tile lookup by coordinate, matching against a localization region, and tile plotting"],
-  ["Simulator", "Filter and detector response simulation for the 7DT bands"],
-  ["const", "Instrument and site constants used by the other modules"]
-], Index14 = () => /* @__PURE__ */ jsxs16(PageLayout, { menu: "manuUsers", children: [
-  /* @__PURE__ */ jsx21(
-    PageHero,
-    {
-      eyebrow: "For users",
-      title: /* @__PURE__ */ jsxs16(Fragment6, { children: [
-        "Available ",
-        /* @__PURE__ */ jsx21("em", { children: "software" })
-      ] }),
-      lede: "What to install to plan an observation or work with 7DT data, and what produced the data in the first place.",
-      image: "/img/hero/computer.jpg"
-    }
-  ),
-  /* @__PURE__ */ jsx21(Section, { eyebrow: "Analysis", title: "supy", children: /* @__PURE__ */ jsxs16("div", { className: "split split--wide-text", children: [
-    /* @__PURE__ */ jsxs16("div", { children: [
-      /* @__PURE__ */ jsxs16("p", { className: "prose", children: [
-        /* @__PURE__ */ jsx21("code", { children: "supy" }),
-        " is a collection of Python utilities for members and users of the 7DT survey. It covers the tasks that come up before and after an observation rather than the reduction itself: working out whether a target is observable, finding which tiles cover a position or a gravitational-wave localization region, and simulating the response of the filter set."
-      ] }),
-      /* @__PURE__ */ jsxs16("p", { className: "prose", children: [
-        "It is installed from source. Documentation, including worked examples for each module, is published at ",
-        /* @__PURE__ */ jsx21("code", { children: "sdt-supy.readthedocs.io" }),
-        "."
-      ] }),
-      /* @__PURE__ */ jsxs16("div", { className: "panel panel--alt", style: { marginTop: "1.5rem" }, children: [
-        /* @__PURE__ */ jsx21("div", { className: "panel__title", children: "Install" }),
-        /* @__PURE__ */ jsx21(
-          "pre",
-          {
-            style: {
-              margin: 0,
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.8125rem",
-              lineHeight: 1.7,
-              overflowX: "auto"
-            },
-            children: /* @__PURE__ */ jsxs16("code", { children: [
-              "git clone https://github.com/7DimensionalTelescope/supy.git",
-              `
-`,
-              "cd supy",
-              `
-`,
-              "pip install ."
-            ] })
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsxs16("div", { className: "btn-row", style: { marginTop: "1.25rem" }, children: [
-        /* @__PURE__ */ jsx21(
-          "a",
-          {
-            className: "btn btn--primary",
-            href: "https://sdt-supy.readthedocs.io/en/latest/",
-            target: "_blank",
-            rel: "noreferrer",
-            children: "Documentation"
-          }
-        ),
-        /* @__PURE__ */ jsx21(
-          "a",
-          {
-            className: "btn btn--secondary",
-            href: "https://github.com/7DimensionalTelescope/supy",
-            target: "_blank",
-            rel: "noreferrer",
-            children: "Source"
-          }
-        )
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx21("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs16("table", { className: "spec-table", children: [
-      /* @__PURE__ */ jsx21("caption", { children: "Modules" }),
-      /* @__PURE__ */ jsx21("tbody", { children: SUPY_MODULES.map((row) => /* @__PURE__ */ jsxs16("tr", { children: [
-        /* @__PURE__ */ jsx21("th", { scope: "row", style: { fontFamily: "var(--font-mono)" }, children: row[0] }),
-        /* @__PURE__ */ jsx21("td", { children: row[1] })
-      ] }, row[0])) })
-    ] }) })
-  ] }) }),
-  /* @__PURE__ */ jsxs16(Section, { eyebrow: "Reprocessing", title: "Running the pipeline yourself", alt: !0, children: [
-    /* @__PURE__ */ jsx21("p", { className: "prose", children: softwareReuseText }),
-    /* @__PURE__ */ jsxs16("p", { className: "note", style: { marginTop: "1rem" }, children: [
-      "Py7DT uses a rolling-release version scheme in which the last digit is incremented whenever a scientific decision changes how data are processed. That version is recorded in every configuration file and in the process status database, so any product can be traced to the code that made it and reprocessed in bulk when the code changes. What each stage does is described under ",
-      /* @__PURE__ */ jsx21(Link12, { to: "/users/access#format", children: "using the data" }),
-      "."
-    ] })
-  ] }),
-  /* @__PURE__ */ jsxs16(Section, { eyebrow: "Operations", title: "The systems that produce the data", children: [
-    /* @__PURE__ */ jsx21("p", { className: "prose", children: "Three systems close observation, reduction and analysis into a nightly loop. They are not installed by external users, but knowing which one recorded a given quantity is often useful when interpreting it." }),
-    /* @__PURE__ */ jsx21("div", { className: "stack-lg", style: { marginTop: "2rem" }, children: software_default.systems.map((system) => /* @__PURE__ */ jsxs16("div", { className: "panel", id: system.name.toLowerCase(), children: [
-      /* @__PURE__ */ jsxs16("div", { className: "rationale__head", children: [
-        /* @__PURE__ */ jsx21("span", { className: "tier-card__code", children: system.name }),
-        /* @__PURE__ */ jsx21("h3", { children: system.role })
-      ] }),
-      /* @__PURE__ */ jsx21("p", { className: "eyebrow", style: { marginBottom: "0.5rem" }, children: system.expansion }),
-      /* @__PURE__ */ jsx21("p", { className: "prose", style: { fontSize: "1rem" }, children: system.body }),
-      /* @__PURE__ */ jsx21(StatGrid, { items: system.stats })
-    ] }, system.name)) }),
-    /* @__PURE__ */ jsxs16("p", { className: "note", style: { marginTop: "2rem" }, children: [
-      "Full technical descriptions are in Hyun et al., ",
-      /* @__PURE__ */ jsx21("i", { children: "Py7DT: Data Reduction Pipeline of the 7-Dimensional Telescope" }),
-      " (Proc. SPIE 14155-12), and Choi et al., Proc. SPIE 14151-12, which covers RTCSpy. See ",
-      /* @__PURE__ */ jsx21(Link12, { to: "/publication/list", children: "publications" }),
-      "."
-    ] })
-  ] })
-] }), users_software_default = Index14;
-
-// app/routes/about.funding.tsx
-var about_funding_exports = {};
-__export(about_funding_exports, {
-  default: () => about_funding_default,
-  meta: () => meta15
-});
-import { jsx as jsx22, jsxs as jsxs17 } from "react/jsx-runtime";
-var meta15 = () => [
-  { title: "Funding \xB7 7-Dimensional Telescope" },
-  {
-    name: "description",
-    content: "Grants and institutions supporting the 7-Dimensional Telescope and Sky Survey."
-  }
-], Index15 = () => /* @__PURE__ */ jsxs17(PageLayout, { menu: "manuAbout", children: [
-  /* @__PURE__ */ jsx22(
-    PageHero,
-    {
-      eyebrow: "About",
-      title: "Funding sources",
-      lede: "The bodies that fund the facility, its operation, and the network that carries its data.",
-      image: "/img/hero/about.jpg"
-    }
-  ),
-  /* @__PURE__ */ jsx22(Section, { eyebrow: "Host center", title: "Center for the Gravitational-wave Universe", children: /* @__PURE__ */ jsxs17("div", { className: "split split--wide-text", children: [
-    /* @__PURE__ */ jsx22("p", { className: "prose", children: fundingGWText }),
-    /* @__PURE__ */ jsx22("figure", { className: "figure", children: /* @__PURE__ */ jsx22(
-      "img",
-      {
-        src: "/img/institutes/gwuniv.png",
-        alt: "Center for the Gravitational-wave Universe",
-        style: { padding: "2rem", background: "#fff" },
-        loading: "lazy"
-      }
-    ) })
-  ] }) }),
-  /* @__PURE__ */ jsx22(Section, { eyebrow: "Agencies", title: "Project support", alt: !0, children: /* @__PURE__ */ jsxs17("div", { className: "split split--wide-text", children: [
-    /* @__PURE__ */ jsxs17("div", { children: [
-      /* @__PURE__ */ jsx22("p", { className: "prose", children: fundingNRFText }),
-      /* @__PURE__ */ jsx22("p", { className: "prose", children: fundingKASIText })
-    ] }),
-    /* @__PURE__ */ jsx22("figure", { className: "figure", children: /* @__PURE__ */ jsx22(
-      "img",
-      {
-        src: "/img/institutes/nrf.jpg",
-        alt: "National Research Foundation of Korea",
-        style: { padding: "2rem", background: "#fff" },
-        loading: "lazy"
-      }
-    ) })
-  ] }) }),
-  /* @__PURE__ */ jsx22(Section, { eyebrow: "Infrastructure", title: "KREONET / KISTI", children: /* @__PURE__ */ jsx22("p", { className: "prose", children: fundingKreonetText }) })
-] }), about_funding_default = Index15;
-
-// app/routes/science.solar.tsx
-var science_solar_exports = {};
-__export(science_solar_exports, {
-  default: () => science_solar_default,
-  meta: () => meta16
-});
-import { jsx as jsx23 } from "react/jsx-runtime";
-var meta16 = () => topicMeta("solar"), Index16 = () => /* @__PURE__ */ jsx23(ScienceTopic, { id: "solar" }), science_solar_default = Index16;
-
-// app/routes/survey.design.tsx
-var survey_design_exports = {};
-__export(survey_design_exports, {
-  loader: () => loader4
-});
-import { redirect as redirect4 } from "@remix-run/node";
-function loader4() {
-  return redirect4("/survey/overview", 301);
-}
-
-// app/routes/survey.status.tsx
-var survey_status_exports = {};
-__export(survey_status_exports, {
-  loader: () => loader5
-});
-import { redirect as redirect5 } from "@remix-run/node";
-function loader5() {
-  return redirect5("/users/status", 301);
-}
-
-// app/routes/users.propose.tsx
-var users_propose_exports = {};
-__export(users_propose_exports, {
-  default: () => users_propose_default,
-  headers: () => headers,
-  loader: () => loader6,
-  meta: () => meta17
-});
-import { Link as Link13, useLoaderData } from "@remix-run/react";
-import { json } from "@remix-run/node";
-
-// app/lib/portal.server.ts
-import fs from "node:fs";
-import path from "node:path";
-
-// app/routes/content/status-snapshot.json
-var status_snapshot_default = { version: "0.6", source: "7DT GW Portal", generated_at: "2026-08-03T04:36:33.310776+00:00", telescopes: { total: 20, online: 16, status_updated_at: "2026-07-14T13:56:17.111000+00:00" }, totals: { science_frames: 2199304, observing_nights: 754, exposure_hours: 48704.3 }, nightly: { basis: "all observing nights (nights with science frames)", n_nights: 754, first_night: "2023-10-10", last_night: "2026-07-12", tiles_per_night: { n: 599, mean: 36.2, median: 36, mode: 36, min: 1, max: 590 }, exposures_per_night: { n: 754, mean: 2916.8, median: 2595.5, mode: 2520, min: 7, max: 24570 }, raw_gb_per_night: { n: 754, mean: 382.7, median: 375.1, mode: 396, min: 0.8, max: 2185.4 } }, ris: { tiles_observed: 15513, tiles_defined: 25472, coverage_pct: 60.9, tiles_observed_extended: 15579, tiles_extended: 28520 }, ims: { n_tiles: 7, min_cycles_per_tile: 225, max_cycles_per_tile: 276, cycles_per_tile: { T02252: 244, T02385: 260, T02386: 276, T02523: 251, T02524: 257, T02665: 225, T02666: 241 } }, too: { followup_events: 178, gw_campaigns: 9, gw_event_ids: ["S251112cm", "S250830bp", "S250725j", "S250328ae", "S250206dm", "S241011k", "S240925n", "S240915b", "S240910ci"] }, notes: ["ris.tiles_defined/tiles_observed cover the original RIS grid (T00000-T25471); the *_extended fields cover the full grid including the northern extension.", "nightly stats cover all observing nights; nights where a metric is zero are excluded from that metric (each block's 'n' is its actual night count); mode is computed on integer-rounded values.", "raw_gb_per_night includes calibration (bias/dark/flat) frames.", "ims cycles count distinct observing nights per IMS tile.", "gw_event_ids are LVK superevent IDs (public alerts); no target-level details are published here.", "observing_nights and n_nights share one definition: nights with science frames.", "Aggregates only; payload refreshed at most every ~15 minutes."] };
-
-// app/lib/portal.server.ts
-function fromEnvFile(key) {
-  try {
-    let file = fs.readFileSync(path.join(process.cwd(), ".env"), "utf8");
-    for (let line of file.split(`
-`)) {
-      let trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#"))
-        continue;
-      let eq = trimmed.indexOf("=");
-      if (eq > 0 && trimmed.slice(0, eq).trim() === key)
-        return trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
-    }
-  } catch {
-  }
-}
-function readEnv(key) {
-  let value = process.env[key] || fromEnvFile(key);
-  return value && value.trim() ? value.trim() : void 0;
-}
-var BASE = (process.env.PORTAL_API_BASE || fromEnvFile("PORTAL_API_BASE") || "").replace(/\/$/, ""), TIMEOUT_MS = { status: 6e3, tiles: 45e3 };
-function minutes(key, fallback) {
-  let raw = process.env[key] || fromEnvFile(key), parsed = raw ? Number(raw) : NaN;
-  return (Number.isFinite(parsed) && parsed > 0 ? parsed : fallback) * 60 * 1e3;
-}
-var TTL = {
-  status: minutes("PORTAL_TTL_STATUS_MIN", 30),
-  tiles: minutes("PORTAL_TTL_TILES_MIN", 24 * 60)
-}, cache = /* @__PURE__ */ new Map(), inFlight = /* @__PURE__ */ new Map(), RETRY_MS = 2 * 60 * 1e3;
-async function getJson(endpoint, key) {
-  if (!BASE)
-    throw new Error("PORTAL_API_BASE is not configured");
-  let response = await fetch(`${BASE}${endpoint}`, {
-    signal: AbortSignal.timeout(TIMEOUT_MS[key]),
-    headers: { accept: "application/json" }
-  });
-  if (!response.ok)
-    throw new Error(`${endpoint} responded ${response.status}`);
-  return await response.json();
-}
-function revalidate(key, load) {
-  let existing = inFlight.get(key);
-  if (existing)
-    return existing;
-  let task = load().then((value) => (cache.set(key, { at: Date.now(), value, failed: !1 }), value)).catch((error) => {
-    let hit = cache.get(key);
-    throw hit && cache.set(key, {
-      ...hit,
-      at: Date.now() - TTL[key] + RETRY_MS,
-      value: { ...hit.value, live: !1 },
-      failed: !0
-    }), error;
-  }).finally(() => inFlight.delete(key));
-  return inFlight.set(key, task), task;
-}
-async function cached(key, load) {
-  let hit = cache.get(key);
-  return hit && Date.now() - hit.at < TTL[key] ? hit.value : hit ? (revalidate(key, load).catch(() => {
-  }), cache.get(key).value) : revalidate(key, load);
-}
-function getStatus() {
-  return cached("status", async () => {
-    let data = await getJson("/status/", "status");
-    return { data, live: !0, generatedAt: data.generated_at };
-  }).catch(() => ({
-    data: status_snapshot_default,
-    live: !1,
-    generatedAt: status_snapshot_default.generated_at
-  }));
-}
-var DAY_MS = 24 * 60 * 60 * 1e3, dayIndex = (iso, epochMs) => Math.round((Date.parse(`${iso}T00:00:00Z`) - epochMs) / DAY_MS), BROADBAND_NM = { u: 355, g: 477, r: 623, i: 762, z: 913 };
-function filterWavelength(name) {
-  let medium = /^m(\d+)w?$/.exec(name);
-  return medium ? Number(medium[1]) : BROADBAND_NM[name] ?? Number.POSITIVE_INFINITY;
-}
-function getTileMap() {
-  return cached("tiles", async () => {
-    let raw = await getJson("/tiles/", "tiles"), tiles = raw.tiles.filter((t) => Number.isFinite(t.ra) && Number.isFinite(t.dec)).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0), firstNight = tiles[0]?.first_night ?? "", lastNight = tiles[0]?.last_night ?? "";
-    for (let tile of tiles)
-      tile.first_night < firstNight && (firstNight = tile.first_night), tile.last_night > lastNight && (lastNight = tile.last_night);
-    let epochMs = Date.parse(`${firstNight}T00:00:00Z`), numeric = tiles.map((t) => /^T\d{1,6}$/.test(t.name) ? Number(t.name.slice(1)) : NaN), nameDelta = numeric.every((n) => Number.isFinite(n)) && numeric.every((n, i) => i === 0 || n > numeric[i - 1]) ? numeric.map((n, i) => i === 0 ? n : n - numeric[i - 1]) : void 0, seen = /* @__PURE__ */ new Set();
-    for (let tile of tiles)
-      for (let name of Object.keys(tile.filters ?? {}))
-        seen.add(name);
-    let filters = [...seen].sort((a, b) => filterWavelength(a) - filterWavelength(b)), filterIndex = new Map(filters.map((name, i) => [name, i])), patterns = [], patternIndex = /* @__PURE__ */ new Map(), patternFor = (tile) => {
-      let flat = Object.entries(tile.filters ?? {}).map(([name, frames]) => [filterIndex.get(name) ?? -1, frames]).filter(([i]) => i >= 0).sort((a, b) => a[0] - b[0]).flatMap(([i, frames]) => [i, frames]), key = flat.join(","), at = patternIndex.get(key);
-      return at === void 0 && (at = patterns.push(flat) - 1, patternIndex.set(key, at)), at;
-    }, data = {
-      count: tiles.length,
-      ...nameDelta ? { nameDelta } : { name: tiles.map((t) => t.name) },
-      // One decimal is well below the ~1° tile pitch and halves the payload.
-      ra: tiles.map((t) => Math.round(t.ra * 10) / 10),
-      dec: tiles.map((t) => Math.round(t.dec * 10) / 10),
-      visits: tiles.map((t) => t.n_nights),
-      frames: tiles.map((t) => t.n_frames),
-      lastDay: tiles.map((t) => dayIndex(t.last_night, epochMs)),
-      // Most tiles were observed on a single night, so a span of zero repeats
-      // thousands of times and costs almost nothing to send.
-      span: tiles.map((t) => dayIndex(t.last_night, epochMs) - dayIndex(t.first_night, epochMs)),
-      pattern: tiles.map(patternFor),
-      perFilter: Object.entries(raw.per_filter ?? {}).map(([name, v]) => ({
-        name,
-        nm: filterWavelength(name),
-        tiles: v.tiles_observed,
-        tilesRis: v.tiles_observed_ris,
-        frames: v.n_frames
-      })).sort((a, b) => a.nm - b.nm),
-      filters,
-      filterWave: filters.map(filterWavelength),
-      patterns,
-      epochDate: firstNight,
-      visitsMax: 0,
-      framesMax: 0,
-      firstNight,
-      lastNight
-    };
-    return data.visitsMax = data.visits.reduce((a, b) => b > a ? b : a, 0), data.framesMax = (data.frames ?? []).reduce((a, b) => b > a ? b : a, 0), { data, live: !0, generatedAt: raw.generated_at };
-  }).catch(() => ({ data: EMPTY_TILES, live: !1, generatedAt: "" }));
-}
-var ids = null;
-function runningId(deltas, index) {
-  if (!ids || ids.from !== deltas) {
-    let out = new Int32Array(deltas.length), running = 0;
-    for (let i = 0; i < deltas.length; i += 1)
-      running += deltas[i], out[i] = running;
-    ids = { from: deltas, value: out };
-  }
-  return ids.value[index];
-}
-async function getTilesNear(ra, dec, radius) {
-  let full = await getTileMap(), { data } = full, found = [], cosDec = Math.cos(dec * (Math.PI / 180));
-  for (let i = 0; i < data.count; i += 1) {
-    let dDec = data.dec[i] - dec;
-    if (Math.abs(dDec) > radius)
-      continue;
-    let dRa = data.ra[i] - ra;
-    dRa > 180 && (dRa -= 360), dRa < -180 && (dRa += 360), !(Math.abs(dRa * cosDec) > radius) && found.push({
-      name: data.name ? data.name[i] : `T${String(runningId(data.nameDelta ?? [], i)).padStart(5, "0")}`,
-      ra: data.ra[i],
-      dec: data.dec[i],
-      visits: data.visits[i],
-      frames: data.frames?.[i] ?? 0,
-      lastDay: data.lastDay[i],
-      epochDate: data.epochDate
-    });
-  }
-  return { ...full, data: found };
-}
-var lite = /* @__PURE__ */ new Map();
-async function getTileMapLite(withNames = !1) {
-  let full = await getTileMap(), key = withNames ? "named" : "bare", held = lite.get(key);
-  if (held && held.from === full.generatedAt)
-    return held.value;
-  let { span, pattern, filters, filterWave, patterns, name, nameDelta, ...rest } = full.data, data = withNames ? { ...rest, name, nameDelta } : rest, value = { ...full, data };
-  return lite.set(key, { from: full.generatedAt, value }), value;
-}
-BASE && setTimeout(() => {
-  getStatus().catch(() => {
-  }), getTileMap().catch(() => {
-  });
-}, 500).unref?.();
-var EMPTY_TILES = {
-  count: 0,
-  name: [],
-  ra: [],
-  dec: [],
-  visits: [],
-  frames: [],
-  lastDay: [],
-  span: [],
-  pattern: [],
-  filters: [],
-  filterWave: [],
-  patterns: [],
-  epochDate: "2023-10-01",
-  visitsMax: 0,
-  framesMax: 0,
-  firstNight: "",
-  lastNight: ""
-};
-
-// app/routes/users.propose.tsx
-import { Fragment as Fragment7, jsx as jsx24, jsxs as jsxs18 } from "react/jsx-runtime";
-var meta17 = () => [
-  { title: "How to propose \xB7 7DT for users" },
-  {
-    name: "description",
-    content: "Observing modes, target-of-opportunity response and how observing time on 7DT is requested."
-  }
-], CACHE = "public, max-age=900, stale-while-revalidate=86400", headers = () => ({ "Cache-Control": CACHE });
-async function loader6() {
-  let status = await getStatus();
-  return json(
-    { too: status.data.too, live: status.live, generatedAt: status.generatedAt },
-    { headers: { "Cache-Control": CACHE } }
-  );
-}
-var num = (value) => value.toLocaleString("en-US"), Index17 = () => {
-  let { too, live, generatedAt } = useLoaderData();
-  return /* @__PURE__ */ jsxs18(PageLayout, { menu: "manuUsers", children: [
-    /* @__PURE__ */ jsx24(
-      PageHero,
-      {
-        eyebrow: "For users",
-        title: /* @__PURE__ */ jsxs18(Fragment7, { children: [
-          "How to ",
-          /* @__PURE__ */ jsx24("em", { children: "propose" })
-        ] }),
-        lede: "What the array can be asked to do, how an observation is specified, and how time is requested.",
-        image: "/img/hero/telescope.jpg"
-      }
-    ),
-    /* @__PURE__ */ jsxs18(Section, { eyebrow: "Modes", title: "Four observing modes", children: [
-      /* @__PURE__ */ jsx24("p", { className: "prose", children: modeText }),
-      /* @__PURE__ */ jsx24("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: surveys_default.modes.map((mode2, index) => /* @__PURE__ */ jsxs18("li", { children: [
-        /* @__PURE__ */ jsx24("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
-        /* @__PURE__ */ jsxs18("div", { children: [
-          /* @__PURE__ */ jsxs18("h3", { className: "feature-list__title", style: { fontSize: "1.125rem" }, children: [
-            mode2.name,
-            /* @__PURE__ */ jsx24(
-              "span",
-              {
-                style: {
-                  marginLeft: "0.75rem",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.6875rem",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: "var(--slate-500)",
-                  fontWeight: 400
-                },
-                children: mode2.tagline
-              }
-            )
-          ] }),
-          /* @__PURE__ */ jsx24("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: mode2.body })
-        ] })
-      ] }, mode2.name)) })
-    ] }),
-    /* @__PURE__ */ jsx24(Section, { eyebrow: "Specifying", title: "What an observation request contains", alt: !0, children: /* @__PURE__ */ jsxs18("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsxs18("div", { children: [
-        /* @__PURE__ */ jsx24("p", { className: "prose", children: "An observation is specified by target position, observing mode, exposure time and the number of repetitions, together with any constraint on airmass, moon separation or time window. Positions on the survey tiling are preferred where the science allows, because data taken on a tile coadd directly with existing survey data and can be differenced against the reference image without an additional calibration step." }),
-        /* @__PURE__ */ jsx24("p", { className: "prose", children: "Before requesting time, check the target is observable from El Sauce in the intended window, and check what already exists: much of the southern sky already has a medium-band reference image, and the tile under a given position may already carry the bands needed." })
-      ] }),
-      /* @__PURE__ */ jsxs18("div", { className: "panel", children: [
-        /* @__PURE__ */ jsx24("div", { className: "panel__title", children: "Before you write" }),
-        /* @__PURE__ */ jsxs18("ul", { className: "feature-list", style: { borderTop: 0, margin: 0 }, children: [
-          /* @__PURE__ */ jsx24("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx24("div", { children: /* @__PURE__ */ jsxs18("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-            "Check visibility and existing coverage \u2014 the",
-            " ",
-            /* @__PURE__ */ jsx24(Link13, { to: "/users/access", children: "data access page" }),
-            " reports the bands and frame counts held for any position."
-          ] }) }) }),
-          /* @__PURE__ */ jsx24("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx24("div", { children: /* @__PURE__ */ jsxs18("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-            "Estimate depth from the measured",
-            " ",
-            /* @__PURE__ */ jsx24(Link13, { to: "/users/overview", children: "limiting magnitudes" }),
-            " rather than from the aperture."
-          ] }) }) }),
-          /* @__PURE__ */ jsx24("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx24("div", { children: /* @__PURE__ */ jsxs18("p", { className: "feature-list__body", style: { margin: 0 }, children: [
-            "Target visibility and filter response can be computed with",
-            " ",
-            /* @__PURE__ */ jsx24(Link13, { to: "/users/software", children: /* @__PURE__ */ jsx24("code", { children: "supy" }) }),
-            "."
-          ] }) }) })
-        ] })
-      ] })
-    ] }) }),
-    /* @__PURE__ */ jsxs18(Section, { eyebrow: "Response", title: "Target of opportunity", children: [
-      /* @__PURE__ */ jsx24("p", { className: "prose", children: "When a transient alert arrives \u2014 a gamma-ray burst, a gravitational-wave candidate \u2014 the scheduler interrupts the observing plan and repoints. Two response modes are available: a regular mode that completes the current exposure block before switching, and a rapid mode that interrupts immediately. Once the follow-up finishes, the array returns to the queue and resumes the interrupted target if it is still observable. Time from alert ingestion to the start of a follow-up exposure is under one minute." }),
-      /* @__PURE__ */ jsx24("p", { className: "prose", children: "Target-of-opportunity data are processed at elevated priority and the requester is notified when raw data arrive, as each filter set completes, and on completion with a spectral energy distribution plot and magnitude table attached." }),
-      /* @__PURE__ */ jsx24("div", { style: { margin: "2rem 0 1.25rem" }, children: /* @__PURE__ */ jsx24(LiveBadge, { live, updated: generatedAt, interval: "every 30 minutes" }) }),
-      /* @__PURE__ */ jsxs18("p", { className: "prose", children: [
-        num(too.followup_events),
-        " follow-up campaigns have been carried out since automated target-of-opportunity response entered service, ",
-        num(too.gw_campaigns),
-        " of them on gravitational-wave events."
-      ] }),
-      /* @__PURE__ */ jsx24("div", { className: "chip-row", style: { marginTop: "1.25rem" }, children: too.gw_event_ids.map((id) => /* @__PURE__ */ jsx24("span", { className: "chip chip--static", children: id }, id)) }),
-      /* @__PURE__ */ jsx24("p", { className: "footnote", style: { marginTop: "1rem" }, children: "LVK superevent identifiers as issued in the public alert stream. Target-level details are not published here." })
-    ] }),
-    /* @__PURE__ */ jsx24(Section, { eyebrow: "Applying", title: "Requesting observing time", alt: !0, children: /* @__PURE__ */ jsxs18("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
-      /* @__PURE__ */ jsx24("div", { className: "panel__title", children: "No open call at present" }),
-      /* @__PURE__ */ jsx24("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: "Observing time is currently allocated within the collaboration and its partner institutions; there is no general call for proposals yet. A proposal template and an exposure time calculator will be published on this page when one opens. Enquiries about observations outside the survey program, including target-of-opportunity requests, should be addressed to the project directly." }),
-      /* @__PURE__ */ jsx24(
-        "a",
-        {
-          className: "btn btn--primary",
-          href: "mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20enquiry",
-          children: "Contact the project"
-        }
-      )
-    ] }) })
-  ] });
-}, users_propose_default = Index17;
-
-// app/routes/users.access.tsx
-var users_access_exports = {};
-__export(users_access_exports, {
-  default: () => users_access_default,
-  headers: () => headers2,
-  loader: () => loader7,
-  meta: () => meta18
-});
-import { json as json2 } from "@remix-run/node";
-import { Link as Link14, useLoaderData as useLoaderData2 } from "@remix-run/react";
-
-// app/components/skymap.tsx
-import { useCallback, useEffect as useEffect3, useMemo as useMemo2, useRef as useRef2, useState as useState4 } from "react";
-
-// app/components/tiledetail.tsx
-import { Fragment as Fragment8, jsx as jsx25, jsxs as jsxs19 } from "react/jsx-runtime";
-var DAY_MS2 = 24 * 60 * 60 * 1e3, degLabel = (value) => `${value >= 0 ? "+" : "\u2212"}${Math.abs(value).toFixed(1)}\xB0`;
-function dayLabel(index, epochDate) {
-  return new Date(Date.parse(`${epochDate}T00:00:00Z`) + index * DAY_MS2).toISOString().slice(0, 10);
-}
-function duration(seconds) {
-  let h = seconds / 3600;
-  return h < 1 ? `${Math.round(seconds / 60)} min` : h < 10 ? `${h.toFixed(1)} h` : `${Math.round(h).toLocaleString("en-US")} h`;
-}
-function breakdown(tiles, index) {
-  let { patterns, pattern, filters, filterWave } = tiles;
-  if (!patterns || !pattern || !filters || !filterWave)
-    return null;
-  let flat = patterns[pattern[index]] ?? [], bands = [], broad = [], peak = 0;
-  for (let i = 0; i < flat.length; i += 2) {
-    let name = filters[flat[i]], frames = flat[i + 1];
-    frames > peak && (peak = frames), name?.startsWith("m") ? bands.push({ name, nm: filterWave[flat[i]], frames }) : name && broad.push({ name, frames });
-  }
-  let byName = new Map(bands.map((band) => [band.name, band])), strip = filters.map((name, i) => ({ name, nm: filterWave[i] })).filter((f) => f.name.startsWith("m")).map((f) => ({ ...f, frames: byName.get(f.name)?.frames ?? 0 }));
-  return { broad, strip, peak, count: bands.length + broad.length };
-}
-function findTileAt(tiles, ra, dec, fovLon = 1.34, fovLat = 0.9) {
-  let wrapped = (ra % 360 + 360) % 360, best = -1, bestScore = 1 / 0;
-  for (let i = 0; i < tiles.count; i += 1) {
-    let dDec = tiles.dec[i] - dec;
-    if (Math.abs(dDec) > fovLat / 2)
-      continue;
-    let dRa = tiles.ra[i] - wrapped;
-    dRa > 180 && (dRa -= 360), dRa < -180 && (dRa += 360);
-    let dRaSky = dRa * Math.cos(dec * (Math.PI / 180));
-    if (Math.abs(dRaSky) > fovLon / 2)
-      continue;
-    let score = dRaSky * dRaSky + dDec * dDec;
-    score < bestScore && (bestScore = score, best = i);
-  }
-  return best >= 0 ? best : null;
-}
-function TileDetail({
-  tiles,
-  index,
-  name,
-  ra,
-  dec,
-  l,
-  b,
-  exposureSec
-}) {
-  let detail = breakdown(tiles, index), frames = tiles.frames?.[index] ?? 0, span = tiles.span?.[index] ?? 0;
-  return /* @__PURE__ */ jsxs19(Fragment8, { children: [
-    /* @__PURE__ */ jsxs19("div", { className: "skymap__tip-head", children: [
-      /* @__PURE__ */ jsx25("span", { className: "skymap__tip-name", children: name }),
-      /* @__PURE__ */ jsx25("span", { className: "skymap__tip-badge", children: "Observed" })
-    ] }),
-    /* @__PURE__ */ jsxs19("dl", { className: "skymap__tip-grid", children: [
-      /* @__PURE__ */ jsx25("dt", { children: "RA, Dec" }),
-      /* @__PURE__ */ jsxs19("dd", { children: [
-        ra.toFixed(1),
-        "\xB0, ",
-        degLabel(dec)
-      ] }),
-      /* @__PURE__ */ jsx25("dt", { children: "l, b" }),
-      /* @__PURE__ */ jsxs19("dd", { children: [
-        l.toFixed(1),
-        "\xB0, ",
-        degLabel(b)
-      ] }),
-      /* @__PURE__ */ jsx25("dt", { children: "Visits" }),
-      /* @__PURE__ */ jsxs19("dd", { children: [
-        tiles.visits[index].toLocaleString("en-US"),
-        " ",
-        tiles.visits[index] === 1 ? "night" : "nights"
-      ] }),
-      /* @__PURE__ */ jsx25("dt", { children: "Frames" }),
-      /* @__PURE__ */ jsx25("dd", { children: frames.toLocaleString("en-US") }),
-      exposureSec ? /* @__PURE__ */ jsxs19(Fragment8, { children: [
-        /* @__PURE__ */ jsx25("dt", { children: "Exposure" }),
-        /* @__PURE__ */ jsxs19("dd", { children: [
-          "\u2248 ",
-          duration(frames * exposureSec)
-        ] })
-      ] }) : null,
-      detail && /* @__PURE__ */ jsxs19(Fragment8, { children: [
-        /* @__PURE__ */ jsx25("dt", { children: "Filters" }),
-        /* @__PURE__ */ jsx25("dd", { children: detail.count })
-      ] }),
-      /* @__PURE__ */ jsx25("dt", { children: "Dates" }),
-      /* @__PURE__ */ jsxs19("dd", { children: [
-        dayLabel(tiles.lastDay[index] - span, tiles.epochDate),
-        span > 0 && /* @__PURE__ */ jsxs19(Fragment8, { children: [
-          " \u2013 ",
-          dayLabel(tiles.lastDay[index], tiles.epochDate)
-        ] })
-      ] })
-    ] }),
-    detail && /* @__PURE__ */ jsxs19(Fragment8, { children: [
-      /* @__PURE__ */ jsx25("div", { className: "skymap__tip-bands", children: detail.strip.map((band) => /* @__PURE__ */ jsx25(
-        "span",
-        {
-          className: "skymap__tip-band",
-          title: `${band.name}: ${band.frames} frames`,
-          children: /* @__PURE__ */ jsx25(
-            "span",
-            {
-              className: "skymap__tip-band-fill",
-              style: {
-                height: `${band.frames > 0 ? Math.max(12, Math.sqrt(band.frames) / Math.sqrt(detail.peak) * 100) : 0}%`,
-                background: wavelengthColor(band.nm)
-              }
-            }
-          )
-        },
-        band.name
-      )) }),
-      /* @__PURE__ */ jsxs19("div", { className: "skymap__tip-scale", children: [
-        /* @__PURE__ */ jsx25("span", { children: "400 nm" }),
-        /* @__PURE__ */ jsx25("span", { children: "frames per medium band" }),
-        /* @__PURE__ */ jsx25("span", { children: "875 nm" })
-      ] }),
-      detail.broad.length > 0 && /* @__PURE__ */ jsx25("p", { className: "skymap__tip-broad", children: detail.broad.map((band) => /* @__PURE__ */ jsxs19("span", { children: [
-        /* @__PURE__ */ jsx25("b", { children: band.name }),
-        " ",
-        band.frames.toLocaleString("en-US")
-      ] }, band.name)) })
-    ] })
-  ] });
-}
-
-// app/lib/tilegrid.ts
-var DEC_STEP = 0.8490566037735849, RING = [
-  1,
-  7,
-  11,
-  15,
-  19,
-  23,
-  27,
-  31,
-  36,
-  40,
-  44,
-  48,
-  52,
-  56,
-  60,
-  64,
-  68,
-  72,
-  76,
-  80,
-  84,
-  88,
-  92,
-  96,
-  100,
-  103,
-  107,
-  111,
-  115,
-  119,
-  122,
-  126,
-  130,
-  133,
-  137,
-  141,
-  144,
-  148,
-  151,
-  155,
-  158,
-  162,
-  165,
-  168,
-  171,
-  175,
-  178,
-  181,
-  184,
-  187,
-  190,
-  193,
-  196,
-  199,
-  202,
-  205,
-  208,
-  211,
-  213,
-  216,
-  219,
-  221,
-  224,
-  226,
-  228,
-  231,
-  233,
-  235,
-  238,
-  240,
-  242,
-  244,
-  246,
-  248,
-  250,
-  252,
-  253,
-  255,
-  257,
-  258,
-  260,
-  261,
-  263,
-  264,
-  266,
-  267,
-  268,
-  269,
-  270,
-  271,
-  272,
-  273,
-  274,
-  275,
-  276,
-  276,
-  277,
-  277,
-  278,
-  278,
-  279,
-  279,
-  279,
-  279,
-  280,
-  280,
-  280,
-  280,
-  280,
-  279,
-  279,
-  279,
-  279,
-  278,
-  278,
-  277,
-  277,
-  276,
-  276,
-  275,
-  274,
-  273,
-  272,
-  271,
-  270,
-  269,
-  268,
-  267,
-  266,
-  264,
-  263,
-  261,
-  260,
-  258,
-  257,
-  255,
-  253,
-  252,
-  250,
-  248,
-  246,
-  244
-], RING_START = (() => {
-  let out = [], at = 0;
-  for (let n of RING)
-    out.push(at), at += n;
-  return out;
-})(), GRID_TILES = RING_START[RING.length - 1] + RING[RING.length - 1], EXTENSION_FROM = 25472, RIS_TILES = EXTENSION_FROM;
-function tileGrid(from = 0, to = GRID_TILES) {
-  let start = Math.max(0, from), end = Math.min(GRID_TILES, to), count = Math.max(0, end - start), ra = new Float64Array(count), dec = new Float64Array(count), ring = 0;
-  for (; ring < RING.length - 1 && RING_START[ring + 1] <= start; )
-    ring += 1;
-  for (let i = 0; i < count; i += 1) {
-    let id = start + i;
-    for (; ring < RING.length - 1 && RING_START[ring + 1] <= id; )
-      ring += 1;
-    ra[i] = (id - RING_START[ring]) * 360 / RING[ring], dec[i] = -90 + ring * DEC_STEP;
-  }
-  return { ra, dec, count };
-}
-
-// app/components/skymap.tsx
-import { Fragment as Fragment9, jsx as jsx26, jsxs as jsxs20 } from "react/jsx-runtime";
-var DEG = Math.PI / 180, FOV_LON = 1.34, FOV_LAT = 0.9, RATIO = 0.52, TABLE_STEP = 0.1, TABLE = (() => {
-  let n = Math.round(180 / TABLE_STEP) + 1, table = new Float64Array(n);
-  for (let i = 0; i < n; i += 1) {
-    let lat = (-90 + i * TABLE_STEP) * DEG, theta2 = lat;
-    if (Math.abs(Math.abs(lat) - Math.PI / 2) < 1e-9)
-      theta2 = lat > 0 ? Math.PI / 2 : -Math.PI / 2;
-    else
-      for (let k = 0; k < 12; k += 1) {
-        let denominator = 2 + 2 * Math.cos(2 * theta2);
-        if (Math.abs(denominator) < 1e-12)
-          break;
-        let step2 = (2 * theta2 + Math.sin(2 * theta2) - Math.PI * Math.sin(lat)) / denominator;
-        if (theta2 -= step2, Math.abs(step2) < 1e-10)
-          break;
-      }
-    table[i] = theta2;
-  }
-  return table;
-})();
-function theta(latDeg) {
-  let position = (latDeg + 90) / TABLE_STEP, i = Math.max(0, Math.min(TABLE.length - 2, Math.floor(position))), f = position - i;
-  return TABLE[i] * (1 - f) + TABLE[i + 1] * f;
-}
-var toLon = (raDeg) => -(((raDeg + 180) % 360 + 360) % 360 - 180);
-function projectLon(lonDeg, decDeg) {
-  let t = theta(decDeg);
-  return [2 / Math.PI * lonDeg * DEG * Math.cos(t), Math.sin(t)];
-}
-function project(raDeg, decDeg) {
-  return projectLon(toLon(raDeg), decDeg);
-}
-function unproject(x, y) {
-  if (x * x / 4 + y * y > 1 + 1e-9)
-    return null;
-  let t = Math.asin(Math.max(-1, Math.min(1, y))), lat = Math.asin(Math.max(-1, Math.min(1, (2 * t + Math.sin(2 * t)) / Math.PI))) / DEG, cosT = Math.cos(t);
-  if (cosT < 1e-9)
-    return [0, lat > 0 ? 90 : -90];
-  let lon = Math.PI * x / (2 * cosT) / DEG;
-  return lon < -180.0001 || lon > 180.0001 ? null : [(-lon % 360 + 360) % 360, lat];
-}
-var NGP_RA = 192.85948 * DEG, NGP_DEC = 27.12825 * DEG, L_NCP = 122.93192 * DEG;
-function equatorialToGalactic(raDeg, decDeg) {
-  let ra = raDeg * DEG, dec = decDeg * DEG, sinDec = Math.sin(dec), cosDec = Math.cos(dec), dRa = ra - NGP_RA, sinB = Math.sin(NGP_DEC) * sinDec + Math.cos(NGP_DEC) * cosDec * Math.cos(dRa), b = Math.asin(Math.max(-1, Math.min(1, sinB))), y = cosDec * Math.sin(dRa), x = Math.cos(NGP_DEC) * sinDec - Math.sin(NGP_DEC) * cosDec * Math.cos(dRa), l = (L_NCP - Math.atan2(y, x)) / DEG;
-  return l = (l % 360 + 360) % 360, [l, b / DEG];
-}
-function galacticToEquatorial(lDeg, bDeg) {
-  let l = lDeg * DEG, b = bDeg * DEG, sinB = Math.sin(b), cosB = Math.cos(b), dL = L_NCP - l, sinDec = Math.sin(NGP_DEC) * sinB + Math.cos(NGP_DEC) * cosB * Math.cos(dL), dec = Math.asin(Math.max(-1, Math.min(1, sinDec))), y = cosB * Math.sin(dL), x = Math.cos(NGP_DEC) * sinB - Math.sin(NGP_DEC) * cosB * Math.cos(dL), ra = (NGP_RA + Math.atan2(y, x)) / DEG;
-  return ra = (ra % 360 + 360) % 360, [ra, dec / DEG];
-}
-var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-function monthLabel(index, epoch) {
-  let total = epoch[1] - 1 + index;
-  return `${MONTHS[(total % 12 + 12) % 12]} ${epoch[0] + Math.floor(total / 12)}`;
-}
-var DAY_MS3 = 24 * 60 * 60 * 1e3;
-function shortDuration(seconds) {
-  return seconds >= 3600 ? `${(seconds / 3600).toFixed(seconds >= 36e3 ? 0 : 1)} h` : seconds >= 60 ? `${Math.round(seconds / 60)} min` : `${Math.round(seconds)} s`;
-}
-function SkyMap({
-  tiles,
-  exposureSec,
-  emphasize,
-  interactive = !0,
-  planned,
-  showObserved = !0,
-  modeToggle,
-  depthRef,
-  defaultMode,
-  caption,
-  theme = "light"
-}) {
-  let dark = theme === "dark", canvasRef = useRef2(null), wrapRef = useRef2(null), hasExposure = Boolean(exposureSec && exposureSec > 0 && tiles.frames), canDepth = Boolean(depthRef && hasExposure && tiles.filters && tiles.patterns), [mode2, setMode] = useState4(
-    defaultMode ?? (canDepth ? "depth" : hasExposure ? "exposure" : "visits")
-  ), [frame, setFrame] = useState4("equatorial"), [width, setWidth] = useState4(960), [probe, setProbe] = useState4(null), hover = probe?.tile ?? null, ids2 = useMemo2(() => {
-    if (!tiles.nameDelta)
-      return null;
-    let out = new Int32Array(tiles.nameDelta.length), running = 0;
-    for (let i = 0; i < out.length; i += 1)
-      running += tiles.nameDelta[i], out[i] = running;
-    return out;
-  }, [tiles]), nameAt = useCallback(
-    (i) => ids2 ? `T${String(ids2[i]).padStart(5, "0")}` : tiles.name?.[i] ?? "",
-    [ids2, tiles]
-  ), emphasized = useMemo2(() => {
-    if (!emphasize || emphasize.length === 0)
-      return null;
-    let wanted = new Set(emphasize), mask = new Uint8Array(tiles.count);
-    for (let i = 0; i < tiles.count; i += 1)
-      mask[i] = wanted.has(nameAt(i)) ? 1 : 0;
-    return mask;
-  }, [emphasize, tiles, nameAt]), months = useMemo2(() => {
-    let epochMs = Date.parse(`${tiles.epochDate}T00:00:00Z`), index = new Int32Array(tiles.count), max = 0;
-    for (let i = 0; i < tiles.count; i += 1) {
-      let at = new Date(epochMs + tiles.lastDay[i] * DAY_MS3), m = (at.getUTCFullYear() - Number(tiles.epochDate.slice(0, 4))) * 12 + (at.getUTCMonth() + 1 - Number(tiles.epochDate.slice(5, 7)));
-      index[i] = m, m > max && (max = m);
-    }
-    return { index, max };
-  }, [tiles]), epoch = useMemo2(
-    () => [Number(tiles.epochDate.slice(0, 4)), Number(tiles.epochDate.slice(5, 7))],
-    [tiles.epochDate]
-  ), coords = useMemo2(() => {
-    if (frame === "equatorial")
-      return { lon: tiles.ra, lat: tiles.dec };
-    let lon = new Float64Array(tiles.count), lat = new Float64Array(tiles.count);
-    for (let i = 0; i < tiles.count; i += 1) {
-      let [l, b] = equatorialToGalactic(tiles.ra[i], tiles.dec[i]);
-      lon[i] = l, lat[i] = b;
-    }
-    return { lon, lat };
-  }, [frame, tiles]), plannedProjected = useMemo2(() => {
-    if (!planned)
-      return null;
-    let grid = tileGrid(planned.from ?? 0, planned.to ?? GRID_TILES), xs = new Float64Array(grid.count), ys = new Float64Array(grid.count), lat = new Float64Array(grid.count);
-    for (let i = 0; i < grid.count; i += 1) {
-      let lon = grid.ra[i], b = grid.dec[i];
-      frame === "galactic" && ([lon, b] = equatorialToGalactic(lon, b));
-      let [x, y] = project(lon, b);
-      xs[i] = x, ys[i] = y, lat[i] = b;
-    }
-    return { xs, ys, lat, count: grid.count };
-  }, [planned?.from, planned?.to, frame]), projected = useMemo2(() => {
-    let xs = new Float64Array(tiles.count), ys = new Float64Array(tiles.count);
-    for (let i = 0; i < tiles.count; i += 1) {
-      let [x, y] = project(coords.lon[i], coords.lat[i]);
-      xs[i] = x, ys[i] = y;
-    }
-    return { xs, ys };
-  }, [coords, tiles.count]), visitScale = useMemo2(() => Math.log(tiles.visitsMax + 1), [tiles.visitsMax]), exposureScale = useMemo2(
-    () => hasExposure ? Math.log(tiles.framesMax * exposureSec + 1) : 1,
-    [hasExposure, tiles.framesMax, exposureSec]
-  ), bandFrames = useMemo2(() => {
-    if (!depthRef || !tiles.filters || !tiles.pattern || !tiles.patterns)
-      return null;
-    let band = tiles.filters.indexOf(depthRef.band);
-    if (band < 0)
-      return null;
-    let perPattern = tiles.patterns.map((flat) => {
-      for (let k = 0; k < flat.length; k += 2)
-        if (flat[k] === band)
-          return flat[k + 1];
-      return 0;
-    }), out = new Int32Array(tiles.count);
-    for (let i = 0; i < tiles.count; i += 1)
-      out[i] = perPattern[tiles.pattern[i]] ?? 0;
-    return out;
-  }, [depthRef, tiles]), depthOf = useCallback(
-    (i) => {
-      if (!depthRef || !hasExposure || !bandFrames)
-        return NaN;
-      let seconds = bandFrames[i] * exposureSec;
-      return seconds <= 0 ? NaN : depthRef.mag + 1.25 * Math.log10(seconds / depthRef.sec);
-    },
-    [depthRef, hasExposure, bandFrames, exposureSec]
-  ), depthRange = useMemo2(() => {
-    if (!depthRef || !hasExposure || !bandFrames)
-      return null;
-    let lo = 1 / 0, hi = -1 / 0;
-    for (let i = 0; i < tiles.count; i += 1) {
-      let d = depthOf(i);
-      Number.isFinite(d) && (d < lo && (lo = d), d > hi && (hi = d));
-    }
-    return Number.isFinite(lo) ? hi - lo < 0.05 ? { lo: lo - 0.25, hi: hi + 0.25 } : { lo, hi } : null;
-  }, [depthRef, hasExposure, bandFrames, tiles.count, depthOf]), modes = useMemo2(() => {
-    let out = [];
-    return depthRange && out.push({ key: "depth", label: "Depth" }), hasExposure && out.push({ key: "exposure", label: "Exposure time" }), out.push({ key: "visits", label: "Visits" }), out.push({ key: "date", label: "Last visit" }), out;
-  }, [depthRange, hasExposure]);
-  useEffect3(() => {
-    modes.some((m) => m.key === mode2) || setMode(modes[0].key);
-  }, [modes, mode2]);
-  let value = useCallback(
-    (i) => {
-      if (mode2 === "depth" && depthRange) {
-        let d = depthOf(i);
-        return Number.isFinite(d) ? (d - depthRange.lo) / (depthRange.hi - depthRange.lo) : 0;
-      }
-      if (mode2 === "exposure" && hasExposure) {
-        let seconds = (tiles.frames?.[i] ?? 0) * exposureSec;
-        return Math.log(seconds + 1) / exposureScale;
-      }
-      return mode2 === "date" ? months.max > 0 ? months.index[i] / months.max : 1 : Math.log(tiles.visits[i] + 1) / visitScale;
-    },
-    [mode2, tiles, visitScale, months, depthRange, depthOf, hasExposure, exposureSec, exposureScale]
-  );
-  useEffect3(() => {
-    let element = wrapRef.current;
-    if (!element)
-      return;
-    let measure = () => setWidth(element.clientWidth || 960);
-    if (measure(), typeof ResizeObserver > "u")
-      return window.addEventListener("resize", measure), () => window.removeEventListener("resize", measure);
-    let observer = new ResizeObserver(measure);
-    return observer.observe(element), () => observer.disconnect();
-  }, []), useEffect3(() => {
-    let canvas = canvasRef.current;
-    if (!canvas)
-      return;
-    let height = Math.round(width * RATIO), dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(width * dpr), canvas.height = Math.round(height * dpr), canvas.style.height = `${height}px`;
-    let ctx = canvas.getContext("2d");
-    if (!ctx)
-      return;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0), ctx.clearRect(0, 0, width, height);
-    let pad = 40, scale = Math.min((width - pad * 2) / 4, (height - pad * 1.4) / 2), cx = width / 2, cy = height / 2, px = (x) => cx + x * scale, py = (y) => cy - y * scale;
-    if (ctx.save(), ctx.beginPath(), ctx.ellipse(cx, cy, 2 * scale, scale, 0, 0, Math.PI * 2), ctx.clip(), ctx.fillStyle = dark ? "rgba(255,255,255,0.05)" : "#eceff4", ctx.fillRect(0, 0, width, height), plannedProjected) {
-      ctx.fillStyle = dark ? "rgba(255,255,255,0.13)" : "rgba(10,16,28,0.13)";
-      for (let i = 0; i < plannedProjected.count; i += 1) {
-        let lat = plannedProjected.lat[i], t = theta(lat), dLon = FOV_LON / Math.max(0.02, Math.cos(lat * DEG)), w = Math.max(1.1, 2 / Math.PI * dLon * DEG * Math.cos(t) * scale), hi = Math.min(90, lat + FOV_LAT / 2), lo = Math.max(-90, lat - FOV_LAT / 2), h = Math.max(1.1, (Math.sin(theta(hi)) - Math.sin(theta(lo))) * scale);
-        ctx.fillRect(
-          px(plannedProjected.xs[i]) - w / 2,
-          py(plannedProjected.ys[i]) - h / 2,
-          w,
-          h
-        );
-      }
-    }
-    for (let i = 0; showObserved && i < tiles.count; i += 1) {
-      let lat = coords.lat[i], t = theta(lat), [x, y] = project(coords.lon[i], lat), dLon = FOV_LON / Math.max(0.02, Math.cos(lat * DEG)), w = Math.max(1.1, 2 / Math.PI * dLon * DEG * Math.cos(t) * scale), hi = Math.min(90, lat + FOV_LAT / 2), lo = Math.max(-90, lat - FOV_LAT / 2), h = Math.max(1.1, (Math.sin(theta(hi)) - Math.sin(theta(lo))) * scale);
-      ctx.fillStyle = emphasized && !emphasized[i] ? dark ? "rgba(255,255,255,0.12)" : "rgba(10,16,28,0.10)" : rgb(sequential(value(i), dark)), ctx.fillRect(px(x) - w / 2, py(y) - h / 2, w, h);
-    }
-    ctx.restore(), ctx.strokeStyle = dark ? "rgba(255,255,255,0.16)" : "rgba(10,16,28,0.18)", ctx.lineWidth = 0.6, ctx.setLineDash([2, 3]);
-    for (let dec = -75; dec <= 75; dec += 15) {
-      ctx.beginPath();
-      for (let lon = -180; lon <= 180; lon += 2) {
-        let [x, y] = projectLon(lon, dec);
-        lon === -180 ? ctx.moveTo(px(x), py(y)) : ctx.lineTo(px(x), py(y));
-      }
-      ctx.stroke();
-    }
-    for (let lon = -150; lon <= 150; lon += 30) {
-      ctx.beginPath();
-      for (let dec = -90; dec <= 90; dec += 1) {
-        let [x, y] = projectLon(lon, dec);
-        dec === -90 ? ctx.moveTo(px(x), py(y)) : ctx.lineTo(px(x), py(y));
-      }
-      ctx.stroke();
-    }
-    if (ctx.setLineDash([]), ctx.strokeStyle = dark ? "rgba(255,255,255,0.42)" : "#0a101c", ctx.lineWidth = 1.2, ctx.beginPath(), ctx.ellipse(cx, cy, 2 * scale, scale, 0, 0, Math.PI * 2), ctx.stroke(), ctx.fillStyle = dark ? "rgba(255,255,255,0.62)" : "#4d5b71", ctx.font = '11px ui-monospace, "JetBrains Mono", monospace', ctx.textAlign = "center", ctx.textBaseline = "middle", frame === "equatorial")
-      for (let hours = 2; hours <= 22; hours += 4) {
-        let [x, y] = project(hours * 15, 0);
-        ctx.fillText(`${String(hours).padStart(2, "0")}h`, px(x), py(y) - 9);
-      }
-    else
-      for (let l of [30, 90, 150, 210, 270, 330]) {
-        let [x, y] = project(l, 0);
-        ctx.fillText(`${l}\xB0`, px(x), py(y) - 9);
-      }
-    ctx.textAlign = "right";
-    for (let lat = -75; lat <= 75; lat += 15) {
-      let [x, y] = projectLon(-180, lat);
-      ctx.fillText(`${lat > 0 ? "+" : ""}${lat}\xB0`, px(x) - 7, py(y));
-    }
-  }, [tiles, coords, projected, plannedProjected, showObserved, frame, width, value, emphasized, dark]);
-  let onMove = (event) => {
-    let canvas = canvasRef.current;
-    if (!canvas)
-      return;
-    let rect = canvas.getBoundingClientRect(), height = rect.height, pad = 40, scale = Math.min((rect.width - pad * 2) / 4, (height - pad * 1.4) / 2), mx = event.clientX - rect.left, my = event.clientY - rect.top, sky = unproject((mx - rect.width / 2) / scale, (height / 2 - my) / scale);
-    if (!sky) {
-      setProbe(null);
-      return;
-    }
-    let perDegree = scale * (2 / 180), tolerance = Math.max(6, perDegree * 1.2), best = -1, bestDistance = tolerance * tolerance;
-    for (let i = 0; i < tiles.count; i += 1) {
-      let dx = rect.width / 2 + projected.xs[i] * scale - mx, dy = height / 2 - projected.ys[i] * scale - my, distance = dx * dx + dy * dy;
-      distance < bestDistance && (bestDistance = distance, best = i);
-    }
-    let [lon, lat] = sky, equatorial = best >= 0 ? [tiles.ra[best], tiles.dec[best]] : frame === "equatorial" ? [lon, lat] : galacticToEquatorial(lon, lat), galactic = best >= 0 ? frame === "galactic" ? [coords.lon[best], coords.lat[best]] : equatorialToGalactic(tiles.ra[best], tiles.dec[best]) : frame === "galactic" ? [lon, lat] : equatorialToGalactic(lon, lat), mark = null;
-    if (best >= 0) {
-      let lat2 = coords.lat[best], t = theta(lat2), dLon = FOV_LON / Math.max(0.02, Math.cos(lat2 * DEG)), hiLat = Math.min(90, lat2 + FOV_LAT / 2), loLat = Math.max(-90, lat2 - FOV_LAT / 2);
-      mark = {
-        x: rect.width / 2 + projected.xs[best] * scale,
-        y: height / 2 - projected.ys[best] * scale,
-        w: Math.max(5, 2 / Math.PI * dLon * DEG * Math.cos(t) * scale),
-        h: Math.max(5, (Math.sin(theta(hiLat)) - Math.sin(theta(loLat))) * scale)
-      };
-    }
-    setProbe({
-      x: mx,
-      y: my,
-      tile: best >= 0 ? best : null,
-      mark,
-      ra: equatorial[0],
-      dec: equatorial[1],
-      l: galactic[0],
-      b: galactic[1]
-    });
-  }, showModes = (modeToggle ?? interactive) && modes.length > 1, legendStops = useMemo2(
-    () => Array.from({ length: 12 }, (_, i) => rgb(sequential(i / 11, dark))).join(", "),
-    []
-  ), legendTicks = useMemo2(() => mode2 === "depth" && depthRange ? [0, 0.5, 1].map((t) => (depthRange.lo + t * (depthRange.hi - depthRange.lo)).toFixed(1)) : mode2 === "exposure" ? [0, 0.5, 1].map((t) => shortDuration(Math.exp(t * exposureScale) - 1)) : mode2 === "date" ? [0, 0.5, 1].map((t) => monthLabel(Math.round(t * months.max), epoch)) : [0, 0.5, 1].map((t) => `${Math.round(Math.exp(t * visitScale) - 1).toLocaleString("en-US")}`), [mode2, tiles, visitScale, months, epoch, depthRange, exposureScale]), legendTitle = mode2 === "depth" ? `Estimated 5\u03C3 depth${depthRef ? ` \xB7 ${depthRef.band}` : ""}` : mode2 === "exposure" ? "Estimated integration time" : mode2 === "date" ? "Last observed" : "Visits per tile";
-  return /* @__PURE__ */ jsxs20("div", { className: `skymap${dark ? " skymap--dark" : ""}`, children: [
-    (interactive || showModes) && /* @__PURE__ */ jsxs20("div", { className: "skymap__controls", children: [
-      interactive && /* @__PURE__ */ jsxs20("div", { className: "skymap__modes", role: "group", "aria-label": "Coordinate system", children: [
-        /* @__PURE__ */ jsx26(
-          "button",
-          {
-            type: "button",
-            className: "toggle-btn",
-            "aria-pressed": frame === "equatorial",
-            onClick: () => setFrame("equatorial"),
-            children: "RA / Dec"
-          }
-        ),
-        /* @__PURE__ */ jsx26(
-          "button",
-          {
-            type: "button",
-            className: "toggle-btn",
-            "aria-pressed": frame === "galactic",
-            onClick: () => setFrame("galactic"),
-            children: "Galactic"
-          }
-        )
-      ] }),
-      showModes && /* @__PURE__ */ jsx26("div", { className: "skymap__modes", role: "group", "aria-label": "Color the map by", children: modes.map((option) => /* @__PURE__ */ jsx26(
-        "button",
-        {
-          type: "button",
-          className: "toggle-btn",
-          "aria-pressed": mode2 === option.key,
-          onClick: () => setMode(option.key),
-          children: option.label
-        },
-        option.key
-      )) }),
-      interactive && /* @__PURE__ */ jsx26("span", { className: "skymap__readout", role: "status", children: probe === null ? caption ?? `${tiles.count.toLocaleString("en-US")} tiles observed` : hover === null ? /* @__PURE__ */ jsxs20(Fragment9, { children: [
-        "RA ",
-        probe.ra.toFixed(1),
-        "\xB0 Dec ",
-        degLabel(probe.dec),
-        " \xB7 not observed"
-      ] }) : /* @__PURE__ */ jsxs20(Fragment9, { children: [
-        /* @__PURE__ */ jsx26("b", { children: nameAt(hover) }),
-        " \xB7",
-        " ",
-        frame === "equatorial" ? /* @__PURE__ */ jsxs20(Fragment9, { children: [
-          "RA ",
-          probe.ra.toFixed(1),
-          "\xB0 Dec ",
-          degLabel(probe.dec)
-        ] }) : /* @__PURE__ */ jsxs20(Fragment9, { children: [
-          "l ",
-          probe.l.toFixed(1),
-          "\xB0 b ",
-          degLabel(probe.b)
-        ] }),
-        " ",
-        "\xB7 ",
-        tiles.visits[hover],
-        " ",
-        tiles.visits[hover] === 1 ? "visit" : "visits",
-        " \xB7",
-        " ",
-        (tiles.frames?.[hover] ?? 0).toLocaleString("en-US"),
-        " frames \xB7 last",
-        " ",
-        monthLabel(months.index[hover], epoch)
-      ] }) })
-    ] }),
-    /* @__PURE__ */ jsxs20("div", { className: "skymap__canvas", ref: wrapRef, children: [
-      /* @__PURE__ */ jsx26(
-        "canvas",
-        {
-          ref: canvasRef,
-          style: { width: "100%", display: "block" },
-          onPointerMove: interactive ? onMove : void 0,
-          onPointerLeave: interactive ? () => setProbe(null) : void 0,
-          role: "img",
-          "aria-label": `Mollweide all-sky map of ${tiles.count.toLocaleString(
-            "en-US"
-          )} observed 7DS tiles in ${frame === "equatorial" ? "equatorial" : "galactic"} coordinates, colored by ${mode2 === "depth" ? "the estimated depth reached on each" : mode2 === "exposure" ? "the estimated integration time on each" : mode2 === "date" ? "the date each was last observed" : "the number of visits to each"}. Longitude increases to the left.`
-        }
-      ),
-      probe?.mark && /* @__PURE__ */ jsx26(
-        "span",
-        {
-          className: "skymap__mark",
-          "aria-hidden": "true",
-          style: {
-            left: probe.mark.x,
-            top: probe.mark.y,
-            width: probe.mark.w,
-            height: probe.mark.h
-          }
-        }
-      ),
-      probe && /* @__PURE__ */ jsx26(
-        "div",
-        {
-          className: `skymap__tip${probe.x > width * 0.55 ? " skymap__tip--left" : ""}${probe.y > width * RATIO * 0.55 ? " skymap__tip--up" : ""}`,
-          style: { left: probe.x, top: probe.y },
-          "aria-hidden": "true",
-          children: hover === null ? /* @__PURE__ */ jsxs20(Fragment9, { children: [
-            /* @__PURE__ */ jsxs20("div", { className: "skymap__tip-head", children: [
-              /* @__PURE__ */ jsx26("span", { className: "skymap__tip-name", children: "No observation" }),
-              /* @__PURE__ */ jsx26("span", { className: "skymap__tip-badge skymap__tip-badge--none", children: "Not observed" })
-            ] }),
-            /* @__PURE__ */ jsxs20("dl", { className: "skymap__tip-grid", children: [
-              /* @__PURE__ */ jsx26("dt", { children: "RA" }),
-              /* @__PURE__ */ jsxs20("dd", { children: [
-                probe.ra.toFixed(1),
-                "\xB0"
-              ] }),
-              /* @__PURE__ */ jsx26("dt", { children: "Dec" }),
-              /* @__PURE__ */ jsx26("dd", { children: degLabel(probe.dec) }),
-              /* @__PURE__ */ jsx26("dt", { children: "l, b" }),
-              /* @__PURE__ */ jsxs20("dd", { children: [
-                probe.l.toFixed(1),
-                "\xB0, ",
-                degLabel(probe.b)
-              ] })
-            ] }),
-            /* @__PURE__ */ jsx26("p", { className: "skymap__tip-note", children: "No science frames recorded at this position." })
-          ] }) : /* @__PURE__ */ jsx26(
-            TileDetail,
-            {
-              tiles,
-              index: hover,
-              name: nameAt(hover),
-              ra: probe.ra,
-              dec: probe.dec,
-              l: probe.l,
-              b: probe.b,
-              exposureSec
-            }
-          )
-        }
-      )
-    ] }),
-    /* @__PURE__ */ jsxs20("div", { className: "skymap__legend", children: [
-      /* @__PURE__ */ jsx26("span", { className: "skymap__legend-title", children: legendTitle }),
-      /* @__PURE__ */ jsx26("div", { className: "skymap__ramp", style: { background: `linear-gradient(to right, ${legendStops})` } }),
-      /* @__PURE__ */ jsx26("div", { className: "skymap__ticks", children: legendTicks.map((tick, index) => /* @__PURE__ */ jsx26("span", { children: tick }, tick + index)) })
-    ] })
-  ] });
-}
-
-// app/components/tilequery.tsx
-import React6, { useMemo as useMemo3, useState as useState5 } from "react";
-import { Fragment as Fragment10, jsx as jsx27, jsxs as jsxs21 } from "react/jsx-runtime";
-var DEG2 = Math.PI / 180, NGP_RA2 = 192.85948 * DEG2, NGP_DEC2 = 27.12825 * DEG2, L_NCP2 = 122.93192 * DEG2;
-function equatorialToGalactic2(raDeg, decDeg) {
-  let ra = raDeg * DEG2, dec = decDeg * DEG2, sinDec = Math.sin(dec), cosDec = Math.cos(dec), dRa = ra - NGP_RA2, sinB = Math.sin(NGP_DEC2) * sinDec + Math.cos(NGP_DEC2) * cosDec * Math.cos(dRa), b = Math.asin(Math.max(-1, Math.min(1, sinB))), y = cosDec * Math.sin(dRa), x = Math.cos(NGP_DEC2) * sinDec - Math.sin(NGP_DEC2) * cosDec * Math.cos(dRa), l = (L_NCP2 - Math.atan2(y, x)) / DEG2;
-  return l = (l % 360 + 360) % 360, [l, b / DEG2];
-}
-function parseAngle(raw, hours) {
-  let text = raw.trim().replace(/[dhms°'"]/g, " ").replace(/:/g, " ").trim();
-  if (!text)
-    return null;
-  let parts = text.split(/\s+/);
-  if (parts.some((p) => !/^[+-]?\d*\.?\d+$/.test(p)))
-    return null;
-  let values = parts.map(Number);
-  if (values.some((v) => !Number.isFinite(v)))
-    return null;
-  if (values.length === 1)
-    return values[0];
-  let sign = /^\s*-/.test(raw) ? -1 : 1, magnitude = Math.abs(values[0]) + (values[1] ?? 0) / 60 + (values[2] ?? 0) / 3600;
-  return sign * magnitude * (hours ? 15 : 1);
-}
-var EXAMPLES = [
-  { label: "IMS field", ra: "05:13:07", dec: "-60:28:12" },
-  { label: "LMC", ra: "80.894", dec: "-69.756" },
-  { label: "Fornax cluster", ra: "54.62", dec: "-35.45" }
-];
-function TileQuery({
-  tiles,
-  exposureSec
-}) {
-  let [ra, setRa] = useState5(""), [dec, setDec] = useState5(""), [query, setQuery] = useState5(null), [error, setError] = useState5(null), ids2 = useMemo3(() => {
-    if (!tiles.nameDelta)
-      return null;
-    let out = new Int32Array(tiles.nameDelta.length), running = 0;
-    for (let i = 0; i < out.length; i += 1)
-      running += tiles.nameDelta[i], out[i] = running;
-    return out;
-  }, [tiles]), nameAt = (i) => ids2 ? `T${String(ids2[i]).padStart(5, "0")}` : tiles.name?.[i] ?? "", hit = useMemo3(
-    () => query ? findTileAt(tiles, query.ra, query.dec) : null,
-    [query, tiles]
-  ), submit = (event) => {
-    event.preventDefault();
-    let parsedRa = parseAngle(ra, ra.includes(":") || /\s/.test(ra.trim())), parsedDec = parseAngle(dec, !1);
-    if (parsedRa === null || parsedDec === null) {
-      setError("Enter a position as decimal degrees (78.83, \u221261.13) or sexagesimal (05:13:07, \u221260:28:12)."), setQuery(null);
-      return;
-    }
-    if (parsedDec < -90 || parsedDec > 90) {
-      setError("Declination must be between \u221290 and +90 degrees."), setQuery(null);
-      return;
-    }
-    setError(null), setQuery({ ra: (parsedRa % 360 + 360) % 360, dec: parsedDec });
-  }, useExample = (example) => {
-    setRa(example.ra), setDec(example.dec), setError(null);
-    let parsedRa = parseAngle(example.ra, example.ra.includes(":")), parsedDec = parseAngle(example.dec, !1);
-    parsedRa !== null && parsedDec !== null && setQuery({ ra: (parsedRa % 360 + 360) % 360, dec: parsedDec });
-  }, galactic = query ? equatorialToGalactic2(query.ra, query.dec) : null;
-  return /* @__PURE__ */ jsxs21("div", { className: "tilequery", children: [
-    /* @__PURE__ */ jsxs21("div", { children: [
-      /* @__PURE__ */ jsxs21("form", { className: "tilequery__form", onSubmit: submit, children: [
-        /* @__PURE__ */ jsxs21("div", { className: "tilequery__field", children: [
-          /* @__PURE__ */ jsx27("label", { htmlFor: "q-ra", children: "Right ascension" }),
-          /* @__PURE__ */ jsx27(
-            "input",
-            {
-              id: "q-ra",
-              type: "text",
-              inputMode: "decimal",
-              value: ra,
-              onChange: (e) => setRa(e.target.value),
-              placeholder: "78.83 or 05:13:07"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxs21("div", { className: "tilequery__field", children: [
-          /* @__PURE__ */ jsx27("label", { htmlFor: "q-dec", children: "Declination" }),
-          /* @__PURE__ */ jsx27(
-            "input",
-            {
-              id: "q-dec",
-              type: "text",
-              inputMode: "decimal",
-              value: dec,
-              onChange: (e) => setDec(e.target.value),
-              placeholder: "-61.13 or -60:28:12"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsx27("button", { className: "btn btn--primary", type: "submit", children: "Check coverage" })
-      ] }),
-      error && /* @__PURE__ */ jsx27("p", { className: "tilequery__error", children: error }),
-      /* @__PURE__ */ jsxs21("p", { className: "tilequery__examples", children: [
-        "Try",
-        " ",
-        EXAMPLES.map((example, index) => /* @__PURE__ */ jsxs21(React6.Fragment, { children: [
-          index > 0 && ", ",
-          /* @__PURE__ */ jsx27("button", { type: "button", onClick: () => useExample(example), children: example.label })
-        ] }, example.label)),
-        ". Right ascension is read as hours when written with colons or spaces, and as degrees when written as a single number."
-      ] }),
-      query && /* @__PURE__ */ jsxs21("p", { className: "note", style: { marginTop: "1rem" }, children: [
-        "Queried RA ",
-        query.ra.toFixed(3),
-        "\xB0, Dec ",
-        degLabel(query.dec),
-        galactic && /* @__PURE__ */ jsxs21(Fragment10, { children: [
-          " ",
-          "\xB7 l ",
-          galactic[0].toFixed(2),
-          "\xB0, b ",
-          degLabel(galactic[1])
-        ] }),
-        hit !== null ? " \u2014 this position falls on an observed tile." : " \u2014 no observed tile covers this position."
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx27("div", { className: "tilequery__result", "aria-live": "polite", children: query === null ? /* @__PURE__ */ jsx27("p", { className: "tilequery__empty", children: "Enter a position to see whether it has been observed and what exists for it." }) : hit !== null && galactic ? /* @__PURE__ */ jsx27(
-      TileDetail,
-      {
-        tiles,
-        index: hit,
-        name: nameAt(hit),
-        ra: tiles.ra[hit],
-        dec: tiles.dec[hit],
-        l: galactic[0],
-        b: galactic[1],
-        exposureSec
-      }
-    ) : /* @__PURE__ */ jsxs21(Fragment10, { children: [
-      /* @__PURE__ */ jsxs21("div", { className: "skymap__tip-head", children: [
-        /* @__PURE__ */ jsx27("span", { className: "skymap__tip-name", children: "No observation" }),
-        /* @__PURE__ */ jsx27("span", { className: "skymap__tip-badge skymap__tip-badge--none", children: "Not observed" })
-      ] }),
-      /* @__PURE__ */ jsxs21("dl", { className: "skymap__tip-grid", children: [
-        /* @__PURE__ */ jsx27("dt", { children: "RA" }),
-        /* @__PURE__ */ jsxs21("dd", { children: [
-          query.ra.toFixed(3),
-          "\xB0"
-        ] }),
-        /* @__PURE__ */ jsx27("dt", { children: "Dec" }),
-        /* @__PURE__ */ jsx27("dd", { children: degLabel(query.dec) }),
-        galactic && /* @__PURE__ */ jsxs21(Fragment10, { children: [
-          /* @__PURE__ */ jsx27("dt", { children: "l, b" }),
-          /* @__PURE__ */ jsxs21("dd", { children: [
-            galactic[0].toFixed(1),
-            "\xB0, ",
-            degLabel(galactic[1])
-          ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsx27("p", { className: "skymap__tip-note", children: "No science frames are recorded on the tile at this position. It may be outside the observable declination range, or not yet reached by the survey." })
-    ] }) })
-  ] });
-}
-
-// app/routes/users.access.tsx
-import { Fragment as Fragment11, jsx as jsx28, jsxs as jsxs22 } from "react/jsx-runtime";
-var meta18 = () => [
-  { title: "Data access \xB7 7DT for users" },
-  {
-    name: "description",
-    content: "Search 7DS coverage by position or on an all-sky map, find out how to obtain the data, and what the pipeline produces and in what units."
-  }
-], CACHE2 = "public, max-age=3600, stale-while-revalidate=86400", headers2 = () => ({ "Cache-Control": CACHE2 });
-async function loader7() {
-  let [tiles, status] = await Promise.all([getTileMap(), getStatus().catch(() => null)]), totals = status?.data.totals, exposureSec = totals && totals.science_frames > 0 ? totals.exposure_hours * 3600 / totals.science_frames : null;
-  return json2(
-    {
-      tiles: tiles.data,
-      live: tiles.live,
-      generatedAt: tiles.generatedAt,
-      ris: status?.data.ris ?? null,
-      frames: totals?.science_frames ?? null,
-      exposureSec
-    },
-    { headers: { "Cache-Control": CACHE2 } }
-  );
-}
-var PRODUCTS = [
-  ["single", "A calibrated individual exposure, 100 s, with WCS and a source catalog"],
-  ["coadd", "Three singles combined to a 300 s frame \u2014 the basic survey product"],
-  ["difference", "A coadd minus its reference image, for transient detection"],
-  ["catalog", "A flux-calibrated source list attached to every image above"],
-  ["master frame", "Bias, dark and flat, generated nightly and matched by group key"]
-], CONVENTIONS = [
-  ["Photometric system", "AB magnitudes"],
-  ["Coadd zero point", "23.9 AB \u2014 pixel values in \xB5Jy"],
-  ["Astrometric reference", "Gaia DR3"],
-  ["Flux calibration", "Synthetic photometry from Gaia XP spectra"],
-  ["Tiling", "HEALPix-derived, T00000 \u2013 T28519"],
-  ["File format", "FITS, with QA metrics in the header"]
-], QA_KEYS = [
-  ["SANITY", "Boolean; false means the image should not be used for science"],
-  ["REJ_PROC", "The processing stage at which SANITY was set false"],
-  ["SEEING", "Measured PSF FWHM"],
-  ["UL5_5", "5\u03C3 limiting magnitude"],
-  ["ELLIP", "Point-source elongation"],
-  ["PPFLAG", "Bitmask recording compromises in master-frame selection"]
-], num2 = (value) => value.toLocaleString("en-US"), day = (iso) => new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }), Index18 = () => {
-  let { tiles, live, generatedAt, ris, frames, exposureSec } = useLoaderData2(), singleVisit = (tiles.visits ?? []).filter((v) => v === 1).length, repeated = tiles.count - singleVisit;
-  return /* @__PURE__ */ jsxs22(PageLayout, { menu: "manuUsers", children: [
-    /* @__PURE__ */ jsx28(
-      PageHero,
-      {
-        eyebrow: "For users",
-        title: /* @__PURE__ */ jsxs22(Fragment11, { children: [
-          "Data access & ",
-          /* @__PURE__ */ jsx28("em", { children: "format" })
-        ] }),
-        lede: "Find out whether a position has been observed, obtain the data, and know what arrives when you do.",
-        image: "/img/hero/data.jpg",
-        meta: [
-          { value: num2(tiles.count), label: "Tiles with data", live: !0 },
-          ...ris ? [{ value: String(ris.coverage_pct), unit: "%", label: "Sky referenced" }] : [],
-          { value: num2(tiles.visitsMax), label: "Most-visited tile" },
-          { value: day(tiles.lastNight), label: "Last observation" }
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsxs22(Section, { eyebrow: "Search", title: "Is this position observed?", children: [
-      /* @__PURE__ */ jsx28("div", { style: { marginBottom: "1.5rem" }, children: /* @__PURE__ */ jsx28(LiveBadge, { live, updated: generatedAt, interval: "daily" }) }),
-      /* @__PURE__ */ jsx28("p", { className: "prose", children: "Enter a position to see whether a survey tile covers it and what the observation record holds \u2014 how many nights and frames, roughly how much open-shutter time, which medium bands were taken and over what date range. The search runs against the same database that drives the pipeline, so a tile reported as observed has calibrated images behind it." }),
-      /* @__PURE__ */ jsx28("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx28(TileQuery, { tiles, exposureSec }) }),
-      /* @__PURE__ */ jsxs22("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: [
-        "A position is matched to a tile when it falls within that tile's 1.34\xB0 \xD7 0.90\xB0 field. Frame counts and filters are exact. Exposure time is an estimate \u2014 the frame count times the survey mean of ",
-        exposureSec ? exposureSec.toFixed(0) : "\u224880",
-        " seconds per frame \u2014 and is marked \u2248 for that reason."
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxs22(Section, { eyebrow: "Footprint", title: "Where 7DS has observed", alt: !0, wide: !0, children: [
-      /* @__PURE__ */ jsx28("p", { className: "prose", children: "The same record, drawn as a map. The projection is Mollweide and equal-area: a given area of the map corresponds to the same area of sky wherever it falls, so coverage near the pole is not exaggerated as it would be on a rectangular plot. Longitude increases to the left. Switch between equatorial and galactic coordinates, and point anywhere to read what exists at that position." }),
-      /* @__PURE__ */ jsx28("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx28(SkyMap, { tiles, exposureSec }) }),
-      /* @__PURE__ */ jsxs22("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
-        live ? `Generated ${day(generatedAt)}.` : "The database could not be reached; this map is a stored copy and may be out of date.",
-        " ",
-        "Only tiles with at least one science exposure are shown. Target-of-opportunity pointings at arbitrary coordinates are not on the tiling and do not appear."
-      ] }),
-      /* @__PURE__ */ jsx28("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx28(
-        StatGrid,
-        {
-          items: [
-            { value: num2(tiles.count), label: "Tiles with data" },
-            { value: num2(singleVisit), label: "Observed once", note: "RIS reference pass" },
-            { value: num2(repeated), label: "Revisited", note: "monitoring and ToO" },
-            ...frames ? [{ value: num2(frames), label: "Science frames" }] : []
-          ]
-        }
-      ) }),
-      /* @__PURE__ */ jsxs22("p", { className: "footnote", style: { marginTop: "1.25rem" }, children: [
-        "The broad wash across the southern sky is the",
-        " ",
-        /* @__PURE__ */ jsx28(Link14, { to: "/survey/ris", children: "Reference Imaging Survey" }),
-        "; the heavily repeated cluster near the south ecliptic pole is the",
-        " ",
-        /* @__PURE__ */ jsx28(Link14, { to: "/survey/ims", children: "Intensive Monitoring Survey" }),
-        ", which is why the visit scale is logarithmic. Isolated tiles elsewhere are target-of-opportunity follow-ups that fell on the tiling."
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx28(Section, { eyebrow: "Requesting", title: "Obtaining data", children: /* @__PURE__ */ jsxs22("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsxs22("div", { children: [
-        /* @__PURE__ */ jsx28("p", { className: "prose", children: "There is no public archive interface yet. A complete record of every image type and source catalog is held internally, with the provenance of any product traceable back to the raw frames it was built from, and requests are handled by the project directly until a public release is made." }),
-        /* @__PURE__ */ jsxs22("p", { className: "prose", children: [
-          "A request is quickest to fill if it states the tile identifier \u2014 or the coordinates \u2014 the filters, the epoch range, and which product is wanted: single exposures, coadds, difference images or catalogs. Terms of use and acknowledgment are set out under",
-          " ",
-          /* @__PURE__ */ jsx28(Link14, { to: "/users/data", children: "how to use the data" }),
-          "."
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxs22("div", { className: "panel", children: [
-        /* @__PURE__ */ jsx28("div", { className: "panel__title", children: "Requesting data" }),
-        /* @__PURE__ */ jsx28("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: "Include the tile identifier or position, the bands, the epoch range and the product type." }),
-        /* @__PURE__ */ jsx28(
-          "a",
-          {
-            className: "btn btn--primary",
-            href: "mailto:mim@astro.snu.ac.kr?subject=7DT%20data%20request",
-            children: "Contact the project"
-          }
-        )
-      ] })
-    ] }) }),
-    /* @__PURE__ */ jsx28(Section, { id: "format", eyebrow: "Format", title: "What the pipeline produces", alt: !0, children: /* @__PURE__ */ jsxs22("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsxs22("div", { children: [
-        /* @__PURE__ */ jsx28("p", { className: "prose", children: dataProductText }),
-        /* @__PURE__ */ jsx28("ul", { className: "feature-list", style: { marginTop: "1.5rem" }, children: PRODUCTS.map((product) => /* @__PURE__ */ jsxs22("li", { children: [
-          /* @__PURE__ */ jsx28("span", { className: "feature-list__key", style: { fontFamily: "var(--font-mono)" }, children: product[0] }),
-          /* @__PURE__ */ jsx28("div", { children: /* @__PURE__ */ jsx28("p", { className: "feature-list__body", style: { margin: 0 }, children: product[1] }) })
-        ] }, product[0])) })
-      ] }),
-      /* @__PURE__ */ jsx28(SimpleTable, { caption: "Conventions", rows: CONVENTIONS })
-    ] }) }),
-    /* @__PURE__ */ jsx28(Section, { eyebrow: "Headers", title: "Header and catalog information", children: /* @__PURE__ */ jsxs22("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsx28("div", { children: /* @__PURE__ */ jsx28("p", { className: "prose", children: "Quality-assurance metrics are written into the FITS header of every product and ingested into the operations database, so the state of an image can be inspected without opening it. Each catalog is a flux-calibrated source list matched to its parent image, carrying positions on the Gaia DR3 frame and AB magnitudes in the band of the image it was extracted from. For a coadd this means one row per detected source per band; combining bands for a given source gives the medium-band spectral energy distribution that the survey exists to produce." }) }),
-      /* @__PURE__ */ jsx28(SimpleTable, { caption: "Selected header keywords", rows: QA_KEYS })
-    ] }) }),
-    /* @__PURE__ */ jsxs22(Section, { eyebrow: "Processing", title: "How a night is reduced", alt: !0, children: [
-      /* @__PURE__ */ jsx28("p", { className: "prose", children: "Images are grouped by their properties \u2014 unit, filter, observing mode, night \u2014 into configurations, and each group runs through the same sequence. Established astronomical software does the numerical work behind Python interfaces rather than being reimplemented, so the behavior of each stage is that of the underlying tool." }),
-      /* @__PURE__ */ jsx28("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: software_default.stages.map((stage, index) => /* @__PURE__ */ jsxs22("li", { children: [
-        /* @__PURE__ */ jsx28("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
-        /* @__PURE__ */ jsxs22("div", { children: [
-          /* @__PURE__ */ jsx28(
-            "h3",
-            {
-              className: "feature-list__title",
-              style: { fontFamily: "var(--font-mono)", fontSize: "1rem" },
-              children: stage.module
-            }
-          ),
-          /* @__PURE__ */ jsx28("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: stage.body })
-        ] })
-      ] }, stage.module)) }),
-      /* @__PURE__ */ jsxs22("div", { className: "panel panel--alt", style: { marginTop: "2rem" }, children: [
-        /* @__PURE__ */ jsx28("div", { className: "panel__title", children: "External engines" }),
-        /* @__PURE__ */ jsx28("div", { className: "table-wrap", style: { border: 0 }, children: /* @__PURE__ */ jsx28("table", { className: "spec-table", children: /* @__PURE__ */ jsx28("tbody", { children: software_default.external.map((tool) => /* @__PURE__ */ jsxs22("tr", { children: [
-          /* @__PURE__ */ jsx28("th", { scope: "row", style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children: tool[0] }),
-          /* @__PURE__ */ jsx28("td", { style: { fontFamily: "var(--font-sans)" }, children: tool[1] })
-        ] }, tool[0])) }) }) })
-      ] }),
-      /* @__PURE__ */ jsxs22("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
-        /* @__PURE__ */ jsx28(Link14, { className: "btn btn--primary", to: "/users/access", children: "Getting the data" }),
-        /* @__PURE__ */ jsx28(Link14, { className: "btn btn--secondary", to: "/users/software", children: "Reprocessing it yourself" })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx28(Section, { eyebrow: "Ahead", title: "Planned public release", children: /* @__PURE__ */ jsx28("p", { className: "prose", children: "A public release of survey products is being prepared alongside the completion of the Reference Imaging Survey, whose first full cycle is anticipated by the end of 2027. The release is intended to include a query interface over images and catalogs; this page will carry it when it exists." }) })
-  ] });
-}, users_access_default = Index18;
-
-// app/routes/users.format.tsx
-var users_format_exports = {};
-__export(users_format_exports, {
-  loader: () => loader8
-});
-import { redirect as redirect6 } from "@remix-run/node";
-function loader8() {
-  return redirect6("/users/access#format", 301);
-}
-
 // app/routes/users.status.tsx
-var users_status_exports = {};
-__export(users_status_exports, {
-  default: () => users_status_default,
-  headers: () => headers3,
-  loader: () => loader9,
-  meta: () => meta19
-});
-import { useMemo as useMemo4, useState as useState6 } from "react";
-import { json as json3 } from "@remix-run/node";
-import { Link as Link15, useLoaderData as useLoaderData3 } from "@remix-run/react";
 import { Fragment as Fragment12, jsx as jsx29, jsxs as jsxs23 } from "react/jsx-runtime";
 var meta19 = () => [
   { title: "Status & overview \xB7 7DT for users" },
@@ -8873,7 +8866,7 @@ var num3 = (value, digits = 0) => value.toLocaleString("en-US", { minimumFractio
       ] }),
       /* @__PURE__ */ jsxs23("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
         /* @__PURE__ */ jsx29(Link15, { className: "btn btn--primary", to: "/users/access", children: "Search coverage by position" }),
-        /* @__PURE__ */ jsx29(Link15, { className: "btn btn--secondary", to: "/users/overview", children: "Measured depths" })
+        /* @__PURE__ */ jsx29(Link15, { className: "btn btn--secondary", to: "/users/performance", children: "Measured depths" })
       ] })
     ] }),
     /* @__PURE__ */ jsx29(Section, { eyebrow: "Processing", title: "Processing status", alt: !0, children: /* @__PURE__ */ jsxs23("p", { className: "prose", children: [
@@ -9502,7 +9495,7 @@ function SurveyPage(props) {
       /* @__PURE__ */ jsx35(Link18, { className: "chip", to: "/survey/overview", children: "All three surveys" }),
       /* @__PURE__ */ jsx35(Link18, { className: "chip", to: "/users/access", children: "Sky coverage and search" }),
       /* @__PURE__ */ jsx35(Link18, { className: "chip", to: "/users/status", children: "Array operations" }),
-      /* @__PURE__ */ jsx35(Link18, { className: "chip", to: "/users/overview", children: "Measured performance" })
+      /* @__PURE__ */ jsx35(Link18, { className: "chip", to: "/users/performance", children: "Measured performance" })
     ] }) })
   ] });
 }
@@ -9978,7 +9971,7 @@ var meta28 = () => [
         /* @__PURE__ */ jsxs30("p", { className: "feature-list__body", children: [
           "The original twenty medium bands are the calibrated set. The fifteen filters added in late 2025 are in operational use but their spectrophotometric calibration is still in preparation. Measured depths per band are on the",
           " ",
-          /* @__PURE__ */ jsx40(Link19, { to: "/users/overview", children: "overview page" }),
+          /* @__PURE__ */ jsx40(Link19, { to: "/users/performance", children: "performance page" }),
           "."
         ] })
       ] })
@@ -9996,7 +9989,7 @@ var meta28 = () => [
     /* @__PURE__ */ jsxs30("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
       /* @__PURE__ */ jsx40(Link19, { className: "btn btn--primary", to: "/users/access", children: "Data access and format" }),
       /* @__PURE__ */ jsx40(Link19, { className: "btn btn--secondary", to: "/users/software", children: "Software" }),
-      /* @__PURE__ */ jsx40(Link19, { className: "btn btn--secondary", to: "/users/overview", children: "Measured performance" })
+      /* @__PURE__ */ jsx40(Link19, { className: "btn btn--secondary", to: "/users/performance", children: "Measured performance" })
     ] })
   ] })
 ] }), users_data_default = Index28;
@@ -10130,7 +10123,7 @@ var meta29 = () => [
         a: /* @__PURE__ */ jsxs32(Fragment17, { children: [
           "A single 100 s exposure reaches 19.06 mag at m400 and 19.61 mag at m475, where throughput peaks; Sloan g reaches 20.59 mag. Cumulative depths for each survey survey and the conditions these assume are on the",
           " ",
-          /* @__PURE__ */ jsx42(Link20, { to: "/users/overview", children: "overview page" }),
+          /* @__PURE__ */ jsx42(Link20, { to: "/users/performance", children: "performance page" }),
           "."
         ] })
       }
@@ -10825,7 +10818,7 @@ var meta33 = () => [
 }, news_default2 = Index33;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-ZLCV5WBI.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-G6XCYQ6O.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-NR372GKT.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-U67KATWE.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-VA2UDWXD.js", imports: ["/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-LPSBLK2F.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-T43TU4OL.js", imports: ["/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-7RMUFJNL.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-7PXMXRG5.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-MH3267EB.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-3M2XW2IU.js", imports: ["/build/_shared/chunk-W7HGSQPT.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-STCRPFJY.js", imports: ["/build/_shared/chunk-W7HGSQPT.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-V52X2R36.js", imports: ["/build/_shared/chunk-W7HGSQPT.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-PYTREQS4.js", imports: ["/build/_shared/chunk-W7HGSQPT.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-TBIWYEWS.js", imports: ["/build/_shared/chunk-W7HGSQPT.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-GAMWE5TZ.js", imports: ["/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-IMLM5FVD.js", imports: ["/build/_shared/chunk-W7HGSQPT.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-ND4DNWQU.js", imports: ["/build/_shared/chunk-W7HGSQPT.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-OL74X3SX.js", imports: ["/build/_shared/chunk-LALTSPOY.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-C534JKH5.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-4LQ75UVE.js", imports: ["/build/_shared/chunk-LALTSPOY.js", "/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-DOKMR7PU.js", imports: ["/build/_shared/chunk-LALTSPOY.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-5EET26I5.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-OZZ3UFTO.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-JFSVZQV2.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-SME53A6P.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-NQYJMXJA.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-2DGNTWE2.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-VTGS6OYS.js", imports: ["/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-E7CQG7IZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-TD57RNUF.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-7QCAFLEB.js", imports: ["/build/_shared/chunk-A7SYDLWY.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-PIM6DZWB.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-SYEOHN4G.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-UAUEMJWC.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-BCKD2GKI.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-A7SYDLWY.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-L4LZP3IW.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "6f66128d", hmr: void 0, url: "/build/manifest-6F66128D.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-ZLCV5WBI.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-W6RGRGE3.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-CVYXDICK.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-RED32RLP.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-6F3YPJK5.js", imports: ["/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-XYXZVCUM.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-LD742Q6E.js", imports: ["/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-RU3QL2MW.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-M2LYJERN.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-VAFMZNUF.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-RM7B77XF.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-BAA2P7L2.js", imports: ["/build/_shared/chunk-NWSUE7AB.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-2G27KCNF.js", imports: ["/build/_shared/chunk-NWSUE7AB.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-DEG53N74.js", imports: ["/build/_shared/chunk-NWSUE7AB.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-BP4I3HY2.js", imports: ["/build/_shared/chunk-NWSUE7AB.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-CKTZNQUF.js", imports: ["/build/_shared/chunk-NWSUE7AB.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-VTZDHH6C.js", imports: ["/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-3AAR4Z3V.js", imports: ["/build/_shared/chunk-NWSUE7AB.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-SDKX6AOZ.js", imports: ["/build/_shared/chunk-NWSUE7AB.js", "/build/_shared/chunk-JZGMCHMM.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-D35J5SFZ.js", imports: ["/build/_shared/chunk-4LYGVINZ.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-NRJ6CH4G.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-U7VOWZMP.js", imports: ["/build/_shared/chunk-4LYGVINZ.js", "/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-JDDHCPCM.js", imports: ["/build/_shared/chunk-4LYGVINZ.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-QMJFUNZC.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-SIFBLOTA.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-XPEL7DU4.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-YGRNFK5Q.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-PJDYKQW7.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-3Z6EXQI7.js", imports: ["/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-OZVETQDU.js", imports: ["/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-E7CQG7IZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-64AIDUY7.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-TJJZS57D.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-TUADUKTP.js", imports: ["/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-2XZNR2IM.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-QCFZFSSR.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-P62V7OXC.js", imports: ["/build/_shared/chunk-XOJHPTFF.js", "/build/_shared/chunk-2LQZOFWS.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-Q5ORCAJG.js", imports: ["/build/_shared/chunk-UW7M7U2Y.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-MACGEPWJ.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "3e9213aa", hmr: void 0, url: "/build/manifest-3E9213AA.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

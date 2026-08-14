@@ -64,7 +64,7 @@ const Index = () => (
           redundant: they reach similar depth over overlapping wavelengths, but 7DS resolves the
           sky roughly ten times more finely, so a 7DS pixel is a measurement of one source where
           a SPHEREx pixel is a blend of several. Measured per-band depths for the current filter
-          set are on the <Link to="/users/overview">overview page</Link>.
+          set are on the <Link to="/users/performance">performance page</Link>.
         </p>
       </div>
       <div style={{ marginTop: '2.5rem' }}>
