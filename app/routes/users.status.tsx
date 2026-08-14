@@ -5,7 +5,8 @@ import { Link, useLoaderData } from '@remix-run/react';
 import { PageLayout, PageHero, Section, StatGrid, LiveBadge } from '../components/site';
 import FilterCurves from '../components/filtercurves';
 import SkyMap from '../components/skymap';
-import { getStatus, getTileMapLite } from '../lib/portal.server';
+import TileQuery from '../components/tilequery';
+import { getStatus, getTileMap } from '../lib/portal.server';
 import { RIS_TILES, GRID_TILES } from '../lib/tilegrid';
 
 export const meta: MetaFunction = () => [
@@ -21,10 +22,10 @@ const CACHE = 'public, max-age=900, stale-while-revalidate=86400';
 export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
 
 export async function loader() {
-  /* Names are asked for because the IMS layer picks its seven tiles out by
-     identifier; they are 3 KB gzipped. The per-filter breakdown is not, so the
-     lite copy is enough for the map. */
-  const [status, tiles] = await Promise.all([getStatus(), getTileMapLite(true)]);
+  /* The full tile list: the IMS layer picks its seven tiles out by identifier,
+     and the position search reports the per-filter breakdown for whatever tile
+     covers the coordinate. */
+  const [status, tiles] = await Promise.all([getStatus(), getTileMap()]);
 
   const totals = status.data.totals;
   const exposureSec =
@@ -370,12 +371,23 @@ const Index = () => {
           <Link to="/users/propose">how to propose</Link>.
         </p>
 
-        <div className="btn-row" style={{ marginTop: '1.5rem' }}>
-          <Link className="btn btn--primary" to="/users/access">
-            Search coverage by position
+        {/* The search sits under the map rather than on a page of its own: it
+            answers the same question the map does, one position at a time, and
+            runs in the browser against the tile list already loaded here. */}
+        <div style={{ marginTop: '2.5rem' }}>
+          <h3>Is this position observed?</h3>
+          <TileQuery tiles={tiles} exposureSec={exposureSec} />
+        </div>
+
+        <div className="btn-row" style={{ marginTop: '2rem' }}>
+          <Link className="btn btn--primary" to="/users/format">
+            What the files look like
           </Link>
           <Link className="btn btn--secondary" to="/users/performance">
             Measured depths
+          </Link>
+          <Link className="btn btn--secondary" to="/users/access">
+            Obtaining data
           </Link>
         </div>
       </Section>
@@ -388,7 +400,7 @@ const Index = () => {
           Target-of-opportunity data skip compression and the wait for sunrise, which brings
           latency down to tens of minutes. What the pipeline produces, and the quality metrics
           attached to each product, are described under{' '}
-          <Link to="/users/access#format">using the data</Link>.
+          <Link to="/users/format">using the data</Link>.
         </p>
       </Section>
     </PageLayout>

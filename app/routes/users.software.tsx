@@ -114,7 +114,7 @@ const Index = () => (
         a scientific decision changes how data are processed. That version is recorded in every
         configuration file and in the process status database, so any product can be traced to the
         code that made it and reprocessed in bulk when the code changes. What each stage does is
-        described under <Link to="/users/access#format">using the data</Link>.
+        described under <Link to="/users/format">using the data</Link>.
       </p>
     </Section>
 
