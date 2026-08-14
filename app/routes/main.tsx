@@ -11,7 +11,7 @@ import FooterBar from './footer';
 
 /* Which snap sections carry a dark background — the dot navigation and the
    scroll cue invert against it. The last entry is the footer. */
-const SECTION_IS_DARK = [true, false, true, false, true, false, true];
+const SECTION_IS_DARK = [true, false, true, true, true, false, true];
 const SECTION_COUNT = SECTION_IS_DARK.length;
 const SECTION_NAMES = [
   'Introduction',
@@ -308,72 +308,61 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage }: Ma
         </section>
 
         {/* 04 — Survey ---------------------------------------------------- */}
-        <section className="fullpage-section section--alt">
+        {/* The footprint is the background rather than a figure inside the
+            section: it is the one thing here that is worth looking at, and as
+            a panel beside the cards it forced the section past one viewport.
+            The interactive map, with per-tile detail, is on the coverage page. */}
+        <section className="fullpage-section fullpage-section--dark home-survey-panel">
+          {tiles && tiles.count > 0 ? (
+            <div className="home-survey__bg" aria-hidden="true">
+              <SkyMap tiles={tiles} interactive={false} theme="dark" />
+            </div>
+          ) : null}
+
           <div className="container container--wide">
             <div className="reveal">
-              <span className="eyebrow">7-Dimensional Sky Survey</span>
+              <span className="eyebrow eyebrow--on-dark">7-Dimensional Sky Survey</span>
               <h2>Three surveys over the southern sky</h2>
-              <p className="prose" style={{ maxWidth: '62ch' }}>
+              <p className="prose" style={{ maxWidth: '62ch', color: 'rgba(255,255,255,.78)' }}>
                 {mainText3}
               </p>
 
-              {/* The footprint is shown here rather than described, because
-                  what the three surveys divide up is exactly this sky. The
-                  map is a figure, not a tool: the interactive one, with
-                  per-tile detail, is on the coverage page. */}
-              <div className="home-survey">
-                <div className="home-survey__map">
-                  {tiles && tiles.count > 0 ? (
-                    <>
-                      {/* The live mark sits in the corner of the map itself:
-                          it qualifies what is drawn, so it belongs on the
-                          figure rather than in a caption under it. The
-                          Mollweide ellipse leaves the corners empty, so it
-                          covers nothing. */}
-                      <div className="home-survey__stamp">
-                        <LiveBadge live={tilesLive} updated={generatedAt} />
-                      </div>
-                      <SkyMap
-                        tiles={tiles}
-                        interactive={false}
-                        caption={`${tiles.count.toLocaleString('en-US')} tiles observed`}
-                      />
-                      <div className="home-survey__meta">
-                        <span className="home-survey__count">
-                          {tiles.count.toLocaleString('en-US')} tiles observed
-                        </span>
-                        <Link className="link-arrow" to="/users/access">
-                          Explore the coverage map
-                        </Link>
-                      </div>
-                    </>
-                  ) : null}
+              {tiles && tiles.count > 0 ? (
+                <div className="home-survey__meta">
+                  <LiveBadge live={tilesLive} updated={generatedAt} onDark />
+                  <span className="home-survey__count">
+                    {tiles.count.toLocaleString('en-US')} tiles observed
+                  </span>
+                  <Link className="link-arrow" to="/users/access" style={{ color: 'var(--accent-on-dark)' }}>
+                    Explore the coverage map
+                  </Link>
                 </div>
+              ) : null}
 
-                <div className="home-survey__tiers">
-                  {surveys.tiers.map((tier) => (
-                    <Link
-                      className="tier-card tier-card--link"
-                      key={tier.code}
-                      to={`/survey/${tier.code.toLowerCase()}`}
-                    >
-                      <span className="tier-card__code">{tier.code}</span>
-                      <h3 className="tier-card__name">{tier.name}</h3>
-                      {/* One line rather than a two-row table: the cards sit
-                          beside the map and have to come out shorter than it,
-                          or the map card ends early and leaves dead space. The
-                          full parameters are one click away. */}
-                      <p className="home-survey__spec">
-                        {tier.area} · {tier.cadence}
-                      </p>
-                      <span className={`pill pill--${tier.status}`}>
-                        {tier.status === 'live' && risCoverage !== null && tier.code === 'RIS'
-                          ? `${risCoverage}% observed`
-                          : tier.statusLabel}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
+              {/* A row under the copy, not a column beside the map: three short
+                  cards cost far less height that way, which is what keeps the
+                  section inside one viewport on a laptop screen. */}
+              <div className="home-survey__tiers">
+                {surveys.tiers.map((tier) => (
+                  <Link
+                    className="tier-card tier-card--link"
+                    key={tier.code}
+                    to={`/survey/${tier.code.toLowerCase()}`}
+                  >
+                    <span className="tier-card__code">{tier.code}</span>
+                    <h3 className="tier-card__name">{tier.name}</h3>
+                    {/* One line rather than a two-row table: the full
+                        parameters are one click away. */}
+                    <p className="home-survey__spec">
+                      {tier.area} · {tier.cadence}
+                    </p>
+                    <span className={`pill pill--${tier.status}`}>
+                      {tier.status === 'live' && risCoverage !== null && tier.code === 'RIS'
+                        ? `${risCoverage}% observed`
+                        : tier.statusLabel}
+                    </span>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

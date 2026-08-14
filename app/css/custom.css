@@ -632,7 +632,7 @@ html {
    content — larger, and packed right so the ragged edge faces the text. */
 .theme-chips--panel {
   margin-top: 0;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 0.625rem;
 }
 
@@ -641,11 +641,6 @@ html {
   font-size: 0.9375rem;
 }
 
-@media (max-width: 976px) {
-  .theme-chips--panel {
-    justify-content: flex-start;
-  }
-}
 
 .theme-chips a:hover,
 .theme-chips a:focus-visible {
@@ -2238,6 +2233,20 @@ html.fullpage-active { overflow: hidden; }
 
 .fullpage-section.section--alt { background-color: var(--slate-50); }
 
+/* A snapped section is only worth snapping to if it fits the window. On a
+   laptop screen the generous top and bottom padding is what pushes content
+   past the fold, so it is traded away before anything else. */
+@media (max-height: 860px) {
+  .fullpage-section { padding: 5.25rem 0 3rem; }
+}
+
+@media (max-height: 740px) {
+  .fullpage-section { padding: 4.75rem 0 2.25rem; }
+  .fullpage-section h2 { font-size: clamp(1.375rem, 2.2vw, 1.75rem); }
+  .home-survey__tiers { margin-top: 1.25rem; }
+  .home-survey__meta { margin-top: 1rem; }
+}
+
 /* The final section carries the footer. It is sized to its content and snapped
    by its bottom edge, so no page background can show below the footer — a
    forced 100vh here produced a blank strip at the end of the scroll. */
@@ -2709,85 +2718,107 @@ table[class*='w-full'] thead {
 
 /* --- Landing page: survey section ----------------------------------------- */
 
-.home-survey {
-  display: grid;
-  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
-  gap: 1.5rem;
-  /* Top-aligned, not stretched: stretching the cards to the height of the map
-     only opened gaps inside them. They are a compact index to the map, not a
-     column that has to reach the bottom of it. */
-  align-items: start;
-  margin-top: 1.75rem;
-}
+/* The all-sky footprint fills the panel behind the copy. It is decorative
+   here — the readable version, with per-tile detail, is the coverage page —
+   so it is dimmed, stripped of its legend, and never intercepts a click. */
+.home-survey-panel { overflow: hidden; }
 
-.home-survey__map {
-  min-width: 0;
-  position: relative;
-}
-
-/* The map is the one thing in this section that should be looked at, so the
-   card carries a little more lift than the cards beside it. */
-.home-survey__map .skymap {
-  border-radius: var(--radius-lg);
-  box-shadow: 0 18px 44px -30px rgba(10, 16, 28, 0.5);
-}
-
-.home-survey__stamp {
+.home-survey__bg {
   position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: 2;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.home-survey__bg .skymap {
+  /* Wider than the panel so the ellipse bleeds past both edges instead of
+     sitting in the middle like a pasted figure. */
+  width: 116%;
+  max-width: none;
+}
+
+.home-survey__bg .skymap__legend,
+.home-survey__bg .skymap__controls { display: none; }
+
+/* The scrim has to sit above the map but below the copy. `.container` is
+   z-index 1 and comes later in the document, so it still wins. */
+.home-survey-panel::before {
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 8, 15, 0.86) 0%,
+    rgba(5, 8, 15, 0.62) 50%,
+    rgba(5, 8, 15, 0.92) 100%
+  );
 }
 
 .home-survey__count {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  color: var(--slate-500);
+  color: rgba(255, 255, 255, 0.62);
 }
 
 .home-survey__meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-top: 0.875rem;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-/* Three cards in a column beside the map rather than a row beneath it: the
-   section is one viewport tall and a row would push the map off it. */
+/* Three cards in a row under the copy. Kept deliberately short: this section
+   has to fit one viewport on a laptop, and the cards are an index to the
+   survey pages rather than a summary of them. */
 .home-survey__tiers {
   display: grid;
-  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.875rem;
+  margin-top: 1.75rem;
+  max-width: 56rem;
 }
 
 .home-survey__tiers .tier-card {
   display: flex;
   flex-direction: column;
-  background: var(--paper);
+  padding: 1rem 1.125rem;
+  /* Translucent rather than paper-white: a solid card would punch three holes
+     in the map behind it. */
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+}
+
+.home-survey__tiers .tier-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.home-survey__tiers .tier-card__code { color: var(--accent-on-dark); }
+
+.home-survey__tiers .tier-card__name {
+  font-size: 0.9375rem;
+  color: #fff;
+  margin: 0.35rem 0 0.35rem;
 }
 
 /* The card is a flex column, so a block-level pill would stretch the full
    width instead of hugging its label. */
 .home-survey__tiers .tier-card .pill { align-self: flex-start; }
 
-.home-survey__tiers .tier-card { padding: 0.9rem 1rem; }
-.home-survey__tiers .tier-card__name { font-size: 0.9375rem; margin-bottom: 0.35rem; }
-
 .home-survey__spec {
   margin: 0 0 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--slate-600);
-}
-
-@media (max-width: 1100px) {
-  .home-survey { grid-template-columns: minmax(0, 1fr); }
-  .home-survey__tiers { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  color: rgba(255, 255, 255, 0.62);
 }
 
 @media (max-width: 720px) {
   .home-survey__tiers { grid-template-columns: minmax(0, 1fr); }
+  .home-survey__bg .skymap { width: 160%; }
 }
 
 /* --- Sky map on a dark section -------------------------------------------- */
