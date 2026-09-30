@@ -42,32 +42,32 @@ npm run dev                # http://localhost:3003
 
 ## Updating the content
 
-Almost everything on the site is data, not code. These files need no web development:
+Every word on the site — paragraphs, headings, tables, captions, buttons, menus — is in
+`content/`, as YAML, one file per page plus shared data. None of it needs web development.
+**`content/README.md` is the editor's guide**: where each thing lives, the handful of inline
+marks the text may carry, the `{placeholder}` rule for live numbers, and how to check a change.
 
-| To change | Edit | Notes |
-|---|---|---|
-| A news item or milestone | `app/routes/content/news.json` | Add an object to `news[]`. File order = page order. `type` is one of `update`, `publication`, `press`, `meeting`. |
-| A publication | `app/routes/content/news.json` | Same array, `"type": "publication"`. **`abstract` must be the author's published abstract, quoted verbatim.** For anything you write yourself use `summary` instead — the page labels the two differently on purpose. |
-| Team members | `app/routes/content/team.json` | `imgName` points into `public/img/team/`. Leave it `""` and the card falls back to initials. |
-| Collaborator list | `app/routes/content/collabs.json` | `id` must be unique. |
-| Survey tiers and status | `app/routes/content/surveys.json` | Includes each tier's `progress` percentage. |
-| Instrument specs and depths | `app/routes/content/specs.json` | |
-| Science themes and results | `app/routes/content/science.json` | One page per theme at `/science/<id>`; `id` is the route segment. Adding a theme means adding a `app/routes/science.<id>.tsx` stub and a nav entry. |
-| Software descriptions | `app/routes/content/software.json` | |
-| External links | `app/routes/content/links.json` | |
-| Gallery | `app/routes/content/images.json` | Put the full-size file in `public/img/images/` **and** a ≤900 px version in `public/img/thumbs/`, same basename, `.jpg`. |
-| Body prose | `app/routes/content/text.tsx` | Named string exports. Mind the `\` line continuations and the quoting. |
-| A hero image | `public/img/hero/<name>.jpg` | Replace the file and keep the name — no code change. ~2400 px wide, quality 80. |
+`npm run content` compiles `content/**.yaml` to `app/content/**.json` (generated, gitignored),
+which the pages import. It runs first in `build`, `dev` and `typecheck`, and refuses to write
+anything if a file is malformed. Rebuild and restart after any change: content is compiled into
+the bundle, not read at runtime.
 
-Rebuild and restart after any change: the JSON is compiled into the bundle, not read at runtime.
+Machine-written data sits apart in `app/data/` — the filter curves, the observation-mode
+snapshot (`scripts/snapshot_obsmodes.py`) and the status snapshot the site falls back to.
+
+A hero image is `public/img/hero/<name>.jpg`: replace the file and keep the name. ~2400 px wide,
+quality 80.
 
 ### Adding a page
 
-1. Create `app/routes/<section>.<page>.tsx` (dots become URL slashes).
-2. Copy an existing route; wrap it in `PageLayout` / `PageHero` / `Section` from
-   `app/components/site.tsx`.
-3. Export a `meta` function for the title and description.
-4. Register it in the `MENU` array in `app/routes/navigate.tsx`.
+1. Write its words in `content/pages/<section>/<page>.yaml`, with `meta` (browser title and
+   description), `hero`, and one key per section. Start with a header comment naming the URL.
+2. Create `app/routes/<section>.<page>.tsx` (dots become URL slashes). Copy an existing route:
+   it imports `../content/pages/<section>/<page>.json`, exports
+   `meta = () => metaOf(page)`, and lays the content out with `PageLayout` / `PageHero` /
+   `Section` from `app/components/site.tsx`, rendering text through `Md` / `Paras`
+   (`app/components/md.tsx`) so the inline marks work.
+3. Add it to `nav.menus` and `footer.columns` in `content/site.yaml`.
 
 ---
 
@@ -93,7 +93,7 @@ Rebuild and restart after any change: the JSON is compiled into the bundle, not 
   share one refresh. A failed refresh marks the held copy stale — the page then says so — and
   backs off for two minutes rather than retrying on every request.
 - If the portal is unreachable, the status page renders from
-  `app/routes/content/status-snapshot.json` and says so in a banner; the sky map renders empty.
+  `app/data/status-snapshot.json` and says so in a banner; the sky map renders empty.
   Refresh the snapshot occasionally so the fallback is not embarrassing.
 - The tile payload is ~6 MB. `getTileMap()` reduces it to parallel arrays before it is
   serialised to the client. Do not pass the raw payload through. Two encodings keep that
@@ -112,15 +112,15 @@ This site is a scientific facility's public record. Two rules matter more than a
 
 1. **Every number traces to a source.** The figures come from the SPIE status report (Kim et al.,
    Proc. SPIE 14147-84) and the pipeline paper (Hyun et al., Proc. SPIE 14155-12). The `note`
-   field at the top of each content JSON records its provenance. If you cannot cite it, do not
+   field at the top of each data file in `content/data/` records its provenance. If you cannot cite it, do not
    publish it.
 2. **Never invent placeholder data.** No sample observation tables, no illustrative catalogs, no
    captions written without looking at the image. If something does not exist yet, say so.
 3. **American English.** color, program, center, catalog, analyze, percent, acknowledgment.
 4. **A publication's thumbnail is a figure from that publication.** These live in
    `public/img/news/pub-*.jpg`. Three entries — Chang et al., Ko et al. and Lim et al. — had no
-   obtainable paper figure and fall back to a 7DT project figure; the `_note` in `news.json`
-   records which. Do not describe a fallback as a figure from the paper.
+   obtainable paper figure and fall back to a 7DT project figure; the `_note` in
+   `content/data/news.yaml` records which. Do not describe a fallback as a figure from the paper.
 
 5. **One fact, one home.** Tier parameters live on the survey overview, depths on the For Users
    performance page, tiling in one table, per-component rationale on the component pages, project
@@ -172,8 +172,13 @@ app/
   components/skymap.tsx   the all-sky coverage map (canvas, Mollweide, equatorial/galactic)
   components/surveypage.tsx  shared layout for the RIS/WTS/IMS pages
   lib/portal.server.ts    live data: fetch, cache, reduce, fall back
+  components/md.tsx       the inline Markdown the content is written in
+  lib/page.ts             metaOf() and fill(): a page's meta, and {placeholders} in its text
   routes/                 one file per URL, plus navigate/footer/main/plot (components, not routes)
-  routes/content/         all site copy and data
+  content/                generated from content/ by `npm run content` — never edited
+  data/                   machine-written data: filter curves, mode snapshot, status snapshot
+content/                  all site copy and fixed data, in YAML (see content/README.md)
+scripts/build-content.mjs the compiler from content/ to app/content/
 public/img/
   hero/                   page hero backgrounds (~2400 px)
   thumbs/                 gallery thumbnails (~900 px)

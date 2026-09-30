@@ -34,9 +34,10 @@ Two exceptions, both narrow:
   appear in a client bundle. The data server is configured the same way, in
   `LINK_PORTAL`. The wiki, pipeline-status and target-of-opportunity pages are
   published by decision of the project and are written into
-  `app/routes/users.links.tsx`; the four observation calculators the same way,
-  in `app/routes/content/calculators.json`. Do not extend that to any other
-  host without being asked.
+  `content/pages/users/links.yaml`; the four observation calculators the same
+  way, in `content/data/calculators.yaml`. Do not extend that to any other
+  host without being asked. That page reads only `LINK_` variables, so that a
+  content edit cannot surface other configuration; keep it that way.
 - **Grant numbers** were deliberately removed from the funding page. Do not
   reinstate them.
 
@@ -46,10 +47,11 @@ Every figure is either a fixed property of the instrument or a number read
 from the observation database. A reader must always be able to tell which.
 
 - Live numbers come through `app/lib/portal.server.ts` and are marked with
-  `<LiveBadge>`. They are never hard-coded into prose.
-- Fixed numbers live in `app/routes/content/*.json` — `specs.json`,
-  `surveys.json`, `science.json` — and each has exactly one home. A page that
-  needs a figure imports it; it does not restate it.
+  `<LiveBadge>`. They are never hard-coded into prose: content text names them
+  as `{placeholders}` that the route fills (`fill` in `app/lib/page.ts`).
+- Fixed numbers live in `content/data/*.yaml` — `specs.yaml`, `surveys.yaml`,
+  `science.yaml` — and each has exactly one home. A page that needs a figure
+  imports it; it does not restate it.
 - Anything derived rather than measured says so and says how. Estimated depth
   and integration time on the sky maps carry their derivation in the caption.
 - Do not invent a number to fill a gap. If the data does not exist, the page
@@ -71,11 +73,18 @@ exists.
 - Match the surrounding file's idiom. This codebase uses function components,
   typed props with doc comments on the non-obvious ones, and Remix v2 flat
   routes.
+- **Words belong in `content/`, not in a route.** A route lays content out; it
+  does not carry prose, labels, captions or links of its own. New text goes in
+  the page's YAML file, rendered through `Md`/`Paras` from
+  `app/components/md.tsx`. `content/README.md` is the editors' guide — keep it
+  true when the format changes. Controls inside the interactive widgets (sky
+  map, tile search, mode picker) are the exception, being part of the widget.
 - `build/` is gitignored but tracked. Stage it with `git add -u`, never
   `git add build/`.
 
 ## Before finishing
 
-`npx tsc --noEmit && npm run build`, then `pm2 restart 7ds` and check the
+`npm run typecheck && npm run build` (the first compiles `content/` before
+type-checking, which a bare `tsc` does not), then `pm2 restart 7ds` and check the
 affected URLs on port 3001. A page that returns 200 has not necessarily
 rendered — check the markup for what you expected to be there.
