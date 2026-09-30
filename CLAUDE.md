@@ -34,8 +34,9 @@ Two exceptions, both narrow:
   appear in a client bundle. The data server is configured the same way, in
   `LINK_PORTAL`. The wiki, pipeline-status and target-of-opportunity pages are
   published by decision of the project and are written into
-  `app/routes/users.links.tsx`; do not extend that to any other host without
-  being asked.
+  `app/routes/users.links.tsx`; the four observation calculators the same way,
+  in `app/routes/content/calculators.json`. Do not extend that to any other
+  host without being asked.
 - **Grant numbers** were deliberately removed from the funding page. Do not
   reinstate them.
 

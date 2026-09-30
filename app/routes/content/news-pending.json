@@ -1,0 +1,21 @@
+{
+	"_note": "Drafted entries awaiting approval. This file is imported by nothing, so nothing here reaches the site or its bundles. To publish an entry, move it into the 'news' array in news.json (top, newest first) and delete it here.",
+	"pending": [
+		{
+			"_status": "awaiting PI approval before publishing; imgName is a project-figure fallback (no obtainable paper figure) — add RTCSpy to the fallback list in the news.json _note when this goes live",
+			"type": "publication",
+			"author": "Choi, Hyeonho; Im, Myungshin; Kim, Ji Hoon",
+			"shortAuthor": "Choi, H. et al.",
+			"title": "RTCSpy: a robotic telescope control system for multi-telescope array with sub-minute ToO response",
+			"journal": "Proc. SPIE 14151, Observatory Operations: Strategies, Processes, and Systems XI, 141510F",
+			"date": "Aug. 2026",
+			"doi": "10.1117/12.3101189",
+			"preprint": "",
+			"ref": "",
+			"abstract": "We present RTCSpy, a network-based robotic telescope control system for fully autonomous operation of multitelescope arrays. RTCSpy provides end-to-end automation—including startup, science observation, calibration image acquisition and shutdown—while coordinating all telescope units through real-time, network-based communication. Its operational framework integrates both synchronized control and automated decision-making by evaluating target priorities, available resources, and weather conditions within a unified framework, while a dedicated target-of-opportunity (ToO) manager monitors external alerts and enables sub-minute rapid ToO response. Deployed since August 2024 on the 7-Dimensional Telescope(7DT), RTCSpy has demonstrated stable nightly operation and reliable rapid response performance. Its network-based architecture also supports straight forward expansion to additional units and multi-site arrays, enabling coordinated observations across distributed facilities.",
+			"imgName": "news-10.jpg",
+			"webpage": "https://www.spiedigitallibrary.org/conference-proceedings-of-spie/14151/141510F/RTCSpy--a-robotic-telescope-control-system-for-multi-telescope/10.1117/12.3101189.full",
+			"webpage2": ""
+		}
+	]
+}

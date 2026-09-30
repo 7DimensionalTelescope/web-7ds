@@ -1,5 +1,5 @@
 {
-	"_note": "Publication entries: 'abstract' holds the author's published abstract, quoted verbatim. 'summary' holds a site-written description and is labeled as such where no published abstract is available. Never put a paraphrase in 'abstract'. 'imgName' for a publication should be a figure from that publication (pub-*.jpg, see public/img/news). Three entries have no obtainable paper figure — Chang et al., Ko et al. and Lim et al. — and fall back to a 7DT project figure instead; do not describe those as figures from the paper.",
+	"_note": "Publication entries: 'abstract' holds the author's published abstract, quoted verbatim. 'summary' holds a site-written description and is labeled as such where no published abstract is available. Never put a paraphrase in 'abstract'. 'imgName' for a publication should be a figure from that publication (pub-*.jpg, see public/img/news). Three entries have no obtainable paper figure — Chang et al., Ko et al. and Lim et al. — and fall back to a 7DT project figure instead; do not describe those as figures from the paper. Drafted entries awaiting approval live in news-pending.json, which nothing imports; move them into 'news' (top, newest first) to publish.",
 	"news": [
 		{
 			"type": "publication",

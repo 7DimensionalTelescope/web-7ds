@@ -147,9 +147,11 @@ const Index = () => {
             </p>
             <p>
               No call for proposals has opened against either allocation. The schedule will be
-              announced here when it is fixed, together with a proposal template and an exposure
-              time calculator. Target-of-opportunity requests are handled separately and
-              continuously, and do not wait for a call.
+              announced here when it is fixed, together with a proposal template. The{' '}
+              <Link to="/calculator">observation calculators</Link> are already available and can
+              be used to cost a program before there is anywhere to send it.
+              Target-of-opportunity requests are handled separately and continuously, and do not
+              wait for a call.
             </p>
           </div>
         </div>
@@ -352,9 +354,12 @@ const Index = () => {
                   Estimate depth from measurements, not aperture
                 </h4>
                 <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
-                  The measured <Link to="/users/performance">limiting magnitudes</Link> per band,
-                  for the fiducial 100-second exposure, are what a coadded depth should be scaled
-                  from.
+                  The <Link to="/calculator/exposure">exposure calculator</Link> does this against
+                  a depth model fitted on real observations, per filter of the mode you intend to
+                  use, and the <Link to="/calculator/overhead">overhead calculator</Link> adds what
+                  the array spends around the exposures. The measured{' '}
+                  <Link to="/users/performance">limiting magnitudes</Link> are what both are
+                  predicting against.
                 </p>
               </div>
             </li>
@@ -365,12 +370,10 @@ const Index = () => {
                   Check the target is observable
                 </h4>
                 <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
-                  Visibility from El Sauce in the intended window, and the filter response over the
-                  wavelengths that matter, can both be computed with{' '}
-                  <Link to="/users/software">
-                    <code>supy</code>
-                  </Link>
-                  .
+                  The <Link to="/calculator/visibility">visibility calculator</Link> gives the
+                  altitude track and observable hours from El Sauce for the window you have in
+                  mind, and the <Link to="/calculator/tiles">tile matcher</Link> places the target
+                  on the survey grid.
                 </p>
               </div>
             </li>
@@ -384,9 +387,11 @@ const Index = () => {
           <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
             Outside the KASI and KAS allocations described above, observing time is allocated
             within the collaboration and its partner institutions, and there is no general call for
-            proposals. A proposal template and an exposure time calculator will be published here
-            when a call opens. Until then, and for anything outside the survey program — including
-            target-of-opportunity requests — write to the project directly.
+            proposals. A proposal template will be published here when a call opens; the{' '}
+            <Link to="/calculator">calculators</Link> for exposure time, overhead, visibility and
+            tile coverage are available now. Until a call opens, and for anything outside the
+            survey program — including target-of-opportunity requests — write to the project
+            directly.
           </p>
           <a
             className="btn btn--primary"

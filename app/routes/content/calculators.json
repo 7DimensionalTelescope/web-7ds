@@ -1,0 +1,97 @@
+{
+  "note": "The 7DT observation calculators. Each is a separate Streamlit app on lyman.snu.ac.kr, embedded on its own page here. Descriptions and model limits are taken from the 7DT_calculator repository README; nothing is inferred. Change a port or a base address here and every page follows.",
+  "shared": "Every calculator reads the live TCSpy configuration of the array when it starts and again every minute, so the filters it offers are the ones actually installed in each unit's wheel tonight, not a list maintained by hand.",
+  "tools": [
+    {
+      "slug": "visibility",
+      "n": "01",
+      "name": "Visibility",
+      "url": "http://lyman.snu.ac.kr:8509",
+      "question": "When is my target observable from El Sauce?",
+      "metaDescription": "Altitude, Moon and twilight over one night for a table of 7DT targets, and a month overview of observable hours.",
+      "lede": "Altitude, Moon separation and twilight across one night for a table of targets, and a month view of how many hours each is observable.",
+      "detail": [
+        "Give it a target list — typed in, uploaded as CSV, or resolved from a name or a 7DS tile identifier — and a date. It returns the altitude track of each target across the night against the Moon and the twilight boundaries, and a month grid of observable hours per target so a campaign can be placed in the season that suits it.",
+        "The night itself is not assumed: the site comes from the array's own observer configuration, the Sun altitude that defines the night from its night-session configuration, and the altitude and Moon-separation limits from its target configuration. The numbers are the ones the scheduler will apply."
+      ],
+      "inputs": [
+        "Target list: names, coordinates in degrees or sexagesimal, or 7DS tile identifiers",
+        "A date, or a month for the overview"
+      ],
+      "outputs": [
+        "Altitude against time for each target, with Moon position and twilight",
+        "Observable hours per night across a month"
+      ]
+    },
+    {
+      "slug": "exposure",
+      "n": "02",
+      "name": "Exposure calculator",
+      "url": "http://lyman.snu.ac.kr:8510",
+      "question": "How long do I need, and how deep will I get?",
+      "metaDescription": "Signal-to-noise for a 7DT exposure, or the exposure needed to reach a target signal-to-noise, in every filter of an observation mode.",
+      "lede": "Signal-to-noise for an exposure time and frame count, or the exposure time needed to reach a signal-to-noise, for every filter of an observation mode.",
+      "detail": [
+        "It runs in either direction: give it an exposure time and a number of frames and it returns the signal-to-noise per filter, or give it the signal-to-noise you need and it returns the time. The source can be a point source or an extended one given as a surface brightness, and its spectrum can be picked from a template library — stars, galaxies, supernovae, quasars — or uploaded.",
+        "Because a mode assigns filters across the array, several units may observe the same filter at once. The calculator counts that multiplicity, so the stacked signal-to-noise scales with the square root of frames times units rather than frames alone."
+      ],
+      "inputs": [
+        "Observation mode, and the filters that mode carries",
+        "Exposure time and frame count, or a target signal-to-noise",
+        "Source magnitude or surface brightness, and a spectrum template or upload",
+        "Sky and seeing conditions, chosen as percentile presets"
+      ],
+      "outputs": [
+        "Signal-to-noise per filter, or the exposure time needed per filter",
+        "The resulting depth, and saturation warnings"
+      ],
+      "model": "The depth model is empirical, fitted on 2025 observations with 100-second frames in a 10-arcsecond aperture. For each filter the 5σ limit is a linear function of Moon phase, Moon separation, hours since sunset and seeing, scaled with exposure time as 1.25 log₁₀(t/100 s) — background-limited, so four times the time buys 0.75 magnitudes. Filters without their own fit are interpolated in effective wavelength between the medium bands and flagged as such.",
+      "limits": [
+        "Source shot noise is neglected: a few percent at a signal-to-noise of 10, and substantial above 100.",
+        "Point sources brighter than 11th magnitude saturate; for extended sources the limit shifts with the seeing disk.",
+        "The fit is on 2025 data. It describes the array as it performed then."
+      ]
+    },
+    {
+      "slug": "overhead",
+      "n": "03",
+      "name": "Overhead calculator",
+      "url": "http://lyman.snu.ac.kr:8511",
+      "question": "What will this actually cost in clock time?",
+      "metaDescription": "Total wall-clock time of one 7DT observation: exposure, readout, filter changes, autofocus, slewing and dispatch.",
+      "lede": "The total clock time of one observation, with the exposure separated from everything else the array has to do to take it.",
+      "detail": [
+        "An observation costs more than its exposures. The array has to slew, change filters, autofocus, read out and dispatch the sequence to each unit, and an observing proposal that counts only integration time will ask for less than it needs.",
+        "The calculator builds the per-unit sequence for an observation mode and runs the units in parallel, so the slowest unit sets the time. Autofocus is not performed for the Spec modes and is performed once per filter otherwise. The component times are medians measured from the control system's own logs, not estimates."
+      ],
+      "inputs": [
+        "Observation mode",
+        "Exposure time and frame count"
+      ],
+      "outputs": [
+        "Total time for the observation, broken into its components",
+        "A timeline of the sequence as the array will execute it"
+      ]
+    },
+    {
+      "slug": "tiles",
+      "n": "04",
+      "name": "Tile matcher",
+      "url": "http://lyman.snu.ac.kr:8512",
+      "question": "Which survey tiles cover my target?",
+      "metaDescription": "Which 7DS survey tiles contain or overlap a target position, with interactive tile maps.",
+      "lede": "Which tiles of the 7DS survey grid contain or overlap each target, and how close to an edge it falls.",
+      "detail": [
+        "An observation placed on the survey tiling coadds directly with the data already there and differences against the existing reference image without a separate calibration step, so the first question about a target is which tile it sits in. Fields near a tile boundary are the awkward case, and the matcher names every overlapping tile rather than only the nearest.",
+        "Targets can be given as coordinates, resolved from names, or searched within a radius. The projection is gnomonic about the target and the tiles are matched as polygons, so a position within four arcminutes of an edge is flagged rather than silently assigned."
+      ],
+      "inputs": [
+        "Target list, or a position and a search radius"
+      ],
+      "outputs": [
+        "Every tile containing or overlapping each target, with edge warnings",
+        "Interactive maps of the matched tiles"
+      ]
+    }
+  ]
+}
