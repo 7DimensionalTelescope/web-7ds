@@ -50,3 +50,33 @@ surveyPage:
         href: /users/status
       - label: Measured performance
         href: /users/performance
+
+# Shown on every science theme page, /science/mma to /science/solar. The
+# themes themselves are in content/data/science.yaml.
+sciencePage:
+  # Appended to the theme's title in the browser tab.
+  titleSuffix: " · 7DS science"
+  eyebrow: Science · Theme {n}
+  background:
+    eyebrow: Background
+    title: Why it matters
+  approach:
+    eyebrow: Approach
+    title: What 7DS contributes
+  figures:
+    eyebrow: Figures
+    title: What it looks like
+  targets:
+    eyebrow: Targets
+    title: What the program aims to deliver
+    note: These are program targets over the seven years of the survey, not results in hand. What
+      has been observed so far is on the [status page](/users/status), and published work is
+      listed under [publications](/publication/list).
+  continue:
+    eyebrow: Continue
+    title: Other themes
+    previous: ← {title}
+    next: "{title} →"
+    all:
+      label: All seven themes
+      href: /science/overview

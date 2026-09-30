@@ -1,70 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
+import { fill } from '../lib/page';
+import site from '../content/site.json';
 
-const MENU = [
-  {
-    key: 'manuAbout',
-    label: 'About',
-    href: '/about/intro',
-    items: [
-      { label: 'What is 7DS', href: '/about/intro' },
-      { label: 'Team', href: '/about/team' },
-      { label: 'Funding', href: '/about/funding' },
-    ],
-  },
-  {
-    key: 'manuScience',
-    label: 'Science',
-    href: '/science/overview',
-    items: [
-      { label: 'Overview', href: '/science/overview' },
-      { label: 'Multi-messenger Astronomy', href: '/science/mma' },
-      { label: 'Transients', href: '/science/transients' },
-      { label: 'Galaxy Formation & Evolution', href: '/science/galaxies' },
-      { label: 'Cosmology', href: '/science/cosmology' },
-      { label: 'Active Galactic Nuclei', href: '/science/agn' },
-      { label: 'Galactic Science & Exoplanets', href: '/science/galactic' },
-      { label: 'Solar System Objects', href: '/science/solar' },
-    ],
-  },
-  {
-    key: 'manu7ds',
-    label: 'Survey',
-    href: '/survey/overview',
-    items: [
-      { label: 'Overview', href: '/survey/overview' },
-      { label: 'Reference Imaging (RIS)', href: '/survey/ris' },
-      { label: 'Wide-area Time-domain (WTS)', href: '/survey/wts' },
-      { label: 'Intensive Monitoring (IMS)', href: '/survey/ims' },
-    ],
-  },
-  {
-    key: 'manu7dt',
-    label: 'Facilities',
-    href: '/telescope/overview',
-    items: [
-      { label: 'Overview', href: '/telescope/overview' },
-      { label: 'Instrument', href: '/telescope/instrument' },
-      { label: 'Location', href: '/telescope/location' },
-      { label: 'Computational Resources', href: '/telescope/computer' },
-    ],
-  },
-  {
-    key: 'manuUsers',
-    label: 'For Users',
-    href: '/users/status',
-    items: [
-      { label: 'Status', href: '/users/status' },
-      { label: 'Performance', href: '/users/performance' },
-      { label: 'Call for Proposals', href: '/users/call' },
-      { label: 'How to Propose', href: '/users/propose' },
-      { label: 'Data Format', href: '/users/format' },
-      { label: 'Data Access', href: '/users/access' },
-      { label: 'Software', href: '/users/software' },
-      { label: 'Useful Links', href: '/users/links' },
-    ],
-  },
-];
+/* The menus and their labels are in content/site.yaml. */
+const { nav } = site;
+const MENU = nav.menus;
 
 const CaretIcon = () => (
   <svg className="site-nav__caret" viewBox="0 0 12 12" fill="none" aria-hidden="true">
@@ -138,14 +79,14 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
   return (
     <nav className={`site-nav${scrolled ? ' site-nav--solid' : ''}`} onKeyDown={(e) => e.key === 'Escape' && closeNow()}>
       <div className="site-nav__inner">
-        <Link to="/" className="site-nav__brand" aria-label="7-Dimensional Telescope — home">
-          <img src="/img/logo_name.png" alt="7DT" />
+        <Link to="/" className="site-nav__brand" aria-label={nav.brand.label}>
+          <img src={nav.brand.logo} alt={nav.brand.alt} />
         </Link>
 
         <div className="site-nav__menu">
           <div className="site-nav__item">
             <Link to="/" className={`site-nav__link${isActive('manuHome') ? ' site-nav__link--active' : ''}`}>
-              Home
+              {nav.home}
             </Link>
           </div>
 
@@ -169,7 +110,7 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
                 type="button"
                 className="site-nav__caret-btn"
                 aria-expanded={openDropdown === menu.key}
-                aria-label={`${menu.label} submenu`}
+                aria-label={fill(nav.submenu, menu)}
                 onClick={() => (openDropdown === menu.key ? closeNow() : openNow(menu.key))}
               >
                 <CaretIcon />
@@ -188,21 +129,13 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
             </div>
           ))}
 
-          <div className="site-nav__item">
-            <Link to="/publication/list" className={`site-nav__link${isActive('manuPaper') ? ' site-nav__link--active' : ''}`}>
-              Publications
-            </Link>
-          </div>
-          <div className="site-nav__item">
-            <Link to="/gallery" className={`site-nav__link${isActive('manuGallery') ? ' site-nav__link--active' : ''}`}>
-              Gallery
-            </Link>
-          </div>
-          <div className="site-nav__item">
-            <Link to="/news" className={`site-nav__link${isActive('manuNews') ? ' site-nav__link--active' : ''}`}>
-              News
-            </Link>
-          </div>
+          {nav.links.map((link) => (
+            <div className="site-nav__item" key={link.key}>
+              <Link to={link.href} className={`site-nav__link${isActive(link.key) ? ' site-nav__link--active' : ''}`}>
+                {link.label}
+              </Link>
+            </div>
+          ))}
         </div>
 
         <button
@@ -211,7 +144,7 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
           onClick={() => setShowMenu(!showMenu)}
           aria-expanded={showMenu}
           aria-controls="mobile-menu"
-          aria-label={showMenu ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-label={showMenu ? nav.closeMenu : nav.openMenu}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
             {showMenu ? (
@@ -225,7 +158,7 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
 
       {showMenu && (
         <div className="site-nav__mobile" id="mobile-menu">
-          <Link to="/">Home</Link>
+          <Link to="/">{nav.home}</Link>
 
           {/* Full two-level menu: on a phone the section landing pages alone
               left most of the site two hops away. */}
@@ -270,9 +203,11 @@ function NavBar(props: { manu?: string; fixed?: boolean }) {
             );
           })}
 
-          <Link to="/publication/list">Publications</Link>
-          <Link to="/gallery">Gallery</Link>
-          <Link to="/news">News</Link>
+          {nav.links.map((link) => (
+            <Link to={link.href} key={link.key}>
+              {link.label}
+            </Link>
+          ))}
         </div>
       )}
     </nav>

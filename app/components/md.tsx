@@ -67,7 +67,8 @@ export function SmartLink({
   );
 }
 
-const WORD = /[A-Za-z0-9]/;
+// Any letter or digit, not only ASCII: σ_NMAD is a subscript, not the start of a title.
+const WORD = /[\p{L}\p{N}]/u;
 
 /** How `code` is drawn. A page may set it in its own style instead of <code>. */
 export type CodeStyle = (text: string, key: number) => React.ReactNode;

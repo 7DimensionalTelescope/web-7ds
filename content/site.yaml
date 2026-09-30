@@ -1,0 +1,201 @@
+# Site-wide furniture: the navigation bar and the footer, shown on every page.
+#
+# In nav.menus, `key` ties a menu to the pages that highlight it (a page's
+# PageLayout `menu`); `href` is where the menu's own label leads, and `items`
+# are its dropdown. nav.links are the single links after the menus.
+
+nav:
+  brand:
+    label: 7-Dimensional Telescope — home
+    alt: 7DT
+    logo: /img/logo_name.png
+  home: Home
+  menus:
+    - key: manuAbout
+      label: About
+      href: /about/intro
+      items:
+        - label: What is 7DS
+          href: /about/intro
+        - label: Team
+          href: /about/team
+        - label: Funding
+          href: /about/funding
+    - key: manuScience
+      label: Science
+      href: /science/overview
+      items:
+        - label: Overview
+          href: /science/overview
+        - label: Multi-messenger Astronomy
+          href: /science/mma
+        - label: Transients
+          href: /science/transients
+        - label: Galaxy Formation & Evolution
+          href: /science/galaxies
+        - label: Cosmology
+          href: /science/cosmology
+        - label: Active Galactic Nuclei
+          href: /science/agn
+        - label: Galactic Science & Exoplanets
+          href: /science/galactic
+        - label: Solar System Objects
+          href: /science/solar
+    - key: manu7ds
+      label: Survey
+      href: /survey/overview
+      items:
+        - label: Overview
+          href: /survey/overview
+        - label: Reference Imaging (RIS)
+          href: /survey/ris
+        - label: Wide-area Time-domain (WTS)
+          href: /survey/wts
+        - label: Intensive Monitoring (IMS)
+          href: /survey/ims
+    - key: manu7dt
+      label: Facilities
+      href: /telescope/overview
+      items:
+        - label: Overview
+          href: /telescope/overview
+        - label: Instrument
+          href: /telescope/instrument
+        - label: Location
+          href: /telescope/location
+        - label: Computational Resources
+          href: /telescope/computer
+    - key: manuUsers
+      label: For Users
+      href: /users/status
+      items:
+        - label: Status
+          href: /users/status
+        - label: Performance
+          href: /users/performance
+        - label: Call for Proposals
+          href: /users/call
+        - label: How to Propose
+          href: /users/propose
+        - label: Data Format
+          href: /users/format
+        - label: Data Access
+          href: /users/access
+        - label: Software
+          href: /users/software
+        - label: Useful Links
+          href: /users/links
+  links:
+    - key: manuPaper
+      label: Publications
+      href: /publication/list
+    - key: manuGallery
+      label: Gallery
+      href: /gallery
+    - key: manuNews
+      label: News
+      href: /news
+  submenu: "{label} submenu"
+  openMenu: Open navigation menu
+  closeMenu: Close navigation menu
+footer:
+  contact:
+    title: Contact
+    name: Prof. Myungshin Im · Principal Investigator
+    lines:
+      - Dept. of Physics & Astronomy, Seoul National University
+      - 1 Gwanak-ro, Gwanak-gu, Seoul 08826, Republic of Korea
+      - +82-2-880-6585 / 6761
+    email: mim@astro.snu.ac.kr
+  columns:
+    - title: About
+      links:
+        - label: What is 7DS
+          href: /about/intro
+        - label: Team
+          href: /about/team
+        - label: Funding
+          href: /about/funding
+        - label: Gallery
+          href: /gallery
+        - label: Links
+          href: /links
+    - title: Survey
+      links:
+        - label: Overview
+          href: /survey/overview
+        - label: Reference (RIS)
+          href: /survey/ris
+        - label: Time-domain (WTS)
+          href: /survey/wts
+        - label: Monitoring (IMS)
+          href: /survey/ims
+    - title: Science
+      links:
+        - label: Overview
+          href: /science/overview
+        - label: Multi-messenger
+          href: /science/mma
+        - label: Transients
+          href: /science/transients
+        - label: Galaxy Evolution
+          href: /science/galaxies
+        - label: Cosmology
+          href: /science/cosmology
+        - label: Active Galactic Nuclei
+          href: /science/agn
+        - label: Galactic & Exoplanets
+          href: /science/galactic
+        - label: Solar System
+          href: /science/solar
+    - title: Facilities
+      links:
+        - label: Overview
+          href: /telescope/overview
+        - label: Instrument
+          href: /telescope/instrument
+        - label: Location
+          href: /telescope/location
+        - label: Computing
+          href: /telescope/computer
+    - title: For Users
+      links:
+        - label: Status
+          href: /users/status
+        - label: Performance
+          href: /users/performance
+        - label: Call for Proposals
+          href: /users/call
+        - label: How to Propose
+          href: /users/propose
+        - label: Data Format
+          href: /users/format
+        - label: Data Access
+          href: /users/access
+        - label: Software
+          href: /users/software
+        - label: Useful Links
+          href: /users/links
+  partners:
+    title: Participating institutions
+    logos:
+      - src: /img/institutes/snu.jpeg
+        alt: Seoul National University
+      - src: /img/institutes/kasi.gif
+        alt: Korea Astronomy and Space Science Institute
+      - src: /img/institutes/postech.png
+        alt: POSTECH
+      - src: /img/institutes/ewha.png
+        alt: Ewha Womans University
+      - src: /img/institutes/gwuniv.png
+        alt: Center for the Gravitational-wave Universe
+      - src: /img/institutes/nrf.jpg
+        alt: National Research Foundation of Korea
+  copyright: © 2026 7-Dimensional Telescope · Center for the Gravitational-wave Universe, SNU
+  legal:
+    - label: Publication Policy
+      href: /publication/policy
+    - label: Links
+      href: /links
+    - label: Contact
+      href: mailto:mim@astro.snu.ac.kr

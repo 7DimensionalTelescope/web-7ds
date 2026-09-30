@@ -1,6 +1,8 @@
 import React from 'react';
-import { Link } from '@remix-run/react';
-import { PageLayout, PageHero, Section, Figure, NextLinks } from './site';
+import { PageLayout, PageHero, Section, NextLinks, ContentFigure } from './site';
+import { Md, Paras } from './md';
+import { fill } from '../lib/page';
+import shared from '../content/shared.json';
 import science from '../content/data/science.json';
 
 /* ---------------------------------------------------------------------------
@@ -9,7 +11,8 @@ import science from '../content/data/science.json';
    The seven themes answer the same four questions in the same order — why it
    matters, what 7DS contributes, what that looks like in the data, and what
    the program is aiming to deliver — so they are one component rather than
-   seven copies. Everything that differs lives in content/science.json.
+   seven copies. Everything that differs lives in content/data/science.yaml;
+   the headings they share are in content/shared.yaml (sciencePage).
 
    Themes without a figure simply skip that section; the alternating band
    background is counted rather than hard-coded so the rhythm survives.
@@ -33,6 +36,8 @@ export type Theme = {
 
 export const themes = science.themes as Theme[];
 
+const T = shared.sciencePage;
+
 export function getTheme(id: string): Theme {
   const theme = themes.find((t) => t.id === id);
   if (!theme) throw new Response(`Unknown science theme: ${id}`, { status: 404 });
@@ -43,7 +48,7 @@ export function getTheme(id: string): Theme {
 export function topicMeta(id: string) {
   const theme = getTheme(id);
   return [
-    { title: `${theme.title} · 7DS science` },
+    { title: `${theme.title}${T.titleSuffix}` },
     { name: 'description', content: theme.metaDescription },
   ];
 }
@@ -64,56 +69,55 @@ export default function ScienceTopic({ id }: { id: string }) {
   return (
     <PageLayout menu="manuScience">
       <PageHero
-        eyebrow={`Science · Theme ${theme.n}`}
+        eyebrow={fill(T.eyebrow, theme)}
         title={theme.title}
         lede={theme.question}
         image={theme.image}
       />
 
-      <Section eyebrow="Background" title="Why it matters" alt={alt()}>
+      <Section eyebrow={T.background.eyebrow} title={T.background.title} alt={alt()}>
         <div className="prose">
-          {(theme.detail ?? []).map((para, k) => (
-            <p key={k}>{para}</p>
-          ))}
+          <Paras>{theme.detail ?? []}</Paras>
         </div>
       </Section>
 
-      <Section eyebrow="Approach" title="What 7DS contributes" alt={alt()}>
-        <p className="prose">{theme.summary}</p>
+      <Section eyebrow={T.approach.eyebrow} title={T.approach.title} alt={alt()}>
+        <p className="prose">
+          <Md>{theme.summary}</Md>
+        </p>
       </Section>
 
       {figures.length > 0 && (
-        <Section eyebrow="Figures" title="What it looks like" alt={alt()}>
+        <Section eyebrow={T.figures.eyebrow} title={T.figures.title} alt={alt()}>
           {figures.map((fig, k) => (
             <div key={fig.src} style={{ marginTop: k === 0 ? 0 : '2.5rem' }}>
-              <Figure src={fig.src} alt={fig.alt} label={fig.label} caption={fig.caption} />
+              <ContentFigure fig={fig} />
             </div>
           ))}
         </Section>
       )}
 
       {theme.goals && theme.goals.length > 0 && (
-        <Section eyebrow="Targets" title="What the program aims to deliver" alt={alt()}>
+        <Section eyebrow={T.targets.eyebrow} title={T.targets.title} alt={alt()}>
           <ul className="prose">
             {theme.goals.map((goal) => (
-              <li key={goal}>{goal}</li>
+              <li key={goal}>
+                <Md>{goal}</Md>
+              </li>
             ))}
           </ul>
           <p className="prose" style={{ marginTop: '1.5rem' }}>
-            These are program targets over the seven years of the survey, not results in hand.
-            What has been observed so far is on the{' '}
-            <Link to="/users/status">status page</Link>, and published work is listed under{' '}
-            <Link to="/publication/list">publications</Link>.
+            <Md>{T.targets.note}</Md>
           </p>
         </Section>
       )}
 
-      <Section eyebrow="Continue" title="Other themes" alt={alt()}>
+      <Section eyebrow={T.continue.eyebrow} title={T.continue.title} alt={alt()}>
         <NextLinks
           links={[
-            ...(previous ? [{ label: `← ${previous.title}`, href: `/science/${previous.id}` }] : []),
-            ...(next ? [{ label: `${next.title} →`, href: `/science/${next.id}` }] : []),
-            { label: 'All seven themes', href: '/science/overview' },
+            ...(previous ? [{ label: fill(T.continue.previous, previous), href: `/science/${previous.id}` }] : []),
+            ...(next ? [{ label: fill(T.continue.next, next), href: `/science/${next.id}` }] : []),
+            T.continue.all,
           ]}
         />
       </Section>
