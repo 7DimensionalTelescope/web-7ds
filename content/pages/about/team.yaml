@@ -1,0 +1,37 @@
+# /about/team — the core team and the wider collaboration. The people are in
+# content/data/team.yaml (core members, with portraits in public/img/team/) and
+# content/data/collabs.yaml (the collaboration roster). {count} in the
+# collaboration caption is the number of people in collabs.yaml.
+
+meta:
+  title: Team · 7-Dimensional Telescope
+  description: The people who build, operate and analyze 7DT and the 7-Dimensional Sky Survey.
+hero:
+  eyebrow: About
+  title: The team
+  lede: 7DT is designed, built and operated by the Center for the Gravitational-wave Universe at
+    Seoul National University, with collaborators across Korea and abroad.
+  image: /img/hero/team.jpg
+  countLabel: Core Members
+  meta:
+    - value: "7"
+      label: Science Groups
+    - value: SNU
+      label: Host institution
+core:
+  eyebrow: Core team
+  title: Who does what
+  homepage: Homepage
+collaboration:
+  eyebrow: Collaboration
+  title: 7DT/7DS team members
+  lede: Members of the 7DT collaboration contributing to the instrument, operations, pipeline and
+    science working groups.
+  caption: 7DT collaboration — {count} members
+  columns:
+    - Name
+    - Affiliation
+    - Working group
+    - Contact
+  note: To join a working group or propose a collaboration, contact the principal investigator at
+    [mim@astro.snu.ac.kr](mailto:mim@astro.snu.ac.kr).

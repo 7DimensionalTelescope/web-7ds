@@ -1,0 +1,26 @@
+# /publication/list — the bibliography. The works listed are the items of type
+# "publication" in content/data/news.yaml; this file is the page around them.
+# In the toolbar, {count}, {page} and {pages} are filled by the page.
+
+meta:
+  title: Publications · 7-Dimensional Telescope
+  description: Refereed papers and conference proceedings from the 7DT collaboration.
+hero:
+  eyebrow: Publications
+  title: Papers & proceedings
+  lede: Instrument, operations and science papers from the 7DT collaboration.
+  image: /img/hero/publications.jpg
+  countLabel: Listed works
+notice: Publishing with 7DT data? Please read the [publication policy](/publication/policy) first.
+list:
+  eyebrow: Bibliography
+  title: Meet our work
+  toolbar: "{count} publications · page {page} of {pages}"
+  showAbstracts: Show abstracts
+  hideAbstracts: Hide abstracts
+  labels:
+    journal: Journal
+    date: Date
+    doi: doi
+    preprint: Preprint
+    ref: Ref

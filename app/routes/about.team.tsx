@@ -4,14 +4,11 @@ import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
 import members from '../content/data/team.json';
 import collabs from '../content/data/collabs.json';
+import { Md } from '../components/md';
+import { fill, metaOf } from '../lib/page';
+import content from '../content/pages/about/team.json';
 
-export const meta: MetaFunction = () => [
-  { title: 'Team · 7-Dimensional Telescope' },
-  {
-    name: 'description',
-    content: 'The people who build, operate and analyze 7DT and the 7-Dimensional Sky Survey.',
-  },
-];
+export const meta: MetaFunction = () => metaOf(content);
 
 /* Rendered as a plain table rather than a data grid: the grid shipped ~575 KB
    of JavaScript and emitted nothing at all during server rendering, so the
@@ -26,21 +23,18 @@ const initials = (name: string) =>
     .join('');
 
 const Index = () => {
+  const { hero, core, collaboration } = content;
   return (
     <PageLayout menu="manuAbout">
       <PageHero
-        eyebrow="About"
-        title="The team"
-        lede="7DT is designed, built and operated by the Center for the Gravitational-wave Universe at Seoul National University, with collaborators across Korea and abroad."
-        image="/img/hero/team.jpg"
-        meta={[
-          { value: String(members.members.length), label: 'Core Members' },
-          { value: String(7), label: 'Science Groups' },
-          { value: 'SNU', label: 'Host institution' },
-        ]}
+        eyebrow={hero.eyebrow}
+        title={hero.title}
+        lede={hero.lede}
+        image={hero.image}
+        meta={[{ value: String(members.members.length), label: hero.countLabel }, ...hero.meta]}
       />
 
-      <Section eyebrow="Core team" title="Who does what">
+      <Section eyebrow={core.eyebrow} title={core.title}>
         <div className="people-grid">
           {members.members.map((member) => (
             <div className="person" key={member.name}>
@@ -66,7 +60,7 @@ const Index = () => {
                 </p>
                 <div className="person__links">
                   {member.webpage && (
-                    <a href={member.webpage} title="Homepage" target="_blank" rel="noreferrer">
+                    <a href={member.webpage} title={core.homepage} target="_blank" rel="noreferrer">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path
                           fillRule="evenodd"
@@ -99,20 +93,20 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Collaboration" title="7DT/7DS team members" alt wide>
+      <Section eyebrow={collaboration.eyebrow} title={collaboration.title} alt wide>
         <p className="lede">
-          Members of the 7DT collaboration contributing to the instrument, operations, pipeline
-          and science working groups.
+          <Md>{collaboration.lede}</Md>
         </p>
         <div className="table-wrap">
           <table className="tier-table">
-            <caption>7DT collaboration — {collabs.collabs.length} members</caption>
+            <caption>{fill(collaboration.caption, { count: collabs.collabs.length })}</caption>
             <thead>
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Affiliation</th>
-                <th scope="col">Working group</th>
-                <th scope="col">Contact</th>
+                {collaboration.columns.map((col) => (
+                  <th key={col} scope="col">
+                    {col}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -136,8 +130,7 @@ const Index = () => {
           </table>
         </div>
         <p className="note" style={{ marginTop: '1rem' }}>
-          To join a working group or propose a collaboration, contact the principal investigator
-          at <a href="mailto:mim@astro.snu.ac.kr">mim@astro.snu.ac.kr</a>.
+          <Md>{collaboration.note}</Md>
         </p>
       </Section>
     </PageLayout>

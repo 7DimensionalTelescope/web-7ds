@@ -3,16 +3,18 @@ import type { MetaFunction } from '@remix-run/node';
 import { Pagination } from 'flowbite-react';
 
 import { PageLayout, PageHero, Section } from '../components/site';
+import { Md } from '../components/md';
+import { fill, metaOf } from '../lib/page';
 import news from '../content/data/news.json';
+import content from '../content/pages/publication/list.json';
 
-export const meta: MetaFunction = () => [
-  { title: 'Publications · 7-Dimensional Telescope' },
-  { name: 'description', content: 'Refereed papers and conference proceedings from the 7DT collaboration.' },
-];
+export const meta: MetaFunction = () => metaOf(content);
 
 const PER_PAGE = 6;
 
 const Index = () => {
+  const { hero, notice, list } = content;
+  const { labels } = list;
   const [currentPage, setCurrentPage] = useState(1);
   const [showAbstract, setShowAbstract] = useState(false);
 
@@ -27,11 +29,11 @@ const Index = () => {
   return (
     <PageLayout menu="manuPaper">
       <PageHero
-        eyebrow="Publications"
-        title="Papers & proceedings"
-        lede="Instrument, operations and science papers from the 7DT collaboration."
-        image="/img/hero/publications.jpg"
-        meta={[{ value: String(pubs.length), label: 'Listed works' }]}
+        eyebrow={hero.eyebrow}
+        title={hero.title}
+        lede={hero.lede}
+        image={hero.image}
+        meta={[{ value: String(pubs.length), label: hero.countLabel }]}
       />
 
       <div className="notice">
@@ -40,15 +42,14 @@ const Index = () => {
           <path d="M12 8h.01M11 12h1v5h1" strokeLinecap="round" />
         </svg>
         <span>
-          Publishing with 7DT data? Please read the{' '}
-          <a href="/publication/policy">publication policy</a> first.
+          <Md>{notice}</Md>
         </span>
       </div>
 
-      <Section eyebrow="Bibliography" title="Meet our work">
+      <Section eyebrow={list.eyebrow} title={list.title}>
         <div className="toolbar">
           <span className="toolbar__label">
-            {pubs.length} publications · page {page} of {totalPages}
+            {fill(list.toolbar, { count: pubs.length, page, pages: totalPages })}
           </span>
           <button
             type="button"
@@ -56,7 +57,7 @@ const Index = () => {
             aria-pressed={showAbstract}
             onClick={() => setShowAbstract(!showAbstract)}
           >
-            {showAbstract ? 'Hide abstracts' : 'Show abstracts'}
+            {showAbstract ? list.hideAbstracts : list.showAbstracts}
           </button>
         </div>
 
@@ -76,19 +77,19 @@ const Index = () => {
               <div className="pub__meta">
                 {pub.journal && (
                   <span>
-                    <b>Journal</b>
+                    <b>{labels.journal}</b>
                     {pub.journal}
                   </span>
                 )}
                 {pub.date && (
                   <span>
-                    <b>Date</b>
+                    <b>{labels.date}</b>
                     {pub.date}
                   </span>
                 )}
                 {pub.doi && (
                   <span>
-                    <b>doi</b>
+                    <b>{labels.doi}</b>
                     <a href={pub.webpage} target="_blank" rel="noreferrer">
                       {pub.doi}
                     </a>
@@ -96,7 +97,7 @@ const Index = () => {
                 )}
                 {pub.preprint && (
                   <span>
-                    <b>Preprint</b>
+                    <b>{labels.preprint}</b>
                     <a href={pub.webpage2} target="_blank" rel="noreferrer">
                       {pub.preprint}
                     </a>
@@ -104,7 +105,7 @@ const Index = () => {
                 )}
                 {!pub.doi && !pub.preprint && pub.ref && (
                   <span>
-                    <b>Ref</b>
+                    <b>{labels.ref}</b>
                     {pub.ref}
                   </span>
                 )}
