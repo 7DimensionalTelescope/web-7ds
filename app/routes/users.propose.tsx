@@ -336,13 +336,12 @@ const Index = () => {
               <span className="feature-list__key">01</span>
               <div>
                 <h4 className="feature-list__title" style={{ fontSize: '1rem' }}>
-                  Check what already exists
+                Check the target is observable
                 </h4>
                 <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
-                  Much of the southern sky already has a medium-band reference image, and the tile
-                  under your position may already carry the bands you need. The{' '}
-                  <Link to="/users/access">data access page</Link> reports the bands and frame
-                  counts held for any position.
+                  Visibility from El Sauce in the intended window, and the filter response over 
+                  the wavelengths that matter, can both be computed with <Link to="/users/software">supy</Link>, or with the 7DT{' '}
+                  <Link to="/calculator/visibility">Visibility Tool</Link>
                 </p>
               </div>
             </li>
@@ -350,12 +349,14 @@ const Index = () => {
               <span className="feature-list__key">02</span>
               <div>
                 <h4 className="feature-list__title" style={{ fontSize: '1rem' }}>
-                  Estimate depth from measurements, not aperture
+                  Check what already exists
                 </h4>
                 <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
-                  The measured <Link to="/users/performance">limiting magnitudes</Link> per band,
-                  for the fiducial 100-second exposure, are what a coadded depth should be scaled
-                  from.
+                  Much of the southern sky already has a medium-band reference image, and the 
+                  tile under your position may already carry the bands you need. The{' '}
+                  <Link to="/users/access">data access page</Link> reports the bands and frame
+                  counts held for any position, and the 7DT{' '}
+                  <Link to="/calculator/tiles">Tile Matcher</Link> shows which survey tile covers it.
                 </p>
               </div>
             </li>
@@ -363,15 +364,26 @@ const Index = () => {
               <span className="feature-list__key">03</span>
               <div>
                 <h4 className="feature-list__title" style={{ fontSize: '1rem' }}>
-                  Check the target is observable
+                  Estimate depth from measurements, not aperture
                 </h4>
                 <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
-                  Visibility from El Sauce in the intended window, and the filter response over the
-                  wavelengths that matter, can both be computed with{' '}
-                  <Link to="/users/software">
-                    <code>supy</code>
-                  </Link>
-                  .
+                  The measured <Link to="/users/performance">limiting magnitudes</Link> per band, for the fiducial 100-second exposure, 
+                  are what a coadded depth should be scaled from. The 7DT <Link to="/calculator/exposure">Exposure Time Calculator</Link>{' '}
+                  uses these same measurements to compute the exposure needed for a target SNR, or 
+                  the SNR for a given exposure.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span className="feature-list__key">04</span>
+              <div>
+                <h4 className="feature-list__title" style={{ fontSize: '1rem' }}>
+                  Calculate the total observing time
+                </h4>
+                <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
+                  Once the exposure time per filter is set, the 7DT <Link to="/calculator/overhead">Overhead Calculator</Link>{' '}
+                  adds the per-frame and per-target overheads, such as filter exchange, autofocus, slewing, 
+                  setup, and readout, to give the total requested hours.
                 </p>
               </div>
             </li>
