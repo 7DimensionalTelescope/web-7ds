@@ -17,13 +17,3 @@ filterSet:
     reflect availability and will be addressed as the remaining five filters become available.
     Their spectrophotometric calibration is in preparation; the original twenty remain the
     calibrated set in operational use."
-photometry:
-  $usedOn: /users/performance
-  body: Photometric calibration runs against synthetic photometry derived from Gaia DR3 BP/RP
-    spectra, homogenized to correct the color- and magnitude-dependent residuals reported by the
-    Gaia collaboration. The procedure was established during commissioning on 68
-    spectrophotometric standard stars, including CALSPEC sources, with non-variable point
-    sources selected following criteria adapted from SkyMapper DR4. Zero-point uncertainty
-    across the twenty medium bands in operational use is 15 to 25 mmag, with the larger values
-    redward of 775 nm where detector quantum efficiency falls and signal-to-noise drops
-    accordingly.

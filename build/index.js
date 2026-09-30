@@ -1081,10 +1081,6 @@ var shared_default = {
     $usedOn: "/telescope/instrument, /users/performance",
     body: "Every unit carries a nine-slot filter wheel. Three slots in each wheel hold Sloan g, r and i; one unit adds u and three units add z. The remaining slots hold medium-band filters, distributed across the array so that the full set is covered in a small number of exposures. The original twenty medium bands are spaced regularly at 25 nm from 400 to 875 nm with 25 nm FWHM. Fifteen more, procured from Edmund Optics and installed in late 2025, fill the gaps between them with central wavelengths from 412 to 832 nm and bandwidths of 14 to 41 nm. The current suite of 35 filters covers 375 to 875 nm, advancing toward the designed complement of 40 medium bands at 12.5 nm spacing.",
     caveat: "The additional fifteen filters depart from the regularity of the original set: their central wavelengths are not precisely aligned to the 12.5 nm grid, their bandwidths vary, and no filter between 700 and 800 nm is included in the second batch. These departures reflect availability and will be addressed as the remaining five filters become available. Their spectrophotometric calibration is in preparation; the original twenty remain the calibrated set in operational use."
-  },
-  photometry: {
-    $usedOn: "/users/performance",
-    body: "Photometric calibration runs against synthetic photometry derived from Gaia DR3 BP/RP spectra, homogenized to correct the color- and magnitude-dependent residuals reported by the Gaia collaboration. The procedure was established during commissioning on 68 spectrophotometric standard stars, including CALSPEC sources, with non-variable point sources selected following criteria adapted from SkyMapper DR4. Zero-point uncertainty across the twenty medium bands in operational use is 15 to 25 mmag, with the larger values redward of 775 nm where detector quantum efficiency falls and signal-to-noise drops accordingly."
   }
 };
 
@@ -2430,11 +2426,6 @@ __export(users_performance_exports, {
 });
 import { Link as Link7 } from "@remix-run/react";
 
-// app/routes/content/text.tsx
-var mainText1 = "The 7-Dimensional Sky Survey (7DS) is a medium-band survey of the southern sky. It is carried out with the 7-Dimensional Telescope (7DT), an array of twenty 50-cm telescopes at El Sauce Observatory in Chile, built and operated by the Center for the Gravitational-wave Universe at Seoul National University. Each unit carries a share of a forty-filter medium-band set, so a single visit records a low-resolution spectrum of every source in 1.25 square degrees. As of now, sixteen units and thirty-five filters are in routine operation.", mainText2 = "A medium-band spectral energy distribution for every source in the field supports a wide range of science from one data product: how galaxies assemble and cease forming stars, where the heavy elements are produced, the expansion rate of the Universe, accretion onto black holes, the variability of young stars, and the composition of small solar-system bodies. 7DS was designed to identify gravitational-wave counterparts; the same images serve the rest.", mainText3 = "7DS comprises three surveys that trade area against depth and cadence: a single-visit reference map of the southern sky, a time-domain survey on a 10-14 day cadence, and nightly monitoring of a deep field at the south ecliptic pole. All three use the same tiling of the sky, so their data coadd directly.", mainText4 = "Twenty DeltaRho 500 units on direct-drive mounts, sixteen currently observing, one control computer per operational telescope, a scheduler that can interrupt the night and begin a follow-up exposure in under a minute, and a pipeline that reduces a 3,000-image night the same day. The array is built to observe a transient while it is still bright.";
-var filterText = "Every unit carries a nine-slot filter wheel. Three slots in each wheel hold Sloan g, r and i; one unit adds u and three units add z. The remaining slots hold medium-band filters, distributed across the array so that the full set is covered in a small number of exposures. The original twenty medium bands are spaced regularly at 25 nm from 400 to 875 nm with 25 nm FWHM. Fifteen more, procured from Edmund Optics and installed in late 2025, fill the gaps between them with central wavelengths from 412 to 832 nm and bandwidths of 14 to 41 nm. The current suite of 35 filters covers 375 to 875 nm, advancing toward the designed complement of 40 medium bands at 12.5 nm spacing.", filterCaveatText = "The additional fifteen filters depart from the regularity of the original set: their central wavelengths are not precisely aligned to the 12.5 nm grid, their bandwidths vary, and no filter between 700 and 800 nm is included in the second batch. These departures reflect availability and will be addressed as the remaining five filters become available. Their spectrophotometric calibration is in preparation; the original twenty remain the calibrated set in operational use.", performanceText = "Across the sixteen operational units the point-spread function measured at field center on good nights ranges from 1.4 to 2.2 arcseconds FWHM, with an array median of 2.0 arcseconds closely tracking the median site seeing. Unit-to-unit scatter in delivered FWHM is 0.2 arcseconds, and the PSF grows by 0.3 arcseconds from field center to corner while ellipticity stays below 0.1 over the central 80 percent of the field. Delivered image quality is therefore consistent across the array. Median delivered FWHM has held stable to within 0.3 arcseconds since routine survey operations began in July 2024.", photometryText = "Photometric calibration runs against synthetic photometry derived from Gaia DR3 BP/RP spectra, homogenized to correct the color- and magnitude-dependent residuals reported by the Gaia collaboration. The procedure was established during commissioning on 68 spectrophotometric standard stars, including CALSPEC sources, with non-variable point sources selected following criteria adapted from SkyMapper DR4. Zero-point uncertainty across the twenty medium bands in operational use is 15 to 25 mmag, with the larger values redward of 775 nm where detector quantum efficiency falls and signal-to-noise drops accordingly.", depthText = "For the canonical 100-second exposure the 5-sigma point-source depth reaches 19.06 mag in the bluest medium band (m400) and 16.60 mag at the longest wavelength (m875), peaking at 19.61 mag in m475 near maximum system throughput. The Sloan broad bands reach 20.59, 20.25 and 19.17 mag in g, r and i. These are nominal-condition figures: seeing better than 2.0 arcseconds, airmass below 1.5, and non-bright nights.", modeText = "Because each unit carries its own filter complement, the array can be reconfigured between science goals without changing hardware. The full spectral range is covered by assigning different filter combinations to individual units and rotating through them during an observation. Four modes are in routine use; the choice between them trades spectral sampling, depth and sky coverage against one another.";
-var softwareReuseText = "Beyond its pipeline role, Py7DT is structured for offline reuse. Researchers inside and outside the 7DT team can run the same codebase to reprocess data with custom configurations, resuming from any stage of the reduction, and choose for themselves how far to trust the standard products. Images are passed through the pipeline as string paths with metadata in FITS headers and YAML files, rather than wrapped in a bespoke data model, which keeps products inspectable outside the pipeline and lowers the cost of learning to process 7DT data.";
-
 // app/content/data/surveys.json
 var surveys_default = {
   note: "The three tiers of the 7-Dimensional Sky Survey. Design parameters from Kim et al., Proc. SPIE 14147-84, Sec. 4 and Table 2. Progress figures are NOT stored here \u2014 they are read live from the portal by app/lib/portal.server.ts, so nothing in this file goes stale as the survey advances.",
@@ -2547,179 +2538,280 @@ var surveys_default = {
   designNote: "Area, cadence and depth cannot all be maximized from a fixed number of nights. Rather than adopt a single compromise, 7DS operates at three separate points in that trade, and ties them together by using one tiling for all three, so that data from any of them coadd directly with data from the others."
 };
 
-// app/routes/users.performance.tsx
-import { jsx as jsx18, jsxs as jsxs14 } from "react/jsx-runtime";
-var meta8 = () => [
-  { title: "Performance \xB7 7DT for users" },
-  {
-    name: "description",
-    content: "What a 7DT observation delivers: filter transmission, delivered PSF, photometric zero points, the depth of a 100-second exposure and the depth each survey reaches."
-  }
-], spec = (label) => {
-  let it = specs_default.performance.find((row) => row.label === label);
-  return it ? `${it.value}${it.unit ?? ""}` : "\u2014";
-}, PSF = [
-  ["Pixel scale", "0.505\u2033 per pixel"],
-  ["Field of view per unit", "1.34\xB0 \xD7 0.90\xB0 (1.25 deg\xB2)"],
-  ["PSF FWHM at field center", spec("PSF FWHM at center")],
-  ["Array median FWHM", spec("Array median FWHM")],
-  ["Unit-to-unit scatter", spec("Unit-to-unit scatter")],
-  ["Center-to-corner growth", "+0.3\u2033"],
-  ["Ellipticity, central 80% of field", spec("PSF ellipticity")],
-  ["Median site seeing", "1.5\u2033"]
-], ZEROPOINT = [
-  ["Reference", "Gaia DR3 BP/RP synthetic photometry"],
-  ["Homogenization", "Color- and magnitude-dependent residuals corrected"],
-  ["Established on", "68 spectrophotometric standards, incl. CALSPEC"],
-  ["Zero-point uncertainty", `${spec("Zero-point uncertainty")}`],
-  ["Redward of 775 nm", "Toward the upper end of that range"],
-  ["Calibrated set", "The original 20 medium bands"]
-], Index8 = () => /* @__PURE__ */ jsxs14(PageLayout, { menu: "manuUsers", rail: !0, children: [
-  /* @__PURE__ */ jsx18(
-    PageHero,
-    {
-      eyebrow: "For users",
-      title: "Performance",
-      lede: "What one 7DT exposure delivers: which bands it can be taken in, how sharp it is, how well it is calibrated, and how deep it goes \u2014 the five numbers an observing plan starts from.",
-      image: "/img/hero/telescope.jpg",
-      meta: [
-        { value: "35", label: "Medium bands installed" },
-        { value: "2.0", unit: "\u2033", label: "Median PSF FWHM" },
-        { value: "15\u201325", unit: "mmag", label: "Zero-point uncertainty" },
-        { value: "19.6", unit: "mag", label: "Best 100 s depth" }
-      ]
-    }
-  ),
-  /* @__PURE__ */ jsxs14(Section, { eyebrow: "Filters", title: "Filter transmission", wide: !0, children: [
-    /* @__PURE__ */ jsxs14("div", { className: "prose", style: { maxWidth: "68ch" }, children: [
-      /* @__PURE__ */ jsx18("p", { children: filterText }),
-      /* @__PURE__ */ jsx18("p", { children: filterCaveatText })
-    ] }),
-    /* @__PURE__ */ jsx18("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx18(
-      Figure,
+// app/content/pages/users/performance.json
+var performance_default = {
+  meta: {
+    title: "Performance \xB7 7DT for users",
+    description: "What a 7DT observation delivers: filter transmission, delivered PSF, photometric zero points, the depth of a 100-second exposure and the depth each survey reaches."
+  },
+  hero: {
+    eyebrow: "For users",
+    title: "Performance",
+    lede: "What one 7DT exposure delivers: which bands it can be taken in, how sharp it is, how well it is calibrated, and how deep it goes \u2014 the five numbers an observing plan starts from.",
+    image: "/img/hero/telescope.jpg",
+    meta: [
       {
-        src: "/img/images/filter-transmission.png",
-        alt: "System response of the 7DT medium bands in two panels, the original twenty above and the fifteen added in 2025 below, each shown against detector quantum efficiency, sky transmission and telescope throughput",
-        label: "Total system response, decomposed",
-        caption: "What actually reaches the detector: filter transmission multiplied by CMOS quantum efficiency, atmospheric transmission and telescope throughput. The original twenty bands are in the upper panel, the fifteen added in 2025 in the lower one, each drawn against the three curves that shape it. Peak system response is about 65 percent near 475 nm and falls away redward of 775 nm as quantum efficiency drops \u2014 which is why the reddest bands are the shallowest and the least well calibrated."
+        value: "35",
+        label: "Medium bands installed"
+      },
+      {
+        value: "2.0",
+        unit: "\u2033",
+        label: "Median PSF FWHM"
+      },
+      {
+        value: "15\u201325",
+        unit: "mmag",
+        label: "Zero-point uncertainty"
+      },
+      {
+        value: "19.6",
+        unit: "mag",
+        label: "Best 100 s depth"
       }
-    ) }),
-    /* @__PURE__ */ jsxs14("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: [
-      "The same response is shipped as reference data with",
-      " ",
-      /* @__PURE__ */ jsx18(Link7, { to: "/users/software", children: /* @__PURE__ */ jsx18("code", { children: "supy" }) }),
-      " and is what its simulator module computes with, so a response derived there matches this figure. Which bands exist on a particular tile is reported on the ",
-      /* @__PURE__ */ jsx18(Link7, { to: "/users/access", children: "data access page" }),
-      ", and how much of the sky each band has reached is on the",
-      " ",
-      /* @__PURE__ */ jsx18(Link7, { to: "/users/status", children: "status page" }),
-      ", which draws the same curves."
-    ] })
-  ] }),
-  /* @__PURE__ */ jsxs14(Section, { eyebrow: "Image quality", title: "Point-spread function", alt: !0, children: [
-    /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsxs14("div", { children: [
-        /* @__PURE__ */ jsx18("p", { className: "prose", children: performanceText }),
-        /* @__PURE__ */ jsx18("p", { className: "footnote", style: { marginTop: "1rem" }, children: "Measured from the point-spread function across the field of view by the Py7DT pipeline as part of routine astrometric and photometric processing, so the figures are delivered image quality in survey operation rather than a specification. Image quality is monitored continuously; units are re-aligned individually as needed." })
-      ] }),
-      /* @__PURE__ */ jsx18(SimpleTable, { caption: "Delivered image quality", rows: PSF })
-    ] }),
-    /* @__PURE__ */ jsx18("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx18(
-      Figure,
+    ]
+  },
+  filters: {
+    eyebrow: "Filters",
+    title: "Filter transmission",
+    figure: {
+      src: "/img/images/filter-transmission.png",
+      alt: "System response of the 7DT medium bands in two panels, the original twenty above and the fifteen added in 2025 below, each shown against detector quantum efficiency, sky transmission and telescope throughput",
+      label: "Total system response, decomposed",
+      caption: "What actually reaches the detector: filter transmission multiplied by CMOS quantum efficiency, atmospheric transmission and telescope throughput. The original twenty bands are in the upper panel, the fifteen added in 2025 in the lower one, each drawn against the three curves that shape it. Peak system response is about 65 percent near 475 nm and falls away redward of 775 nm as quantum efficiency drops \u2014 which is why the reddest bands are the shallowest and the least well calibrated."
+    },
+    footnote: "The same response is shipped as reference data with [`supy`](/users/software) and is what its simulator module computes with, so a response derived there matches this figure. Which bands exist on a particular tile is reported on the [data access page](/users/access), and how much of the sky each band has reached is on the [status page](/users/status), which draws the same curves."
+  },
+  psf: {
+    eyebrow: "Image quality",
+    title: "Point-spread function",
+    body: "Across the sixteen operational units the point-spread function measured at field center on good nights ranges from 1.4 to 2.2 arcseconds FWHM, with an array median of 2.0 arcseconds closely tracking the median site seeing. Unit-to-unit scatter in delivered FWHM is 0.2 arcseconds, and the PSF grows by 0.3 arcseconds from field center to corner while ellipticity stays below 0.1 over the central 80 percent of the field. Delivered image quality is therefore consistent across the array. Median delivered FWHM has held stable to within 0.3 arcseconds since routine survey operations began in July 2024.",
+    footnote: "Measured from the point-spread function across the field of view by the Py7DT pipeline as part of routine astrometric and photometric processing, so the figures are delivered image quality in survey operation rather than a specification. Image quality is monitored continuously; units are re-aligned individually as needed.",
+    table: {
+      caption: "Delivered image quality",
+      rows: [
+        [
+          "Pixel scale",
+          "0.505\u2033 per pixel"
+        ],
+        [
+          "Field of view per unit",
+          "1.34\xB0 \xD7 0.90\xB0 (1.25 deg\xB2)"
+        ],
+        [
+          "PSF FWHM at field center",
+          "{spec:PSF FWHM at center}"
+        ],
+        [
+          "Array median FWHM",
+          "{spec:Array median FWHM}"
+        ],
+        [
+          "Unit-to-unit scatter",
+          "{spec:Unit-to-unit scatter}"
+        ],
+        [
+          "Center-to-corner growth",
+          "+0.3\u2033"
+        ],
+        [
+          "Ellipticity, central 80% of field",
+          "{spec:PSF ellipticity}"
+        ],
+        [
+          "Median site seeing",
+          "1.5\u2033"
+        ]
+      ]
+    },
+    figures: [
       {
         src: "/img/images/Seeing_2025-2026.png",
         alt: "Violin plot of the delivered seeing distribution in each 7DT band over 2025 and 2026, with the median marked for each",
         label: "Delivered seeing, by band",
         caption: "Distribution of measured seeing in every band over the 2025\u20132026 seasons, with the median marked on each. Medians run from 2.0 arcseconds in r, m700 and m775 to 2.7 in m575: the variation is the observing conditions the band happened to be taken in, not a property of the filter. The width of each violin is the number of exposures reaching that seeing."
-      }
-    ) }),
-    /* @__PURE__ */ jsx18("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx18(
-      Figure,
+      },
       {
         src: "/img/images/Seeing_by_unit_2025-2026.png",
         alt: "Violin plot of the delivered seeing distribution for each of the sixteen operational 7DT units over 2025 and 2026",
         label: "Delivered seeing, by unit",
         caption: "The same measurements grouped by telescope rather than by band, over all sixteen operational units. Medians lie between 2.0 and 2.8 arcseconds, so the array behaves as a coherent set of instruments rather than sixteen separate ones \u2014 which is what makes coadding across units sound."
       }
-    ) }),
-    /* @__PURE__ */ jsx18("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx18(StatGrid, { items: specs_default.performance }) })
-  ] }),
-  /* @__PURE__ */ jsxs14(Section, { eyebrow: "Photometry", title: "Photometric zero point", children: [
-    /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsx18("p", { className: "prose", children: photometryText }),
-      /* @__PURE__ */ jsx18(SimpleTable, { caption: "Calibration", rows: ZEROPOINT })
-    ] }),
-    /* @__PURE__ */ jsx18("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx18(
-      Figure,
+    ]
+  },
+  photometry: {
+    eyebrow: "Photometry",
+    title: "Photometric zero point",
+    body: "Photometric calibration runs against synthetic photometry derived from Gaia DR3 BP/RP spectra, homogenized to correct the color- and magnitude-dependent residuals reported by the Gaia collaboration. The procedure was established during commissioning on 68 spectrophotometric standard stars, including CALSPEC sources, with non-variable point sources selected following criteria adapted from SkyMapper DR4. Zero-point uncertainty across the twenty medium bands in operational use is 15 to 25 mmag, with the larger values redward of 775 nm where detector quantum efficiency falls and signal-to-noise drops accordingly.",
+    table: {
+      caption: "Calibration",
+      rows: [
+        [
+          "Reference",
+          "Gaia DR3 BP/RP synthetic photometry"
+        ],
+        [
+          "Homogenization",
+          "Color- and magnitude-dependent residuals corrected"
+        ],
+        [
+          "Established on",
+          "68 spectrophotometric standards, incl. CALSPEC"
+        ],
+        [
+          "Zero-point uncertainty",
+          "{spec:Zero-point uncertainty}"
+        ],
+        [
+          "Redward of 775 nm",
+          "Toward the upper end of that range"
+        ],
+        [
+          "Calibrated set",
+          "The original 20 medium bands"
+        ]
+      ]
+    },
+    figure: {
+      src: "/img/images/zeropoint.png",
+      alt: "Violin plot of the spatial zero-point RMSE in each band across 1167 deep-stack tiles, rising from about 0.010 magnitudes in the blue to 0.064 in m875",
+      label: "Zero-point uniformity across a stack",
+      caption: "Spatial zero-point RMSE within DP2 deep stacks, measured in a 5-arcsecond aperture over 1,167 tiles \u2014 how much the calibration varies from place to place inside one image, which is a different quantity from the overall zero-point uncertainty quoted above. Medians run from 0.010 mag in r to 0.064 mag in m875, flat across the blue and green bands and climbing steadily redward of 775 nm with falling detector quantum efficiency."
+    },
+    footnote: "Zero points are determined per image by Py7DT with 3\u03C3 clipping across multiple aperture sizes, against corrected synthetic photometry of matched Gaia sources. The fifteen filters installed in late 2025 are not yet spectrophotometrically calibrated and are excluded from the figures above; a calibration campaign following the same procedure is planned. Full methodology is in preparation (Paek et al.)."
+  },
+  depth: {
+    eyebrow: "Depth",
+    title: "A 100-second exposure",
+    body: "For the canonical 100-second exposure the 5-sigma point-source depth reaches 19.06 mag in the bluest medium band (m400) and 16.60 mag at the longest wavelength (m875), peaking at 19.61 mag in m475 near maximum system throughput. The Sloan broad bands reach 20.59, 20.25 and 19.17 mag in g, r and i. These are nominal-condition figures: seeing better than 2.0 arcseconds, airmass below 1.5, and non-bright nights.",
+    notes: [
+      "One hundred seconds is the fiducial 7DS exposure: every survey visit is built from it, so a depth quoted for any program is this number scaled by the number of frames coadded. Background-limited, so four frames buy 0.75 mag.",
+      "Nominal conditions: seeing better than 2.0 arcseconds, airmass below 1.5, and a non-bright night. The spread around each figure on a real night is the width of the violins below."
+    ],
+    figure: {
+      src: "/img/images/depth-distribution.png",
+      alt: "Violin plot of the 5-sigma limiting magnitude distribution for each 7DT band in a 100-second exposure",
+      label: "Measured depth per band",
+      caption: "Distribution of single-exposure 5\u03C3 point-source depths for the twenty original medium bands and Sloan g, r, i and z, measured from individual 100-second exposures taken in routine survey operation, with the median marked on each. They run from 20.59 mag in Sloan g down to 16.60 in m875, following the system response above. The width of each violin is the number of exposures reaching that magnitude; the spread within a band is the variation in seeing, airmass and sky brightness across real nights. The fifteen filters added in late 2025 are not included, their spectrophotometric calibration being incomplete."
+    }
+  },
+  surveys: {
+    eyebrow: "Depth",
+    title: "What each survey reaches",
+    body: "The three surveys spend that fiducial exposure differently \u2014 over the whole southern sky once, over a smaller area every ten to fourteen days, or on one field every night \u2014 so they arrive at very different depths from the same instrument.",
+    table: {
+      caption: "Depth reached by each survey, 5\u03C3 in m600",
+      columns: [
+        "Survey",
+        "Area",
+        "Cadence",
+        "Depth"
+      ]
+    },
+    footnote: "The RIS figure is one visit of 3 \xD7 100 s. Figures marked with an asterisk are cumulative over the planned operation rather than the depth of any single visit, and are targets: [status and overview](/users/status) reports what has actually been observed, and the coverage map on the [data access page](/users/access) gives the integration time and estimated depth reached on any individual tile."
+  },
+  next: {
+    eyebrow: "Next",
+    title: "Planning an observation",
+    body: "To turn these figures into an expected signal-to-noise, combine the depths with the response curves: the `supy` package has a simulator module that generates filter and detector response for the 7DT bands, and an observer module for target visibility from El Sauce.",
+    buttons: [
       {
-        src: "/img/images/zeropoint.png",
-        alt: "Violin plot of the spatial zero-point RMSE in each band across 1167 deep-stack tiles, rising from about 0.010 magnitudes in the blue to 0.064 in m875",
-        label: "Zero-point uniformity across a stack",
-        caption: "Spatial zero-point RMSE within DP2 deep stacks, measured in a 5-arcsecond aperture over 1,167 tiles \u2014 how much the calibration varies from place to place inside one image, which is a different quantity from the overall zero-point uncertainty quoted above. Medians run from 0.010 mag in r to 0.064 mag in m875, flat across the blue and green bands and climbing steadily redward of 775 nm with falling detector quantum efficiency."
-      }
-    ) }),
-    /* @__PURE__ */ jsx18("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: "Zero points are determined per image by Py7DT with 3\u03C3 clipping across multiple aperture sizes, against corrected synthetic photometry of matched Gaia sources. The fifteen filters installed in late 2025 are not yet spectrophotometrically calibrated and are excluded from the figures above; a calibration campaign following the same procedure is planned. Full methodology is in preparation (Paek et al.)." })
-  ] }),
-  /* @__PURE__ */ jsxs14(Section, { eyebrow: "Depth", title: "A 100-second exposure", alt: !0, children: [
-    /* @__PURE__ */ jsx18("p", { className: "prose", children: depthText }),
-    /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", style: { marginTop: "2rem" }, children: [
-      /* @__PURE__ */ jsx18(SimpleTable, { caption: specs_default.depths.caption, rows: specs_default.depths.rows }),
-      /* @__PURE__ */ jsxs14("div", { children: [
-        /* @__PURE__ */ jsx18("p", { className: "footnote", children: "One hundred seconds is the fiducial 7DS exposure: every survey visit is built from it, so a depth quoted for any program is this number scaled by the number of frames coadded. Background-limited, so four frames buy 0.75 mag." }),
-        /* @__PURE__ */ jsx18("p", { className: "footnote", style: { marginTop: "1rem" }, children: "Nominal conditions: seeing better than 2.0 arcseconds, airmass below 1.5, and a non-bright night. The spread around each figure on a real night is the width of the violins below." })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx18("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx18(
-      Figure,
+        label: "Current status",
+        href: "/users/status"
+      },
       {
-        src: "/img/images/depth-distribution.png",
-        alt: "Violin plot of the 5-sigma limiting magnitude distribution for each 7DT band in a 100-second exposure",
-        label: "Measured depth per band",
-        caption: "Distribution of single-exposure 5\u03C3 point-source depths for the twenty original medium bands and Sloan g, r, i and z, measured from individual 100-second exposures taken in routine survey operation, with the median marked on each. They run from 20.59 mag in Sloan g down to 16.60 in m875, following the system response above. The width of each violin is the number of exposures reaching that magnitude; the spread within a band is the variation in seeing, airmass and sky brightness across real nights. The fifteen filters added in late 2025 are not included, their spectrophotometric calibration being incomplete."
+        label: "Software",
+        href: "/users/software"
+      },
+      {
+        label: "How to propose",
+        href: "/users/propose"
+      },
+      {
+        label: "Instrument specification",
+        href: "/telescope/instrument"
       }
-    ) })
-  ] }),
-  /* @__PURE__ */ jsxs14(Section, { eyebrow: "Depth", title: "What each survey reaches", children: [
-    /* @__PURE__ */ jsx18("p", { className: "prose", children: "The three surveys spend that fiducial exposure differently \u2014 over the whole southern sky once, over a smaller area every ten to fourteen days, or on one field every night \u2014 so they arrive at very different depths from the same instrument." }),
-    /* @__PURE__ */ jsx18("div", { className: "table-wrap", style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsxs14("table", { className: "spec-table", children: [
-      /* @__PURE__ */ jsx18("caption", { children: "Depth reached by each survey, 5\u03C3 in m600" }),
-      /* @__PURE__ */ jsx18("thead", { children: /* @__PURE__ */ jsxs14("tr", { children: [
-        /* @__PURE__ */ jsx18("th", { scope: "col", children: "Survey" }),
-        /* @__PURE__ */ jsx18("th", { scope: "col", children: "Area" }),
-        /* @__PURE__ */ jsx18("th", { scope: "col", children: "Cadence" }),
-        /* @__PURE__ */ jsx18("th", { scope: "col", children: "Depth" })
+    ]
+  }
+};
+
+// app/routes/users.performance.tsx
+import { jsx as jsx18, jsxs as jsxs14 } from "react/jsx-runtime";
+var meta8 = () => metaOf(performance_default), fillSpecs = (rows) => rows.map(
+  (row) => row.map(
+    (cell) => cell.replace(/\{spec:([^}]+)\}/g, (_, label) => {
+      let it = specs_default.performance.find((r) => r.label === label);
+      return it ? `${it.value}${it.unit ?? ""}` : "\u2014";
+    })
+  )
+), Index8 = () => {
+  let { hero: hero2, filters, psf, photometry, depth, surveys: reach, next } = performance_default;
+  return /* @__PURE__ */ jsxs14(PageLayout, { menu: "manuUsers", rail: !0, children: [
+    /* @__PURE__ */ jsx18(
+      PageHero,
+      {
+        eyebrow: hero2.eyebrow,
+        title: hero2.title,
+        lede: hero2.lede,
+        image: hero2.image,
+        meta: hero2.meta
+      }
+    ),
+    /* @__PURE__ */ jsxs14(Section, { eyebrow: filters.eyebrow, title: filters.title, wide: !0, children: [
+      /* @__PURE__ */ jsxs14("div", { className: "prose", style: { maxWidth: "68ch" }, children: [
+        /* @__PURE__ */ jsx18("p", { children: /* @__PURE__ */ jsx18(Md, { children: shared_default.filterSet.body }) }),
+        /* @__PURE__ */ jsx18("p", { children: /* @__PURE__ */ jsx18(Md, { children: shared_default.filterSet.caveat }) })
+      ] }),
+      /* @__PURE__ */ jsx18("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx18(ContentFigure, { fig: filters.figure }) }),
+      /* @__PURE__ */ jsx18("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx18(Md, { children: filters.footnote }) })
+    ] }),
+    /* @__PURE__ */ jsxs14(Section, { eyebrow: psf.eyebrow, title: psf.title, alt: !0, children: [
+      /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", children: [
+        /* @__PURE__ */ jsxs14("div", { children: [
+          /* @__PURE__ */ jsx18("p", { className: "prose", children: /* @__PURE__ */ jsx18(Md, { children: psf.body }) }),
+          /* @__PURE__ */ jsx18("p", { className: "footnote", style: { marginTop: "1rem" }, children: /* @__PURE__ */ jsx18(Md, { children: psf.footnote }) })
+        ] }),
+        /* @__PURE__ */ jsx18(SimpleTable, { caption: psf.table.caption, rows: fillSpecs(psf.table.rows) })
+      ] }),
+      psf.figures.map((fig) => /* @__PURE__ */ jsx18("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx18(ContentFigure, { fig }) }, fig.src)),
+      /* @__PURE__ */ jsx18("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx18(StatGrid, { items: specs_default.performance }) })
+    ] }),
+    /* @__PURE__ */ jsxs14(Section, { eyebrow: photometry.eyebrow, title: photometry.title, children: [
+      /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", children: [
+        /* @__PURE__ */ jsx18("p", { className: "prose", children: /* @__PURE__ */ jsx18(Md, { children: photometry.body }) }),
+        /* @__PURE__ */ jsx18(SimpleTable, { caption: photometry.table.caption, rows: fillSpecs(photometry.table.rows) })
+      ] }),
+      /* @__PURE__ */ jsx18("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx18(ContentFigure, { fig: photometry.figure }) }),
+      /* @__PURE__ */ jsx18("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx18(Md, { children: photometry.footnote }) })
+    ] }),
+    /* @__PURE__ */ jsxs14(Section, { eyebrow: depth.eyebrow, title: depth.title, alt: !0, children: [
+      /* @__PURE__ */ jsx18("p", { className: "prose", children: /* @__PURE__ */ jsx18(Md, { children: depth.body }) }),
+      /* @__PURE__ */ jsxs14("div", { className: "split split--wide-text", style: { marginTop: "2rem" }, children: [
+        /* @__PURE__ */ jsx18(SimpleTable, { caption: specs_default.depths.caption, rows: specs_default.depths.rows }),
+        /* @__PURE__ */ jsx18("div", { children: depth.notes.map((note, k) => /* @__PURE__ */ jsx18("p", { className: "footnote", style: k ? { marginTop: "1rem" } : void 0, children: /* @__PURE__ */ jsx18(Md, { children: note }) }, k)) })
+      ] }),
+      /* @__PURE__ */ jsx18("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx18(ContentFigure, { fig: depth.figure }) })
+    ] }),
+    /* @__PURE__ */ jsxs14(Section, { eyebrow: reach.eyebrow, title: reach.title, children: [
+      /* @__PURE__ */ jsx18("p", { className: "prose", children: /* @__PURE__ */ jsx18(Md, { children: reach.body }) }),
+      /* @__PURE__ */ jsx18("div", { className: "table-wrap", style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsxs14("table", { className: "spec-table", children: [
+        /* @__PURE__ */ jsx18("caption", { children: reach.table.caption }),
+        /* @__PURE__ */ jsx18("thead", { children: /* @__PURE__ */ jsx18("tr", { children: reach.table.columns.map((col) => /* @__PURE__ */ jsx18("th", { scope: "col", children: col }, col)) }) }),
+        /* @__PURE__ */ jsx18("tbody", { children: surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsxs14("tr", { children: [
+          /* @__PURE__ */ jsx18("th", { scope: "row", children: /* @__PURE__ */ jsx18(Link7, { to: `/survey/${tier4.code.toLowerCase()}`, children: tier4.code }) }),
+          /* @__PURE__ */ jsx18("td", { children: tier4.area }),
+          /* @__PURE__ */ jsx18("td", { children: tier4.cadence }),
+          /* @__PURE__ */ jsx18("td", { children: tier4.depth })
+        ] }, tier4.code)) })
       ] }) }),
-      /* @__PURE__ */ jsx18("tbody", { children: surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsxs14("tr", { children: [
-        /* @__PURE__ */ jsx18("th", { scope: "row", children: /* @__PURE__ */ jsx18(Link7, { to: `/survey/${tier4.code.toLowerCase()}`, children: tier4.code }) }),
-        /* @__PURE__ */ jsx18("td", { children: tier4.area }),
-        /* @__PURE__ */ jsx18("td", { children: tier4.cadence }),
-        /* @__PURE__ */ jsx18("td", { children: tier4.depth })
-      ] }, tier4.code)) })
-    ] }) }),
-    /* @__PURE__ */ jsxs14("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: [
-      "The RIS figure is one visit of 3 \xD7 100 s. Figures marked with an asterisk are cumulative over the planned operation rather than the depth of any single visit, and are targets:",
-      " ",
-      /* @__PURE__ */ jsx18(Link7, { to: "/users/status", children: "status and overview" }),
-      " reports what has actually been observed, and the coverage map on the",
-      " ",
-      /* @__PURE__ */ jsx18(Link7, { to: "/users/access", children: "data access page" }),
-      " gives the integration time and estimated depth reached on any individual tile."
-    ] })
-  ] }),
-  /* @__PURE__ */ jsxs14(Section, { eyebrow: "Next", title: "Planning an observation", alt: !0, children: [
-    /* @__PURE__ */ jsxs14("p", { className: "prose", children: [
-      "To turn these figures into an expected signal-to-noise, combine the depths with the response curves: the ",
-      /* @__PURE__ */ jsx18("code", { children: "supy" }),
-      " package has a simulator module that generates filter and detector response for the 7DT bands, and an observer module for target visibility from El Sauce."
+      /* @__PURE__ */ jsx18("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx18(Md, { children: reach.footnote }) })
     ] }),
-    /* @__PURE__ */ jsxs14("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
-      /* @__PURE__ */ jsx18(Link7, { className: "btn btn--primary", to: "/users/status", children: "Current status" }),
-      /* @__PURE__ */ jsx18(Link7, { className: "btn btn--secondary", to: "/users/software", children: "Software" }),
-      /* @__PURE__ */ jsx18(Link7, { className: "btn btn--secondary", to: "/users/propose", children: "How to propose" }),
-      /* @__PURE__ */ jsx18(Link7, { className: "btn btn--secondary", to: "/telescope/instrument", children: "Instrument specification" })
+    /* @__PURE__ */ jsxs14(Section, { eyebrow: next.eyebrow, title: next.title, alt: !0, children: [
+      /* @__PURE__ */ jsx18("p", { className: "prose", children: /* @__PURE__ */ jsx18(Md, { children: next.body }) }),
+      /* @__PURE__ */ jsx18(ButtonRow, { buttons: next.buttons, style: { marginTop: "1.5rem" } })
     ] })
-  ] })
-] }), users_performance_default = Index8;
+  ] });
+}, users_performance_default = Index8;
 
 // app/routes/publication.list.tsx
 var publication_list_exports = {};
@@ -3410,6 +3502,13 @@ __export(users_software_exports, {
   meta: () => meta14
 });
 import { Link as Link10 } from "@remix-run/react";
+
+// app/routes/content/text.tsx
+var mainText1 = "The 7-Dimensional Sky Survey (7DS) is a medium-band survey of the southern sky. It is carried out with the 7-Dimensional Telescope (7DT), an array of twenty 50-cm telescopes at El Sauce Observatory in Chile, built and operated by the Center for the Gravitational-wave Universe at Seoul National University. Each unit carries a share of a forty-filter medium-band set, so a single visit records a low-resolution spectrum of every source in 1.25 square degrees. As of now, sixteen units and thirty-five filters are in routine operation.", mainText2 = "A medium-band spectral energy distribution for every source in the field supports a wide range of science from one data product: how galaxies assemble and cease forming stars, where the heavy elements are produced, the expansion rate of the Universe, accretion onto black holes, the variability of young stars, and the composition of small solar-system bodies. 7DS was designed to identify gravitational-wave counterparts; the same images serve the rest.", mainText3 = "7DS comprises three surveys that trade area against depth and cadence: a single-visit reference map of the southern sky, a time-domain survey on a 10-14 day cadence, and nightly monitoring of a deep field at the south ecliptic pole. All three use the same tiling of the sky, so their data coadd directly.", mainText4 = "Twenty DeltaRho 500 units on direct-drive mounts, sixteen currently observing, one control computer per operational telescope, a scheduler that can interrupt the night and begin a follow-up exposure in under a minute, and a pipeline that reduces a 3,000-image night the same day. The array is built to observe a transient while it is still bright.";
+var modeText = "Because each unit carries its own filter complement, the array can be reconfigured between science goals without changing hardware. The full spectral range is covered by assigning different filter combinations to individual units and rotating through them during an observation. Four modes are in routine use; the choice between them trades spectral sampling, depth and sky coverage against one another.";
+var softwareReuseText = "Beyond its pipeline role, Py7DT is structured for offline reuse. Researchers inside and outside the 7DT team can run the same codebase to reprocess data with custom configurations, resuming from any stage of the reduction, and choose for themselves how far to trust the standard products. Images are passed through the pipeline as string paths with metadata in FITS headers and YAML files, rather than wrapped in a bespoke data model, which keeps products inspectable outside the pipeline and lowers the cost of learning to process 7DT data.";
+
+// app/routes/users.software.tsx
 import { jsx as jsx24, jsxs as jsxs18 } from "react/jsx-runtime";
 var meta14 = () => [
   { title: "Software \xB7 7DT for users" },
@@ -12460,7 +12559,7 @@ function loader19() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-BQKCGNKD.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-VG3XBZES.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-4ZHBOGJG.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-XX7Q4SHF.js", imports: ["/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-T2L3Y4X2.js", imports: ["/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-JKPLRYTU.js", imports: ["/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/exptime": { id: "routes/exptime", parentId: "root", path: "exptime", index: void 0, caseSensitive: void 0, module: "/build/routes/exptime-B66677KU.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-JVYHFGKE.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-EU2QOIVA.js", imports: ["/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-MFAIUFPB.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overhead": { id: "routes/overhead", parentId: "root", path: "overhead", index: void 0, caseSensitive: void 0, module: "/build/routes/overhead-GDOVE2UB.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overview": { id: "routes/overview", parentId: "root", path: "overview", index: void 0, caseSensitive: void 0, module: "/build/routes/overview-KJQASMSO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-AWMJKT3Q.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-DR6JYAKO.js", imports: ["/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-OF74BMQK.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-WCAYPQHM.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-KSFNOHSR.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-XTYZX6CY.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-OEXUJ6RG.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-ZJ633QKE.js", imports: ["/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-G3LY5CRE.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-QVZJPQ4U.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-KU2MJRHZ.js", imports: ["/build/_shared/chunk-YETKBDH2.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-FK565G5W.js", imports: ["/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-IY5CCO63.js", imports: ["/build/_shared/chunk-YETKBDH2.js", "/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-DCGY6P3T.js", imports: ["/build/_shared/chunk-YETKBDH2.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-LTZMP5GG.js", imports: ["/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-ZSATYMYU.js", imports: ["/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-QOLMKHMX.js", imports: ["/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-BWQEXQGG.js", imports: ["/build/_shared/chunk-3LTHRCGQ.js", "/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/tile": { id: "routes/tile", parentId: "root", path: "tile", index: void 0, caseSensitive: void 0, module: "/build/routes/tile-VYWTWX2U.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-KAXF3EVM.js", imports: ["/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.call": { id: "routes/users.call", parentId: "root", path: "users/call", index: void 0, caseSensitive: void 0, module: "/build/routes/users.call-A3HOQ4DI.js", imports: ["/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-4BTPHAGG.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-DNO3SIOE.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-GQRIU3OP.js", imports: ["/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-CO4J7DDH.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-TJJZS57D.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-TGJCKDJY.js", imports: ["/build/_shared/chunk-4ZHBOGJG.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-3LTHRCGQ.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-SKQ7OG25.js", imports: ["/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-4ZHBOGJG.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-QV6RGD5V.js", imports: ["/build/_shared/chunk-4ZHBOGJG.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-VT7T5TX6.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/visibility": { id: "routes/visibility", parentId: "root", path: "visibility", index: void 0, caseSensitive: void 0, module: "/build/routes/visibility-3OHETBRR.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "b7fabfaf", hmr: void 0, url: "/build/manifest-B7FABFAF.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-BQKCGNKD.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-4Z7XETR7.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-254GQ427.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-XX7Q4SHF.js", imports: ["/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-T2L3Y4X2.js", imports: ["/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-JKPLRYTU.js", imports: ["/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/exptime": { id: "routes/exptime", parentId: "root", path: "exptime", index: void 0, caseSensitive: void 0, module: "/build/routes/exptime-B66677KU.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-JVYHFGKE.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-EU2QOIVA.js", imports: ["/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-MFAIUFPB.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overhead": { id: "routes/overhead", parentId: "root", path: "overhead", index: void 0, caseSensitive: void 0, module: "/build/routes/overhead-GDOVE2UB.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overview": { id: "routes/overview", parentId: "root", path: "overview", index: void 0, caseSensitive: void 0, module: "/build/routes/overview-KJQASMSO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-AWMJKT3Q.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-DR6JYAKO.js", imports: ["/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-OF74BMQK.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-WCAYPQHM.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-KSFNOHSR.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-XTYZX6CY.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-OEXUJ6RG.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-ZJ633QKE.js", imports: ["/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-G3LY5CRE.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-QVZJPQ4U.js", imports: ["/build/_shared/chunk-ZGM4PWHZ.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-KU2MJRHZ.js", imports: ["/build/_shared/chunk-YETKBDH2.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-FK565G5W.js", imports: ["/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-IY5CCO63.js", imports: ["/build/_shared/chunk-YETKBDH2.js", "/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-DCGY6P3T.js", imports: ["/build/_shared/chunk-YETKBDH2.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-LTZMP5GG.js", imports: ["/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-JYN5QJBK.js", imports: ["/build/_shared/chunk-DXIY2ZBC.js", "/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-QOLMKHMX.js", imports: ["/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-BWQEXQGG.js", imports: ["/build/_shared/chunk-3LTHRCGQ.js", "/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/tile": { id: "routes/tile", parentId: "root", path: "tile", index: void 0, caseSensitive: void 0, module: "/build/routes/tile-VYWTWX2U.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-KAXF3EVM.js", imports: ["/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.call": { id: "routes/users.call", parentId: "root", path: "users/call", index: void 0, caseSensitive: void 0, module: "/build/routes/users.call-A3HOQ4DI.js", imports: ["/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-4BTPHAGG.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-DNO3SIOE.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-GQRIU3OP.js", imports: ["/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-CO4J7DDH.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-TJJZS57D.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-AEFBOTVG.js", imports: ["/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-DXIY2ZBC.js", "/build/_shared/chunk-3LTHRCGQ.js", "/build/_shared/chunk-IG4MVFXA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-S5G5UUP5.js", imports: ["/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-254GQ427.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-LZ265AEM.js", imports: ["/build/_shared/chunk-254GQ427.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-VT7T5TX6.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-URPS57QC.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/visibility": { id: "routes/visibility", parentId: "root", path: "visibility", index: void 0, caseSensitive: void 0, module: "/build/routes/visibility-3OHETBRR.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "f6a4e9f9", hmr: void 0, url: "/build/manifest-F6A4E9F9.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

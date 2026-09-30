@@ -1,0 +1,205 @@
+# /users/performance — what one 7DT exposure delivers: bands, PSF, calibration, depth.
+#
+# The filter-set paragraphs are shared with /telescope/instrument and live in
+# content/shared.yaml (filterSet).
+#
+# A table cell written {spec:LABEL} is filled from the row of that label in
+# content/data/specs.yaml (performance), so a measured figure has one home. The
+# StatGrid under the PSF section and the depth table are read from specs.yaml
+# directly, and the survey table from surveys.yaml.
+
+meta:
+  title: Performance · 7DT for users
+  description: "What a 7DT observation delivers: filter transmission, delivered PSF, photometric
+    zero points, the depth of a 100-second exposure and the depth each survey reaches."
+hero:
+  eyebrow: For users
+  title: Performance
+  lede: "What one 7DT exposure delivers: which bands it can be taken in, how sharp it is, how well
+    it is calibrated, and how deep it goes — the five numbers an observing plan starts from."
+  image: /img/hero/telescope.jpg
+  meta:
+    - value: "35"
+      label: Medium bands installed
+    - value: "2.0"
+      unit: ″
+      label: Median PSF FWHM
+    - value: 15–25
+      unit: mmag
+      label: Zero-point uncertainty
+    - value: "19.6"
+      unit: mag
+      label: Best 100 s depth
+filters:
+  eyebrow: Filters
+  title: Filter transmission
+  figure:
+    src: /img/images/filter-transmission.png
+    alt: System response of the 7DT medium bands in two panels, the original twenty above and the
+      fifteen added in 2025 below, each shown against detector quantum efficiency, sky
+      transmission and telescope throughput
+    label: Total system response, decomposed
+    caption: "What actually reaches the detector: filter transmission multiplied by CMOS quantum
+      efficiency, atmospheric transmission and telescope throughput. The original twenty bands
+      are in the upper panel, the fifteen added in 2025 in the lower one, each drawn against the
+      three curves that shape it. Peak system response is about 65 percent near 475 nm and falls
+      away redward of 775 nm as quantum efficiency drops — which is why the reddest bands are
+      the shallowest and the least well calibrated."
+  footnote: The same response is shipped as reference data with [`supy`](/users/software) and is
+    what its simulator module computes with, so a response derived there matches this figure.
+    Which bands exist on a particular tile is reported on the [data access page](/users/access),
+    and how much of the sky each band has reached is on the [status page](/users/status), which
+    draws the same curves.
+psf:
+  eyebrow: Image quality
+  title: Point-spread function
+  body: Across the sixteen operational units the point-spread function measured at field center on
+    good nights ranges from 1.4 to 2.2 arcseconds FWHM, with an array median of 2.0 arcseconds
+    closely tracking the median site seeing. Unit-to-unit scatter in delivered FWHM is 0.2
+    arcseconds, and the PSF grows by 0.3 arcseconds from field center to corner while
+    ellipticity stays below 0.1 over the central 80 percent of the field. Delivered image
+    quality is therefore consistent across the array. Median delivered FWHM has held stable to
+    within 0.3 arcseconds since routine survey operations began in July 2024.
+  footnote: Measured from the point-spread function across the field of view by the Py7DT pipeline
+    as part of routine astrometric and photometric processing, so the figures are delivered
+    image quality in survey operation rather than a specification. Image quality is monitored
+    continuously; units are re-aligned individually as needed.
+  table:
+    caption: Delivered image quality
+    rows:
+      - - Pixel scale
+        - 0.505″ per pixel
+      - - Field of view per unit
+        - 1.34° × 0.90° (1.25 deg²)
+      - - PSF FWHM at field center
+        - "{spec:PSF FWHM at center}"
+      - - Array median FWHM
+        - "{spec:Array median FWHM}"
+      - - Unit-to-unit scatter
+        - "{spec:Unit-to-unit scatter}"
+      - - Center-to-corner growth
+        - +0.3″
+      - - Ellipticity, central 80% of field
+        - "{spec:PSF ellipticity}"
+      - - Median site seeing
+        - 1.5″
+  figures:
+    - src: /img/images/Seeing_2025-2026.png
+      alt: Violin plot of the delivered seeing distribution in each 7DT band over 2025 and 2026, with
+        the median marked for each
+      label: Delivered seeing, by band
+      caption: "Distribution of measured seeing in every band over the 2025–2026 seasons, with the
+        median marked on each. Medians run from 2.0 arcseconds in r, m700 and m775 to 2.7 in
+        m575: the variation is the observing conditions the band happened to be taken in, not a
+        property of the filter. The width of each violin is the number of exposures reaching
+        that seeing."
+    - src: /img/images/Seeing_by_unit_2025-2026.png
+      alt: Violin plot of the delivered seeing distribution for each of the sixteen operational 7DT
+        units over 2025 and 2026
+      label: Delivered seeing, by unit
+      caption: The same measurements grouped by telescope rather than by band, over all sixteen
+        operational units. Medians lie between 2.0 and 2.8 arcseconds, so the array behaves as a
+        coherent set of instruments rather than sixteen separate ones — which is what makes
+        coadding across units sound.
+photometry:
+  eyebrow: Photometry
+  title: Photometric zero point
+  body: Photometric calibration runs against synthetic photometry derived from Gaia DR3 BP/RP
+    spectra, homogenized to correct the color- and magnitude-dependent residuals reported by the
+    Gaia collaboration. The procedure was established during commissioning on 68
+    spectrophotometric standard stars, including CALSPEC sources, with non-variable point
+    sources selected following criteria adapted from SkyMapper DR4. Zero-point uncertainty
+    across the twenty medium bands in operational use is 15 to 25 mmag, with the larger values
+    redward of 775 nm where detector quantum efficiency falls and signal-to-noise drops
+    accordingly.
+  table:
+    caption: Calibration
+    rows:
+      - - Reference
+        - Gaia DR3 BP/RP synthetic photometry
+      - - Homogenization
+        - Color- and magnitude-dependent residuals corrected
+      - - Established on
+        - 68 spectrophotometric standards, incl. CALSPEC
+      - - Zero-point uncertainty
+        - "{spec:Zero-point uncertainty}"
+      - - Redward of 775 nm
+        - Toward the upper end of that range
+      - - Calibrated set
+        - The original 20 medium bands
+  figure:
+    src: /img/images/zeropoint.png
+    alt: Violin plot of the spatial zero-point RMSE in each band across 1167 deep-stack tiles,
+      rising from about 0.010 magnitudes in the blue to 0.064 in m875
+    label: Zero-point uniformity across a stack
+    caption: Spatial zero-point RMSE within DP2 deep stacks, measured in a 5-arcsecond aperture over
+      1,167 tiles — how much the calibration varies from place to place inside one image, which
+      is a different quantity from the overall zero-point uncertainty quoted above. Medians run
+      from 0.010 mag in r to 0.064 mag in m875, flat across the blue and green bands and
+      climbing steadily redward of 775 nm with falling detector quantum efficiency.
+  footnote: Zero points are determined per image by Py7DT with 3σ clipping across multiple
+    aperture sizes, against corrected synthetic photometry of matched Gaia sources. The fifteen
+    filters installed in late 2025 are not yet spectrophotometrically calibrated and are
+    excluded from the figures above; a calibration campaign following the same procedure is
+    planned. Full methodology is in preparation (Paek et al.).
+depth:
+  eyebrow: Depth
+  title: A 100-second exposure
+  body: "For the canonical 100-second exposure the 5-sigma point-source depth reaches 19.06 mag in
+    the bluest medium band (m400) and 16.60 mag at the longest wavelength (m875), peaking at
+    19.61 mag in m475 near maximum system throughput. The Sloan broad bands reach 20.59, 20.25
+    and 19.17 mag in g, r and i. These are nominal-condition figures: seeing better than 2.0
+    arcseconds, airmass below 1.5, and non-bright nights."
+  notes:
+    - "One hundred seconds is the fiducial 7DS exposure: every survey visit is built from it, so
+      a depth quoted for any program is this number scaled by the number of frames coadded.
+      Background-limited, so four frames buy 0.75 mag."
+    - "Nominal conditions: seeing better than 2.0 arcseconds, airmass below 1.5, and a
+      non-bright night. The spread around each figure on a real night is the width of the
+      violins below."
+  figure:
+    src: /img/images/depth-distribution.png
+    alt: Violin plot of the 5-sigma limiting magnitude distribution for each 7DT band in a
+      100-second exposure
+    label: Measured depth per band
+    caption: Distribution of single-exposure 5σ point-source depths for the twenty original medium
+      bands and Sloan g, r, i and z, measured from individual 100-second exposures taken in
+      routine survey operation, with the median marked on each. They run from 20.59 mag in Sloan
+      g down to 16.60 in m875, following the system response above. The width of each violin is
+      the number of exposures reaching that magnitude; the spread within a band is the variation
+      in seeing, airmass and sky brightness across real nights. The fifteen filters added in
+      late 2025 are not included, their spectrophotometric calibration being incomplete.
+surveys:
+  eyebrow: Depth
+  title: What each survey reaches
+  body: The three surveys spend that fiducial exposure differently — over the whole southern sky
+    once, over a smaller area every ten to fourteen days, or on one field every night — so they
+    arrive at very different depths from the same instrument.
+  table:
+    caption: Depth reached by each survey, 5σ in m600
+    columns:
+      - Survey
+      - Area
+      - Cadence
+      - Depth
+  footnote: "The RIS figure is one visit of 3 × 100 s. Figures marked with an asterisk are
+    cumulative over the planned operation rather than the depth of any single visit, and are
+    targets: [status and overview](/users/status) reports what has actually been observed, and
+    the coverage map on the [data access page](/users/access) gives the integration time and
+    estimated depth reached on any individual tile."
+next:
+  eyebrow: Next
+  title: Planning an observation
+  body: "To turn these figures into an expected signal-to-noise, combine the depths with the
+    response curves: the `supy` package has a simulator module that generates filter and
+    detector response for the 7DT bands, and an observer module for target visibility from El
+    Sauce."
+  buttons:
+    - label: Current status
+      href: /users/status
+    - label: Software
+      href: /users/software
+    - label: How to propose
+      href: /users/propose
+    - label: Instrument specification
+      href: /telescope/instrument
