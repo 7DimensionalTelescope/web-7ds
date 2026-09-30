@@ -227,7 +227,7 @@ const Index = () => {
                   <Link to="/publication/policy">publication policy</Link> once ratified.
                 </p>
               </div>
-              <div className="panel">
+              {/* <div className="panel">
                 <div className="panel__title">Settled, and not</div>
                 <ul className="feature-list" style={{ borderTop: 0, margin: 0 }}>
                   <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
@@ -256,7 +256,7 @@ const Index = () => {
                     </div>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         </Section>
