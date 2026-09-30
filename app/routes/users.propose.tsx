@@ -157,50 +157,19 @@ const Index = () => {
 
         <div className="subsection">
           <h3>Who may propose</h3>
-          <div className="split split--wide-text">
-            <div className="prose">
-              <p>
-                The 7DS team is being formally constituted. Anyone taking part in a 7DS Science
-                Working Group becomes a member of the team automatically, without having to ask —
-                opting out is the action that requires notice, not joining. The working groups
-                follow the <Link to="/science/overview">seven science themes</Link>.
-              </p>
-              <p>
-                Team membership carries two rights. The first is early access to 7DS data during
-                its proprietary period, before it is released more widely. The second is the right
-                to propose an independent observing program of your own on 7DT, rather than working
-                only from what the surveys happen to collect.
-              </p>
-            </div>
-            <div className="panel">
-              <div className="panel__title">In short</div>
-              <ul className="feature-list" style={{ borderTop: 0, margin: 0 }}>
-                <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-                  <div>
-                    <p className="feature-list__body" style={{ margin: 0 }}>
-                      <b>Who</b> Set by each call — see the{' '}
-                      <Link to="/users/call">Call for Proposals</Link>.
-                    </p>
-                  </div>
-                </li>
-                <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-                  <div>
-                    <p className="feature-list__body" style={{ margin: 0 }}>
-                      <b>How much</b> 200 hours for KASI and 200 hours for the Korean Astronomical
-                      Society.
-                    </p>
-                  </div>
-                </li>
-                <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-                  <div>
-                    <p className="feature-list__body" style={{ margin: 0 }}>
-                      <b>When</b> A call is open —{' '}
-                      <Link to="/users/call">dates and documents</Link>.
-                    </p>
-                  </div>
-                </li>
-              </ul>
-            </div>
+          <div className="prose">
+            <p>
+              The 7DS team is being formally constituted. Anyone taking part in a 7DS Science
+              Working Group becomes a member of the team automatically, without having to ask —
+              opting out is the action that requires notice, not joining. The working groups
+              follow the <Link to="/science/overview">seven science themes</Link>.
+            </p>
+            <p>
+              Team membership carries two rights. The first is early access to 7DS data during
+              its proprietary period, before it is released more widely. The second is the right
+              to propose an independent observing program of your own on 7DT, rather than working
+              only from what the surveys happen to collect.
+            </p>
           </div>
         </div>
 
@@ -459,11 +428,11 @@ const Index = () => {
           </ul>
         </div>
 
-        <div className="btn-row" style={{ marginTop: '2.5rem' }}>
+        {/* <div className="btn-row" style={{ marginTop: '2.5rem' }}>
           <Link className="btn btn--primary" to="/users/call">
             Submitting — dates, documents and address
           </Link>
-        </div>
+        </div> */}
       </Section>
 
     </PageLayout>

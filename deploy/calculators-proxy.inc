@@ -1,5 +1,7 @@
-# Shared proxy settings for the calculator location blocks.
 # Install as /etc/nginx/conf.d/calculators-proxy.inc
+#
+# The .inc extension matters: conf.d is loaded with `include conf.d/*.conf`, so
+# this file is only read where a location block includes it by name.
 
 proxy_http_version 1.1;
 proxy_set_header Upgrade            $http_upgrade;
@@ -14,6 +16,3 @@ proxy_set_header X-Forwarded-Proto  $scheme;
 proxy_buffering off;
 proxy_read_timeout 86400s;
 proxy_send_timeout 86400s;
-
-# The page-level CSP of this site would otherwise apply to the proxied app.
-proxy_hide_header Content-Security-Policy;
