@@ -1,0 +1,82 @@
+# /users/call — the dates and documents of the open call, and nothing else.
+#
+# The call itself — whether one is open, its dates, files, hours and addresses —
+# is in content/data/call.yaml, which the site-wide notice bar reads too. Text
+# in {braces} is filled from there. The rules of a call are not restated here:
+# they are in the Call for Proposals document, the version of record.
+#
+# While call.active is true the page shows `open`; otherwise `closed`.
+
+meta:
+  title: Call for Proposals · 7DT for users
+  description: "The open call for 7DT observing time: key dates, the documents to download, and
+    where the rules are set out."
+hero:
+  eyebrow: For users
+  title: Call for Proposals
+  image: /img/hero/telescope.jpg
+  ledeOpen: "{call.title} — proposals are being accepted for observations between
+    {call.observingPeriod}."
+  ledeClosed: No call is open at present. This page carries the dates and documents while one is.
+  deadlineLabel: Phase 1 deadline
+  meta:
+    - value: "400"
+      unit: hr
+      label: Time available
+    - value: "9"
+      unit: mo
+      label: Observing period
+    - value: "2"
+      label: Allocation pools
+open:
+  documents:
+    eyebrow: Documents
+    title: What to download
+    body: Read the first, fill in the second, and keep the third beside you while you do. This page
+      is where the call directs proposers for the current versions, so use the copies here
+      rather than a forwarded attachment.
+    tag: docx
+  schedule:
+    eyebrow: Schedule
+    title: Key dates
+    caption: Milestones of this call
+    footnote: Unless stated otherwise, deadlines are {call.deadlineNote}.
+  time:
+    eyebrow: Time
+    title: What is being offered
+    body:
+      - "{call.hours}. {call.pools} A proposal is counted against one pool on the basis of the
+        PI’s affiliation alone; the Call for Proposals gives the rule in full, including what
+        happens to a proposal that is not selected in the first pool it is considered in."
+      - "{call.nextCall}"
+    buttons:
+      - label: How to write the proposal
+        href: /users/propose
+      - label: Calculators
+        href: /users/links#calculators
+      - label: Measured performance
+        href: /users/performance
+  submit:
+    eyebrow: Submitting
+    title: Where to send it
+    panelTitle: By e-mail, before {call.deadline}
+    body: Send the completed Proposal Form together with the Scientific Justification, the Technical
+      Justification and any accompanying files — a target list, for example — to
+      [{call.submit.email}](mailto:{call.submit.email}?subject=7DT%20Phase%201%20proposal).
+      There is no submission portal; e-mail is the route.
+    button:
+      label: Submit a proposal
+      href: mailto:{call.submit.email}?subject=7DT%20Phase%201%20proposal
+  questions:
+    eyebrow: Questions
+    title: Who to ask
+    body: Questions about this call, the submission process or 7DS collaboration policies go to
+      {call.contact.name} at
+      [{call.contact.email}](mailto:{call.contact.email}?subject=7DT%20Call%20for%20Proposals).
+closed:
+  eyebrow: Status
+  title: No call is open
+  panelTitle: Nothing to submit at present
+  body: When a call opens, its dates and documents appear here and a notice goes up across the
+    site. How proposals are written does not change between calls, and is set out under [how to
+    propose](/users/propose).

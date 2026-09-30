@@ -42,3 +42,10 @@ dates:
 submit:
   method: e-mail
   email: 7ds.cfp@gmail.com
+# The notice bar across the top of every page while the call is open. Text in
+# {braces} is filled from the fields above.
+banner:
+  tag: Open call
+  text: "**{title}** — proposals for {observingPeriod} are being accepted. Deadline **{deadline}**,
+    {deadlineNote}."
+  link: Dates and documents

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
+import { Md } from './md';
+import { fill } from '../lib/page';
 import call from '../content/data/call.json';
 
 /* ---------------------------------------------------------------------------
@@ -13,7 +15,7 @@ import call from '../content/data/call.json';
    it. The value is measured rather than fixed because the line wraps on a
    phone; CSS carries a one-line default for the moment before this runs.
 
-   Set `active: false` in content/call.json when the deadline passes and it
+   Set `active: false` in content/data/call.yaml when the deadline passes and it
    disappears everywhere at once, taking the offset with it.
 --------------------------------------------------------------------------- */
 
@@ -46,13 +48,12 @@ export default function CallBanner() {
   return (
     <aside className="callbar" aria-label="Call for proposals" ref={ref}>
       <div className="callbar__inner">
-        <span className="callbar__tag">Open call</span>
+        <span className="callbar__tag">{call.banner.tag}</span>
         <p className="callbar__text">
-          <b>{call.title}</b> — proposals for {call.observingPeriod} are being accepted. Deadline{' '}
-          <b>{call.deadline}</b>, {call.deadlineNote}.
+          <Md>{fill(call.banner.text, call)}</Md>
         </p>
         <Link className="callbar__link" to="/users/call">
-          Dates and documents
+          {call.banner.link}
         </Link>
       </div>
     </aside>

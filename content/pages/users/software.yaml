@@ -1,0 +1,89 @@
+# /users/software — what to install to plan an observation or work with 7DT data.
+#
+# The first table names the packages; a name written as a link to #supy or
+# #py7dt jumps to that package's section below.
+
+meta:
+  title: Software · 7DT for users
+  description: "Software available to 7DT users: supy for analysis, Py7DT for reprocessing, and
+    the operational systems that produce the data."
+hero:
+  eyebrow: For users
+  title: Software
+  lede: What to install to plan an observation or work with 7DT data, and what produced the data
+    in the first place.
+  image: /img/hero/computer.jpg
+packages:
+  eyebrow: Start here
+  title: The three packages
+  caption: What each one is for
+  columns:
+    - Package
+    - What it does
+    - Who installs it
+  rows:
+    - name: "[supy](#supy)"
+      what: Target visibility from El Sauce, tile lookup by coordinate, and filter and detector
+        response simulation for the 7DT bands.
+      who: Anyone planning an observation or interpreting a band
+    - name: "[Py7DT](#py7dt)"
+      what: "The reduction pipeline: preprocessing, astrometry, photometric calibration, coaddition
+        and difference imaging, at survey throughput."
+      who: Anyone reprocessing data rather than using the products
+    - name: uniphot
+      what: Not yet described here. It is not in the project’s public GitHub organization, and this
+        page will carry it once its purpose and repository are confirmed.
+      who: —
+supy:
+  id: supy
+  eyebrow: Analysis
+  title: supy
+  body:
+    - "`supy` is a collection of Python utilities for members and users of the 7DT survey. It
+      covers the tasks that come up before and after an observation rather than the reduction
+      itself: working out whether a target is observable, finding which tiles cover a position
+      or a gravitational-wave localization region, and simulating the response of the filter
+      set."
+    - It is installed from source. Documentation, including worked examples for each module, is
+      published at `sdt-supy.readthedocs.io`.
+  install:
+    title: Install
+    lines:
+      - git clone https://github.com/7DimensionalTelescope/supy.git
+      - cd supy
+      - pip install .
+  buttons:
+    - label: Documentation
+      href: https://sdt-supy.readthedocs.io/en/latest/
+    - label: Source
+      href: https://github.com/7DimensionalTelescope/supy
+  modules:
+    caption: Modules
+    rows:
+      - - Observer
+        - Target visibility and altitude from El Sauce, including StarAlt-style plots
+      - - Tiles
+        - Tile lookup by coordinate, matching against a localization region, and tile plotting
+      - - Simulator
+        - Filter and detector response simulation for the 7DT bands
+      - - const
+        - Instrument and site constants used by the other modules
+py7dt:
+  id: py7dt
+  eyebrow: Reprocessing
+  title: "Py7DT: running the pipeline yourself"
+  body: Beyond its pipeline role, Py7DT is structured for offline reuse. Researchers inside and
+    outside the 7DT team can run the same codebase to reprocess data with custom configurations,
+    resuming from any stage of the reduction, and choose for themselves how far to trust the
+    standard products. Images are passed through the pipeline as string paths with metadata in
+    FITS headers and YAML files, rather than wrapped in a bespoke data model, which keeps
+    products inspectable outside the pipeline and lowers the cost of learning to process 7DT
+    data.
+  notes:
+    - Py7DT uses a rolling-release version scheme in which the last digit is incremented
+      whenever a scientific decision changes how data are processed. That version is recorded in
+      every configuration file and in the process status database, so any product can be traced
+      to the code that made it and reprocessed in bulk when the code changes. What a reduced
+      file contains, keyword by keyword, is on the [data format page](/users/format).
+    - "The full technical description is in Hyun et al., _Py7DT: Data Reduction Pipeline of the
+      7-Dimensional Telescope_ (Proc. SPIE 14155-12) — see [publications](/publication/list)."

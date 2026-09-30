@@ -1,174 +1,107 @@
 import React from 'react';
-import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
-import { PageLayout, PageHero, Section } from '../components/site';
-import { softwareReuseText } from './content/text';
+import { PageLayout, PageHero, Section, ButtonRow } from '../components/site';
+import { Md, Paras } from '../components/md';
+import { metaOf } from '../lib/page';
+import page from '../content/pages/users/software.json';
 
-export const meta: MetaFunction = () => [
-  { title: 'Software · 7DT for users' },
-  {
-    name: 'description',
-    content:
-      'Software available to 7DT users: supy for analysis, Py7DT for reprocessing, and the operational systems that produce the data.',
-  },
-];
+export const meta: MetaFunction = () => metaOf(page);
 
 /* Two audiences, kept apart deliberately: supy is what an external user
    installs, the operational systems are what produced the data they are
    looking at. Mixing them made the previous page hard to act on. */
 
-const SUPY_MODULES = [
-  ['Observer', 'Target visibility and altitude from El Sauce, including StarAlt-style plots'],
-  ['Tiles', 'Tile lookup by coordinate, matching against a localization region, and tile plotting'],
-  ['Simulator', 'Filter and detector response simulation for the 7DT bands'],
-  ['const', 'Instrument and site constants used by the other modules'],
-];
+const Index = () => {
+  const { hero, packages, supy, py7dt } = page;
+  return (
+    <PageLayout menu="manuUsers">
+      <PageHero eyebrow={hero.eyebrow} title={hero.title} lede={hero.lede} image={hero.image} />
 
-const Index = () => (
-  <PageLayout menu="manuUsers">
-    <PageHero
-      eyebrow="For users"
-      title="Software"
-      lede="What to install to plan an observation or work with 7DT data, and what produced the data in the first place."
-      image="/img/hero/computer.jpg"
-    />
-
-    {/* Three packages carry almost everything a user touches. Naming them
-        together at the top saves a reader working out which of the systems
-        further down they are supposed to install. */}
-    <Section eyebrow="Start here" title="The three packages">
-      <div className="table-wrap">
-        <table className="spec-table">
-          <caption>What each one is for</caption>
-          <thead>
-            <tr>
-              <th scope="col">Package</th>
-              <th scope="col">What it does</th>
-              <th scope="col">Who installs it</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">
-                <a href="#supy">supy</a>
-              </th>
-              <td>
-                Target visibility from El Sauce, tile lookup by coordinate, and filter and detector
-                response simulation for the 7DT bands.
-              </td>
-              <td>Anyone planning an observation or interpreting a band</td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <a href="#py7dt">Py7DT</a>
-              </th>
-              <td>
-                The reduction pipeline: preprocessing, astrometry, photometric calibration,
-                coaddition and difference imaging, at survey throughput.
-              </td>
-              <td>Anyone reprocessing data rather than using the products</td>
-            </tr>
-            <tr>
-              <th scope="row">uniphot</th>
-              <td>
-                Not yet described here. It is not in the project&rsquo;s public GitHub
-                organization, and this page will carry it once its purpose and repository are
-                confirmed.
-              </td>
-              <td>—</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </Section>
-
-    <Section id="supy" eyebrow="Analysis" title="supy">
-      <div className="split split--wide-text">
-        <div>
-          <p className="prose">
-            <code>supy</code> is a collection of Python utilities for members and users of the 7DT
-            survey. It covers the tasks that come up before and after an observation rather than
-            the reduction itself: working out whether a target is observable, finding which tiles
-            cover a position or a gravitational-wave localization region, and simulating the
-            response of the filter set.
-          </p>
-          <p className="prose">
-            It is installed from source. Documentation, including worked examples for each module,
-            is published at <code>sdt-supy.readthedocs.io</code>.
-          </p>
-          <div className="panel panel--alt" style={{ marginTop: '1.5rem' }}>
-            <div className="panel__title">Install</div>
-            <pre
-              style={{
-                margin: 0,
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.8125rem',
-                lineHeight: 1.7,
-                overflowX: 'auto',
-              }}
-            >
-              <code>
-                git clone https://github.com/7DimensionalTelescope/supy.git{'\n'}
-                cd supy{'\n'}
-                pip install .
-              </code>
-            </pre>
-          </div>
-          <div className="btn-row" style={{ marginTop: '1.25rem' }}>
-            <a
-              className="btn btn--primary"
-              href="https://sdt-supy.readthedocs.io/en/latest/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Documentation
-            </a>
-            <a
-              className="btn btn--secondary"
-              href="https://github.com/7DimensionalTelescope/supy"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Source
-            </a>
-          </div>
-        </div>
+      {/* Three packages carry almost everything a user touches. Naming them
+          together at the top saves a reader working out which of the systems
+          further down they are supposed to install. */}
+      <Section eyebrow={packages.eyebrow} title={packages.title}>
         <div className="table-wrap">
           <table className="spec-table">
-            <caption>Modules</caption>
-            <tbody>
-              {SUPY_MODULES.map((row) => (
-                <tr key={row[0]}>
-                  <th scope="row" style={{ fontFamily: 'var(--font-mono)' }}>
-                    {row[0]}
+            <caption>{packages.caption}</caption>
+            <thead>
+              <tr>
+                {packages.columns.map((col) => (
+                  <th key={col} scope="col">
+                    {col}
                   </th>
-                  <td>{row[1]}</td>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {packages.rows.map((row) => (
+                <tr key={row.name}>
+                  <th scope="row">
+                    <Md>{row.name}</Md>
+                  </th>
+                  <td>
+                    <Md>{row.what}</Md>
+                  </td>
+                  <td>
+                    <Md>{row.who}</Md>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
-    </Section>
+      </Section>
 
-    <Section id="py7dt" eyebrow="Reprocessing" title="Py7DT: running the pipeline yourself" alt>
-      <p className="prose">{softwareReuseText}</p>
-      <p className="note" style={{ marginTop: '1rem' }}>
-        Py7DT uses a rolling-release version scheme in which the last digit is incremented whenever
-        a scientific decision changes how data are processed. That version is recorded in every
-        configuration file and in the process status database, so any product can be traced to the
-        code that made it and reprocessed in bulk when the code changes. What a reduced file
-        contains, keyword by keyword, is on the{' '}
-        <Link to="/users/format">data format page</Link>.
-      </p>
-      <p className="note" style={{ marginTop: '1rem' }}>
-        The full technical description is in Hyun et al., <i>Py7DT: Data Reduction Pipeline of the
-        7-Dimensional Telescope</i> (Proc. SPIE 14155-12) — see{' '}
-        <Link to="/publication/list">publications</Link>.
-      </p>
-    </Section>
+      <Section id={supy.id} eyebrow={supy.eyebrow} title={supy.title}>
+        <div className="split split--wide-text">
+          <div>
+            <Paras className="prose">{supy.body}</Paras>
+            <div className="panel panel--alt" style={{ marginTop: '1.5rem' }}>
+              <div className="panel__title">{supy.install.title}</div>
+              <pre
+                style={{
+                  margin: 0,
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.8125rem',
+                  lineHeight: 1.7,
+                  overflowX: 'auto',
+                }}
+              >
+                <code>{supy.install.lines.join('\n')}</code>
+              </pre>
+            </div>
+            <ButtonRow buttons={supy.buttons} style={{ marginTop: '1.25rem' }} />
+          </div>
+          <div className="table-wrap">
+            <table className="spec-table">
+              <caption>{supy.modules.caption}</caption>
+              <tbody>
+                {supy.modules.rows.map((row) => (
+                  <tr key={row[0]}>
+                    <th scope="row" style={{ fontFamily: 'var(--font-mono)' }}>
+                      {row[0]}
+                    </th>
+                    <td>
+                      <Md>{row[1]}</Md>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Section>
 
-  </PageLayout>
-);
+      <Section id={py7dt.id} eyebrow={py7dt.eyebrow} title={py7dt.title} alt>
+        <p className="prose">
+          <Md>{py7dt.body}</Md>
+        </p>
+        <Paras className="note" style={{ marginTop: '1rem' }}>
+          {py7dt.notes}
+        </Paras>
+      </Section>
+    </PageLayout>
+  );
+};
 
 export default Index;
