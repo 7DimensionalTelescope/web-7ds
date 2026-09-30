@@ -131,18 +131,26 @@ Lines starting with `#` are comments for editors, and the site never shows
 them. The `note:` and `_note:` fields at the top of data files are also never
 shown. They record where the figures come from.
 
-## Checking and publishing a change
+## Publishing a change
+
+Edit the file on GitHub: open it in
+[7DimensionalTelescope/web-7ds](https://github.com/7DimensionalTelescope/web-7ds),
+click the pencil, make the change, and commit it to `main`. The site picks it
+up within about five minutes. It first builds the change and checks that
+every page still renders. If anything fails, the change is not published and
+the site stays as it was. Nothing on the site breaks, but your edit will not
+appear until the file is fixed. Whoever looks after the server can see why in
+`~/7ds-live/deploy.log` (see `deploy/AUTODEPLOY.md`).
+
+To check a change before committing it, work in a local copy of the
+repository:
 
 ```bash
 npm run content     # checks every file and compiles it; stops with file:line on an error
-npm run build       # content, CSS and site
-pm2 restart 7ds
 ```
 
-If `npm run content` reports an error, nothing is written and the site keeps
-running on the previous build. The usual causes are a missing quote, an
-indentation step that does not match its neighbors, or a tab character. Use
-spaces, never tabs.
+The usual causes of an error are a missing quote, an indentation step that
+does not match its neighbors, or a tab character. Use spaces, never tabs.
 
 `app/content/` holds the compiled copy, which is generated. Never edit it,
 because the next build overwrites it.

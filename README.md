@@ -35,6 +35,11 @@ Development server:
 npm run dev                # http://localhost:3003
 ```
 
+**Deployment.** The live site builds and deploys itself from `main` on GitHub within five
+minutes of a push, after checking that every page renders; a commit that fails keeps the
+previous release live. How it works, how to roll back or pause it, and the one-time setup are
+in [`deploy/AUTODEPLOY.md`](deploy/AUTODEPLOY.md).
+
 > `npm run build` writes `app/css/app.css`, `build/` and `public/build/`. These are **generated**
 > and are not committed — a fresh clone must run `npm run build` before `npm start`.
 

@@ -85,6 +85,16 @@ exists.
 ## Before finishing
 
 `npm run typecheck && npm run build` (the first compiles `content/` before
-type-checking, which a bare `tsc` does not), then `pm2 restart 7ds` and check the
-affected URLs on port 3001. A page that returns 200 has not necessarily
+type-checking, which a bare `tsc` does not). Then look at the result on a
+spare port — `PORT=3005 node_modules/.bin/remix-serve build/index.js` — and
+check the affected URLs there. A page that returns 200 has not necessarily
 rendered — check the markup for what you expected to be there.
+
+**The live site deploys itself from `main` on GitHub** (`deploy/AUTODEPLOY.md`):
+it runs from `~/7ds-live/current`, not from this working copy, so a change
+reaches it only by being pushed, and pushing is the user's to do. Never
+`pm2 delete`/`pm2 start` the `7ds` app or edit `~/7ds-live` by hand; a bad
+restart there takes the public site down. Test the deployer, if it changes,
+under another `DEPLOY_ROOT` and `DEPLOY_APP`, as the script's header describes,
+and check that `site.config.cjs` resolves to that test name before starting
+anything with pm2.
