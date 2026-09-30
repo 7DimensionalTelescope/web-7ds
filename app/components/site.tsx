@@ -3,7 +3,7 @@ import { Link } from '@remix-run/react';
 import NavBar from '../routes/navigate';
 import CallBanner from './callbanner';
 import PageRail, { type RailItem } from './pagerail';
-import { Md } from './md';
+import { Md, SmartLink } from './md';
 import FooterBar from '../routes/footer';
 
 /* ---------------------------------------------------------------------------
@@ -315,9 +315,9 @@ export function ButtonRow({ buttons, style }: { buttons: ButtonContent[]; style?
   return (
     <div className="btn-row" style={style}>
       {buttons.map((b, k) => (
-        <Link key={b.href + b.label} className={`btn ${k === 0 ? 'btn--primary' : 'btn--secondary'}`} to={b.href}>
+        <SmartLink key={b.href + b.label} className={`btn ${k === 0 ? 'btn--primary' : 'btn--secondary'}`} href={b.href}>
           {b.label}
-        </Link>
+        </SmartLink>
       ))}
     </div>
   );

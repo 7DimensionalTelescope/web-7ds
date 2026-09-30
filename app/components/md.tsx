@@ -25,30 +25,43 @@ import { Link } from '@remix-run/react';
 
 const DOWNLOAD = /\.(docx?|pdf|xlsx?|csv|zip|fits)$/i;
 
-function link(href: string, children: React.ReactNode, key: number) {
+/**
+ * A link whose kind follows from its address, by the rules above. Used by the
+ * Markdown and by anything else that takes a link from a content file, so a
+ * button to a .docx downloads just as a link to one does.
+ */
+export function SmartLink({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
   if (/^https?:\/\//.test(href)) {
     return (
-      <a key={key} href={href} target="_blank" rel="noreferrer">
+      <a className={className} href={href} target="_blank" rel="noreferrer">
         {children}
       </a>
     );
   }
   if (href.startsWith('/') && DOWNLOAD.test(href.split(/[?#]/)[0])) {
     return (
-      <a key={key} href={href} download>
+      <a className={className} href={href} download>
         {children}
       </a>
     );
   }
   if (href.startsWith('/')) {
     return (
-      <Link key={key} to={href}>
+      <Link className={className} to={href}>
         {children}
       </Link>
     );
   }
   return (
-    <a key={key} href={href}>
+    <a className={className} href={href}>
       {children}
     </a>
   );
@@ -91,7 +104,11 @@ export function inline(src: string): React.ReactNode[] {
       const end = close > i ? src.indexOf(')', close + 2) : -1;
       if (close > i && end > close) {
         flush();
-        out.push(link(src.slice(close + 2, end), inline(src.slice(i + 1, close)), key++));
+        out.push(
+          <SmartLink key={key++} href={src.slice(close + 2, end)}>
+            {inline(src.slice(i + 1, close))}
+          </SmartLink>
+        );
         i = end + 1;
         continue;
       }

@@ -1,0 +1,213 @@
+# /users/propose — how to write a proposal for 7DT time. This page does not change
+# between calls; the dates and documents of the current call are on /users/call.
+#
+# Text in {braces} is filled from content/data/call.yaml: {call.deadline},
+# {call.deadlineNote}, {call.observingPeriod}. The openCall block is shown only
+# while call.active is true there.
+#
+# The mode boxes under Observation mode are read from content/data/surveys.yaml
+# (modes); the coverage figure below them from app/data/obsmodes.json.
+#
+# Two blocks are switched off in the page and kept here in case they return:
+# a "Settled, and not" panel beside Data rights —
+#   Decided: The PI chooses the proprietary period — none, 12 or 18 months from
+#     delivery of the data products. The core members appear as co-authors on
+#     any output that uses non-public data.
+#   Still open: The wider collaboration publication policy, including the public
+#     release schedule.
+#   Meanwhile: Contact the PI before submitting a paper, and use the citation
+#     and acknowledgment given in the call.
+# and a closing button, "Submitting — dates, documents and address" → /users/call.
+
+meta:
+  title: How to propose · 7DT for users
+  description: "Who may propose for 7DT time, how much is available and when: team membership
+    through the science working groups, the KASI and KAS allocations, the data policy, and how
+    an observation is specified."
+hero:
+  eyebrow: For users
+  title: How to *Propose*
+  lede: Who may ask for time on 7DT, how much of it there is, and what the array can be asked to
+    do with it.
+  image: /img/hero/telescope.jpg
+general:
+  id: general
+  eyebrow: Before you start
+  title: General information
+  openCall:
+    id: open-call
+    title: The open call
+    body: Proposals are being accepted for observations between {call.observingPeriod}. The deadline
+      is **{call.deadline}**, {call.deadlineNote}. The dates, the documents to download and the
+      rules that apply to this particular call are on the [call for proposals](/users/call)
+      page. This page is about writing the proposal, and does not change between calls.
+    buttons:
+      - label: Dates and documents
+        href: /users/call
+      - label: Proposal Form
+        href: /proposal/7DT_Phase1_Proposal_Form.docx
+  who:
+    id: who
+    title: Who may propose
+    body:
+      - The 7DS team is being formally constituted. Anyone taking part in a 7DS Science Working
+        Group becomes a member of the team automatically, without having to ask — opting out is
+        the action that requires notice, not joining. The working groups follow the [seven
+        science themes](/science/overview).
+      - Team membership carries two rights. The first is early access to 7DS data during its
+        proprietary period, before it is released more widely. The second is the right to
+        propose an independent observing program of your own on 7DT, rather than working only
+        from what the surveys happen to collect.
+  time:
+    id: time
+    title: Time available, and when
+    rail: Time available
+    body:
+      - Two hundred hours of 7DT time are allocated to the Korea Astronomy and Space Science
+        Institute, and a further two hundred hours to the Korean Astronomical Society — four
+        hundred hours in total. How a proposal is assigned to a pool and reviewed is set by each
+        call, and is given in its [Call for Proposals](/users/call). This is time on the array
+        outside the three surveys, which otherwise occupy the night.
+      - The current call, its dates and its documents are on the [call for
+        proposals](/users/call) page. The [observation calculators](/users/links#calculators)
+        are available for costing a program. Target-of-opportunity requests are handled
+        separately and continuously, and do not wait for a call.
+  dataRights:
+    id: data-rights
+    title: Data rights and authorship
+    body:
+      - Data taken for the surveys and for approved programs carry a proprietary period during
+        which they are available to the 7DS team before wider release. Team membership is what
+        grants that access, which is the practical reason the working groups matter as much as
+        the allocations do.
+      - Any paper, conference contribution, thesis or other public output that uses 7DT data not
+        yet in a 7DS public release must include the core members of the 7DS team as co-authors.
+        They are named in the [Call for Proposals](/proposal/7DT_Call_for_Proposals.docx), along
+        with the reference to cite and the acknowledgment to include. Anyone intending to
+        publish is asked to contact the principal investigator first, so that authors and
+        acknowledgments are agreed before submission rather than after.
+      - The wider publication policy of the 7DS collaboration — the public release schedule
+        among it — is being finalized, and will be posted under [publication
+        policy](/publication/policy) once ratified.
+guidelines:
+  id: guidelines
+  eyebrow: Writing
+  title: Guidelines
+  intro: "A request is a program type, an observation mode, a target or an area, the exposures
+    that reach the signal-to-noise the science needs, and the constraints under which the array
+    may take them. Positions on the survey tiling are preferred wherever the science allows:
+    data taken on a tile coadd directly with the survey data already there, and difference
+    against the existing reference image without a separate calibration step."
+  # The type says what kind of program it is; the mode, below, says how the
+  # array is configured to carry it out. Two different axes.
+  programType:
+    id: program-type
+    title: Program type
+    caption: Program types
+    types:
+      - code: ToO
+        name: Target of opportunity
+        body: Observations triggered by an unpredictable event — a gamma-ray burst, a gravitational-wave
+          counterpart, a newly discovered supernova. The trigger condition is described in
+          prose; the response time is a separate field.
+      - code: Target
+        name: Pre-selected targets
+        body: One or more targets observed on a planned schedule. A custom tiling may be used. Every
+          target has to be listed with its coordinates — a representative subset is not enough,
+          since each is judged on its own visibility and priority.
+      - code: Survey
+        name: Wide area or many tiles
+        body: Systematic coverage of an area. Carried out on the existing 7DS tiling grid, the same one
+          RIS, WTS and IMS use, rather than a tiling of your own. Give the coordinate range and
+          the area in square degrees rather than a tile list.
+  observationMode:
+    id: observation-mode
+    title: Observation mode
+    body: Because each unit carries its own filter complement, the array can be reconfigured between
+      science goals without changing hardware. The full spectral range is covered by assigning
+      different filter combinations to individual units and rotating through them during an
+      observation. Four modes are in routine use; the choice between them trades spectral
+      sampling, depth and sky coverage against one another.
+  beforeYouWrite:
+    id: before-you-write
+    title: Before you write
+    body: Four things are worth settling first, because each of them can make a program unnecessary
+      or unworkable, and all four can be checked from this site.
+    steps:
+      - title: Check the target is observable
+        body: Visibility from El Sauce in the intended window, and the filter response over the
+          wavelengths that matter, can both be computed with [supy](/users/software), or with
+          the 7DT [Visibility Tool](/visibility)
+      - title: Check what already exists
+        body: Much of the southern sky already has a medium-band reference image, and the tile under
+          your position may already carry the bands you need. The [data access
+          page](/users/access) reports the bands and frame counts held for any position, and the
+          7DT [Tile Matcher](/tile) shows which survey tile covers it.
+      - title: Estimate depth from measurements, not aperture
+        body: The measured [limiting magnitudes](/users/performance) per band, for the fiducial
+          100-second exposure, are what a coadded depth should be scaled from. The 7DT [Exposure
+          Time Calculator](/exptime) uses these same measurements to compute the exposure needed
+          for a target SNR, or the SNR for a given exposure.
+      - title: Calculate the total observing time
+        body: Once the exposure time per filter is set, the 7DT [Overhead Calculator](/overhead) adds
+          the per-frame and per-target overheads, such as filter exchange, autofocus, slewing,
+          setup, and readout, to give the total requested hours.
+  # The fields of the Phase 1 form, in the order the form asks for them. The
+  # Preparation Instructions are the authority; this table lets a reader see
+  # what they are committing to before opening a document, and points each
+  # field a calculator answers at that calculator.
+  technical:
+    id: technical-justification
+    title: Technical justification
+    caption: Fields of the Phase 1 form
+    columns:
+      - Field
+      - What to give
+    fields:
+      - field: Total requested hours
+        what: The whole request, overheads included — slewing, filter changes, readout — not time on
+          source. The [overhead calculator](/overhead) gives the difference.
+      - field: Minimum acceptable hours
+        what: The smallest allocation that still meets the core objective. Used when a partial
+          allocation is considered.
+      - field: Program type
+        what: ToO, Target or Survey, as above.
+      - field: Observation mode
+        what: Spec, Deep, Color or Search. More than one may be listed, with the time allocated to each
+          explained.
+      - field: Proprietary period
+        what: None, 12 months or 18 months, counted from the date the data products are delivered rather
+          than from the observation.
+      - field: Observing window
+        what: Any constraint on when the observations may happen — a seasonal visibility window,
+          coordination with another facility, a deadline for a fading object. “None” if there is
+          none. The [visibility calculator](/visibility) gives the window a target actually has.
+      - field: Moon phase
+        what: Dark, gray or bright; more than one if the program tolerates a range.
+      - field: Required response time
+        what: "ToO programs only: the longest acceptable delay between trigger and the start of
+          observation."
+      - field: Exposure time justification
+        what: The exposure per target or tile and how it was derived, the target signal-to-noise and the
+          calculation or calculator used to reach it, the filters and the time on each, and the
+          arithmetic that adds up to the total requested hours. The [exposure
+          calculator](/exptime) works in either direction.
+      - field: Target coordinates
+        what: "Target programs: every target in RA and Dec, J2000. Survey programs: the coordinate range
+          and the area in deg². The [tile matcher](/tile) shows which tiles cover a position,
+          and how they overlap."
+      - field: Duplication with existing 7DS data
+        what: Whether the targets or area overlap [RIS](/survey/ris), [IMS](/survey/ims) or
+          [WTS](/survey/wts). “None”, or why the existing data are not sufficient — greater
+          depth, a different cadence, a different filter set. What exists on a given tile is on
+          the [status page](/users/status).
+    body: Two limits shape the exposure time before the science does. A single frame should be at
+      least 100 seconds, which is what it takes to reach background-limited conditions, and no
+      more than 180, beyond which tracking accuracy starts to elongate the PSF. Depth comes from
+      taking frames in series, not from lengthening one. Bright targets can use shorter frames
+      at the cost of more overhead, and any frame time other than 100 seconds adds overhead for
+      its own calibration frames. Survey observations use 100 seconds as standard.
+    footnote: Of the observing conditions, only Moon phase can be requested — seeing and cloud cover
+      cannot be specified, though observations are made under nominal conditions wherever
+      possible. A unit may also be out of service on the night, in which case the delivered data
+      lack whatever that telescope was carrying.

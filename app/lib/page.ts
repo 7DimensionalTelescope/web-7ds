@@ -13,3 +13,17 @@ export const metaOf = (page: { meta: PageMeta }) => [
   { title: page.meta.title },
   { name: 'description', content: page.meta.description },
 ];
+
+/**
+ * Fills {name.path} placeholders in content text from the data a page passes,
+ * so a sentence that quotes a date or a count from a data file reads it rather
+ * than restating it. A placeholder with nothing behind it is left as written,
+ * which makes a mistyped name visible on the page instead of blank.
+ */
+export const fill = (text: string, vars: Record<string, unknown>) =>
+  text.replace(/\{([A-Za-z][\w.]*)\}/g, (whole, path: string) => {
+    const value = path
+      .split('.')
+      .reduce<unknown>((obj, key) => (obj && typeof obj === 'object' ? (obj as Record<string, unknown>)[key] : undefined), vars);
+    return value === undefined || value === null ? whole : String(value);
+  });
