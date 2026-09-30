@@ -1,0 +1,11 @@
+# /links — partner surveys, facilities, vendors and institutions. The groups and
+# links themselves are in content/data/links.yaml.
+
+meta:
+  title: Links · 7-Dimensional Telescope
+  description: Partner surveys, facilities, vendors and institutions related to 7DT.
+hero:
+  eyebrow: Resources
+  title: Links
+  lede: The surveys, facilities, networks and suppliers that 7DT depends on or works alongside.
+  image: /img/hero/links.jpg

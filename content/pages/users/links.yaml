@@ -1,0 +1,57 @@
+# /users/links — project services and the observation calculators.
+#
+# Services with a `url` are published by decision of the project. The data
+# server's address is configuration, not content: it has a `key` naming the
+# environment variable that holds it (LINK_PORTAL), and appears only when that
+# is set. Only variables whose names begin with LINK_ are read. Do not add a
+# service on another host without the project deciding to publish it.
+#
+# The calculator cards are read from content/data/calculators.yaml.
+
+meta:
+  title: Useful links · 7DT for users
+  description: Project services and observation calculators for users of the 7-Dimensional Telescope.
+hero:
+  eyebrow: For users
+  title: Useful *links*
+  lede: The services that support work with 7DT data. For partner surveys, vendors and
+    institutions, see the site-wide links page.
+  image: /img/hero/computer.jpg
+services:
+  eyebrow: Services
+  title: Project services
+  list:
+    - url: https://proton.snu.ac.kr
+      name: Project wiki
+      note: User manuals, quality-assurance criteria and operating procedures for internal and
+        external users of 7DT data.
+    - url: https://proton.snu.ac.kr/pipeline
+      name: Pipeline status
+      note: Real-time progress of the nightly reduction, with quality-assurance summaries per night
+        and per unit.
+    - url: https://proton.snu.ac.kr/too
+      name: Target-of-opportunity page
+      note: Observation requests and the history of follow-up campaigns, including gravitational-wave
+        events.
+    - key: LINK_PORTAL
+      name: Data server
+      note: "The observation database of record: images, catalogs, processing state and data quality."
+    - url: https://github.com/7DimensionalTelescope
+      name: 7DT on GitHub
+      note: The project organization. Every repository listed below lives here, including the
+        pipeline, the control system and supy.
+  noneLinked:
+    title: Not publicly linked
+    body:
+      - Four services support work with 7DT data — a project wiki carrying user manuals and
+        quality-assurance criteria, a pipeline status page with per-night progress, a
+        target-of-opportunity page holding observation requests and campaign history, and the
+        observation database itself. They run on project infrastructure and are reached through
+        the collaboration rather than from this page.
+      - Ask the project for access, or see [data access](/users/access) for what can be obtained
+        without it.
+  someUnlinked: Services not listed here are reached through the collaboration rather than from this page.
+calculators:
+  id: calculators
+  eyebrow: Calculators
+  title: Observation calculators

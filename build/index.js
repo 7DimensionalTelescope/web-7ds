@@ -4226,47 +4226,57 @@ __export(users_access_exports, {
   default: () => users_access_default,
   meta: () => meta18
 });
-import { Link as Link10 } from "@remix-run/react";
-import { jsx as jsx29, jsxs as jsxs22 } from "react/jsx-runtime";
-var meta18 = () => [
-  { title: "Data access \xB7 7DT for users" },
-  {
-    name: "description",
-    content: "How 7DS data will be obtained. A public query and download service is being built; until it opens, data are requested from the project directly."
-  }
-], Index18 = () => /* @__PURE__ */ jsxs22(PageLayout, { menu: "manuUsers", children: [
-  /* @__PURE__ */ jsx29(
-    PageHero,
-    {
-      eyebrow: "For users",
-      title: "Data access",
-      lede: "How 7DS data are obtained: search, query and download. The service is being built; this page will describe it when it opens.",
-      image: "/img/hero/data.jpg"
+
+// app/content/pages/users/access.json
+var access_default = {
+  meta: {
+    title: "Data access \xB7 7DT for users",
+    description: "How 7DS data will be obtained. A public query and download service is being built; until it opens, data are requested from the project directly."
+  },
+  hero: {
+    eyebrow: "For users",
+    title: "Data access",
+    lede: "How 7DS data are obtained: search, query and download. The service is being built; this page will describe it when it opens.",
+    image: "/img/hero/data.jpg"
+  },
+  status: {
+    eyebrow: "Status",
+    title: "Being built",
+    panelTitle: "To be determined",
+    body: [
+      "There is no public interface for querying or downloading 7DS data yet. How data will be searched, what may be retrieved at once, how bulk transfers are handled and what authentication is required are all still being decided, and this page will set them out once they are.",
+      "Data taken for the surveys carry a proprietary period during which they are available to the 7DS team. Membership, and the data rights that come with it, are described under [how to propose](/users/propose). Until the service opens, requests \u2014 from team members and from anyone else \u2014 go to the project directly."
+    ],
+    button: {
+      label: "Request data",
+      href: "mailto:mim@astro.snu.ac.kr?subject=7DS%20data%20request"
     }
-  ),
-  /* @__PURE__ */ jsx29(Section, { eyebrow: "Status", title: "Being built", children: /* @__PURE__ */ jsxs22("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
-    /* @__PURE__ */ jsx29("div", { className: "panel__title", children: "To be determined" }),
-    /* @__PURE__ */ jsx29("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: "There is no public interface for querying or downloading 7DS data yet. How data will be searched, what may be retrieved at once, how bulk transfers are handled and what authentication is required are all still being decided, and this page will set them out once they are." }),
-    /* @__PURE__ */ jsxs22("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: [
-      "Data taken for the surveys carry a proprietary period during which they are available to the 7DS team. Membership, and the data rights that come with it, are described under",
-      " ",
-      /* @__PURE__ */ jsx29(Link10, { to: "/users/propose", children: "how to propose" }),
-      ". Until the service opens, requests \u2014 from team members and from anyone else \u2014 go to the project directly."
-    ] }),
-    /* @__PURE__ */ jsx29(
-      "a",
-      {
-        className: "btn btn--primary",
-        href: "mailto:mim@astro.snu.ac.kr?subject=7DS%20data%20request",
-        children: "Request data"
-      }
-    )
-  ] }) }),
-  /* @__PURE__ */ jsx29(Section, { eyebrow: "Query", title: "Data query", alt: !0, children: /* @__PURE__ */ jsxs22("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
-    /* @__PURE__ */ jsx29("div", { className: "panel__title", children: "TBD" }),
-    /* @__PURE__ */ jsx29("p", { className: "feature-list__body", style: { marginBottom: 0 }, children: "A query interface \u2014 search by position, tile, band, date or depth, and retrieve the matching images and catalogs \u2014 is to be determined. It will be described here." })
-  ] }) })
-] }), users_access_default = Index18;
+  },
+  query: {
+    eyebrow: "Query",
+    title: "Data query",
+    panelTitle: "TBD",
+    body: "A query interface \u2014 search by position, tile, band, date or depth, and retrieve the matching images and catalogs \u2014 is to be determined. It will be described here."
+  }
+};
+
+// app/routes/users.access.tsx
+import { jsx as jsx29, jsxs as jsxs22 } from "react/jsx-runtime";
+var meta18 = () => metaOf(access_default), Index18 = () => {
+  let { hero: hero3, status, query } = access_default;
+  return /* @__PURE__ */ jsxs22(PageLayout, { menu: "manuUsers", children: [
+    /* @__PURE__ */ jsx29(PageHero, { eyebrow: hero3.eyebrow, title: hero3.title, lede: hero3.lede, image: hero3.image }),
+    /* @__PURE__ */ jsx29(Section, { eyebrow: status.eyebrow, title: status.title, children: /* @__PURE__ */ jsxs22("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
+      /* @__PURE__ */ jsx29("div", { className: "panel__title", children: status.panelTitle }),
+      /* @__PURE__ */ jsx29(Paras, { className: "feature-list__body", style: { marginBottom: "1rem" }, children: status.body }),
+      /* @__PURE__ */ jsx29(SmartLink, { className: "btn btn--primary", href: status.button.href, children: status.button.label })
+    ] }) }),
+    /* @__PURE__ */ jsx29(Section, { eyebrow: query.eyebrow, title: query.title, alt: !0, children: /* @__PURE__ */ jsxs22("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
+      /* @__PURE__ */ jsx29("div", { className: "panel__title", children: query.panelTitle }),
+      /* @__PURE__ */ jsx29("p", { className: "feature-list__body", style: { marginBottom: 0 }, children: /* @__PURE__ */ jsx29(Md, { children: query.body }) })
+    ] }) })
+  ] });
+}, users_access_default = Index18;
 
 // app/routes/users.format.tsx
 var users_format_exports = {};
@@ -4274,7 +4284,7 @@ __export(users_format_exports, {
   default: () => users_format_default,
   meta: () => meta19
 });
-import { Link as Link11 } from "@remix-run/react";
+import { Link as Link10 } from "@remix-run/react";
 
 // app/content/data/dataformat.json
 var dataformat_default = {
@@ -4731,18 +4741,18 @@ var Index19 = () => /* @__PURE__ */ jsxs23(PageLayout, { menu: "manuUsers", rail
   /* @__PURE__ */ jsxs23(Section, { eyebrow: "Next", title: "Working with it", alt: !0, children: [
     /* @__PURE__ */ jsxs23("p", { className: "prose", children: [
       "The pipeline that produces these files, and the packages for reading and analyzing them, are described under ",
-      /* @__PURE__ */ jsx30(Link11, { to: "/users/software", children: "software" }),
+      /* @__PURE__ */ jsx30(Link10, { to: "/users/software", children: "software" }),
       ". How the data are obtained is on ",
-      /* @__PURE__ */ jsx30(Link11, { to: "/users/access", children: "data access" }),
+      /* @__PURE__ */ jsx30(Link10, { to: "/users/access", children: "data access" }),
       ". Measured depths, zero-point accuracy and delivered image quality \u2014 the numbers behind the header keywords above \u2014 are on the",
       " ",
-      /* @__PURE__ */ jsx30(Link11, { to: "/users/performance", children: "performance page" }),
+      /* @__PURE__ */ jsx30(Link10, { to: "/users/performance", children: "performance page" }),
       "."
     ] }),
     /* @__PURE__ */ jsxs23("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
-      /* @__PURE__ */ jsx30(Link11, { className: "btn btn--primary", to: "/users/software", children: "Software" }),
-      /* @__PURE__ */ jsx30(Link11, { className: "btn btn--secondary", to: "/users/access", children: "Data access" }),
-      /* @__PURE__ */ jsx30(Link11, { className: "btn btn--secondary", to: "/users/performance", children: "Measured performance" })
+      /* @__PURE__ */ jsx30(Link10, { className: "btn btn--primary", to: "/users/software", children: "Software" }),
+      /* @__PURE__ */ jsx30(Link10, { className: "btn btn--secondary", to: "/users/access", children: "Data access" }),
+      /* @__PURE__ */ jsx30(Link10, { className: "btn btn--secondary", to: "/users/performance", children: "Measured performance" })
     ] })
   ] })
 ] }), users_format_default = Index19;
@@ -4757,7 +4767,7 @@ __export(users_status_exports, {
 });
 import { useMemo as useMemo4, useState as useState8 } from "react";
 import { json } from "@remix-run/node";
-import { Link as Link12, useLoaderData } from "@remix-run/react";
+import { Link as Link11, useLoaderData } from "@remix-run/react";
 
 // app/data/filters.json
 var filters_default = {
@@ -10437,12 +10447,12 @@ var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFraction
         num(nightly.exposures_per_night.max),
         " exposures and would otherwise dominate the figure. Progress of each survey is on its own page \u2014",
         " ",
-        /* @__PURE__ */ jsx35(Link12, { to: "/survey/ris", children: "RIS" }),
+        /* @__PURE__ */ jsx35(Link11, { to: "/survey/ris", children: "RIS" }),
         ", ",
-        /* @__PURE__ */ jsx35(Link12, { to: "/survey/wts", children: "WTS" }),
+        /* @__PURE__ */ jsx35(Link11, { to: "/survey/wts", children: "WTS" }),
         " and",
         " ",
-        /* @__PURE__ */ jsx35(Link12, { to: "/survey/ims", children: "IMS" }),
+        /* @__PURE__ */ jsx35(Link11, { to: "/survey/ims", children: "IMS" }),
         "."
       ] })
     ] }),
@@ -10451,7 +10461,7 @@ var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFraction
       /* @__PURE__ */ jsxs28("p", { className: "prose", children: [
         "The original twenty are the calibrated set in operational use. Spectrophotometric calibration of the fifteen added filters is in preparation, and their central wavelengths are not aligned to a regular grid \u2014 check which bands a given tile actually carries on the",
         " ",
-        /* @__PURE__ */ jsx35(Link12, { to: "/users/access", children: "data access page" }),
+        /* @__PURE__ */ jsx35(Link11, { to: "/users/access", children: "data access page" }),
         ", which reports the medium bands observed on any tile."
       ] }),
       /* @__PURE__ */ jsx35("div", { className: "table-wrap", style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsxs28("table", { className: "spec-table", children: [
@@ -10508,7 +10518,7 @@ var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFraction
         ris.coverage_pct,
         "% figure above. Broad bands are listed at their effective wavelength. Which bands a particular tile carries is reported on the",
         " ",
-        /* @__PURE__ */ jsx35(Link12, { to: "/users/access", children: "data access page" }),
+        /* @__PURE__ */ jsx35(Link11, { to: "/users/access", children: "data access page" }),
         "."
       ] })
     ] }),
@@ -10517,7 +10527,7 @@ var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFraction
       /* @__PURE__ */ jsxs28("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
         "Curves are read from the reference data shipped with",
         " ",
-        /* @__PURE__ */ jsx35(Link12, { to: "/users/software", children: /* @__PURE__ */ jsx35("code", { children: "supy" }) }),
+        /* @__PURE__ */ jsx35(Link11, { to: "/users/software", children: /* @__PURE__ */ jsx35("code", { children: "supy" }) }),
         ", which is also what its simulator module uses, so a response computed there matches this figure exactly."
       ] })
     ] }),
@@ -10544,7 +10554,7 @@ var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFraction
         num(data.too.followup_events),
         " follow-up campaigns to date are summarized under",
         " ",
-        /* @__PURE__ */ jsx35(Link12, { to: "/users/propose", children: "how to propose" }),
+        /* @__PURE__ */ jsx35(Link11, { to: "/users/propose", children: "how to propose" }),
         "."
       ] }),
       /* @__PURE__ */ jsxs28("div", { style: { marginTop: "2.5rem" }, children: [
@@ -10552,15 +10562,15 @@ var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFraction
         /* @__PURE__ */ jsx35(TileQuery, { tiles, exposureSec })
       ] }),
       /* @__PURE__ */ jsxs28("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
-        /* @__PURE__ */ jsx35(Link12, { className: "btn btn--primary", to: "/users/format", children: "What the files look like" }),
-        /* @__PURE__ */ jsx35(Link12, { className: "btn btn--secondary", to: "/users/performance", children: "Measured depths" }),
-        /* @__PURE__ */ jsx35(Link12, { className: "btn btn--secondary", to: "/users/access", children: "Obtaining data" })
+        /* @__PURE__ */ jsx35(Link11, { className: "btn btn--primary", to: "/users/format", children: "What the files look like" }),
+        /* @__PURE__ */ jsx35(Link11, { className: "btn btn--secondary", to: "/users/performance", children: "Measured depths" }),
+        /* @__PURE__ */ jsx35(Link11, { className: "btn btn--secondary", to: "/users/access", children: "Obtaining data" })
       ] })
     ] }),
     /* @__PURE__ */ jsx35(Section, { eyebrow: "Processing", title: "Processing status", alt: !0, children: /* @__PURE__ */ jsxs28("p", { className: "prose", children: [
       "Data are reduced the same day they are taken. Raw frames are transferred from Chile overnight and a typical night clears the pipeline in about five hours of wall-clock time after transfer completes, so survey data are normally available the following day. Target-of-opportunity data skip compression and the wait for sunrise, which brings latency down to tens of minutes. What the pipeline produces, and the quality metrics attached to each product, are described under",
       " ",
-      /* @__PURE__ */ jsx35(Link12, { to: "/users/format", children: "using the data" }),
+      /* @__PURE__ */ jsx35(Link11, { to: "/users/format", children: "using the data" }),
       "."
     ] }) })
   ] });
@@ -10810,87 +10820,106 @@ __export(users_links_exports, {
   meta: () => meta24
 });
 import { json as json2 } from "@remix-run/node";
-import { Link as Link13, useLoaderData as useLoaderData2 } from "@remix-run/react";
-import { Fragment as Fragment8, jsx as jsx39, jsxs as jsxs30 } from "react/jsx-runtime";
-var meta24 = () => [
-  { title: "Useful links \xB7 7DT for users" },
-  {
-    name: "description",
-    content: "Project services and observation calculators for users of the 7-Dimensional Telescope."
+import { useLoaderData as useLoaderData2 } from "@remix-run/react";
+
+// app/content/pages/users/links.json
+var links_default = {
+  meta: {
+    title: "Useful links \xB7 7DT for users",
+    description: "Project services and observation calculators for users of the 7-Dimensional Telescope."
+  },
+  hero: {
+    eyebrow: "For users",
+    title: "Useful *links*",
+    lede: "The services that support work with 7DT data. For partner surveys, vendors and institutions, see the site-wide links page.",
+    image: "/img/hero/computer.jpg"
+  },
+  services: {
+    eyebrow: "Services",
+    title: "Project services",
+    list: [
+      {
+        url: "https://proton.snu.ac.kr",
+        name: "Project wiki",
+        note: "User manuals, quality-assurance criteria and operating procedures for internal and external users of 7DT data."
+      },
+      {
+        url: "https://proton.snu.ac.kr/pipeline",
+        name: "Pipeline status",
+        note: "Real-time progress of the nightly reduction, with quality-assurance summaries per night and per unit."
+      },
+      {
+        url: "https://proton.snu.ac.kr/too",
+        name: "Target-of-opportunity page",
+        note: "Observation requests and the history of follow-up campaigns, including gravitational-wave events."
+      },
+      {
+        key: "LINK_PORTAL",
+        name: "Data server",
+        note: "The observation database of record: images, catalogs, processing state and data quality."
+      },
+      {
+        url: "https://github.com/7DimensionalTelescope",
+        name: "7DT on GitHub",
+        note: "The project organization. Every repository listed below lives here, including the pipeline, the control system and supy."
+      }
+    ],
+    noneLinked: {
+      title: "Not publicly linked",
+      body: [
+        "Four services support work with 7DT data \u2014 a project wiki carrying user manuals and quality-assurance criteria, a pipeline status page with per-night progress, a target-of-opportunity page holding observation requests and campaign history, and the observation database itself. They run on project infrastructure and are reached through the collaboration rather than from this page.",
+        "Ask the project for access, or see [data access](/users/access) for what can be obtained without it."
+      ]
+    },
+    someUnlinked: "Services not listed here are reached through the collaboration rather than from this page."
+  },
+  calculators: {
+    id: "calculators",
+    eyebrow: "Calculators",
+    title: "Observation calculators"
   }
-], GITHUB = "https://github.com/7DimensionalTelescope", CACHE2 = "public, max-age=3600", headers2 = () => ({ "Cache-Control": CACHE2 }), SERVICES = [
-  {
-    url: "https://proton.snu.ac.kr",
-    name: "Project wiki",
-    note: "User manuals, quality-assurance criteria and operating procedures for internal and external users of 7DT data."
-  },
-  {
-    url: "https://proton.snu.ac.kr/pipeline",
-    name: "Pipeline status",
-    note: "Real-time progress of the nightly reduction, with quality-assurance summaries per night and per unit."
-  },
-  {
-    url: "https://proton.snu.ac.kr/too",
-    name: "Target-of-opportunity page",
-    note: "Observation requests and the history of follow-up campaigns, including gravitational-wave events."
-  },
-  {
-    key: "LINK_PORTAL",
-    name: "Data server",
-    note: "The observation database of record: images, catalogs, processing state and data quality."
-  },
-  {
-    url: GITHUB,
-    name: "7DT on GitHub",
-    note: "The project organization. Every repository listed below lives here, including the pipeline, the control system and supy."
-  }
-];
+};
+
+// app/routes/users.links.tsx
+import { jsx as jsx39, jsxs as jsxs30 } from "react/jsx-runtime";
+var meta24 = () => metaOf(links_default), CACHE2 = "public, max-age=3600", headers2 = () => ({ "Cache-Control": CACHE2 }), SERVICES = links_default.services.list, configured = (key) => key && key.startsWith("LINK_") ? readEnv(key) : void 0;
 async function loader8() {
   return json2(
     {
       services: SERVICES.map((service) => ({
         ...service,
-        url: service.url ?? (service.key ? readEnv(service.key) : null) ?? null
+        url: service.url ?? configured(service.key) ?? null
       }))
     },
     { headers: { "Cache-Control": CACHE2 } }
   );
 }
 var Index24 = () => {
-  let { services } = useLoaderData2(), linked = services.filter((service) => service.url);
+  let { services } = useLoaderData2(), linked = services.filter((service) => service.url), { hero: hero3, services: section, calculators } = links_default;
   return /* @__PURE__ */ jsxs30(PageLayout, { menu: "manuUsers", children: [
-    /* @__PURE__ */ jsx39(
-      PageHero,
-      {
-        eyebrow: "For users",
-        title: /* @__PURE__ */ jsxs30(Fragment8, { children: [
-          "Useful ",
-          /* @__PURE__ */ jsx39("em", { children: "links" })
-        ] }),
-        lede: "The services that support work with 7DT data. For partner surveys, vendors and institutions, see the site-wide links page.",
-        image: "/img/hero/computer.jpg"
-      }
-    ),
-    /* @__PURE__ */ jsxs30(Section, { eyebrow: "Services", title: "Project services", children: [
+    /* @__PURE__ */ jsx39(PageHero, { eyebrow: hero3.eyebrow, title: /* @__PURE__ */ jsx39(Md, { children: hero3.title }), lede: hero3.lede, image: hero3.image }),
+    /* @__PURE__ */ jsxs30(Section, { eyebrow: section.eyebrow, title: section.title, children: [
       linked.length > 0 ? /* @__PURE__ */ jsx39("ul", { className: "feature-list", children: linked.map((service) => /* @__PURE__ */ jsxs30("li", { children: [
         /* @__PURE__ */ jsx39("span", { className: "feature-list__key", children: "\u2197" }),
         /* @__PURE__ */ jsxs30("div", { children: [
           /* @__PURE__ */ jsx39("h3", { className: "feature-list__title", children: /* @__PURE__ */ jsx39("a", { href: service.url ?? "#", target: "_blank", rel: "noreferrer", children: service.name }) }),
-          /* @__PURE__ */ jsx39("p", { className: "feature-list__body", children: service.note })
+          /* @__PURE__ */ jsx39("p", { className: "feature-list__body", children: /* @__PURE__ */ jsx39(Md, { children: service.note }) })
         ] })
       ] }, service.name)) }) : /* @__PURE__ */ jsxs30("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
-        /* @__PURE__ */ jsx39("div", { className: "panel__title", children: "Not publicly linked" }),
-        /* @__PURE__ */ jsx39("p", { className: "feature-list__body", style: { marginBottom: "0.75rem" }, children: "Four services support work with 7DT data \u2014 a project wiki carrying user manuals and quality-assurance criteria, a pipeline status page with per-night progress, a target-of-opportunity page holding observation requests and campaign history, and the observation database itself. They run on project infrastructure and are reached through the collaboration rather than from this page." }),
-        /* @__PURE__ */ jsxs30("p", { className: "feature-list__body", style: { marginBottom: 0 }, children: [
-          "Ask the project for access, or see",
-          " ",
-          /* @__PURE__ */ jsx39(Link13, { to: "/users/access", children: "data access" }),
-          " for what can be obtained without it."
-        ] })
+        /* @__PURE__ */ jsx39("div", { className: "panel__title", children: section.noneLinked.title }),
+        section.noneLinked.body.map((para, k, all) => /* @__PURE__ */ jsx39(
+          "p",
+          {
+            className: "feature-list__body",
+            style: { marginBottom: k === all.length - 1 ? 0 : "0.75rem" },
+            children: /* @__PURE__ */ jsx39(Md, { children: para })
+          },
+          k
+        ))
       ] }),
-      linked.length > 0 && linked.length < services.length && /* @__PURE__ */ jsx39("p", { className: "footnote", style: { marginTop: "1rem" }, children: "Services not listed here are reached through the collaboration rather than from this page." })
+      linked.length > 0 && linked.length < services.length && /* @__PURE__ */ jsx39("p", { className: "footnote", style: { marginTop: "1rem" }, children: /* @__PURE__ */ jsx39(Md, { children: section.someUnlinked }) })
     ] }),
-    /* @__PURE__ */ jsx39(Section, { id: "calculators", eyebrow: "Calculators", title: "Observation calculators", alt: !0, children: /* @__PURE__ */ jsx39("div", { className: "grid grid-cols-2", children: tools.map((tool) => /* @__PURE__ */ jsxs30(
+    /* @__PURE__ */ jsx39(Section, { id: calculators.id, eyebrow: calculators.eyebrow, title: calculators.title, alt: !0, children: /* @__PURE__ */ jsx39("div", { className: "grid grid-cols-2", children: tools.map((tool) => /* @__PURE__ */ jsxs30(
       "a",
       {
         className: "theme-card",
@@ -11082,7 +11111,7 @@ var collabs_default = {
 };
 
 // app/routes/about.team.tsx
-import { Fragment as Fragment9, jsx as jsx40, jsxs as jsxs31 } from "react/jsx-runtime";
+import { Fragment as Fragment8, jsx as jsx40, jsxs as jsxs31 } from "react/jsx-runtime";
 var meta25 = () => [
   { title: "Team \xB7 7-Dimensional Telescope" },
   {
@@ -11117,7 +11146,7 @@ var meta25 = () => [
       /* @__PURE__ */ jsx40("h3", { className: "person__name", children: member.name }),
       /* @__PURE__ */ jsx40("p", { className: "person__role", children: member.role }),
       /* @__PURE__ */ jsxs31("p", { className: "person__meta", children: [
-        member.title && /* @__PURE__ */ jsxs31(Fragment9, { children: [
+        member.title && /* @__PURE__ */ jsxs31(Fragment8, { children: [
           member.title,
           /* @__PURE__ */ jsx40("br", {})
         ] }),
@@ -11196,7 +11225,7 @@ import { json as json3 } from "@remix-run/node";
 import { useLoaderData as useLoaderData3 } from "@remix-run/react";
 
 // app/components/surveypage.tsx
-import { Link as Link14 } from "@remix-run/react";
+import { Link as Link12 } from "@remix-run/react";
 import { jsx as jsx41, jsxs as jsxs32 } from "react/jsx-runtime";
 function SurveyPage(props) {
   let {
@@ -11252,7 +11281,7 @@ function SurveyPage(props) {
       /* @__PURE__ */ jsxs32("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
         map.note,
         " The whole survey footprint, with per-tile detail under the pointer and a search by position, is on the ",
-        /* @__PURE__ */ jsx41(Link14, { to: "/users/access", children: "data access page" }),
+        /* @__PURE__ */ jsx41(Link12, { to: "/users/access", children: "data access page" }),
         "."
       ] })
     ] }),
@@ -11282,10 +11311,10 @@ function SurveyPage(props) {
     ] }),
     children,
     /* @__PURE__ */ jsx41(Section, { eyebrow: "Elsewhere", title: "Related pages", alt: !0, children: /* @__PURE__ */ jsxs32("div", { className: "chip-row", children: [
-      /* @__PURE__ */ jsx41(Link14, { className: "chip", to: "/survey/overview", children: "All three surveys" }),
-      /* @__PURE__ */ jsx41(Link14, { className: "chip", to: "/users/access", children: "Sky coverage and search" }),
-      /* @__PURE__ */ jsx41(Link14, { className: "chip", to: "/users/status", children: "Array operations" }),
-      /* @__PURE__ */ jsx41(Link14, { className: "chip", to: "/users/performance", children: "Measured performance" })
+      /* @__PURE__ */ jsx41(Link12, { className: "chip", to: "/survey/overview", children: "All three surveys" }),
+      /* @__PURE__ */ jsx41(Link12, { className: "chip", to: "/users/access", children: "Sky coverage and search" }),
+      /* @__PURE__ */ jsx41(Link12, { className: "chip", to: "/users/status", children: "Array operations" }),
+      /* @__PURE__ */ jsx41(Link12, { className: "chip", to: "/users/performance", children: "Measured performance" })
     ] }) })
   ] });
 }
@@ -11788,7 +11817,7 @@ var call_default2 = {
 };
 
 // app/routes/users.call.tsx
-import { Fragment as Fragment10, jsx as jsx46, jsxs as jsxs35 } from "react/jsx-runtime";
+import { Fragment as Fragment9, jsx as jsx46, jsxs as jsxs35 } from "react/jsx-runtime";
 var meta29 = () => metaOf(call_default2), md = (text) => fill(text, { call: call_default }), Index29 = () => {
   let { hero: hero3, open, closed } = call_default2, [day2, month] = call_default.deadline.split(" ");
   return /* @__PURE__ */ jsxs35(PageLayout, { menu: "manuUsers", children: [
@@ -11802,7 +11831,7 @@ var meta29 = () => metaOf(call_default2), md = (text) => fill(text, { call: call
         meta: call_default.active ? [{ value: day2, unit: month, label: hero3.deadlineLabel }, ...hero3.meta] : void 0
       }
     ),
-    call_default.active ? /* @__PURE__ */ jsxs35(Fragment10, { children: [
+    call_default.active ? /* @__PURE__ */ jsxs35(Fragment9, { children: [
       /* @__PURE__ */ jsxs35(Section, { eyebrow: open.documents.eyebrow, title: open.documents.title, children: [
         /* @__PURE__ */ jsx46("p", { className: "prose", children: /* @__PURE__ */ jsx46(Md, { children: md(open.documents.body) }) }),
         /* @__PURE__ */ jsx46("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: call_default.files.map((file, index) => /* @__PURE__ */ jsxs35("li", { children: [
@@ -12005,13 +12034,13 @@ import { useLoaderData as useLoaderData5 } from "@remix-run/react";
 
 // app/routes/main.tsx
 import { useEffect as useEffect6, useState as useState10, useRef as useRef5, useCallback as useCallback2 } from "react";
-import { Link as Link15 } from "@remix-run/react";
+import { Link as Link13 } from "@remix-run/react";
 
 // app/routes/content/text.tsx
 var mainText1 = "The 7-Dimensional Sky Survey (7DS) is a medium-band survey of the southern sky. It is carried out with the 7-Dimensional Telescope (7DT), an array of twenty 50-cm telescopes at El Sauce Observatory in Chile, built and operated by the Center for the Gravitational-wave Universe at Seoul National University. Each unit carries a share of a forty-filter medium-band set, so a single visit records a low-resolution spectrum of every source in 1.25 square degrees. As of now, sixteen units and thirty-five filters are in routine operation.", mainText2 = "A medium-band spectral energy distribution for every source in the field supports a wide range of science from one data product: how galaxies assemble and cease forming stars, where the heavy elements are produced, the expansion rate of the Universe, accretion onto black holes, the variability of young stars, and the composition of small solar-system bodies. 7DS was designed to identify gravitational-wave counterparts; the same images serve the rest.", mainText3 = "7DS comprises three surveys that trade area against depth and cadence: a single-visit reference map of the southern sky, a time-domain survey on a 10-14 day cadence, and nightly monitoring of a deep field at the south ecliptic pole. All three use the same tiling of the sky, so their data coadd directly.", mainText4 = "Twenty DeltaRho 500 units on direct-drive mounts, sixteen currently observing, one control computer per operational telescope, a scheduler that can interrupt the night and begin a follow-up exposure in under a minute, and a pipeline that reduces a 3,000-image night the same day. The array is built to observe a transient while it is still bright.";
 
 // app/routes/main.tsx
-import { Fragment as Fragment11, jsx as jsx48, jsxs as jsxs37 } from "react/jsx-runtime";
+import { Fragment as Fragment10, jsx as jsx48, jsxs as jsxs37 } from "react/jsx-runtime";
 var SECTION_IS_DARK = [!0, !1, !0, !1, !0, !1, !0], SECTION_COUNT = SECTION_IS_DARK.length, SECTION_NAMES = [
   "Introduction",
   "About 7DT",
@@ -12063,7 +12092,7 @@ function ScrollChrome() {
       wrapper && section && section.getBoundingClientRect().height > wrapper.clientHeight + 2 && (e.key === "ArrowDown" || e.key === "ArrowUp") || (e.preventDefault(), e.key === "ArrowDown" || e.key === "PageDown" ? scrollToSection(Math.min(current + 1, SECTION_COUNT - 1)) : e.key === "ArrowUp" || e.key === "PageUp" ? scrollToSection(Math.max(current - 1, 0)) : e.key === "Home" ? scrollToSection(0) : scrollToSection(SECTION_COUNT - 1));
     };
     return window.addEventListener("keydown", onKey), () => window.removeEventListener("keydown", onKey);
-  }, [current, scrollToSection]), /* @__PURE__ */ jsxs37(Fragment11, { children: [
+  }, [current, scrollToSection]), /* @__PURE__ */ jsxs37(Fragment10, { children: [
     /* @__PURE__ */ jsx48("div", { className: "fullpage-progress" }),
     /* @__PURE__ */ jsx48("div", { className: "fullpage-nav", children: Array.from({ length: SECTION_COUNT }).map((_, index) => /* @__PURE__ */ jsx48(
       "button",
@@ -12132,7 +12161,7 @@ var MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, exposu
           /* @__PURE__ */ jsx48("span", { className: "eyebrow", children: "Introduction" }),
           /* @__PURE__ */ jsx48("h2", { children: "A survey that measures spectra, not colors" }),
           /* @__PURE__ */ jsx48("p", { className: "prose", children: mainText1 }),
-          /* @__PURE__ */ jsx48("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx48(Link15, { className: "link-arrow", to: "/about/intro", children: "What is 7DS" }) })
+          /* @__PURE__ */ jsx48("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx48(Link13, { className: "link-arrow", to: "/about/intro", children: "What is 7DS" }) })
         ] }),
         /* @__PURE__ */ jsxs37("figure", { className: "figure", children: [
           /* @__PURE__ */ jsx48(
@@ -12162,9 +12191,9 @@ var MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, exposu
               /* @__PURE__ */ jsx48("span", { className: "eyebrow eyebrow--on-dark", children: "Science" }),
               /* @__PURE__ */ jsx48("h2", { children: "Broad science topics" }),
               /* @__PURE__ */ jsx48("p", { className: "prose", style: { color: "rgba(255,255,255,.78)" }, children: mainText2 }),
-              /* @__PURE__ */ jsx48("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx48(Link15, { className: "link-arrow", to: "/science/overview", style: { color: "var(--accent-on-dark)" }, children: "Science program" }) })
+              /* @__PURE__ */ jsx48("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx48(Link13, { className: "link-arrow", to: "/science/overview", style: { color: "var(--accent-on-dark)" }, children: "Science program" }) })
             ] }),
-            /* @__PURE__ */ jsx48("ul", { className: "theme-chips theme-chips--panel", children: science_default.themes.map((theme) => /* @__PURE__ */ jsx48("li", { children: /* @__PURE__ */ jsxs37(Link15, { to: `/science/${theme.id}`, children: [
+            /* @__PURE__ */ jsx48("ul", { className: "theme-chips theme-chips--panel", children: science_default.themes.map((theme) => /* @__PURE__ */ jsx48("li", { children: /* @__PURE__ */ jsxs37(Link13, { to: `/science/${theme.id}`, children: [
               /* @__PURE__ */ jsx48("span", { className: "theme-chips__hash", "aria-hidden": "true", children: "#" }),
               theme.title
             ] }) }, theme.id)) })
@@ -12192,9 +12221,9 @@ var MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, exposu
           /* @__PURE__ */ jsx48("span", { className: "eyebrow", children: "7-Dimensional Sky Survey" }),
           /* @__PURE__ */ jsx48("h2", { children: "Three surveys over the southern sky" }),
           /* @__PURE__ */ jsx48("p", { className: "prose", style: { maxWidth: "62ch" }, children: mainText3 }),
-          tiles && tiles.count > 0 ? /* @__PURE__ */ jsx48("div", { className: "home-survey__meta", children: /* @__PURE__ */ jsx48(Link15, { className: "link-arrow", to: "/users/access", children: "Explore the coverage map" }) }) : null,
+          tiles && tiles.count > 0 ? /* @__PURE__ */ jsx48("div", { className: "home-survey__meta", children: /* @__PURE__ */ jsx48(Link13, { className: "link-arrow", to: "/users/access", children: "Explore the coverage map" }) }) : null,
           /* @__PURE__ */ jsx48("div", { className: "home-survey__tiers", children: surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsxs37(
-            Link15,
+            Link13,
             {
               className: "tier-card tier-card--link",
               to: `/survey/${tier4.code.toLowerCase()}`,
@@ -12223,7 +12252,7 @@ var MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, exposu
               /* @__PURE__ */ jsx48("span", { className: "eyebrow eyebrow--on-dark", children: "The facility" }),
               /* @__PURE__ */ jsx48("h2", { children: "Twenty telescopes, one system" }),
               /* @__PURE__ */ jsx48("p", { className: "prose", style: { color: "rgba(255,255,255,.78)" }, children: mainText4 }),
-              /* @__PURE__ */ jsx48("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx48(Link15, { className: "link-arrow", to: "/telescope/overview", style: { color: "var(--accent-on-dark)" }, children: "Telescope & site" }) })
+              /* @__PURE__ */ jsx48("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx48(Link13, { className: "link-arrow", to: "/telescope/overview", style: { color: "var(--accent-on-dark)" }, children: "Telescope & site" }) })
             ] }),
             /* @__PURE__ */ jsxs37("div", { className: "stat-grid stat-grid--2x2 stat-grid--on-dark", children: [
               /* @__PURE__ */ jsxs37("div", { className: "stat", children: [
@@ -12274,8 +12303,8 @@ var MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, exposu
           ] })
         ] }, index)) }),
         /* @__PURE__ */ jsxs37("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
-          /* @__PURE__ */ jsx48(Link15, { className: "btn btn--secondary", to: "/news", children: "All news" }),
-          /* @__PURE__ */ jsx48(Link15, { className: "btn btn--secondary", to: "/publication/list", children: "Publications" })
+          /* @__PURE__ */ jsx48(Link13, { className: "btn btn--secondary", to: "/news", children: "All news" }),
+          /* @__PURE__ */ jsx48(Link13, { className: "btn btn--secondary", to: "/publication/list", children: "Publications" })
         ] })
       ] }) }) }),
       /* @__PURE__ */ jsx48("div", { className: "fullpage-section fullpage-section--footer", children: /* @__PURE__ */ jsx48(footer_default, {}) })
@@ -12339,12 +12368,12 @@ function loader18({ params }) {
 // app/routes/links.tsx
 var links_exports = {};
 __export(links_exports, {
-  default: () => links_default2,
+  default: () => links_default4,
   meta: () => meta32
 });
 
 // app/content/data/links.json
-var links_default = {
+var links_default2 = {
   groups: [
     {
       title: "Site & host",
@@ -12474,29 +12503,35 @@ var links_default = {
   ]
 };
 
+// app/content/pages/links.json
+var links_default3 = {
+  meta: {
+    title: "Links \xB7 7-Dimensional Telescope",
+    description: "Partner surveys, facilities, vendors and institutions related to 7DT."
+  },
+  hero: {
+    eyebrow: "Resources",
+    title: "Links",
+    lede: "The surveys, facilities, networks and suppliers that 7DT depends on or works alongside.",
+    image: "/img/hero/links.jpg"
+  }
+};
+
 // app/routes/links.tsx
 import { jsx as jsx50, jsxs as jsxs39 } from "react/jsx-runtime";
-var meta32 = () => [
-  { title: "Links \xB7 7-Dimensional Telescope" },
-  { name: "description", content: "Partner surveys, facilities, vendors and institutions related to 7DT." }
-], Index32 = () => /* @__PURE__ */ jsxs39(PageLayout, { menu: "manuLinks", children: [
-  /* @__PURE__ */ jsx50(
-    PageHero,
-    {
-      eyebrow: "Resources",
-      title: "Links",
-      lede: "The surveys, facilities, networks and suppliers that 7DT depends on or works alongside.",
-      image: "/img/hero/links.jpg"
-    }
-  ),
-  links_default.groups.map((group, index) => /* @__PURE__ */ jsx50(Section, { eyebrow: String(index + 1).padStart(2, "0"), title: group.title, alt: index % 2 === 1, children: /* @__PURE__ */ jsx50("ul", { className: "feature-list", children: group.items.map((item) => /* @__PURE__ */ jsxs39("li", { children: [
-    /* @__PURE__ */ jsx50("span", { className: "feature-list__key", children: "\u2197" }),
-    /* @__PURE__ */ jsxs39("div", { children: [
-      /* @__PURE__ */ jsx50("h3", { className: "feature-list__title", children: /* @__PURE__ */ jsx50("a", { href: item.url, target: "_blank", rel: "noreferrer", children: item.name }) }),
-      /* @__PURE__ */ jsx50("p", { className: "feature-list__body", children: item.note })
-    ] })
-  ] }, item.name)) }) }, group.title))
-] }), links_default2 = Index32;
+var meta32 = () => metaOf(links_default3), Index32 = () => {
+  let { hero: hero3 } = links_default3;
+  return /* @__PURE__ */ jsxs39(PageLayout, { menu: "manuLinks", children: [
+    /* @__PURE__ */ jsx50(PageHero, { eyebrow: hero3.eyebrow, title: hero3.title, lede: hero3.lede, image: hero3.image }),
+    links_default2.groups.map((group, index) => /* @__PURE__ */ jsx50(Section, { eyebrow: String(index + 1).padStart(2, "0"), title: group.title, alt: index % 2 === 1, children: /* @__PURE__ */ jsx50("ul", { className: "feature-list", children: group.items.map((item) => /* @__PURE__ */ jsxs39("li", { children: [
+      /* @__PURE__ */ jsx50("span", { className: "feature-list__key", children: "\u2197" }),
+      /* @__PURE__ */ jsxs39("div", { children: [
+        /* @__PURE__ */ jsx50("h3", { className: "feature-list__title", children: /* @__PURE__ */ jsx50("a", { href: item.url, target: "_blank", rel: "noreferrer", children: item.name }) }),
+        /* @__PURE__ */ jsx50("p", { className: "feature-list__body", children: /* @__PURE__ */ jsx50(Md, { children: item.note }) })
+      ] })
+    ] }, item.name)) }) }, group.title))
+  ] });
+}, links_default4 = Index32;
 
 // app/routes/news.tsx
 var news_exports = {};
@@ -12592,7 +12627,7 @@ function loader19() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-BQKCGNKD.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-ZAZZDHWO.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-JJ22HEEZ.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-OLZXQ2GT.js", imports: ["/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-AXW4HNY3.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/exptime": { id: "routes/exptime", parentId: "root", path: "exptime", index: void 0, caseSensitive: void 0, module: "/build/routes/exptime-B66677KU.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-GXZXTQJR.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-EFRYYWV5.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-UFVBKS5R.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overhead": { id: "routes/overhead", parentId: "root", path: "overhead", index: void 0, caseSensitive: void 0, module: "/build/routes/overhead-GDOVE2UB.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overview": { id: "routes/overview", parentId: "root", path: "overview", index: void 0, caseSensitive: void 0, module: "/build/routes/overview-KJQASMSO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-H7ZHICSY.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-ZICB7ZVG.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-HYEXCL6A.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-KKTR2XXI.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-BYGL2LCK.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-B5MQ3RK4.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-MDJBA7TZ.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-JLNXZ2HH.js", imports: ["/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-CNEVWM62.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-BMFTLSDO.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-6ZFU5MIF.js", imports: ["/build/_shared/chunk-JVJZDEAT.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-3ITZIKUD.js", imports: ["/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-6B3BDYHR.js", imports: ["/build/_shared/chunk-JVJZDEAT.js", "/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-NMNZYLTU.js", imports: ["/build/_shared/chunk-JVJZDEAT.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-HJP5GC26.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-SRUZ7BCB.js", imports: ["/build/_shared/chunk-DXIY2ZBC.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-SHCEPP4C.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-AG2QIRBJ.js", imports: ["/build/_shared/chunk-3LTHRCGQ.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/tile": { id: "routes/tile", parentId: "root", path: "tile", index: void 0, caseSensitive: void 0, module: "/build/routes/tile-VYWTWX2U.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-BGXARDMS.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.call": { id: "routes/users.call", parentId: "root", path: "users/call", index: void 0, caseSensitive: void 0, module: "/build/routes/users.call-BCRRB4D2.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-4BTPHAGG.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-DNO3SIOE.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-L7BLF7TM.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-WB4BJNWJ.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-TJJZS57D.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-DBFLVF4T.js", imports: ["/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-DXIY2ZBC.js", "/build/_shared/chunk-3LTHRCGQ.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-QNFWCEOQ.js", imports: ["/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-BJE6YKTH.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-JI6BMH5B.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/visibility": { id: "routes/visibility", parentId: "root", path: "visibility", index: void 0, caseSensitive: void 0, module: "/build/routes/visibility-3OHETBRR.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "1b80bb48", hmr: void 0, url: "/build/manifest-1B80BB48.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-BQKCGNKD.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-ZAZZDHWO.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-JJ22HEEZ.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-OLZXQ2GT.js", imports: ["/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-AXW4HNY3.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/exptime": { id: "routes/exptime", parentId: "root", path: "exptime", index: void 0, caseSensitive: void 0, module: "/build/routes/exptime-B66677KU.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-GXZXTQJR.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-N6R3MSGA.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-UFVBKS5R.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overhead": { id: "routes/overhead", parentId: "root", path: "overhead", index: void 0, caseSensitive: void 0, module: "/build/routes/overhead-GDOVE2UB.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overview": { id: "routes/overview", parentId: "root", path: "overview", index: void 0, caseSensitive: void 0, module: "/build/routes/overview-KJQASMSO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-H7ZHICSY.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-QCBR3XQK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-ZICB7ZVG.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-HYEXCL6A.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-KKTR2XXI.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-BYGL2LCK.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-B5MQ3RK4.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-MDJBA7TZ.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-JLNXZ2HH.js", imports: ["/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-CNEVWM62.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-BMFTLSDO.js", imports: ["/build/_shared/chunk-344Y7VKT.js", "/build/_shared/chunk-ZNOS42HK.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-6ZFU5MIF.js", imports: ["/build/_shared/chunk-JVJZDEAT.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-3ITZIKUD.js", imports: ["/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-6B3BDYHR.js", imports: ["/build/_shared/chunk-JVJZDEAT.js", "/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-NMNZYLTU.js", imports: ["/build/_shared/chunk-JVJZDEAT.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-HJP5GC26.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-SRUZ7BCB.js", imports: ["/build/_shared/chunk-DXIY2ZBC.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-SHCEPP4C.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-AG2QIRBJ.js", imports: ["/build/_shared/chunk-3LTHRCGQ.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/tile": { id: "routes/tile", parentId: "root", path: "tile", index: void 0, caseSensitive: void 0, module: "/build/routes/tile-VYWTWX2U.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-A6ZC2A3V.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.call": { id: "routes/users.call", parentId: "root", path: "users/call", index: void 0, caseSensitive: void 0, module: "/build/routes/users.call-BCRRB4D2.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-4BTPHAGG.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-DNO3SIOE.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-L7BLF7TM.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-RV7PIFYF.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-TJJZS57D.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-DBFLVF4T.js", imports: ["/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-DXIY2ZBC.js", "/build/_shared/chunk-3LTHRCGQ.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-QNFWCEOQ.js", imports: ["/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-P5CCIMJA.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-BJE6YKTH.js", imports: ["/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-JI6BMH5B.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-LVM7B7P5.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/visibility": { id: "routes/visibility", parentId: "root", path: "visibility", index: void 0, caseSensitive: void 0, module: "/build/routes/visibility-3OHETBRR.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "eb815a5d", hmr: void 0, url: "/build/manifest-EB815A5D.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
