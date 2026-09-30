@@ -1,0 +1,29 @@
+# Text used on more than one page. Each entry says where it appears; change it
+# here and every page that shows it follows.
+
+filterSet:
+  $usedOn: /telescope/instrument, /users/performance
+  body: Every unit carries a nine-slot filter wheel. Three slots in each wheel hold Sloan g, r and
+    i; one unit adds u and three units add z. The remaining slots hold medium-band filters,
+    distributed across the array so that the full set is covered in a small number of exposures.
+    The original twenty medium bands are spaced regularly at 25 nm from 400 to 875 nm with 25 nm
+    FWHM. Fifteen more, procured from Edmund Optics and installed in late 2025, fill the gaps
+    between them with central wavelengths from 412 to 832 nm and bandwidths of 14 to 41 nm. The
+    current suite of 35 filters covers 375 to 875 nm, advancing toward the designed complement
+    of 40 medium bands at 12.5 nm spacing.
+  caveat: "The additional fifteen filters depart from the regularity of the original set: their
+    central wavelengths are not precisely aligned to the 12.5 nm grid, their bandwidths vary,
+    and no filter between 700 and 800 nm is included in the second batch. These departures
+    reflect availability and will be addressed as the remaining five filters become available.
+    Their spectrophotometric calibration is in preparation; the original twenty remain the
+    calibrated set in operational use."
+photometry:
+  $usedOn: /users/performance
+  body: Photometric calibration runs against synthetic photometry derived from Gaia DR3 BP/RP
+    spectra, homogenized to correct the color- and magnitude-dependent residuals reported by the
+    Gaia collaboration. The procedure was established during commissioning on 68
+    spectrophotometric standard stars, including CALSPEC sources, with non-variable point
+    sources selected following criteria adapted from SkyMapper DR4. Zero-point uncertainty
+    across the twenty medium bands in operational use is 15 to 25 mmag, with the larger values
+    redward of 775 nm where detector quantum efficiency falls and signal-to-noise drops
+    accordingly.
