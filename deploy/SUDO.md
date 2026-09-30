@@ -68,24 +68,30 @@ step makes nginx the way in.
 
 ```bash
 cd /home/dtak/7ds
-sudo cp deploy/calculators-map.conf   /etc/nginx/conf.d/calculators-map.conf
-sudo cp deploy/calculators-proxy.inc  /etc/nginx/conf.d/calculators-proxy.inc
-# Paste the four location blocks from deploy/calculators.nginx.conf into the
-# `server { listen 443 ssl; ... }` block of /etc/nginx/conf.d/7ds.conf,
-# ABOVE the existing `location / { ... }`.
+sudo cp /etc/nginx/conf.d/7ds.conf /etc/nginx/conf.d/7ds.conf.bak-$(date +%Y%m%d)
+sudo cp deploy/calculators-locations.inc /etc/nginx/conf.d/
+# one line, inserted inside the 443 server block just before `location / {`
+sudo sed -i '/listen 443 ssl;/,/location \/ {/ s|^\(\s*\)location / {|\1include /etc/nginx/conf.d/calculators-locations.inc;\n\n\1location / {|' /etc/nginx/conf.d/7ds.conf
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
-Three files, three places, and the difference matters: `calculators-map.conf`
+The location blocks live in `calculators-locations.inc` rather than being
+pasted, because pasting was the step that went wrong the first time: the two
+helper files were installed but the blocks never reached `7ds.conf`. The `sed`
+range starts at `listen 443 ssl;`, so the port-80 block's own `location /` is
+left alone.
+
+The pieces go in different places, and the difference matters: `calculators-map.conf`
 is an http-level `map` and nginx will not start if it is pasted inside a
 server block; `calculators-proxy.inc` has a `.inc` extension so the
-`conf.d/*.conf` glob does not load it on its own; the location blocks go
-inside the 443 server block.
+`conf.d/*.conf` glob does not load it on its own, and the same is true of
+`calculators-locations.inc`, which is only read where 7ds.conf includes it.
 
-Tested before handing over, with a throwaway nginx running exactly this
-configuration against the running apps: all four pages 200, `_stcore/health`
+Tested before handing over, by applying that exact `sed` to a copy of the live
+`7ds.conf` and running the result in a throwaway nginx against the running apps: all four pages 200, `_stcore/health`
 ok, and the websocket upgrade at `_stcore/stream` answers `101 Switching
-Protocols` with `Host: 7ds.snu.ac.kr` and `Origin: https://7ds.snu.ac.kr`.
+Protocols` with `Host: 7ds.snu.ac.kr` and `Origin: https://7ds.snu.ac.kr`, and
+the site root still proxies to the website.
 
 After the reload, check from outside:
 
