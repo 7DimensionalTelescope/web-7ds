@@ -1,0 +1,83 @@
+# /survey/overview — the three surveys, their tiling, and why there are three.
+#
+# Each survey's own figures (area, cadence, depth, status, trade-off, goal) are in
+# content/data/surveys.yaml under tiers; this page lays them side by side.
+
+meta:
+  title: 7-Dimensional Sky Survey · 7DT
+  description: "The 7-Dimensional Sky Survey: three surveys covering the southern sky in medium
+    bands, from a single-visit reference map to nightly deep monitoring, on one tiling."
+hero:
+  eyebrow: Survey
+  title: The 7-Dimensional *Sky Survey*
+  lede: 7DS is the science program of 7DT. It comprises three surveys that differ in area, cadence
+    and depth, and that share one tiling of the sky.
+  image: /img/hero/survey.jpg
+  meta:
+    - value: "3"
+      label: Surveys
+    - value: 23,000
+      unit: deg²
+      label: Widest survey
+    - value: "1"
+      unit: d
+      label: Fastest cadence
+    - value: "23.6"
+      unit: mag
+      label: Deepest planned
+overview:
+  eyebrow: Overview
+  title: Three surveys on one tiling
+  body: "7DS is the science program of 7DT. It comprises three surveys distinguished by area,
+    cadence and depth: the Reference Imaging Survey (RIS), the Wide-area Time-domain Survey
+    (WTS) and the Intensive Monitoring Survey (IMS). Across the three, area decreases and depth
+    increases — from a single visit to the whole southern sky, to nightly observation of one
+    field — while all three use the same instrument and the same tiling."
+  table:
+    caption: Design parameters of the three surveys
+    corner: Property
+    rows:
+      area: Survey area
+      region: Target region
+      cadence: Cadence
+      depth: Depth
+      statusLabel: Status
+  footnote: Depths are 5σ point-source limits in the m600 band. The RIS figure is the depth of one
+    visit (3 × 100 s); the WTS and IMS figures are cumulative over the planned five-year
+    operation. Measured performance is reported on the [performance page](/users/performance),
+    and current progress on each survey page.
+tiling:
+  eyebrow: Tiling
+  title: One tile pattern for the whole program
+  body:
+    - All 7DS observations use a common set of fixed pointings, generated from a HEALPix
+      pixelization of the celestial sphere. Adjacent pointings overlap by about 5 arcminutes in
+      right ascension and 4 arcminutes in declination near the celestial equator, and by more
+      toward the poles. Tiles are numbered T00000 to T28519 in order of increasing declination,
+      covering everything accessible to the array from the south celestial pole to +30 degrees.
+    - This tiling is the operational reference for the whole program. WTS and IMS point at the
+      same tile centers, and target-of-opportunity observations use them wherever the field
+      allows. Because all three surveys share it, data from any of them coadd directly with data
+      from the others and difference imaging always runs against a consistent reference. A visit
+      is three consecutive 100-second exposures coadded to a 300-second frame; the exposure
+      length is set by the unguided tracking capability of the mount and the read noise of the
+      detector.
+  table:
+    caption: Tiling and exposure
+    rows:
+      - - Tile centers
+        - HEALPix pixelization of the celestial sphere
+      - - Tile numbering
+        - T00000 – T28519, by increasing declination
+      - - Sky coverage
+        - South celestial pole to Dec +30°
+      - - Overlap near equator
+        - ≈ 5′ in right ascension, 4′ in declination
+      - - Standard visit
+        - 3 × 100 s, coadded to 300 s
+      - - Field of view per tile
+        - 1.34° × 0.90°, 1.25 deg²
+rationale:
+  eyebrow: Rationale
+  title: Why three surveys and not one
+  note: Each survey page carries its own strategy, sky map, coverage and current status.

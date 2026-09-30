@@ -2,125 +2,76 @@ import React from 'react';
 import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
-import { surveyOverviewText, surveyTilingText, surveyTilingText2 } from './content/text';
+import { Md, Paras } from '../components/md';
+import { metaOf } from '../lib/page';
 import surveys from '../content/data/surveys.json';
+import page from '../content/pages/survey/overview.json';
 
-export const meta: MetaFunction = () => [
-  { title: '7-Dimensional Sky Survey · 7DT' },
-  {
-    name: 'description',
-    content:
-      'The 7-Dimensional Sky Survey: three surveys covering the southern sky in medium bands, from a single-visit reference map to nightly deep monitoring, on one tiling.',
-  },
-];
+export const meta: MetaFunction = () => metaOf(page);
 
-/* Tiling parameters live here and nowhere else on the site. The component
-   pages give the parameters specific to each survey and link back. */
-const TILING = [
-  ['Tile centers', 'HEALPix pixelization of the celestial sphere'],
-  ['Tile numbering', 'T00000 – T28519, by increasing declination'],
-  ['Sky coverage', 'South celestial pole to Dec +30°'],
-  ['Overlap near equator', '≈ 5′ in right ascension, 4′ in declination'],
-  ['Standard visit', '3 × 100 s, coadded to 300 s'],
-  ['Field of view per tile', '1.34° × 0.90°, 1.25 deg²'],
-];
-
-const PAGES: Record<string, string> = {
-  RIS: '/survey/ris',
-  WTS: '/survey/wts',
-  IMS: '/survey/ims',
-};
+type Tier = (typeof surveys.tiers)[number];
+const pageOf = (tier: Tier) => `/survey/${tier.code.toLowerCase()}`;
 
 const Index = () => {
+  const { hero, overview, tiling, rationale } = page;
+  /* Rows of the comparison table: each names a field of a tier in
+     surveys.yaml, and the label the table shows for it. */
+  const rows = Object.entries(overview.table.rows) as [keyof Tier, string][];
   return (
     <PageLayout menu="manu7ds">
       <PageHero
-        eyebrow="Survey"
-        title={
-          <>
-            The 7-Dimensional <em>Sky Survey</em>
-          </>
-        }
-        lede="7DS is the science program of 7DT. It comprises three surveys that differ in area, cadence and depth, and that share one tiling of the sky."
-        image="/img/hero/survey.jpg"
-        meta={[
-          { value: '3', label: 'Surveys' },
-          { value: '23,000', unit: 'deg²', label: 'Widest survey' },
-          { value: '1', unit: 'd', label: 'Fastest cadence' },
-          { value: '23.6', unit: 'mag', label: 'Deepest planned' },
-        ]}
+        eyebrow={hero.eyebrow}
+        title={<Md>{hero.title}</Md>}
+        lede={hero.lede}
+        image={hero.image}
+        meta={hero.meta}
       />
 
-      <Section eyebrow="Overview" title="Three surveys on one tiling">
-        <p className="prose">{surveyOverviewText}</p>
+      <Section eyebrow={overview.eyebrow} title={overview.title}>
+        <p className="prose">
+          <Md>{overview.body}</Md>
+        </p>
 
         <div className="table-wrap" style={{ marginTop: '2rem' }}>
           <table className="tier-table">
-            <caption>Design parameters of the three surveys</caption>
+            <caption>{overview.table.caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Property</th>
+                <th scope="col">{overview.table.corner}</th>
                 {surveys.tiers.map((tier) => (
                   <th scope="col" key={tier.code}>
-                    <Link to={PAGES[tier.code]}>{tier.code}</Link>
+                    <Link to={pageOf(tier)}>{tier.code}</Link>
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">Survey area</th>
-                {surveys.tiers.map((tier) => (
-                  <td key={tier.code}>{tier.area}</td>
-                ))}
-              </tr>
-              <tr>
-                <th scope="row">Target region</th>
-                {surveys.tiers.map((tier) => (
-                  <td key={tier.code}>{tier.region}</td>
-                ))}
-              </tr>
-              <tr>
-                <th scope="row">Cadence</th>
-                {surveys.tiers.map((tier) => (
-                  <td key={tier.code}>{tier.cadence}</td>
-                ))}
-              </tr>
-              <tr>
-                <th scope="row">Depth</th>
-                {surveys.tiers.map((tier) => (
-                  <td key={tier.code}>{tier.depth}</td>
-                ))}
-              </tr>
-              <tr>
-                <th scope="row">Status</th>
-                {surveys.tiers.map((tier) => (
-                  <td key={tier.code}>{tier.statusLabel}</td>
-                ))}
-              </tr>
+              {rows.map(([field, label]) => (
+                <tr key={String(field)}>
+                  <th scope="row">{label}</th>
+                  {surveys.tiers.map((tier) => (
+                    <td key={tier.code}>{String(tier[field])}</td>
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
         <p className="footnote" style={{ marginTop: '0.75rem' }}>
-          Depths are 5σ point-source limits in the m600 band. The RIS figure is the depth of one
-          visit (3 × 100 s); the WTS and IMS figures are cumulative over the planned five-year
-          operation. Measured performance is reported on the{' '}
-          <Link to="/users/performance">performance page</Link>, and current progress on each
-          survey page.
+          <Md>{overview.footnote}</Md>
         </p>
       </Section>
 
-      <Section eyebrow="Tiling" title="One tile pattern for the whole program" alt>
+      <Section eyebrow={tiling.eyebrow} title={tiling.title} alt>
         <div className="split split--wide-text">
           <div>
-            <p className="prose">{surveyTilingText}</p>
-            <p className="prose">{surveyTilingText2}</p>
+            <Paras className="prose">{tiling.body}</Paras>
           </div>
           <div className="table-wrap">
             <table className="spec-table">
-              <caption>Tiling and exposure</caption>
+              <caption>{tiling.table.caption}</caption>
               <tbody>
-                {TILING.map((row) => (
+                {tiling.table.rows.map((row) => (
                   <tr key={row[0]}>
                     <th scope="row">{row[0]}</th>
                     <td>{row[1]}</td>
@@ -132,12 +83,14 @@ const Index = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Rationale" title="Why three surveys and not one">
-        <p className="prose">{surveys.designNote}</p>
+      <Section eyebrow={rationale.eyebrow} title={rationale.title}>
+        <p className="prose">
+          <Md>{surveys.designNote}</Md>
+        </p>
 
         <div className="grid grid-cols-3" style={{ marginTop: '2rem' }}>
           {surveys.tiers.map((tier) => (
-            <Link className="tier-card tier-card--link" key={tier.code} to={PAGES[tier.code]}>
+            <Link className="tier-card tier-card--link" key={tier.code} to={pageOf(tier)}>
               <span className="tier-card__code">{tier.code}</span>
               <h3 className="tier-card__name">{tier.name}</h3>
               <p className="rationale__tradeoff" style={{ marginBottom: '0.75rem' }}>
@@ -150,7 +103,7 @@ const Index = () => {
         </div>
 
         <p className="note" style={{ marginTop: '1.5rem' }}>
-          Each survey page carries its own strategy, sky map, coverage and current status.
+          <Md>{rationale.note}</Md>
         </p>
       </Section>
     </PageLayout>

@@ -273,14 +273,16 @@ export function Figure({
   alt,
   caption,
   label,
+  style,
 }: {
   src: string;
   alt: string;
   caption?: React.ReactNode;
   label?: string;
+  style?: React.CSSProperties;
 }) {
   return (
-    <figure className="figure">
+    <figure className="figure" style={style}>
       <img src={src} alt={alt} loading="lazy" />
       {(caption || label) && (
         <figcaption>
@@ -294,14 +296,30 @@ export function Figure({
 export type FigureContent = { src: string; alt: string; label?: string; caption?: string };
 
 /** A figure whose words come from a content file; the caption may carry Markdown. */
-export function ContentFigure({ fig }: { fig: FigureContent }) {
+export function ContentFigure({ fig, style }: { fig: FigureContent; style?: React.CSSProperties }) {
   return (
     <Figure
       src={fig.src}
       alt={fig.alt}
+      style={style}
       label={fig.label}
       caption={fig.caption ? <Md>{fig.caption}</Md> : undefined}
     />
+  );
+}
+
+export type ButtonContent = { label: string; href: string };
+
+/** A row of buttons from a content file: the first is the primary action. */
+export function ButtonRow({ buttons, style }: { buttons: ButtonContent[]; style?: React.CSSProperties }) {
+  return (
+    <div className="btn-row" style={style}>
+      {buttons.map((b, k) => (
+        <Link key={b.href + b.label} className={`btn ${k === 0 ? 'btn--primary' : 'btn--secondary'}`} to={b.href}>
+          {b.label}
+        </Link>
+      ))}
+    </div>
   );
 }
 

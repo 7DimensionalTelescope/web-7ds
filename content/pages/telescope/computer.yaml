@@ -1,0 +1,129 @@
+# /telescope/computer — control computers in Chile, the Proton server and storage.
+#
+# Storage servers are added as the archive grows, so the storage table lists the
+# current set and the naming convention behind them.
+
+meta:
+  title: Computational resources · 7-Dimensional Telescope
+  description: On-site control computers, the Proton processing server and the storage behind 7DT.
+hero:
+  eyebrow: Facilities
+  title: "*Computational* resources"
+  lede: About 350 GB of raw data are produced each night, transferred from Chile to Seoul and
+    reduced the same day.
+  image: /img/hero/computer.jpg
+  meta:
+    - value: "128"
+      label: CPU cores
+    - value: "2"
+      unit: × A100
+      label: GPUs
+    - value: "3.6"
+      unit: PB
+      label: Storage
+    - value: 66 ± 24
+      unit: GB/hr
+      label: Pipeline throughput
+onsite:
+  eyebrow: On site
+  title: Control computers in Chile
+  body: On-site computing consists of sixteen Telescope Control Computers, one per operational
+    unit, and a single Main Control Computer that coordinates the array. Each TCC drives its own
+    mount, camera, focuser and filter wheel and writes exposures to local storage as they
+    complete. The MCC dispatches observation commands through RTCSpy, aggregates data from every
+    TCC, and manages transfer to the processing facility at Seoul National University over
+    KREONET.
+  table:
+    caption: On-site infrastructure
+    rows:
+      - - Telescope control computers
+        - 16, one per operational unit
+      - - Main control computer
+        - 1, array-level command hub
+      - - Dispatch
+        - RTCSpy over real-time network
+      - - Link to Korea
+        - KREONET
+      - - Transfer protocol
+        - GridFTP, ≈ 80 MB s⁻¹
+      - - Typical transfer time
+        - "< 12 hours (ToO: tens of minutes)"
+proton:
+  eyebrow: Processing
+  title: Proton
+  body: All 7DT data are reduced on Proton, a dedicated server with dual AMD EPYC 7513 processors
+    providing 128 cores at up to 2.6 GHz, 512 GB of memory, and two NVIDIA A100 GPUs sharing
+    memory over NVLink. A nightly volume of roughly 3,000 raw images requires an effective
+    per-image processing time of about 30 seconds to complete within the daily budget; the
+    current pipeline sustains a median end-to-end throughput of 66 ± 24 GB per hour and clears a
+    typical survey night in about five hours of wall-clock time after transfer completes. GPU
+    acceleration is available for preprocessing, though in this deployment the throughput gain
+    over the CPU path is minimal — the pipeline is bound by I/O rather than by computation.
+  table:
+    caption: Processing server
+    rows:
+      - - CPU
+        - 2 × AMD EPYC 7513
+      - - Cores
+        - 128 @ up to 2.6 GHz
+      - - Memory
+        - 512 GB (8 × 64 GB)
+      - - GPU
+        - 2 × NVIDIA A100, 82 GB VRAM
+      - - GPU interconnect
+        - NVLink
+      - - Target throughput
+        - ≈ 30 s per image
+storage:
+  eyebrow: Storage
+  title: Storage servers
+  body: A typical night yields about 3,000 raw frames of roughly 117 MiB each, some 350 GB before
+    compression. Raw data are compressed on site and transferred by GridFTP at a typical 80
+    MB/s, a procedure that usually completes in under twelve hours; target-of-opportunity data
+    skip the compression and the wait for sunrise, cutting latency to tens of minutes. Storage
+    is provided by a growing set of servers named for the hydrogen transition series. Two are in
+    service — Lyman, with two 1.2 PB volumes, and Balmer, with one — for a current capacity of
+    about 3.6 PB, and further servers are added as the archive grows. Each is attached to the
+    compute server as an NFS mount over a 10 Gbps class network, so that I/O buffering does not
+    burden processing.
+  table:
+    caption: Storage servers
+    rows:
+      - - Naming
+        - Hydrogen transition series — Lyman, Balmer, …
+      - - Lyman
+        - 2 × 1.2 PB (RAID 60)
+      - - Balmer
+        - 1 × 1.2 PB, extensible
+      - - Current capacity
+        - ≈ 3.6 PB, extended as required
+      - - Attachment
+        - NFS over 10 Gbps class network
+      - - Nightly inflow
+        - ≈ 350 GB (≈ 3,000 × 117 MiB)
+  stats:
+    - value: ≈ 3,000
+      label: Images per night
+    - value: ≈ 5
+      unit: hr
+      label: To reduce a night
+    - value: ≈ 350
+      unit: GB
+      label: Nightly inflow
+    - value: "1.75"
+      unit: M
+      label: Images archived
+facility:
+  eyebrow: Facility
+  title: The processing center
+  figure:
+    src: /img/computer.jpeg
+    alt: The 7DT data processing facility at Seoul National University
+    label: Proton
+    caption: The dedicated reduction server at Seoul National University, where all 7DT data are
+      processed.
+  buttons:
+    - label: Reduction software
+      href: /users/software
+    - label: Data products
+      href: /users/format

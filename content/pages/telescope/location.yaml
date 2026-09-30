@@ -1,0 +1,89 @@
+# /telescope/location — El Sauce Observatory, and a photograph slideshow of the site.
+#
+# Photo captions were written from the photographs themselves: change one only
+# while looking at the image it belongs to. Images are in public/img/carousel/.
+
+meta:
+  title: Location · 7-Dimensional Telescope
+  description: El Sauce Observatory, Río Hurtado Valley, Chile — the site of the 7-Dimensional Telescope.
+hero:
+  eyebrow: Facilities
+  title: 7DT in *Chile*
+  lede: El Sauce Observatory, in the Río Hurtado Valley of Chile, at 1,600 m and close to Cerro
+    Tololo, Gemini South and Rubin.
+  image: /img/hero/location.jpg
+  meta:
+    - value: "1600"
+      unit: m
+      label: Altitude
+    - value: "1.5"
+      unit: ″
+      label: Median seeing
+    - value: "300"
+      unit: +
+      label: Clear nights / yr
+    - value: "21.97"
+      label: Sky brightness
+site:
+  eyebrow: The site
+  title: Río Hurtado Valley
+  body: "El Sauce Observatory sits in the Rio Hurtado Valley of Chile at 30 deg 28 min 16 sec
+    South, 70 deg 45 min 47 sec West, 1,600 m above sea level. It neighbors the sites of Cerro
+    Tololo Inter-American Observatory, Gemini South, the Southern Astrophysical Research
+    Telescope and the Vera C. Rubin Observatory, and shares their sky conditions: typical seeing
+    of about 1.5 arcseconds, more than 300 clear nights a year, and a mean zenith sky brightness
+    of 21.97 mag per square arcsecond. Site infrastructure and maintenance are provided by
+    ObsTech, a Chilean telescope hosting company."
+  neighbours:
+    title: Neighbouring facilities
+    names:
+      - Cerro Tololo Inter-American Observatory
+      - Gemini South Telescope
+      - Southern Astrophysical Research Telescope
+      - Vera C. Rubin Observatory
+  table:
+    caption: Site parameters
+    rows:
+      - - Observatory
+        - El Sauce, Río Hurtado Valley
+      - - Latitude
+        - 30° 28′ 16″ S
+      - - Longitude
+        - 70° 45′ 47″ W
+      - - Altitude
+        - 1600 m
+      - - Median seeing
+        - ≈ 1.5 arcsec
+      - - Clear nights
+        - "> 300 per year"
+      - - Zenith sky brightness
+        - 21.97 mag arcsec⁻²
+      - - Site operator
+        - ObsTech
+photos:
+  - file: c1.jpg
+    caption: Site preparation and pier foundations above the Río Hurtado Valley
+  - file: c2.jpg
+    caption: The roll-off enclosure erected over the instrument deck, before installation
+  - file: c3.jpg
+    caption: "Inside the closed enclosure: DeltaRho 500 units parked on their piers"
+  - file: c4.jpg
+    caption: The roof rolled open at dusk, units stowed and ready for the night
+  - file: c5.jpg
+    caption: Members of the 7DT team and ObsTech site staff on the instrument deck
+  - file: c6.jpg
+    caption: The deck from above — installed units alongside piers still awaiting theirs
+  - file: c7.jpg
+    caption: The array working under the southern Milky Way
+infrastructure:
+  eyebrow: On site
+  title: Infrastructure
+  body: Site infrastructure, enclosures and on-site computing hardware are maintained by ObsTech,
+    a Chilean telescope hosting company. The array is controlled from sixteen telescope control
+    computers and a single main control computer housed at the site; data are handed to the
+    Korean processing facility over KREONET each night.
+  buttons:
+    - label: Computational resources
+      href: /telescope/computer
+    - label: Instrument
+      href: /telescope/instrument
