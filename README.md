@@ -145,9 +145,10 @@ advances, grep for the old value before assuming one edit is enough.
 /survey/…             overview (design + parameters + tiling), ris, wts, ims,
                       coverage (interactive map), status (array operations)
 /telescope/…          overview (hardware first), instrument, location, computer
-/calculator/…         overview, visibility, exposure, overhead, tiles — each embeds a
-                      Streamlit app from the 7DT_calculator repo running on
-                      lyman.snu.ac.kr; addresses live in content/calculators.json
+/visibility /exptime  the four observation calculators, at the addresses the Call for
+/overhead /tile       Proposals prints. Streamlit apps from the 7DT_calculator repo, run
+                      here under pm2 (deploy/calculators.config.cjs) and served by nginx
+                      (deploy/calculators-locations.inc). Listed on /users/links.
 /users/…              status (coverage map with layer switches, position search,
                       per-band coverage), performance (filter transmission, PSF,
                       zero point, 100 s depth, survey depths), propose, format

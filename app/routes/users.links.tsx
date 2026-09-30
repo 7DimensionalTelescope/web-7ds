@@ -132,7 +132,7 @@ const Index = () => {
           {tools.map((tool) => (
             <a
               className="theme-card"
-              href={`/calculator/${tool.slug}`}
+              href={tool.path}
               target="_blank"
               rel="noreferrer"
               key={tool.slug}

@@ -227,66 +227,6 @@ function ErrorBoundary() {
   ] });
 }
 
-// app/routes/calculator.visibility.tsx
-var calculator_visibility_exports = {};
-__export(calculator_visibility_exports, {
-  loader: () => loader
-});
-import { redirect } from "@remix-run/node";
-
-// app/routes/content/calculators.json
-var calculators_default = {
-  note: "The 7DT observation calculators, which run as Streamlit apps. Addresses live here so a port or host change is one edit. They are intended to be served from this site rather than from the machine they run on - see deploy/calculators.nginx.conf.",
-  tools: [
-    {
-      slug: "visibility",
-      n: "01",
-      name: "Visibility",
-      url: "http://lyman.snu.ac.kr:8509",
-      question: "When is my target observable from El Sauce?",
-      metaDescription: "Altitude, Moon and twilight over one night for a table of 7DT targets, and a month overview of observable hours."
-    },
-    {
-      slug: "exposure",
-      n: "02",
-      name: "Exposure calculator",
-      url: "http://lyman.snu.ac.kr:8510",
-      question: "How long do I need, and how deep will I get?",
-      metaDescription: "Signal-to-noise for a 7DT exposure, or the exposure needed to reach a target signal-to-noise, in every filter of an observation mode."
-    },
-    {
-      slug: "overhead",
-      n: "03",
-      name: "Overhead calculator",
-      url: "http://lyman.snu.ac.kr:8511",
-      question: "What will this actually cost in clock time?",
-      metaDescription: "Total wall-clock time of one 7DT observation: exposure, readout, filter changes, autofocus, slewing and dispatch."
-    },
-    {
-      slug: "tiles",
-      n: "04",
-      name: "Tile matcher",
-      url: "http://lyman.snu.ac.kr:8512",
-      question: "Which survey tiles cover my target?",
-      metaDescription: "Which 7DS survey tiles contain or overlap a target position, with interactive tile maps."
-    }
-  ]
-};
-
-// app/lib/calculators.ts
-var tools = calculators_default.tools;
-function getTool(slug) {
-  let tool = tools.find((t) => t.slug === slug);
-  if (!tool)
-    throw new Response(`Unknown calculator: ${slug}`, { status: 404 });
-  return tool;
-}
-
-// app/routes/calculator.visibility.tsx
-function loader() {
-  return redirect(getTool("visibility").url, 302);
-}
-
 // app/routes/telescope.instrument.tsx
 var telescope_instrument_exports = {};
 __export(telescope_instrument_exports, {
@@ -958,26 +898,6 @@ var meta = () => [
     ] })
   ] }) })
 ] }), telescope_instrument_default = Index;
-
-// app/routes/calculator.exposure.tsx
-var calculator_exposure_exports = {};
-__export(calculator_exposure_exports, {
-  loader: () => loader2
-});
-import { redirect as redirect2 } from "@remix-run/node";
-function loader2() {
-  return redirect2(getTool("exposure").url, 302);
-}
-
-// app/routes/calculator.overhead.tsx
-var calculator_overhead_exports = {};
-__export(calculator_overhead_exports, {
-  loader: () => loader3
-});
-import { redirect as redirect3 } from "@remix-run/node";
-function loader3() {
-  return redirect3(getTool("overhead").url, 302);
-}
 
 // app/routes/publication.policy.tsx
 var publication_policy_exports = {};
@@ -1689,16 +1609,6 @@ var meta6 = () => [
   ] })
 ] }), telescope_overview_default = Index6;
 
-// app/routes/calculator._index.tsx
-var calculator_index_exports = {};
-__export(calculator_index_exports, {
-  loader: () => loader4
-});
-import { redirect as redirect4 } from "@remix-run/node";
-function loader4() {
-  return redirect4("/users/links#calculators", 302);
-}
-
 // app/routes/science.cosmology.tsx
 var science_cosmology_exports = {};
 __export(science_cosmology_exports, {
@@ -2001,16 +1911,6 @@ var meta8 = () => [
     ] })
   ] })
 ] }), users_performance_default = Index8;
-
-// app/routes/calculator.tiles.tsx
-var calculator_tiles_exports = {};
-__export(calculator_tiles_exports, {
-  loader: () => loader5
-});
-import { redirect as redirect5 } from "@remix-run/node";
-function loader5() {
-  return redirect5(getTool("tiles").url, 302);
-}
 
 // app/routes/publication.list.tsx
 var publication_list_exports = {};
@@ -2476,11 +2376,11 @@ var meta12 = () => [
 // app/routes/survey.coverage.tsx
 var survey_coverage_exports = {};
 __export(survey_coverage_exports, {
-  loader: () => loader6
+  loader: () => loader
 });
-import { redirect as redirect6 } from "@remix-run/node";
-function loader6() {
-  return redirect6("/users/access", 301);
+import { redirect } from "@remix-run/node";
+function loader() {
+  return redirect("/users/access", 301);
 }
 
 // app/routes/survey.overview.tsx
@@ -2594,21 +2494,21 @@ var meta13 = () => [
 // app/routes/telescope.mode.tsx
 var telescope_mode_exports = {};
 __export(telescope_mode_exports, {
-  loader: () => loader7
+  loader: () => loader2
 });
-import { redirect as redirect7 } from "@remix-run/node";
-function loader7() {
-  return redirect7("/users/propose", 301);
+import { redirect as redirect2 } from "@remix-run/node";
+function loader2() {
+  return redirect2("/users/propose", 301);
 }
 
 // app/routes/users.overview.tsx
 var users_overview_exports = {};
 __export(users_overview_exports, {
-  loader: () => loader8
+  loader: () => loader3
 });
-import { redirect as redirect8 } from "@remix-run/node";
-function loader8() {
-  return redirect8("/users/performance", 301);
+import { redirect as redirect3 } from "@remix-run/node";
+function loader3() {
+  return redirect3("/users/performance", 301);
 }
 
 // app/routes/users.software.tsx
@@ -2815,21 +2715,21 @@ var meta16 = () => topicMeta("solar"), Index16 = () => /* @__PURE__ */ jsx23(Sci
 // app/routes/survey.design.tsx
 var survey_design_exports = {};
 __export(survey_design_exports, {
-  loader: () => loader9
+  loader: () => loader4
 });
-import { redirect as redirect9 } from "@remix-run/node";
-function loader9() {
-  return redirect9("/survey/overview", 301);
+import { redirect as redirect4 } from "@remix-run/node";
+function loader4() {
+  return redirect4("/survey/overview", 301);
 }
 
 // app/routes/survey.status.tsx
 var survey_status_exports = {};
 __export(survey_status_exports, {
-  loader: () => loader10
+  loader: () => loader5
 });
-import { redirect as redirect10 } from "@remix-run/node";
-function loader10() {
-  return redirect10("/users/status", 301);
+import { redirect as redirect5 } from "@remix-run/node";
+function loader5() {
+  return redirect5("/users/status", 301);
 }
 
 // app/routes/users.propose.tsx
@@ -3032,6 +2932,54 @@ function ObsModes() {
 
 // app/components/tooldock.tsx
 import { useState as useState5 } from "react";
+
+// app/routes/content/calculators.json
+var calculators_default = {
+  note: "The 7DT observation calculators. Each is served from this site at /<slug> - the addresses the Call for Proposals and the Phase 1 Instructions publish - by nginx proxying to a Streamlit app on 127.0.0.1 (deploy/). `url` is the lyman address, used only by the bridge routes while nginx does not yet serve the new paths.",
+  tools: [
+    {
+      slug: "visibility",
+      n: "01",
+      name: "Visibility",
+      url: "http://lyman.snu.ac.kr:8509",
+      question: "When is my target observable from El Sauce?",
+      metaDescription: "Altitude, Moon and twilight over one night for a table of 7DT targets, and a month overview of observable hours.",
+      path: "/visibility"
+    },
+    {
+      slug: "exptime",
+      n: "02",
+      name: "Exposure calculator",
+      url: "http://lyman.snu.ac.kr:8510",
+      question: "How long do I need, and how deep will I get?",
+      metaDescription: "Signal-to-noise for a 7DT exposure, or the exposure needed to reach a target signal-to-noise, in every filter of an observation mode.",
+      path: "/exptime"
+    },
+    {
+      slug: "overhead",
+      n: "03",
+      name: "Overhead calculator",
+      url: "http://lyman.snu.ac.kr:8511",
+      question: "What will this actually cost in clock time?",
+      metaDescription: "Total wall-clock time of one 7DT observation: exposure, readout, filter changes, autofocus, slewing and dispatch.",
+      path: "/overhead"
+    },
+    {
+      slug: "tile",
+      n: "04",
+      name: "Tile matcher",
+      url: "http://lyman.snu.ac.kr:8512",
+      question: "Which survey tiles cover my target?",
+      metaDescription: "Which 7DS survey tiles contain or overlap a target position, with interactive tile maps.",
+      path: "/tile"
+    }
+  ]
+};
+
+// app/lib/calculators.ts
+var tools = calculators_default.tools;
+
+// app/components/tooldock.tsx
 import { jsx as jsx25, jsxs as jsxs19 } from "react/jsx-runtime";
 function ToolDock() {
   let [open, setOpen] = useState5(!1);
@@ -3049,7 +2997,7 @@ function ToolDock() {
     ),
     /* @__PURE__ */ jsxs19("div", { className: "tooldock__panel", id: "tooldock-list", children: [
       /* @__PURE__ */ jsx25("p", { className: "tooldock__title", children: "Useful tools" }),
-      /* @__PURE__ */ jsx25("ul", { children: tools.map((tool) => /* @__PURE__ */ jsx25("li", { children: /* @__PURE__ */ jsx25("a", { href: `/calculator/${tool.slug}`, target: "_blank", rel: "noreferrer", children: tool.name }) }, tool.slug)) })
+      /* @__PURE__ */ jsx25("ul", { children: tools.map((tool) => /* @__PURE__ */ jsx25("li", { children: /* @__PURE__ */ jsx25("a", { href: tool.path, target: "_blank", rel: "noreferrer", children: tool.name }) }, tool.slug)) })
     ] })
   ] });
 }
@@ -3083,7 +3031,7 @@ var meta17 = () => [
     field: "Total requested hours",
     what: /* @__PURE__ */ jsxs20(Fragment6, { children: [
       "The whole request, overheads included \u2014 slewing, filter changes, readout \u2014 not time on source. The ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/calculator/overhead", children: "overhead calculator" }),
+      /* @__PURE__ */ jsx26(Link14, { to: "/overhead", children: "overhead calculator" }),
       " gives the difference."
     ] })
   },
@@ -3104,7 +3052,7 @@ var meta17 = () => [
     field: "Observing window",
     what: /* @__PURE__ */ jsxs20(Fragment6, { children: [
       "Any constraint on when the observations may happen \u2014 a seasonal visibility window, coordination with another facility, a deadline for a fading object. \u201CNone\u201D if there is none. The ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/calculator/visibility", children: "visibility calculator" }),
+      /* @__PURE__ */ jsx26(Link14, { to: "/visibility", children: "visibility calculator" }),
       " gives the window a target actually has."
     ] })
   },
@@ -3118,7 +3066,7 @@ var meta17 = () => [
     what: /* @__PURE__ */ jsxs20(Fragment6, { children: [
       "The exposure per target or tile and how it was derived, the target signal-to-noise and the calculation or calculator used to reach it, the filters and the time on each, and the arithmetic that adds up to the total requested hours. The",
       " ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/calculator/exposure", children: "exposure calculator" }),
+      /* @__PURE__ */ jsx26(Link14, { to: "/exptime", children: "exposure calculator" }),
       " works in either direction."
     ] })
   },
@@ -3126,7 +3074,7 @@ var meta17 = () => [
     field: "Target coordinates",
     what: /* @__PURE__ */ jsxs20(Fragment6, { children: [
       "Target programs: every target in RA and Dec, J2000. Survey programs: the coordinate range and the area in deg\xB2. The ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/calculator/tiles", children: "tile matcher" }),
+      /* @__PURE__ */ jsx26(Link14, { to: "/tile", children: "tile matcher" }),
       " shows which tiles cover a position, and how they overlap."
     ] })
   },
@@ -3288,7 +3236,7 @@ var meta17 = () => [
               /* @__PURE__ */ jsx26(Link14, { to: "/users/software", children: "supy" }),
               ", or with the 7DT",
               " ",
-              /* @__PURE__ */ jsx26(Link14, { to: "/calculator/visibility", children: "Visibility Tool" })
+              /* @__PURE__ */ jsx26(Link14, { to: "/visibility", children: "Visibility Tool" })
             ] })
           ] })
         ] }),
@@ -3302,7 +3250,7 @@ var meta17 = () => [
               /* @__PURE__ */ jsx26(Link14, { to: "/users/access", children: "data access page" }),
               " reports the bands and frame counts held for any position, and the 7DT",
               " ",
-              /* @__PURE__ */ jsx26(Link14, { to: "/calculator/tiles", children: "Tile Matcher" }),
+              /* @__PURE__ */ jsx26(Link14, { to: "/tile", children: "Tile Matcher" }),
               " shows which survey tile covers it."
             ] })
           ] })
@@ -3315,7 +3263,7 @@ var meta17 = () => [
               "The measured ",
               /* @__PURE__ */ jsx26(Link14, { to: "/users/performance", children: "limiting magnitudes" }),
               " per band, for the fiducial 100-second exposure, are what a coadded depth should be scaled from. The 7DT ",
-              /* @__PURE__ */ jsx26(Link14, { to: "/calculator/exposure", children: "Exposure Time Calculator" }),
+              /* @__PURE__ */ jsx26(Link14, { to: "/exptime", children: "Exposure Time Calculator" }),
               " ",
               "uses these same measurements to compute the exposure needed for a target SNR, or the SNR for a given exposure."
             ] })
@@ -3327,7 +3275,7 @@ var meta17 = () => [
             /* @__PURE__ */ jsx26("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Calculate the total observing time" }),
             /* @__PURE__ */ jsxs20("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
               "Once the exposure time per filter is set, the 7DT ",
-              /* @__PURE__ */ jsx26(Link14, { to: "/calculator/overhead", children: "Overhead Calculator" }),
+              /* @__PURE__ */ jsx26(Link14, { to: "/overhead", children: "Overhead Calculator" }),
               " ",
               "adds the per-frame and per-target overheads, such as filter exchange, autofocus, slewing, setup, and readout, to give the total requested hours."
             ] })
@@ -3724,7 +3672,7 @@ var users_status_exports = {};
 __export(users_status_exports, {
   default: () => users_status_default,
   headers: () => headers,
-  loader: () => loader11,
+  loader: () => loader6,
   meta: () => meta20
 });
 import { useMemo as useMemo4, useState as useState8 } from "react";
@@ -9221,7 +9169,7 @@ var meta20 = () => [
     content: "What 7DT can observe now and what data exist: telescopes and filters available, survey coverage, measured depths and processing status."
   }
 ], CACHE = "public, max-age=900, stale-while-revalidate=86400", headers = () => ({ "Cache-Control": CACHE });
-async function loader11() {
+async function loader6() {
   let [status, tiles] = await Promise.all([getStatus(), getTileMap()]), totals = status.data.totals, exposureSec = totals && totals.science_frames > 0 ? totals.exposure_hours * 3600 / totals.science_frames : null;
   return json(
     { ...status, tiles: tiles.data, tilesLive: tiles.live, exposureSec },
@@ -9724,11 +9672,11 @@ var meta23 = () => topicMeta("mma"), Index23 = () => /* @__PURE__ */ jsx36(Scien
 // app/routes/science.sci.tsx
 var science_sci_exports = {};
 __export(science_sci_exports, {
-  loader: () => loader12
+  loader: () => loader7
 });
-import { redirect as redirect11 } from "@remix-run/node";
-function loader12() {
-  return redirect11("/science/overview", 301);
+import { redirect as redirect6 } from "@remix-run/node";
+function loader7() {
+  return redirect6("/science/overview", 301);
 }
 
 // app/routes/users.links.tsx
@@ -9736,7 +9684,7 @@ var users_links_exports = {};
 __export(users_links_exports, {
   default: () => users_links_default,
   headers: () => headers2,
-  loader: () => loader13,
+  loader: () => loader8,
   meta: () => meta24
 });
 import { json as json2 } from "@remix-run/node";
@@ -9775,7 +9723,7 @@ var meta24 = () => [
     note: "The project organization. Every repository listed below lives here, including the pipeline, the control system and supy."
   }
 ];
-async function loader13() {
+async function loader8() {
   return json2(
     {
       services: SERVICES.map((service) => ({
@@ -9824,7 +9772,7 @@ var Index24 = () => {
       "a",
       {
         className: "theme-card",
-        href: `/calculator/${tool.slug}`,
+        href: tool.path,
         target: "_blank",
         rel: "noreferrer",
         children: [
@@ -10035,7 +9983,7 @@ var survey_ims_exports = {};
 __export(survey_ims_exports, {
   default: () => survey_ims_default,
   headers: () => headers3,
-  loader: () => loader14,
+  loader: () => loader9,
   meta: () => meta26
 });
 import { json as json3 } from "@remix-run/node";
@@ -10304,7 +10252,7 @@ var meta26 = () => [
     content: "The deep, nightly survey of 7DS: seven tiles at the south ecliptic pole, overlapping the SPHEREx Deep Field South."
   }
 ], CACHE3 = "public, max-age=900, stale-while-revalidate=86400", headers3 = () => ({ "Cache-Control": CACHE3 }), CENTER = { ra: 78.28, dec: -60.47 };
-async function loader14() {
+async function loader9() {
   let status = await getStatus(), field = await getTilesNear(CENTER.ra, CENTER.dec, 3.4);
   return json3(
     {
@@ -10386,7 +10334,7 @@ var survey_ris_exports = {};
 __export(survey_ris_exports, {
   default: () => survey_ris_default,
   headers: () => headers4,
-  loader: () => loader15,
+  loader: () => loader10,
   meta: () => meta27
 });
 import { json as json4 } from "@remix-run/node";
@@ -10399,7 +10347,7 @@ var meta27 = () => [
     content: "The wide-area survey of 7DS: one medium-band visit to every tile of the southern sky, with live coverage from the observation database."
   }
 ], CACHE4 = "public, max-age=900, stale-while-revalidate=86400", headers4 = () => ({ "Cache-Control": CACHE4 });
-async function loader15() {
+async function loader10() {
   let [tiles, status] = await Promise.all([getTileMap(), getStatus()]), totals = status.data.totals, exposureSec = totals && totals.science_frames > 0 ? totals.exposure_hours * 3600 / totals.science_frames : null;
   return json4(
     {
@@ -10653,21 +10601,64 @@ var meta29 = () => [
 // app/routes/users.data.tsx
 var users_data_exports = {};
 __export(users_data_exports, {
-  loader: () => loader16
+  loader: () => loader11
 });
-import { redirect as redirect12 } from "@remix-run/node";
-function loader16() {
-  return redirect12("/users/format", 301);
+import { redirect as redirect7 } from "@remix-run/node";
+function loader11() {
+  return redirect7("/users/format", 301);
+}
+
+// app/routes/visibility.tsx
+var visibility_exports = {};
+__export(visibility_exports, {
+  loader: () => loader12
+});
+import { redirect as redirect8 } from "@remix-run/node";
+function loader12() {
+  let tool = tools.find((t) => t.slug === "visibility");
+  return redirect8(tool ? tool.url : "/users/links#calculators", 302);
 }
 
 // app/routes/users.faq.tsx
 var users_faq_exports = {};
 __export(users_faq_exports, {
-  loader: () => loader17
+  loader: () => loader13
 });
-import { redirect as redirect13 } from "@remix-run/node";
-function loader17() {
-  return redirect13("/users/status", 301);
+import { redirect as redirect9 } from "@remix-run/node";
+function loader13() {
+  return redirect9("/users/status", 301);
+}
+
+// app/routes/overhead.tsx
+var overhead_exports = {};
+__export(overhead_exports, {
+  loader: () => loader14
+});
+import { redirect as redirect10 } from "@remix-run/node";
+function loader14() {
+  let tool = tools.find((t) => t.slug === "overhead");
+  return redirect10(tool ? tool.url : "/users/links#calculators", 302);
+}
+
+// app/routes/overview.tsx
+var overview_exports = {};
+__export(overview_exports, {
+  loader: () => loader15
+});
+import { redirect as redirect11 } from "@remix-run/node";
+function loader15() {
+  return redirect11("/survey/overview", 301);
+}
+
+// app/routes/exptime.tsx
+var exptime_exports = {};
+__export(exptime_exports, {
+  loader: () => loader16
+});
+import { redirect as redirect12 } from "@remix-run/node";
+function loader16() {
+  let tool = tools.find((t) => t.slug === "exptime");
+  return redirect12(tool ? tool.url : "/users/links#calculators", 302);
 }
 
 // app/routes/gallery.tsx
@@ -10760,7 +10751,7 @@ var index_exports = {};
 __export(index_exports, {
   default: () => index_default,
   headers: () => headers5,
-  loader: () => loader18,
+  loader: () => loader17,
   meta: () => meta31
 });
 import { json as json5 } from "@remix-run/node";
@@ -11050,7 +11041,7 @@ var meta31 = () => [
     content: "The 7-Dimensional Telescope: a twenty-unit medium-band array at El Sauce Observatory, Chile, and the 7-Dimensional Sky Survey of the southern sky."
   }
 ], CACHE5 = "public, max-age=1800, stale-while-revalidate=86400", headers5 = () => ({ "Cache-Control": CACHE5 });
-async function loader18() {
+async function loader17() {
   let [tiles, status] = await Promise.all([
     getTileMapLite().catch(() => null),
     getStatus().catch(() => null)
@@ -11080,18 +11071,18 @@ var Index31 = () => {
 // app/routes/data.$.tsx
 var data_exports = {};
 __export(data_exports, {
-  loader: () => loader19
+  loader: () => loader18
 });
-import { redirect as redirect14 } from "@remix-run/node";
+import { redirect as redirect13 } from "@remix-run/node";
 var MOVED = {
   overview: "/users/status",
   coverage: "/users/access",
   data: "/users/access",
   software: "/users/software"
 };
-function loader19({ params }) {
+function loader18({ params }) {
   let rest = params["*"] ?? "";
-  return redirect14(MOVED[rest.split("/")[0]] ?? "/users/status", 301);
+  return redirect13(MOVED[rest.split("/")[0]] ?? "/users/status", 301);
 }
 
 // app/routes/links.tsx
@@ -11258,8 +11249,19 @@ var meta33 = () => [
   ] });
 }, news_default2 = Index33;
 
+// app/routes/tile.tsx
+var tile_exports = {};
+__export(tile_exports, {
+  loader: () => loader19
+});
+import { redirect as redirect14 } from "@remix-run/node";
+function loader19() {
+  let tool = tools.find((t) => t.slug === "tile");
+  return redirect14(tool ? tool.url : "/users/links#calculators", 302);
+}
+
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-ARVKKLFD.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-M42MWXWA.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-WQ3BNKON.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-UE6EXCGB.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-ZUWDNX4V.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/calculator._index": { id: "routes/calculator._index", parentId: "root", path: "calculator", index: !0, caseSensitive: void 0, module: "/build/routes/calculator._index-5LDM5AUT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/calculator.exposure": { id: "routes/calculator.exposure", parentId: "root", path: "calculator/exposure", index: void 0, caseSensitive: void 0, module: "/build/routes/calculator.exposure-C4QISHLJ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/calculator.overhead": { id: "routes/calculator.overhead", parentId: "root", path: "calculator/overhead", index: void 0, caseSensitive: void 0, module: "/build/routes/calculator.overhead-YROLK6JC.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/calculator.tiles": { id: "routes/calculator.tiles", parentId: "root", path: "calculator/tiles", index: void 0, caseSensitive: void 0, module: "/build/routes/calculator.tiles-EGQURDDD.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/calculator.visibility": { id: "routes/calculator.visibility", parentId: "root", path: "calculator/visibility", index: void 0, caseSensitive: void 0, module: "/build/routes/calculator.visibility-6EA3ESH5.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-6PFGXW2Z.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-BBXNIDTZ.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-HBLAAOYS.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-WW6NCK22.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-UGS7MSJW.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-LRNEPZLB.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-P7NGYWQ3.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-73RZED2L.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-K3JBI4QC.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-CYAMGIRA.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-KS2B7S3O.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-IFJD2B5U.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-MBH4SS7H.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-ZSMU3IDR.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-MOI3QCIU.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-DLX5GMNG.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-RFQ4XZ7Z.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-6C7BMXUH.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-QLPZOQAD.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-SAMROODD.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-IUTTE3TX.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-VAM2SKK7.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.call": { id: "routes/users.call", parentId: "root", path: "users/call", index: void 0, caseSensitive: void 0, module: "/build/routes/users.call-23OF4AR7.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-4BTPHAGG.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-DNO3SIOE.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-GBNUHZSI.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-QHNO7GAL.js", imports: ["/build/_shared/chunk-M46Q5ON3.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-TJJZS57D.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-5QURXAL3.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-6KOXKZHA.js", imports: ["/build/_shared/chunk-M46Q5ON3.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-OC6QUAR5.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-XNWIUOKN.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "68566017", hmr: void 0, url: "/build/manifest-68566017.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-ARVKKLFD.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-PYENLP5H.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-WQ3BNKON.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-UE6EXCGB.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-ZUWDNX4V.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/exptime": { id: "routes/exptime", parentId: "root", path: "exptime", index: void 0, caseSensitive: void 0, module: "/build/routes/exptime-B66677KU.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-6PFGXW2Z.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-BBXNIDTZ.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-HBLAAOYS.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overhead": { id: "routes/overhead", parentId: "root", path: "overhead", index: void 0, caseSensitive: void 0, module: "/build/routes/overhead-GDOVE2UB.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overview": { id: "routes/overview", parentId: "root", path: "overview", index: void 0, caseSensitive: void 0, module: "/build/routes/overview-KJQASMSO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-WW6NCK22.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-UGS7MSJW.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-LRNEPZLB.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-P7NGYWQ3.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-73RZED2L.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-K3JBI4QC.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-CYAMGIRA.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-PTXVTLKX.js", imports: ["/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-IFJD2B5U.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-MBH4SS7H.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-ZSMU3IDR.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-MOI3QCIU.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-DLX5GMNG.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-RFQ4XZ7Z.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-6C7BMXUH.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-QLPZOQAD.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-SAMROODD.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-IUTTE3TX.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/tile": { id: "routes/tile", parentId: "root", path: "tile", index: void 0, caseSensitive: void 0, module: "/build/routes/tile-VYWTWX2U.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-VAM2SKK7.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.call": { id: "routes/users.call", parentId: "root", path: "users/call", index: void 0, caseSensitive: void 0, module: "/build/routes/users.call-23OF4AR7.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-4BTPHAGG.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-DNO3SIOE.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-GBNUHZSI.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-ST2CVZRW.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-6FIGRRAY.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-TJJZS57D.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-5QURXAL3.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-7T3D33JY.js", imports: ["/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-6FIGRRAY.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-OC6QUAR5.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-XNWIUOKN.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/visibility": { id: "routes/visibility", parentId: "root", path: "visibility", index: void 0, caseSensitive: void 0, module: "/build/routes/visibility-3OHETBRR.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "268076fc", hmr: void 0, url: "/build/manifest-268076FC.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
@@ -11271,14 +11273,6 @@ var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fe
     caseSensitive: void 0,
     module: root_exports
   },
-  "routes/calculator.visibility": {
-    id: "routes/calculator.visibility",
-    parentId: "root",
-    path: "calculator/visibility",
-    index: void 0,
-    caseSensitive: void 0,
-    module: calculator_visibility_exports
-  },
   "routes/telescope.instrument": {
     id: "routes/telescope.instrument",
     parentId: "root",
@@ -11286,22 +11280,6 @@ var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fe
     index: void 0,
     caseSensitive: void 0,
     module: telescope_instrument_exports
-  },
-  "routes/calculator.exposure": {
-    id: "routes/calculator.exposure",
-    parentId: "root",
-    path: "calculator/exposure",
-    index: void 0,
-    caseSensitive: void 0,
-    module: calculator_exposure_exports
-  },
-  "routes/calculator.overhead": {
-    id: "routes/calculator.overhead",
-    parentId: "root",
-    path: "calculator/overhead",
-    index: void 0,
-    caseSensitive: void 0,
-    module: calculator_overhead_exports
   },
   "routes/publication.policy": {
     id: "routes/publication.policy",
@@ -11343,14 +11321,6 @@ var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fe
     caseSensitive: void 0,
     module: telescope_overview_exports
   },
-  "routes/calculator._index": {
-    id: "routes/calculator._index",
-    parentId: "root",
-    path: "calculator",
-    index: !0,
-    caseSensitive: void 0,
-    module: calculator_index_exports
-  },
   "routes/science.cosmology": {
     id: "routes/science.cosmology",
     parentId: "root",
@@ -11366,14 +11336,6 @@ var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fe
     index: void 0,
     caseSensitive: void 0,
     module: users_performance_exports
-  },
-  "routes/calculator.tiles": {
-    id: "routes/calculator.tiles",
-    parentId: "root",
-    path: "calculator/tiles",
-    index: void 0,
-    caseSensitive: void 0,
-    module: calculator_tiles_exports
   },
   "routes/publication.list": {
     id: "routes/publication.list",
@@ -11599,6 +11561,14 @@ var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fe
     caseSensitive: void 0,
     module: users_data_exports
   },
+  "routes/visibility": {
+    id: "routes/visibility",
+    parentId: "root",
+    path: "visibility",
+    index: void 0,
+    caseSensitive: void 0,
+    module: visibility_exports
+  },
   "routes/users.faq": {
     id: "routes/users.faq",
     parentId: "root",
@@ -11606,6 +11576,30 @@ var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fe
     index: void 0,
     caseSensitive: void 0,
     module: users_faq_exports
+  },
+  "routes/overhead": {
+    id: "routes/overhead",
+    parentId: "root",
+    path: "overhead",
+    index: void 0,
+    caseSensitive: void 0,
+    module: overhead_exports
+  },
+  "routes/overview": {
+    id: "routes/overview",
+    parentId: "root",
+    path: "overview",
+    index: void 0,
+    caseSensitive: void 0,
+    module: overview_exports
+  },
+  "routes/exptime": {
+    id: "routes/exptime",
+    parentId: "root",
+    path: "exptime",
+    index: void 0,
+    caseSensitive: void 0,
+    module: exptime_exports
   },
   "routes/gallery": {
     id: "routes/gallery",
@@ -11646,6 +11640,14 @@ var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fe
     index: void 0,
     caseSensitive: void 0,
     module: news_exports
+  },
+  "routes/tile": {
+    id: "routes/tile",
+    parentId: "root",
+    path: "tile",
+    index: void 0,
+    caseSensitive: void 0,
+    module: tile_exports
   }
 };
 export {

@@ -3,17 +3,18 @@ import calculators from '../routes/content/calculators.json';
 /* ---------------------------------------------------------------------------
    The observation calculators.
 
-   They are Streamlit applications, opened directly rather than described on a
-   page of their own first. `/calculator/<slug>` is kept as a stable address
-   for each one and redirects to wherever it currently runs, so a link written
-   down today survives the move onto this host.
+   They are Streamlit applications served from this site at /<slug> — the
+   addresses the Call for Proposals and the Phase 1 Instructions print, so
+   they are addresses the site has to keep working.
 --------------------------------------------------------------------------- */
 
 export type Tool = {
   slug: string;
   n: string;
   name: string;
-  /** Where the application is served from now. */
+  /** Where it is served from this site: /visibility, /exptime, ... */
+  path: string;
+  /** The lyman address — only for the bridge while nginx does not serve `path`. */
   url: string;
   question: string;
   metaDescription: string;

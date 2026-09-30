@@ -1,5 +1,5 @@
 {
-  "note": "The 7DT observation calculators, which run as Streamlit apps. Addresses live here so a port or host change is one edit. They are intended to be served from this site rather than from the machine they run on - see deploy/calculators.nginx.conf.",
+  "note": "The 7DT observation calculators. Each is served from this site at /<slug> - the addresses the Call for Proposals and the Phase 1 Instructions publish - by nginx proxying to a Streamlit app on 127.0.0.1 (deploy/). `url` is the lyman address, used only by the bridge routes while nginx does not yet serve the new paths.",
   "tools": [
     {
       "slug": "visibility",
@@ -7,15 +7,17 @@
       "name": "Visibility",
       "url": "http://lyman.snu.ac.kr:8509",
       "question": "When is my target observable from El Sauce?",
-      "metaDescription": "Altitude, Moon and twilight over one night for a table of 7DT targets, and a month overview of observable hours."
+      "metaDescription": "Altitude, Moon and twilight over one night for a table of 7DT targets, and a month overview of observable hours.",
+      "path": "/visibility"
     },
     {
-      "slug": "exposure",
+      "slug": "exptime",
       "n": "02",
       "name": "Exposure calculator",
       "url": "http://lyman.snu.ac.kr:8510",
       "question": "How long do I need, and how deep will I get?",
-      "metaDescription": "Signal-to-noise for a 7DT exposure, or the exposure needed to reach a target signal-to-noise, in every filter of an observation mode."
+      "metaDescription": "Signal-to-noise for a 7DT exposure, or the exposure needed to reach a target signal-to-noise, in every filter of an observation mode.",
+      "path": "/exptime"
     },
     {
       "slug": "overhead",
@@ -23,15 +25,17 @@
       "name": "Overhead calculator",
       "url": "http://lyman.snu.ac.kr:8511",
       "question": "What will this actually cost in clock time?",
-      "metaDescription": "Total wall-clock time of one 7DT observation: exposure, readout, filter changes, autofocus, slewing and dispatch."
+      "metaDescription": "Total wall-clock time of one 7DT observation: exposure, readout, filter changes, autofocus, slewing and dispatch.",
+      "path": "/overhead"
     },
     {
-      "slug": "tiles",
+      "slug": "tile",
       "n": "04",
       "name": "Tile matcher",
       "url": "http://lyman.snu.ac.kr:8512",
       "question": "Which survey tiles cover my target?",
-      "metaDescription": "Which 7DS survey tiles contain or overlap a target position, with interactive tile maps."
+      "metaDescription": "Which 7DS survey tiles contain or overlap a target position, with interactive tile maps.",
+      "path": "/tile"
     }
   ]
 }

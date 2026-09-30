@@ -10,8 +10,8 @@ import { tools } from '../lib/calculators';
    narrower one the margin is where the text starts, so it collapses to a pill
    at the lower left and opens on demand rather than covering the page.
 
-   Links go to /calculator/<slug>, the stable address, not to wherever the
-   calculator happens to run — so the dock follows it when it moves.
+   Links go to /visibility, /exptime, /overhead and /tile — the addresses the
+   Call for Proposals prints.
 --------------------------------------------------------------------------- */
 
 export default function ToolDock() {
@@ -33,7 +33,7 @@ export default function ToolDock() {
         <ul>
           {tools.map((tool) => (
             <li key={tool.slug}>
-              <a href={`/calculator/${tool.slug}`} target="_blank" rel="noreferrer">
+              <a href={tool.path} target="_blank" rel="noreferrer">
                 {tool.name}
               </a>
             </li>

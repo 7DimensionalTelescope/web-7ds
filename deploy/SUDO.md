@@ -96,11 +96,21 @@ the site root still proxies to the website.
 After the reload, check from outside:
 
 ```bash
-curl -s https://7ds.snu.ac.kr/calculator/exposure/app/_stcore/health   # ok
+curl -s https://7ds.snu.ac.kr/exptime/_stcore/health   # ok
 ```
 
 No firewall change is needed: the apps listen on 127.0.0.1, so only nginx
 reaches them.
+
+## Changing the calculators later
+
+The include line is in `7ds.conf` now and does not need touching again. Any
+change to the calculator addresses is a change to one file and a reload:
+
+```bash
+sudo cp deploy/calculators-locations.inc /etc/nginx/conf.d/
+sudo nginx -t && sudo systemctl reload nginx
+```
 
 ## The mount as it is now
 

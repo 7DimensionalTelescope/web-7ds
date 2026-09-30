@@ -48,7 +48,7 @@ const REQUEST_PARAMETERS: { field: string; what: React.ReactNode }[] = [
     what: (
       <>
         The whole request, overheads included — slewing, filter changes, readout — not time on
-        source. The <Link to="/calculator/overhead">overhead calculator</Link> gives the difference.
+        source. The <Link to="/overhead">overhead calculator</Link> gives the difference.
       </>
     ),
   },
@@ -71,7 +71,7 @@ const REQUEST_PARAMETERS: { field: string; what: React.ReactNode }[] = [
       <>
         Any constraint on when the observations may happen — a seasonal visibility window,
         coordination with another facility, a deadline for a fading object. &ldquo;None&rdquo; if
-        there is none. The <Link to="/calculator/visibility">visibility calculator</Link> gives the
+        there is none. The <Link to="/visibility">visibility calculator</Link> gives the
         window a target actually has.
       </>
     ),
@@ -88,7 +88,7 @@ const REQUEST_PARAMETERS: { field: string; what: React.ReactNode }[] = [
         The exposure per target or tile and how it was derived, the target signal-to-noise and the
         calculation or calculator used to reach it, the filters and the time on each, and the
         arithmetic that adds up to the total requested hours. The{' '}
-        <Link to="/calculator/exposure">exposure calculator</Link> works in either direction.
+        <Link to="/exptime">exposure calculator</Link> works in either direction.
       </>
     ),
   },
@@ -97,7 +97,7 @@ const REQUEST_PARAMETERS: { field: string; what: React.ReactNode }[] = [
     what: (
       <>
         Target programs: every target in RA and Dec, J2000. Survey programs: the coordinate range
-        and the area in deg². The <Link to="/calculator/tiles">tile matcher</Link> shows which
+        and the area in deg². The <Link to="/tile">tile matcher</Link> shows which
         tiles cover a position, and how they overlap.
       </>
     ),
@@ -330,7 +330,7 @@ const Index = () => {
                 <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
                   Visibility from El Sauce in the intended window, and the filter response over 
                   the wavelengths that matter, can both be computed with <Link to="/users/software">supy</Link>, or with the 7DT{' '}
-                  <Link to="/calculator/visibility">Visibility Tool</Link>
+                  <Link to="/visibility">Visibility Tool</Link>
                 </p>
               </div>
             </li>
@@ -345,7 +345,7 @@ const Index = () => {
                   tile under your position may already carry the bands you need. The{' '}
                   <Link to="/users/access">data access page</Link> reports the bands and frame
                   counts held for any position, and the 7DT{' '}
-                  <Link to="/calculator/tiles">Tile Matcher</Link> shows which survey tile covers it.
+                  <Link to="/tile">Tile Matcher</Link> shows which survey tile covers it.
                 </p>
               </div>
             </li>
@@ -357,7 +357,7 @@ const Index = () => {
                 </h4>
                 <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
                   The measured <Link to="/users/performance">limiting magnitudes</Link> per band, for the fiducial 100-second exposure, 
-                  are what a coadded depth should be scaled from. The 7DT <Link to="/calculator/exposure">Exposure Time Calculator</Link>{' '}
+                  are what a coadded depth should be scaled from. The 7DT <Link to="/exptime">Exposure Time Calculator</Link>{' '}
                   uses these same measurements to compute the exposure needed for a target SNR, or 
                   the SNR for a given exposure.
                 </p>
@@ -370,7 +370,7 @@ const Index = () => {
                   Calculate the total observing time
                 </h4>
                 <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
-                  Once the exposure time per filter is set, the 7DT <Link to="/calculator/overhead">Overhead Calculator</Link>{' '}
+                  Once the exposure time per filter is set, the 7DT <Link to="/overhead">Overhead Calculator</Link>{' '}
                   adds the per-frame and per-target overheads, such as filter exchange, autofocus, slewing, 
                   setup, and readout, to give the total requested hours.
                 </p>
