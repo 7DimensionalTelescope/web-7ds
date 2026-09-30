@@ -6,22 +6,16 @@ import SkyMap from '../components/skymap';
 import news from '../content/data/news.json';
 import surveys from '../content/data/surveys.json';
 import science from '../content/data/science.json';
-import { mainText1, mainText2, mainText3, mainText4 } from './content/text';
+import { Md } from '../components/md';
+import { fill } from '../lib/page';
+import page from '../content/pages/home.json';
 import FooterBar from './footer';
 
 /* Which snap sections carry a dark background — the dot navigation and the
    scroll cue invert against it. The last entry is the footer. */
 const SECTION_IS_DARK = [true, false, true, false, true, false, true];
 const SECTION_COUNT = SECTION_IS_DARK.length;
-const SECTION_NAMES = [
-  'Introduction',
-  'About 7DT',
-  'Science',
-  'Sky survey',
-  'Telescope',
-  'News',
-  'Contact and partners',
-];
+const SECTION_NAMES = page.sections;
 
 /* The snap sections are static markup. They are deliberately kept out of any
    component that holds scroll state: when `current` lived here, changing
@@ -173,7 +167,7 @@ function ScrollChrome() {
         type="button"
         className={`scroll-to-top${showTop ? ' visible' : ''}`}
         onClick={() => scrollToSection(0)}
-        aria-label="Back to top"
+        aria-label={page.backToTop}
       >
         ↑
       </button>
@@ -193,6 +187,11 @@ type MainProps = {
 
 const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, exposureSec }: MainProps) => {
   const latest = (news.news as any[]).filter((item) => item.type !== 'update').slice(0, 3);
+  const { hero, intro, science: sci, survey, facility, news: latestNews } = page;
+  const counts = {
+    total: telescopes?.total ?? facility.offline.total,
+    online: telescopes?.online ?? facility.offline.online,
+  };
 
   return (
     <div className="fullpage-container">
@@ -202,19 +201,16 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, expo
         {/* 01 — Hero ------------------------------------------------------ */}
         <section
           className="fullpage-section fullpage-section--dark fullpage-hero"
-          style={{ backgroundImage: "url('/img/hero/home.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+          style={{ backgroundImage: `url('${hero.image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         >
           <div className="container container--wide">
             <div className="reveal">
-              <p className="fullpage-hero__eyebrow">
-                Center for the Gravitational-wave Universe · Seoul National University
-              </p>
-              <h1>7-Dimensional Sky Survey</h1>
+              <p className="fullpage-hero__eyebrow">{hero.eyebrow}</p>
+              <h1>
+                <Md>{hero.title}</Md>
+              </h1>
               <p className="fullpage-hero__lede">
-                A medium-band survey of the southern sky, measuring a low-resolution spectrum for
-                every source it observes and repeating the measurement over time. It is carried
-                out with the 7-Dimensional Telescope, an array of twenty 50-cm telescopes in
-                Chile.
+                <Md>{hero.lede}</Md>
               </p>
               <div className="dimension-row" style={{ marginTop: '2rem' }}>
                 {surveys.dimensions.map((dim) => (
@@ -224,7 +220,6 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, expo
                   </span>
                 ))}
               </div>
-              
             </div>
           </div>
 
@@ -240,7 +235,7 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, expo
               });
             }}
           >
-            <span>Scroll</span>
+            <span>{hero.scroll}</span>
             <span className="scroll-cue__line" />
           </button>
         </section>
@@ -250,25 +245,28 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, expo
           <div className="container container--wide">
             <div className="split split--wide-text split--middle reveal">
               <div>
-                <span className="eyebrow">Introduction</span>
-                <h2>A survey that measures spectra, not colors</h2>
-                <p className="prose">{mainText1}</p>
+                <span className="eyebrow">{intro.eyebrow}</span>
+                <h2>{intro.title}</h2>
+                <p className="prose">
+                  <Md>{intro.body}</Md>
+                </p>
                 <p style={{ marginTop: '1.5rem' }}>
-                  <Link className="link-arrow" to="/about/intro">What is 7DS</Link>
+                  <Link className="link-arrow" to={intro.link.href}>
+                    {intro.link.label}
+                  </Link>
                 </p>
               </div>
               <figure className="figure">
                 <img
-                  src="/img/NGC0253.gif"
-                  alt="The Sculptor Galaxy, NGC 253, scanned through the 7DT medium-band filter set"
+                  src={intro.figure.src}
+                  alt={intro.figure.alt}
                   width={900}
                   height={929}
                   loading="lazy"
                   decoding="async"
                 />
                 <figcaption>
-                  <b>NGC 253</b> The Sculptor Galaxy seen through successive medium bands from
-                  400 to 875 nm — each frame a different slice of the spectrum.
+                  <Md>{intro.figure.caption}</Md>
                 </figcaption>
               </figure>
             </div>
@@ -278,18 +276,20 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, expo
         {/* 03 — Science --------------------------------------------------- */}
         <section
           className="fullpage-section fullpage-section--dark"
-          style={{ backgroundImage: "url('/img/hero/science.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+          style={{ backgroundImage: `url('${sci.image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         >
           <div className="container container--wide">
             <div className="split split--middle reveal">
               <div>
-                <span className="eyebrow eyebrow--on-dark">Science</span>
-                <h2>Broad science topics</h2>
+                <span className="eyebrow eyebrow--on-dark">{sci.eyebrow}</span>
+                <h2>{sci.title}</h2>
                 <p className="prose" style={{ color: 'rgba(255,255,255,.78)' }}>
-                  {mainText2}
+                  <Md>{sci.body}</Md>
                 </p>
                 <p style={{ marginTop: '1.5rem' }}>
-                  <Link className="link-arrow" to="/science/overview" style={{ color: 'var(--accent-on-dark)' }}>Science program</Link>
+                  <Link className="link-arrow" to={sci.link.href} style={{ color: 'var(--accent-on-dark)' }}>
+                    {sci.link.label}
+                  </Link>
                 </p>
               </div>
               {/* The themes are listed rather than described: the point of this
@@ -336,23 +336,23 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, expo
             <div className="home-survey__stamp">
               <LiveBadge live={tilesLive} updated={generatedAt} />
               <span className="home-survey__count">
-                {tiles.count.toLocaleString('en-US')} tiles observed
+                {fill(survey.tilesObserved, { count: tiles.count.toLocaleString('en-US') })}
               </span>
             </div>
           ) : null}
 
           <div className="container container--wide">
             <div className="reveal">
-              <span className="eyebrow">7-Dimensional Sky Survey</span>
-              <h2>Three surveys over the southern sky</h2>
+              <span className="eyebrow">{survey.eyebrow}</span>
+              <h2>{survey.title}</h2>
               <p className="prose" style={{ maxWidth: '62ch' }}>
-                {mainText3}
+                <Md>{survey.body}</Md>
               </p>
 
               {tiles && tiles.count > 0 ? (
                 <div className="home-survey__meta">
-                  <Link className="link-arrow" to="/users/access">
-                    Explore the coverage map
+                  <Link className="link-arrow" to={survey.link.href}>
+                    {survey.link.label}
                   </Link>
                 </div>
               ) : null}
@@ -376,7 +376,7 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, expo
                     </p>
                     <span className={`pill pill--${tier.status}`}>
                       {tier.status === 'live' && risCoverage !== null && tier.code === 'RIS'
-                        ? `${risCoverage}% observed`
+                        ? fill(survey.observed, { percent: risCoverage })
                         : tier.statusLabel}
                     </span>
                   </Link>
@@ -389,17 +389,19 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, expo
         {/* 05 — Telescope -------------------------------------------------- */}
         <section
           className="fullpage-section fullpage-section--dark"
-          style={{ backgroundImage: "url('/img/hero/survey.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+          style={{ backgroundImage: `url('${facility.image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         >
           <div className="container container--wide">
             <div className="split split--middle reveal">
               <div>
-                <span className="eyebrow eyebrow--on-dark">The facility</span>
-                <h2>Twenty telescopes, one system</h2>
-                <p className="prose" style={{ color: 'rgba(255,255,255,.78)' }}>{mainText4}</p>
+                <span className="eyebrow eyebrow--on-dark">{facility.eyebrow}</span>
+                <h2>{facility.title}</h2>
+                <p className="prose" style={{ color: 'rgba(255,255,255,.78)' }}>
+                  <Md>{facility.body}</Md>
+                </p>
                 <p style={{ marginTop: '1.5rem' }}>
-                  <Link className="link-arrow" to="/telescope/overview" style={{ color: 'var(--accent-on-dark)' }}>
-                    Telescope &amp; site
+                  <Link className="link-arrow" to={facility.link.href} style={{ color: 'var(--accent-on-dark)' }}>
+                    {facility.link.label}
                   </Link>
                 </p>
               </div>
@@ -407,26 +409,20 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, expo
                   hardware, site and pipeline detail they replace is set out in
                   full on the telescope pages. */}
               <div className="stat-grid stat-grid--2x2 stat-grid--on-dark">
-                <div className="stat">
-                  <span className="stat__value">{telescopes?.total ?? 20}</span>
-                  <span className="stat__label">Telescopes in the array</span>
-                  <span className="stat__note stat__note--live">
-                    {telescopes ? `${telescopes.online} online` : '16 online'}
-                  </span>
-                </div>
-                <div className="stat">
-                  <span className="stat__value">40</span>
-                  <span className="stat__label">Medium-band filters</span>
-                  <span className="stat__note">35 installed</span>
-                </div>
-                <div className="stat">
-                  <span className="stat__value">30–70</span>
-                  <span className="stat__label">Spectral resolution R</span>
-                </div>
-                <div className="stat">
-                  <span className="stat__value">1.25<span className="stat__unit">deg²</span></span>
-                  <span className="stat__label">Per pointing</span>
-                </div>
+                {facility.stats.map((stat) => (
+                  <div className="stat" key={stat.label}>
+                    <span className="stat__value">
+                      {fill(stat.value, counts)}
+                      {stat.unit && <span className="stat__unit">{stat.unit}</span>}
+                    </span>
+                    <span className="stat__label">{stat.label}</span>
+                    {stat.note && (
+                      <span className={`stat__note${stat.live ? ' stat__note--live' : ''}`}>
+                        {fill(stat.note, counts)}
+                      </span>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -437,8 +433,8 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, expo
           <div className="container container--wide">
             <div className="reveal">
               <div className="section-title">
-                <span className="eyebrow">Latest</span>
-                <h2>News &amp; publications</h2>
+                <span className="eyebrow">{latestNews.eyebrow}</span>
+                <h2>{latestNews.title}</h2>
               </div>
 
               <div className="grid grid-cols-3">
@@ -476,8 +472,12 @@ const MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, expo
               </div>
 
               <div className="btn-row" style={{ marginTop: '2rem' }}>
-                <Link className="btn btn--secondary" to="/news">All news</Link>
-                <Link className="btn btn--secondary" to="/publication/list">Publications</Link>
+                {/* Both secondary: neither is the page's main action. */}
+                {latestNews.links.map((link) => (
+                  <Link className="btn btn--secondary" to={link.href} key={link.href}>
+                    {link.label}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

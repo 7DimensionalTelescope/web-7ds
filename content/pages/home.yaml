@@ -1,0 +1,107 @@
+# / — the front page, a deck of full-screen sections.
+#
+# `sections` names them for the dot navigation down the right edge, in order;
+# the last is the footer. The dimensions under the title, the science themes,
+# the survey cards and the news cards are read from content/data/ (surveys,
+# science, news); this file holds the words around them.
+#
+# In the facility stats, {total} and {online} are the telescope counts from the
+# observation database; `offline` gives what is shown when it cannot be reached.
+
+meta:
+  title: 7-Dimensional Telescope
+  description: "The 7-Dimensional Telescope: a twenty-unit medium-band array at El Sauce
+    Observatory, Chile, and the 7-Dimensional Sky Survey of the southern sky."
+sections:
+  - Introduction
+  - About 7DT
+  - Science
+  - Sky survey
+  - Telescope
+  - News
+  - Contact and partners
+backToTop: Back to top
+hero:
+  eyebrow: Center for the Gravitational-wave Universe · Seoul National University
+  title: 7-Dimensional Sky Survey
+  lede: A medium-band survey of the southern sky, measuring a low-resolution spectrum for every
+    source it observes and repeating the measurement over time. It is carried out with the
+    7-Dimensional Telescope, an array of twenty 50-cm telescopes in Chile.
+  image: /img/hero/home.jpg
+  scroll: Scroll
+intro:
+  eyebrow: Introduction
+  title: A survey that measures spectra, not colors
+  body: The 7-Dimensional Sky Survey (7DS) is a medium-band survey of the southern sky. It is
+    carried out with the 7-Dimensional Telescope (7DT), an array of twenty 50-cm telescopes at
+    El Sauce Observatory in Chile, built and operated by the Center for the Gravitational-wave
+    Universe at Seoul National University. Each unit carries a share of a forty-filter
+    medium-band set, so a single visit records a low-resolution spectrum of every source in 1.25
+    square degrees. As of now, sixteen units and thirty-five filters are in routine operation.
+  link:
+    label: What is 7DS
+    href: /about/intro
+  figure:
+    src: /img/NGC0253.gif
+    alt: The Sculptor Galaxy, NGC 253, scanned through the 7DT medium-band filter set
+    caption: "**NGC 253** The Sculptor Galaxy seen through successive medium bands from 400 to 875
+      nm — each frame a different slice of the spectrum."
+science:
+  eyebrow: Science
+  title: Broad science topics
+  body: "A medium-band spectral energy distribution for every source in the field supports a wide
+    range of science from one data product: how galaxies assemble and cease forming stars, where
+    the heavy elements are produced, the expansion rate of the Universe, accretion onto black
+    holes, the variability of young stars, and the composition of small solar-system bodies. 7DS
+    was designed to identify gravitational-wave counterparts; the same images serve the rest."
+  image: /img/hero/science.jpg
+  link:
+    label: Science program
+    href: /science/overview
+survey:
+  eyebrow: 7-Dimensional Sky Survey
+  title: Three surveys over the southern sky
+  body: "7DS comprises three surveys that trade area against depth and cadence: a single-visit
+    reference map of the southern sky, a time-domain survey on a 10-14 day cadence, and nightly
+    monitoring of a deep field at the south ecliptic pole. All three use the same tiling of the
+    sky, so their data coadd directly."
+  tilesObserved: "{count} tiles observed"
+  link:
+    label: Explore the coverage map
+    href: /users/access
+  observed: "{percent}% observed"
+facility:
+  eyebrow: The facility
+  title: Twenty telescopes, one system
+  body: Twenty DeltaRho 500 units on direct-drive mounts, sixteen currently observing, one control
+    computer per operational telescope, a scheduler that can interrupt the night and begin a
+    follow-up exposure in under a minute, and a pipeline that reduces a 3,000-image night the
+    same day. The array is built to observe a transient while it is still bright.
+  image: /img/hero/survey.jpg
+  link:
+    label: Telescope & site
+    href: /telescope/overview
+  offline:
+    total: 20
+    online: 16
+  stats:
+    - value: "{total}"
+      label: Telescopes in the array
+      note: "{online} online"
+      live: true
+    - value: "40"
+      label: Medium-band filters
+      note: 35 installed
+    - value: 30–70
+      label: Spectral resolution R
+    - value: "1.25"
+      unit: deg²
+      label: Per pointing
+news:
+  eyebrow: Latest
+  title: News & publications
+  links:
+    - label: All news
+      href: /news
+    - label: Publications
+      href: /publication/list

@@ -6,17 +6,10 @@ import NavBar from './navigate';
 import CallBanner from '../components/callbanner';
 import MainFrame from './main';
 import { getStatus, getTileMapLite } from '../lib/portal.server';
+import { metaOf } from '../lib/page';
+import page from '../content/pages/home.json';
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: '7-Dimensional Telescope' },
-    {
-      name: 'description',
-      content:
-        'The 7-Dimensional Telescope: a twenty-unit medium-band array at El Sauce Observatory, Chile, and the 7-Dimensional Sky Survey of the southern sky.',
-    },
-  ];
-};
+export const meta: MetaFunction = () => metaOf(page);
 
 const CACHE = 'public, max-age=1800, stale-while-revalidate=86400';
 export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
