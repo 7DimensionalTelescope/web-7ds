@@ -504,61 +504,14 @@ const Index = () => {
             </li>
           </ul>
         </div>
-      </Section>
 
-      <Section eyebrow="Submitting" title="Requesting observing time">
-        <div className="panel" style={{ maxWidth: '68ch' }}>
-          <div className="panel__title">
-            {call.active ? `By e-mail, before ${call.deadline}` : 'No open call at present'}
-          </div>
-          {call.active ? (
-            <>
-              <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
-                Proposals for the current call go by e-mail to{' '}
-                <a href={`mailto:${call.submit.email}?subject=7DT%20Phase%201%20proposal`}>
-                  {call.submit.email}
-                </a>
-                : the completed <a href="/proposal/7DT_Phase1_Proposal_Form.docx" download>Proposal
-                Form</a>, with the Scientific Justification, the Technical Justification and any
-                accompanying files. Dates and the other documents are on the{' '}
-                <Link to="/users/call">call for proposals</Link> page.
-              </p>
-              <a
-                className="btn btn--primary"
-                href={`mailto:${call.submit.email}?subject=7DT%20Phase%201%20proposal`}
-              >
-                Submit a proposal
-              </a>
-            </>
-          ) : (
-            <p className="feature-list__body" style={{ marginBottom: 0 }}>
-              When a call opens, its dates, documents and submission address appear on the{' '}
-              <Link to="/users/call">call for proposals</Link> page.
-            </p>
-          )}
-        </div>
-
-        <p className="footnote" style={{ marginTop: '1.25rem' }}>
-          Outside a call, and for anything outside the survey program — target-of-opportunity
-          requests among them — write to the project at{' '}
-          <a href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20inquiry">
-            mim@astro.snu.ac.kr
-          </a>
-          .
-        </p>
-
-        <div className="btn-row" style={{ marginTop: '2rem' }}>
-          <Link className="btn btn--secondary" to="/users/performance">
-            Measured performance
-          </Link>
-          <Link className="btn btn--secondary" to="/users/access">
-            Check coverage
-          </Link>
-          <Link className="btn btn--secondary" to="/science/overview">
-            Science working groups
+        <div className="btn-row" style={{ marginTop: '2.5rem' }}>
+          <Link className="btn btn--primary" to="/users/call">
+            Submitting — dates, documents and address
           </Link>
         </div>
       </Section>
+
     </PageLayout>
   );
 };
