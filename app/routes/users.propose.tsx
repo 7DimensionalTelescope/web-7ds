@@ -6,7 +6,7 @@ import { modeText } from './content/text';
 import surveys from './content/surveys.json';
 import call from './content/call.json';
 import ObsModes from '../components/obsmodes';
-import PageRail, { type RailItem } from '../components/pagerail';
+import type { RailItem } from '../components/pagerail';
 
 export const meta: MetaFunction = () => [
   { title: 'How to propose · 7DT for users' },
@@ -131,7 +131,7 @@ const RAIL: RailItem[] = [
 
 const Index = () => {
   return (
-    <PageLayout menu="manuUsers">
+    <PageLayout menu="manuUsers" rail={{ items: RAIL, tools: true }}>
       <PageHero
         eyebrow="For users"
         title={
@@ -148,9 +148,6 @@ const Index = () => {
           titled block inside one of them — as nine equal sections a reader
           could not tell which headings decided their eligibility and which
           only described the mechanics. */}
-      {/* The page rail rides alongside these sections and no further. */}
-      <div className="dockzone">
-        <PageRail items={RAIL} />
         <Section id="general" eyebrow="Before you start" title="General information">
           {call.active && (
             <div className="subsection">
@@ -290,7 +287,7 @@ const Index = () => {
           <div className="subsection">
             <h3 id="program-type">Program type</h3>
             <div className="table-wrap">
-              <table className="spec-table">
+              <table className="spec-table spec-table--key">
                 <caption>Program types</caption>
                 <tbody>
                   {PROGRAM_TYPES.map((row) => (
@@ -397,7 +394,7 @@ const Index = () => {
           <div className="subsection">
             <h3 id="technical-justification">Technical justification</h3>
             <div className="table-wrap">
-              <table className="spec-table">
+              <table className="spec-table spec-table--key">
                 <caption>Fields of the Phase 1 form</caption>
                 <thead>
                   <tr>
@@ -439,7 +436,6 @@ const Index = () => {
             </Link>
           </div> */}
         </Section>
-      </div>
 
     </PageLayout>
   );

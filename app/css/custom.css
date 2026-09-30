@@ -948,6 +948,13 @@ html {
 
 .tier-table { table-layout: fixed; }
 
+/* A key/value table whose keys are short and whose values are sentences. The
+   default 34% for every th also caught the column headers, so a two-column
+   table split evenly and the key column was mostly empty. */
+.spec-table--key th[scope='row'],
+.spec-table--key thead th:first-child { width: 24%; }
+.spec-table--key thead th:not(:first-child) { width: auto; }
+
 .tier-table thead th:first-child { width: 20%; }
 
 .tier-table thead th {
@@ -3072,7 +3079,7 @@ table[class*='w-full'] thead {
   /* the column's right edge, less its padding: 100% is the zone, which is the
      page's width without the scrollbar */
   right: max(var(--space-xl), calc((100% - 1280px) / 2 + var(--space-xl)));
-  width: 13.5rem;
+  width: 11.5rem;
   z-index: 40;
 }
 
@@ -3179,11 +3186,13 @@ table[class*='w-full'] thead {
 /* Anchored headings land below the fixed bar and nav, not under them. */
 .dockzone [id] { scroll-margin-top: calc(var(--callbar-h) + 4.5rem + 1.5rem); }
 
-/* From 1100px the column is wide enough to give the rail its 13.5rem and
-   still leave the tables and figures more room than the text needs. */
+/* From 1100px the column is wide enough to give the rail its room and still
+   leave the tables and figures more than the text needs. The reservation is
+   kept tight — 11.5rem and a 2rem gutter — because every pixel of it comes
+   out of the split layouts and stat grids beside the text. */
 @media (min-width: 1100px) {
   .pagerail { display: block; }
-  .dockzone .section > .container { padding-right: calc(var(--space-xl) + 13.5rem + 3rem); }
+  .dockzone .section > .container { padding-right: calc(var(--space-xl) + 11.5rem + 2rem); }
 }
 
 @media print {

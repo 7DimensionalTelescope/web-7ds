@@ -143,7 +143,7 @@ const Index = () => {
   const imsTiles = Object.keys(ims.cycles_per_tile ?? {});
 
   return (
-    <PageLayout menu="manuUsers">
+    <PageLayout menu="manuUsers" rail>
       <PageHero
         eyebrow="For users"
         title={

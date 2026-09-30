@@ -49,7 +49,7 @@ function KeywordTable({ caption, rows }: { caption: string; rows: string[][] }) 
 }
 
 const Index = () => (
-  <PageLayout menu="manuUsers">
+  <PageLayout menu="manuUsers" rail>
     <PageHero
       eyebrow="For users"
       title="Data format"

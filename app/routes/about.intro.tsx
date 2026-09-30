@@ -88,7 +88,7 @@ const MILESTONES = [
 
 const Index = () => {
   return (
-    <PageLayout menu="manuAbout">
+    <PageLayout menu="manuAbout" rail>
       <PageHero
         eyebrow="About"
         title={

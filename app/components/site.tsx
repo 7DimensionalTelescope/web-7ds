@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@remix-run/react';
 import NavBar from '../routes/navigate';
 import CallBanner from './callbanner';
+import PageRail, { type RailItem } from './pagerail';
 import FooterBar from '../routes/footer';
 
 /* ---------------------------------------------------------------------------
@@ -13,11 +14,37 @@ type Meta = { value: string; unit?: string; label: string; note?: string; live?:
 
 export function PageLayout({
   menu,
+  rail,
   children,
 }: {
   menu: string;
+  /**
+   * A contents rail on the right, for long pages. `true` builds it from the
+   * page's own headings; pass `{ items, tools }` to give the list explicitly or
+   * to add the calculators.
+   */
+  rail?: boolean | { items?: RailItem[]; tools?: boolean };
   children: React.ReactNode;
 }) {
+  let body: React.ReactNode = children;
+  if (rail) {
+    /* The hero stays outside: the rail belongs to the content, and the zone it
+       lives in ends where the content does. */
+    const all = React.Children.toArray(children);
+    const heroAt = all.findIndex((c) => React.isValidElement(c) && c.type === PageHero);
+    const hero = heroAt >= 0 ? all.slice(0, heroAt + 1) : [];
+    const rest = heroAt >= 0 ? all.slice(heroAt + 1) : all;
+    const opts = typeof rail === 'object' ? rail : {};
+    body = (
+      <>
+        {hero}
+        <div className="dockzone">
+          <PageRail items={opts.items} tools={opts.tools} />
+          {rest}
+        </div>
+      </>
+    );
+  }
   return (
     <div className="page">
       <a className="skip-link" href="#content">
@@ -25,7 +52,7 @@ export function PageLayout({
       </a>
       <CallBanner />
       <NavBar manu={menu} fixed={true} />
-      <main id="content">{children}</main>
+      <main id="content">{body}</main>
       <FooterBar />
     </div>
   );

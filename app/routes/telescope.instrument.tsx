@@ -61,7 +61,7 @@ const FILTERS = [
 
 const Index = () => {
   return (
-    <PageLayout menu="manu7dt">
+    <PageLayout menu="manu7dt" rail>
       <PageHero
         eyebrow="Facilities"
         title={

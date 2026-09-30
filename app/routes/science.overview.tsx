@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => [
 ];
 
 const Index = () => (
-  <PageLayout menu="manuScience">
+  <PageLayout menu="manuScience" rail>
     <PageHero
       eyebrow="Science"
       title="Motivation"

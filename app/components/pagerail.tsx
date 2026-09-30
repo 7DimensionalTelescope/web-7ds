@@ -1,30 +1,61 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ToolIcons } from './tooldock';
 
 /* ---------------------------------------------------------------------------
-   A right-hand rail for a long page: where you are, and the tools you need.
+   A right-hand rail for a long page: where you are, and optionally the tools.
 
-   Body text is held to a readable measure, so on a wide window the right side
-   of the column is otherwise empty. The rail puts that space to work — the
-   page's own contents, with the section in view highlighted, and the
-   calculators below it.
+   Body text is held to a readable measure, so on a wide window the right of
+   the column is otherwise empty. The rail puts that space to work — the page's
+   own contents, with the section in view highlighted.
 
-   It spans the wrapped sections and sticks inside them, so it follows the
-   reader but never rides over the hero above or the footer below. Wrap the
-   sections in a `.dockzone` and place this as its first child; the zone's
-   containers leave room for it.
+   Enable it with PageLayout's `rail` prop rather than placing it by hand: the
+   layout wraps everything after the hero in a `.dockzone`, which the rail
+   spans and sticks inside, so it never rides over the hero or the footer, and
+   whose containers leave room for it.
+
+   Contents come from the page itself — every section heading, and every
+   `.subsection` heading below it — unless a page passes its own list. That
+   keeps the rail from ever disagreeing with the page it describes.
 --------------------------------------------------------------------------- */
 
 export type RailItem = { id: string; label: string; level: 2 | 3 };
 
-export default function PageRail({ items }: { items: RailItem[] }) {
+const slug = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
+export default function PageRail({ items, tools = false }: { items?: RailItem[]; tools?: boolean }) {
+  const ref = useRef<HTMLElement | null>(null);
+  const [list, setList] = useState<RailItem[]>(items ?? []);
   const [active, setActive] = useState<string | null>(null);
 
-  /* The heading nearest the top of the viewport is the one being read. A
-     band just under the fixed nav, rather than the whole viewport, so the
-     highlight moves when a heading reaches the reading line and not before. */
   useEffect(() => {
-    const targets = items
+    if (items) return;
+    const zone = ref.current?.closest('.dockzone');
+    if (!zone) return;
+    const seen = new Set<string>();
+    const found: RailItem[] = [];
+    zone.querySelectorAll<HTMLElement>('.section-title h2, .subsection > h3').forEach((el) => {
+      const label = (el.textContent ?? '').trim();
+      if (!label) return;
+      if (!el.id) {
+        let id = slug(label) || 'section';
+        while (seen.has(id) || document.getElementById(id)) id = `${id}-x`;
+        el.id = id;
+      }
+      seen.add(el.id);
+      found.push({ id: el.id, label, level: el.tagName === 'H2' ? 2 : 3 });
+    });
+    setList(found);
+  }, [items]);
+
+  /* The heading nearest the reading line is the one being read: a band just
+     under the fixed nav, so the highlight moves as a heading reaches it. */
+  useEffect(() => {
+    const targets = list
       .map((item) => document.getElementById(item.id))
       .filter((el): el is HTMLElement => Boolean(el));
     if (!targets.length || typeof IntersectionObserver === 'undefined') return undefined;
@@ -39,30 +70,34 @@ export default function PageRail({ items }: { items: RailItem[] }) {
     );
     targets.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [items]);
+  }, [list]);
 
   return (
-    <aside className="pagerail" aria-label="On this page">
+    <aside className="pagerail" aria-label="On this page" ref={ref}>
       <div className="pagerail__card">
-        <nav aria-label="Page contents">
-          <p className="pagerail__title">On this page</p>
-          <ol className="pagerail__toc">
-            {items.map((item) => (
-              <li key={item.id} className={`pagerail__item pagerail__item--${item.level}`}>
-                <a
-                  href={`#${item.id}`}
-                  className={active === item.id ? 'is-active' : undefined}
-                  aria-current={active === item.id ? 'location' : undefined}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
-        <div className="pagerail__tools">
-          <ToolIcons />
-        </div>
+        {list.length > 1 && (
+          <nav aria-label="Page contents">
+            <p className="pagerail__title">On this page</p>
+            <ol className="pagerail__toc">
+              {list.map((item) => (
+                <li key={item.id} className={`pagerail__item pagerail__item--${item.level}`}>
+                  <a
+                    href={`#${item.id}`}
+                    className={active === item.id ? 'is-active' : undefined}
+                    aria-current={active === item.id ? 'location' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+        {tools && (
+          <div className="pagerail__tools">
+            <ToolIcons />
+          </div>
+        )}
       </div>
     </aside>
   );
