@@ -69,8 +69,13 @@ export function SmartLink({
 
 const WORD = /[A-Za-z0-9]/;
 
+/** How `code` is drawn. A page may set it in its own style instead of <code>. */
+export type CodeStyle = (text: string, key: number) => React.ReactNode;
+
+const asCode: CodeStyle = (text, key) => <code key={key}>{text}</code>;
+
 /** Inline Markdown to React nodes. */
-export function inline(src: string): React.ReactNode[] {
+export function inline(src: string, code: CodeStyle = asCode): React.ReactNode[] {
   const out: React.ReactNode[] = [];
   let text = '';
   let key = 0;
@@ -93,7 +98,7 @@ export function inline(src: string): React.ReactNode[] {
       const end = src.indexOf('`', i + 1);
       if (end > i) {
         flush();
-        out.push(<code key={key++}>{src.slice(i + 1, end)}</code>);
+        out.push(code(src.slice(i + 1, end), key++));
         i = end + 1;
         continue;
       }
@@ -106,7 +111,7 @@ export function inline(src: string): React.ReactNode[] {
         flush();
         out.push(
           <SmartLink key={key++} href={src.slice(close + 2, end)}>
-            {inline(src.slice(i + 1, close))}
+            {inline(src.slice(i + 1, close), code)}
           </SmartLink>
         );
         i = end + 1;
@@ -118,7 +123,7 @@ export function inline(src: string): React.ReactNode[] {
       const end = src.indexOf('**', i + 2);
       if (end > i + 2) {
         flush();
-        out.push(<b key={key++}>{inline(src.slice(i + 2, end))}</b>);
+        out.push(<b key={key++}>{inline(src.slice(i + 2, end), code)}</b>);
         i = end + 2;
         continue;
       }
@@ -128,7 +133,7 @@ export function inline(src: string): React.ReactNode[] {
       const end = src.indexOf('*', i + 1);
       if (end > i + 1 && src[end - 1] !== ' ') {
         flush();
-        out.push(<em key={key++}>{inline(src.slice(i + 1, end))}</em>);
+        out.push(<em key={key++}>{inline(src.slice(i + 1, end), code)}</em>);
         i = end + 1;
         continue;
       }
@@ -139,7 +144,7 @@ export function inline(src: string): React.ReactNode[] {
       while (end > 0 && WORD.test(src[end + 1] ?? '')) end = src.indexOf('_', end + 1);
       if (end > i + 1 && src[end - 1] !== ' ') {
         flush();
-        out.push(<i key={key++}>{inline(src.slice(i + 1, end))}</i>);
+        out.push(<i key={key++}>{inline(src.slice(i + 1, end), code)}</i>);
         i = end + 1;
         continue;
       }
@@ -153,9 +158,9 @@ export function inline(src: string): React.ReactNode[] {
 }
 
 /** Inline Markdown, rendered into whatever element surrounds it. */
-export function Md({ children }: { children?: string | null }) {
+export function Md({ children, code }: { children?: string | null; code?: CodeStyle }) {
   if (!children) return null;
-  return <>{inline(children)}</>;
+  return <>{inline(children, code)}</>;
 }
 
 /**

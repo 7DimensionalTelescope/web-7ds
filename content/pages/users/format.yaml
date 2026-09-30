@@ -1,0 +1,97 @@
+# /users/format — the data format specification, as published to the science
+# working groups.
+#
+# This file holds the page's words. The rows of every table — products,
+# basename elements, suffixes, conventions, header keywords, catalog columns —
+# are in content/data/dataformat.yaml, a transcription of the specification.
+# Table cells there are shown exactly as written, without Markdown, since
+# file patterns such as *_100s.fits are meant literally.
+#
+# In this file, `code` is set in the monospace used for keywords.
+
+meta:
+  title: Data format · 7DT for users
+  description: "What a 7DT data product is: image and catalog products, the filename convention,
+    WCS and unit conventions, the FITS header keywords, and the columns of a Py7DT source
+    catalog."
+hero:
+  eyebrow: For users
+  title: Data format
+  lede: "What arrives when you obtain 7DT data: two image products and a catalog, a filename that
+    tells you what a file is, and headers that carry everything needed to turn counts into
+    calibrated magnitudes."
+  image: /img/hero/data.jpg
+  meta:
+    - value: "2"
+      label: Image products
+    - value: 9576×6388
+      label: Single-exposure pixels
+    - value: "0.505"
+      unit: ″
+      label: Per pixel
+    - value: µJy
+      label: Coadd pixel units
+products:
+  eyebrow: Products
+  title: What a data product is
+  images:
+    title: Images
+    body: A calibrated single exposure and a coadd are the two primary image products. Coadds may be
+      nightly stacks, commonly around 300 seconds, or longer multi-epoch stacks.
+    caption: Primary image products
+    columns:
+      - Product
+      - Filename
+      - Format and size
+      - Contents
+  filename:
+    title: What a filename tells you
+    body: "A basename identifies the observation completely, so a file can be placed without opening
+      it. A typical single exposure:"
+    example: T08147_m650_7DT02_20251126_043413_100s.fits
+    caption: Elements of a basename
+    suffixBody: The same stem carries through to everything derived from that image, distinguished
+      by a suffix.
+    suffixCaption: Suffixes on the same stem
+  conventions:
+    title: Conventions
+    caption: Coordinate, unit and naming conventions
+headers:
+  eyebrow: Headers
+  title: FITS header keywords
+  body: Beyond the standard keywords, a 7DT header carries what the observation was, how good it
+    turned out, what is needed to calibrate it, and where every input came from. Quality metrics
+    are written by the pipeline for every image it produces and are also ingested into the
+    observation database.
+  footnote: Two keywords are worth reading before any analysis. `SANITY` is the pipeline's own
+    verdict on the frame, and `False` means it should normally be excluded. `PPFLAG` records
+    every compromise made in finding calibration masters, so a frame calibrated against
+    something less than ideal always says so.
+catalogs:
+  eyebrow: Catalogs
+  title: Source catalogs
+  naming:
+    title: The naming rule
+    body: "Py7DT source catalogs are FITS binary tables following SExtractor conventions, holding
+      instrumental measurements, calibrated photometry, source morphology and reference-catalog
+      cross-matches. One rule explains most of the column names: an unsuffixed photometric
+      column is an instrumental measurement, and a column suffixed with a filter name is the
+      calibrated quantity in that filter."
+    caption: The same measurement, in an m650 catalog
+    footnote: The suffix convention extends to the corresponding errors and related quantities
+      wherever filter-specific columns are provided.
+next:
+  eyebrow: Next
+  title: Working with it
+  body: The pipeline that produces these files, and the packages for reading and analyzing them,
+    are described under [software](/users/software). How the data are obtained is on [data
+    access](/users/access). Measured depths, zero-point accuracy and delivered image quality —
+    the numbers behind the header keywords above — are on the [performance
+    page](/users/performance).
+  buttons:
+    - label: Software
+      href: /users/software
+    - label: Data access
+      href: /users/access
+    - label: Measured performance
+      href: /users/performance
