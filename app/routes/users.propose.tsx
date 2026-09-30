@@ -148,8 +148,7 @@ const Index = () => {
             <p>
               No call for proposals has opened against either allocation. The schedule will be
               announced here when it is fixed, together with a proposal template. The{' '}
-              <Link to="/calculator">observation calculators</Link> are already available and can
-              be used to cost a program before there is anywhere to send it.
+              <Link to="/calculator">observation calculators</Link> are available now.
               Target-of-opportunity requests are handled separately and continuously, and do not
               wait for a call.
             </p>
