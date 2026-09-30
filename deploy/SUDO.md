@@ -62,34 +62,59 @@ not a default.
 
 ## 3. Serve the calculators under 7ds.snu.ac.kr — ON 7ds
 
+The apps are already running on this host (`pm2 ls` shows `calc-visibility`,
+`calc-exposure`, `calc-overhead`, `calc-tiles`), each on 127.0.0.1 only. This
+step makes nginx the way in.
+
 ```bash
-sudo cp deploy/calculators-proxy.inc /etc/nginx/conf.d/calculators-proxy.inc
-# paste the location blocks from deploy/calculators.nginx.conf into the
+cd /home/dtak/7ds
+sudo cp deploy/calculators-map.conf   /etc/nginx/conf.d/calculators-map.conf
+sudo cp deploy/calculators-proxy.inc  /etc/nginx/conf.d/calculators-proxy.inc
+# Paste the four location blocks from deploy/calculators.nginx.conf into the
 # `server { listen 443 ssl; ... }` block of /etc/nginx/conf.d/7ds.conf,
-# ABOVE the existing `location / { ... }`
+# ABOVE the existing `location / { ... }`.
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
-With the apps running on 7ds itself the proxy targets become local, which is
-simpler than the cross-machine version in that file:
+Three files, three places, and the difference matters: `calculators-map.conf`
+is an http-level `map` and nginx will not start if it is pasted inside a
+server block; `calculators-proxy.inc` has a `.inc` extension so the
+`conf.d/*.conf` glob does not load it on its own; the location blocks go
+inside the 443 server block.
 
-```nginx
-location /calculator/visibility/app/ { proxy_pass http://127.0.0.1:8509/calculator/visibility/app/; include /etc/nginx/conf.d/calculators-proxy.inc; }
-location /calculator/exposure/app/   { proxy_pass http://127.0.0.1:8510/calculator/exposure/app/;   include /etc/nginx/conf.d/calculators-proxy.inc; }
-location /calculator/overhead/app/   { proxy_pass http://127.0.0.1:8511/calculator/overhead/app/;   include /etc/nginx/conf.d/calculators-proxy.inc; }
-location /calculator/tiles/app/      { proxy_pass http://127.0.0.1:8512/calculator/tiles/app/;      include /etc/nginx/conf.d/calculators-proxy.inc; }
-```
+Tested before handing over, with a throwaway nginx running exactly this
+configuration against the running apps: all four pages 200, `_stcore/health`
+ok, and the websocket upgrade at `_stcore/stream` answers `101 Switching
+Protocols` with `Host: 7ds.snu.ac.kr` and `Origin: https://7ds.snu.ac.kr`.
 
-No firewall change is needed in that case: the Streamlit processes listen on
-127.0.0.1 and only nginx reaches them. If instead the apps are to be reached
-directly as `7ds.snu.ac.kr:8509`, each port has to be opened —
+After the reload, check from outside:
 
 ```bash
-sudo firewall-cmd --permanent --add-port=8509/tcp   # and 8510, 8511, 8512
-sudo firewall-cmd --reload
+curl -s https://7ds.snu.ac.kr/calculator/exposure/app/_stcore/health   # ok
 ```
 
-— but then they are cross-origin again and cannot be framed by the site.
+No firewall change is needed: the apps listen on 127.0.0.1, so only nginx
+reaches them.
+
+## The mount as it is now
+
+`/lyman/data1/7dt` is mounted over NFSv4.1 and the calculators read it without
+trouble. Two of its options differ from what step 2 recommends, and both are
+worth changing when convenient:
+
+- **`rw`, not `ro`.** Nothing here writes to that folder, and the configuration
+  folder holds credentials. Read-only makes that a guarantee rather than a habit.
+- **`hard`, not `soft`.** If lyman becomes unreachable, a hard mount blocks
+  every process that touches it until it comes back — and the four calculator
+  processes re-read the configuration every minute, so they would all hang.
+  `soft,timeo=30,retrans=3` makes them fail and recover instead.
+
+```bash
+sudo umount /lyman/data1/7dt
+sudo mount -t nfs -o ro,soft,timeo=30,retrans=3 147.46.45.48:/lyman/data1/7dt /lyman/data1/7dt
+```
+
+(and the same options in `/etc/fstab`, if the mount was added there)
 
 ## Order
 
