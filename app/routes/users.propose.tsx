@@ -288,8 +288,41 @@ const Index = () => {
       </Section>
 
       <Section eyebrow="Writing" title="Guidelines" alt>
+        {/* In the order of the Phase 1 form: the two choices that decide the
+            shape of a program first, then the fields that pin it down, then the
+            checks worth running before any of it is written. */}
+        <p className="prose">
+          A request is a program type, an observation mode, a target or an area, the exposures
+          that reach the signal-to-noise the science needs, and the constraints under which the
+          array may take them. Positions on the survey tiling are preferred wherever the science
+          allows: data taken on a tile coadd directly with the survey data already there, and
+          difference against the existing reference image without a separate calibration step.
+        </p>
+
         <div className="subsection">
-          <h3>Observing modes</h3>
+          <h3>Program type</h3>
+          <div className="table-wrap">
+            <table className="spec-table">
+              <caption>Program types</caption>
+              <tbody>
+                {PROGRAM_TYPES.map((row) => (
+                  <tr key={row[0]}>
+                    <th scope="row" style={{ whiteSpace: 'nowrap' }}>
+                      {row[0]}
+                      <span className="tier-card__code" style={{ display: 'block', fontSize: '0.6875rem' }}>
+                        {row[1]}
+                      </span>
+                    </th>
+                    <td>{row[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="subsection">
+          <h3>Observation mode</h3>
           <p className="prose">{modeText}</p>
 
           <ul className="feature-list" style={{ marginTop: '2rem' }}>
@@ -323,35 +356,8 @@ const Index = () => {
         </div>
 
         <div className="subsection">
-          <h3>What a request contains</h3>
-          <p className="prose">
-            A request is a program type, an observation mode, a target or an area, the exposures
-            that reach the signal-to-noise the science needs, and the constraints under which the
-            array may take them. Positions on the survey tiling are preferred wherever the science
-            allows: data taken on a tile coadd directly with the survey data already there, and
-            difference against the existing reference image without a separate calibration step.
-          </p>
-
-          <div className="table-wrap" style={{ marginTop: '2rem' }}>
-            <table className="spec-table">
-              <caption>Program types</caption>
-              <tbody>
-                {PROGRAM_TYPES.map((row) => (
-                  <tr key={row[0]}>
-                    <th scope="row" style={{ whiteSpace: 'nowrap' }}>
-                      {row[0]}
-                      <span className="tier-card__code" style={{ display: 'block', fontSize: '0.6875rem' }}>
-                        {row[1]}
-                      </span>
-                    </th>
-                    <td>{row[2]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="table-wrap" style={{ marginTop: '2rem' }}>
+          <h3>Technical justification</h3>
+          <div className="table-wrap">
             <table className="spec-table">
               <caption>Fields of the Phase 1 form</caption>
               <thead>

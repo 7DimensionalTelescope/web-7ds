@@ -77,12 +77,6 @@ const Index = () => (
               </li>
             ))}
           </ul>
-          <p className="footnote" style={{ marginTop: '1.5rem' }}>
-            The Proposal Form and the Preparation Instructions are reused from one call to the
-            next. The Call for Proposals is specific to this one, and is the document that settles
-            eligibility, how the two allocation pools are counted, the review process and the data
-            rights that come with an award — those rules are not restated on this site.
-          </p>
         </Section>
 
         <Section eyebrow="Schedule" title="Key dates" alt>
@@ -104,26 +98,6 @@ const Index = () => (
           </p>
         </Section>
 
-        <Section eyebrow="Submitting" title="Where to send it">
-          <div className="panel" style={{ maxWidth: '68ch' }}>
-            <div className="panel__title">By e-mail, before {call.deadline}</div>
-            <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
-              Send the completed Proposal Form together with the Scientific Justification, the
-              Technical Justification and any accompanying files — a target list, for example — to{' '}
-              <a href={`mailto:${call.submit.email}?subject=7DT%20Phase%201%20proposal`}>
-                {call.submit.email}
-              </a>
-              . There is no submission portal; e-mail is the route.
-            </p>
-            <a
-              className="btn btn--primary"
-              href={`mailto:${call.submit.email}?subject=7DT%20Phase%201%20proposal`}
-            >
-              Submit a proposal
-            </a>
-          </div>
-        </Section>
-
         <Section eyebrow="Time" title="What is being offered">
           <p className="prose">
             {call.hours}. {call.pools} A proposal is counted against one pool on the basis of the
@@ -141,6 +115,26 @@ const Index = () => (
             <Link className="btn btn--secondary" to="/users/performance">
               Measured performance
             </Link>
+          </div>
+        </Section>
+
+        <Section eyebrow="Submitting" title="Where to send it">
+          <div className="panel" style={{ maxWidth: '68ch' }}>
+            <div className="panel__title">By e-mail, before {call.deadline}</div>
+            <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
+              Send the completed Proposal Form together with the Scientific Justification, the
+              Technical Justification and any accompanying files — a target list, for example — to{' '}
+              <a href={`mailto:${call.submit.email}?subject=7DT%20Phase%201%20proposal`}>
+                {call.submit.email}
+              </a>
+              . There is no submission portal; e-mail is the route.
+            </p>
+            <a
+              className="btn btn--primary"
+              href={`mailto:${call.submit.email}?subject=7DT%20Phase%201%20proposal`}
+            >
+              Submit a proposal
+            </a>
           </div>
         </Section>
 
