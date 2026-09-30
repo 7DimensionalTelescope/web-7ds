@@ -1,9 +1,7 @@
 import React from 'react';
-import { Link, useLoaderData } from '@remix-run/react';
-import type { HeadersFunction, MetaFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
-import { PageLayout, PageHero, Section, LiveBadge } from '../components/site';
-import { getStatus } from '../lib/portal.server';
+import { Link } from '@remix-run/react';
+import type { MetaFunction } from '@remix-run/node';
+import { PageLayout, PageHero, Section } from '../components/site';
 import { modeText } from './content/text';
 import surveys from './content/surveys.json';
 import call from './content/call.json';
@@ -16,19 +14,6 @@ export const meta: MetaFunction = () => [
       'Who may propose for 7DT time, how much is available and when: team membership through the science working groups, the KASI and KAS allocations, the data policy, and how an observation is specified.',
   },
 ];
-
-const CACHE = 'public, max-age=900, stale-while-revalidate=86400';
-export const headers: HeadersFunction = () => ({ 'Cache-Control': CACHE });
-
-export async function loader() {
-  const status = await getStatus();
-  return json(
-    { too: status.data.too, live: status.live, generatedAt: status.generatedAt },
-    { headers: { 'Cache-Control': CACHE } }
-  );
-}
-
-const num = (value: number) => value.toLocaleString('en-US');
 
 /* The three program types. A different axis from the observation modes: the
    type says what kind of program it is, the mode says how the array is
@@ -130,8 +115,6 @@ const REQUEST_PARAMETERS: { field: string; what: React.ReactNode }[] = [
 ];
 
 const Index = () => {
-  const { too, live, generatedAt } = useLoaderData<typeof loader>();
-
   return (
     <PageLayout menu="manuUsers">
       <PageHero
@@ -402,43 +385,6 @@ const Index = () => {
             cannot be specified, though observations are made under nominal conditions wherever
             possible. A unit may also be out of service on the night, in which case the delivered
             data lack whatever that telescope was carrying.
-          </p>
-        </div>
-
-        <div className="subsection">
-          <h3>Target of opportunity</h3>
-          <p className="prose">
-            When a transient alert arrives — a gamma-ray burst, a gravitational-wave candidate —
-            the scheduler interrupts the observing plan and repoints. Two response modes are
-            available: a regular mode that completes the current exposure block before switching,
-            and a rapid mode that interrupts immediately. Once the follow-up finishes, the array
-            returns to the queue and resumes the interrupted target if it is still observable. Time
-            from alert ingestion to the start of a follow-up exposure is under one minute.
-          </p>
-          <p className="prose">
-            Target-of-opportunity data are processed at elevated priority and the requester is
-            notified when raw data arrive, as each filter set completes, and on completion with a
-            spectral energy distribution plot and magnitude table attached.
-          </p>
-
-          <div style={{ margin: '2rem 0 1.25rem' }}>
-            <LiveBadge live={live} updated={generatedAt} interval="every 30 minutes" />
-          </div>
-          <p className="prose">
-            {num(too.followup_events)} follow-up campaigns have been carried out since automated
-            target-of-opportunity response entered service, {num(too.gw_campaigns)} of them on
-            gravitational-wave events.
-          </p>
-          <div className="chip-row" style={{ marginTop: '1.25rem' }}>
-            {too.gw_event_ids.map((id: string) => (
-              <span className="chip chip--static" key={id}>
-                {id}
-              </span>
-            ))}
-          </div>
-          <p className="footnote" style={{ marginTop: '1rem' }}>
-            LVK superevent identifiers as issued in the public alert stream. Target-level details
-            are not published here.
           </p>
         </div>
 
