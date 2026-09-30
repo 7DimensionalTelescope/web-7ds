@@ -1,0 +1,90 @@
+# /telescope/overview — the array: what it is made of and why it is an array.
+#
+# The system summary table at the foot is content/data/specs.yaml (groups).
+
+meta:
+  title: Telescope · 7-Dimensional Telescope
+  description: "The 7-Dimensional Telescope: twenty 50-cm units on direct-drive mounts with CMOS
+    cameras and medium-band filter wheels, operated as one instrument."
+hero:
+  eyebrow: Facilities
+  title: The *7DT* array
+  lede: Twenty 50-cm telescopes on direct-drive mounts, each with its own camera and filter wheel,
+    operated as a single instrument.
+  image: /img/hero/telescope.jpg
+  meta:
+    - value: "20"
+      label: Telescopes
+      note: 16 online
+      live: true
+    - value: "50.8"
+      unit: cm
+      label: Primary diameter
+    - value: f/3.0
+      label: Focal ratio
+    - value: 1.34 × 0.90
+      unit: °
+      label: Field per unit
+hardware:
+  eyebrow: Hardware
+  title: What the array is made of
+  body: 7DT is an array of twenty 50-cm commercial off-the-shelf telescopes. Each unit is a
+    PlaneWave DeltaRho 500 optical tube assembly on an L-500 direct-drive mount in equatorial
+    configuration, paired with a Moravian Instruments C3-61000 PRO CMOS camera. Units are
+    identical except for the filters they carry. Sixteen of the twenty are deployed and
+    operational as of June 2026; the remaining four complete the array. All operational units
+    share a common configuration and show consistent optical performance in routine use.
+  table:
+    caption: Unit telescope, at a glance
+    rows:
+      - - Optical tube
+        - PlaneWave DeltaRho 500 — 508 mm corrected Cassegrain, f/3.0
+      - - Mount
+        - PlaneWave L-500 direct drive, equatorial, 20 deg s⁻¹ slew
+      - - Camera
+        - Moravian C3-61000 PRO — SONY IMX455 CMOS, 9576 × 6388 px
+      - - Filter wheel
+        - 9 slots per unit — Sloan broad bands and a share of 35 medium bands
+      - - Field of view
+        - 1.34° × 0.90° at 0.5″ per pixel, 1.25 deg² per pointing
+  note: Each subsystem is described in full under [instrument](/telescope/instrument). Measured
+    on-sky performance is reported on the [performance page](/users/performance).
+  figure:
+    src: /img/images/Figure2_7DT.jpg
+    alt: The 7-Dimensional Telescope array seen from the front
+    label: DeltaRho 500
+    caption: Each unit is a 508 mm corrected Cassegrain on an L-500 direct-drive mount, with its own
+      camera and filter wheel.
+design:
+  eyebrow: Design
+  title: Why an array rather than one telescope
+  body:
+    - Twenty commercial 50-cm units, each carrying a different share of the forty-filter
+      medium-band set, cost a fraction of a purpose-built instrument, can be brought on line in
+      stages, and can be reconfigured between science goals without hardware changes. Pointed
+      together the units build a spectrum of one field; pointed apart they cover 25 square
+      degrees at once.
+    - "Other multi-telescope arrays — GOTO, BlackGEM, LAST — take the same approach to
+      off-the-shelf optics. What distinguishes 7DT is the filter set placed in front of them: 40
+      medium bands of about 25 nm width spanning 375 to 900 nm, distributed across the array so
+      that the full set is covered in a small number of exposures."
+  figure:
+    src: /img/images/Figure1_7DT.jpeg
+    alt: The 7-Dimensional Telescope array at El Sauce Observatory
+    label: The array
+    caption: DeltaRho 500 units installed at El Sauce Observatory, Río Hurtado Valley, Chile.
+specs:
+  eyebrow: Specifications
+  title: System summary
+  caption: 7DT system specifications — June 2026
+  next:
+    title: In detail
+    links:
+      - label: Instrument
+        href: /telescope/instrument
+      - label: Location
+        href: /telescope/location
+      - label: Computational resources
+        href: /telescope/computer
+      - label: Measured performance
+        href: /users/performance

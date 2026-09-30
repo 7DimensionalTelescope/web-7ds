@@ -1,42 +1,31 @@
 import React from 'react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
-import { publicationPolicyText } from './content/text';
+import { Md } from '../components/md';
+import { metaOf } from '../lib/page';
+import page from '../content/pages/publication/policy.json';
 
-export const meta: MetaFunction = () => [
-  { title: 'Publication policy · 7-Dimensional Telescope' },
-  { name: 'description', content: 'Authorship, data rights and acknowledgment for work using 7DT data.' },
-];
+export const meta: MetaFunction = () => metaOf(page);
 
 const Index = () => {
+  const { hero, status } = page;
   return (
     <PageLayout menu="manuPaper">
-      <PageHero
-        eyebrow="Publications"
-        title="Publication policy"
-        lede="How authorship, data rights and acknowledgment are handled for work based on 7DT observations."
-        image="/img/hero/policy.jpg"
-      />
+      <PageHero eyebrow={hero.eyebrow} title={hero.title} lede={hero.lede} image={hero.image} />
 
-      <Section eyebrow="Status" title="In preparation">
-        <p className="prose">{publicationPolicyText}</p>
+      <Section eyebrow={status.eyebrow} title={status.title}>
+        <p className="prose">
+          <Md>{status.body}</Md>
+        </p>
 
         <div className="panel" style={{ marginTop: '2rem', maxWidth: '68ch' }}>
-          <div className="panel__title">In the meantime</div>
+          <div className="panel__title">{status.meantime.title}</div>
           <ul className="prose" style={{ paddingLeft: '1.25rem', margin: 0 }}>
-            <li>
-              Contact the principal investigator at{' '}
-              <a href="mailto:mim@astro.snu.ac.kr">mim@astro.snu.ac.kr</a> before submitting.
-            </li>
-            <li>
-              Acknowledge the Center for the Gravitational-wave Universe at Seoul National
-              University and the funding bodies set out on the{' '}
-              <a href="/about/funding">funding</a> page.
-            </li>
-            <li>
-              Cite the instrument and pipeline papers listed under{' '}
-              <a href="/publication/list">publications</a>.
-            </li>
+            {status.meantime.items.map((item) => (
+              <li key={item}>
+                <Md>{item}</Md>
+              </li>
+            ))}
           </ul>
         </div>
       </Section>

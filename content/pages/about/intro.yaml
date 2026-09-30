@@ -1,0 +1,143 @@
+# /about/intro — what 7DS is, why it is a medium-band survey, and its history.
+#
+# History dates are those reported in the project papers and in the site news
+# record; every entry should be traceable to one of them.
+
+meta:
+  title: What is 7DS · 7-Dimensional Telescope
+  description: "The 7-Dimensional Sky Survey: what it measures, why it is built as a medium-band
+    survey, and how it has developed since first light in October 2023."
+hero:
+  eyebrow: About
+  title: What is *7DS*?
+  lede: A medium-band survey of the southern sky that measures a low-resolution spectrum for every
+    source it observes, and repeats the measurement over time.
+  image: /img/hero/about.jpg
+  meta:
+    - value: 23,000
+      unit: deg²
+      label: Survey area
+    - value: "40"
+      label: Medium bands
+      note: 35 installed
+    - value: 30–70
+      label: Spectral resolution R
+    - value: "2023"
+      label: First light
+motivation:
+  eyebrow: Motivation
+  title: Why a medium-band survey
+  body:
+    - Most optical surveys measure a source in a few broad bands, which constrains its spectrum
+      only weakly. Identifying what a source is — and, for anything that varies, what is
+      changing about it — then requires spectroscopic follow-up on a larger telescope, which is
+      expensive and cannot be applied to more than a small fraction of detections. The result is
+      a large gap between the number of sources a survey finds and the number it can
+      characterize.
+    - 7DS closes that gap by putting the spectral information into the survey itself. Imaging
+      through a set of medium bands rather than a few broad ones gives every source a
+      low-resolution spectrum at the moment it is detected, for the whole field at once and
+      without follow-up. The immediate motivation was the search for optical counterparts to
+      gravitational-wave events, where candidates must be classified quickly and in large
+      numbers; the same capability applies to any survey question that depends on knowing what a
+      source is rather than only how bright it is.
+  figure:
+    src: /img/overview.png
+    alt: "Sky areas compared: a gravitational-wave localization region set against the fields of
+      view of 7DT and other survey telescopes"
+    label: Scale of the problem
+    caption: A gravitational-wave localization region set against the field of view of 7DT and of
+      other survey telescopes.
+name:
+  eyebrow: The name
+  title: Seven dimensions
+  body: The name counts the measured axes of the data. Two of position on the sky, one of
+    brightness, one of wavelength and one of time come directly from the observations; distance
+    and radial velocity are derived from the medium-band spectral energy distribution. A single
+    visit therefore records where a source is, how bright it is, what its spectrum looks like,
+    and how both change with time.
+approach:
+  eyebrow: Approach
+  title: Spectral mapping and the time domain
+  body:
+    - 7DS is a spectral-mapping survey of the southern sky. Rather than measuring a few
+      broadband colors, it images through medium-band filters of about 25 nm width, so each
+      visit yields a spectral energy distribution at R = 30-70 for every source in the field.
+      Applied over 23,000 square degrees, this produces a homogeneous low-resolution
+      spectroscopic map of the southern sky, and applied repeatedly it measures how those
+      spectra change with time.
+    - "The survey combines two capabilities that are usually separate. Spectral mapping: each
+      visit samples the spectrum of every source in a 1.25 square-degree field at R = 30-70
+      between 375 and 875 nm, which is enough to locate the 4000 Angstrom break and strong
+      emission lines, and so to estimate redshifts and stellar populations directly from
+      imaging. Time domain: the same field can be revisited on cadences from one day to two
+      weeks, so the spectral measurement becomes a time series rather than a single epoch."
+    - "Sampling a spectrum at this resolution costs exposures: a full medium-band set is many
+      more frames than a broadband survey takes for the same field. The array is what makes that
+      affordable, and the trade is set out under the telescope and the survey design."
+  detail:
+    title: Where the detail is
+    items:
+      - How the three surveys divide area, cadence and depth — [survey design](/survey/overview).
+      - What the array is and why it is built as an array — [the telescope](/telescope/overview).
+      - What the measurement is used for — [science](/science/overview).
+history:
+  eyebrow: History
+  title: From first light to survey operation
+  milestones:
+    - when: 2019–2020
+      what: Before 7DT
+      body: GECKO, the Gravitational-wave Electromagnetic Counterpart Korean Observatory, follows up
+        gravitational-wave alerts during the O3 run using existing Korean-accessible telescopes.
+        Its campaign on GW190425 covers 621 candidate host galaxies inside a 7,460 deg²
+        localization and finds no counterpart — the direct argument for a purpose-built
+        facility.
+    - when: Oct 2023
+      what: First light
+      body: The first units observe from El Sauce Observatory in the Río Hurtado Valley, Chile.
+        Commissioning begins with twelve of the twenty planned telescopes on sky.
+    - when: Feb 2024
+      what: First images released
+      body: The Center for the Gravitational-wave Universe publishes the first public set of 7DT
+        images.
+    - when: Jul 2024
+      what: Reference Imaging Survey begins
+      body: Routine survey operation starts on the wide-area survey, covering roughly 23,000 deg²
+        south of Dec +20° with a single visit per tile.
+    - when: Aug 2024
+      what: Robotic operation
+      body: RTCSpy takes over nightly operation. From this point the array plans, observes and hands
+        off the night without an operator at the controls.
+    - when: Dec 2024
+      what: Sixteen units, automated response
+      body: "Four more DeltaRho 500 units enter routine operation, and automated target-of-opportunity
+        ingestion goes live: the scheduler can interrupt the night and begin a follow-up
+        exposure in under a minute."
+    - when: Apr 2025
+      what: Intensive Monitoring Survey begins
+      body: Seven tiles at the south ecliptic pole, chosen to overlap the SPHEREx Deep Field South,
+        are observed every available night.
+    - when: Late 2025
+      what: Thirty-five medium bands
+      body: Fifteen further medium-band filters are installed, extending coverage to 375–875 nm and
+        advancing toward the designed complement of forty.
+    - when: Jun 2026
+      what: Commissioning closes
+      body: Final commissioning is completed. The facility is reported as an operating observatory,
+        with two of the three surveys under way.
+    - when: Ahead
+      what: Completing the survey
+      body: The Wide-area Time-domain Survey commences in 2026. Four remaining units and five
+        remaining filters complete the design, and the first full cycle of the Reference Imaging
+        Survey is anticipated by the end of 2027.
+  next:
+    title: Continue
+    links:
+      - label: Survey design
+        href: /survey/overview
+      - label: Team
+        href: /about/team
+      - label: Funding
+        href: /about/funding
+      - label: For users
+        href: /users/status

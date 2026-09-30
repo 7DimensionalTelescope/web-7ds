@@ -1,0 +1,43 @@
+# /about/funding — the bodies that fund the facility and its operation.
+#
+# Grant numbers were deliberately taken off this page. If they are ever put back,
+# keep project-level awards separate from individual investigator awards.
+
+meta:
+  title: Funding · 7-Dimensional Telescope
+  description: Grants and institutions supporting the 7-Dimensional Telescope and Sky Survey.
+hero:
+  eyebrow: About
+  title: Funding sources
+  lede: The bodies that fund the facility, its operation, and the network that carries its data.
+  image: /img/hero/about.jpg
+host:
+  eyebrow: Host center
+  title: Center for the Gravitational-wave Universe
+  body: The 7-Dimensional Telescope is designed, built and operated by the Center for the
+    Gravitational-wave Universe at Seoul National University. The Center is supported by
+    National Research Foundation of Korea (MSIT).
+  logo:
+    src: /img/institutes/gwuniv.png
+    alt: Center for the Gravitational-wave Universe
+agencies:
+  eyebrow: Agencies
+  title: Project support
+  body:
+    - Further project support is provided by the National Research Foundation of Korea (MSIT).
+      Several members of the collaboration are additionally supported by individual NRF awards;
+      those grants support the researchers rather than the facility, and are acknowledged in
+      their own papers.
+    - 7DT is operated in part with support from special funding of the Korea Astronomy and Space
+      Science Institute (KASI).
+  logo:
+    src: /img/institutes/nrf.jpg
+    alt: National Research Foundation of Korea
+network:
+  eyebrow: Infrastructure
+  title: KREONET / KISTI
+  body: Nightly transfer of roughly 350 GB of raw data from Chile to the processing facility in
+    Seoul is carried by KREONET, the Korea Research Environment Open NETwork, operated by KISTI,
+    the Korea Institute of Science and Technology Information. The 7DT project gratefully
+    acknowledges this support, without which same-day reduction of survey and
+    target-of-opportunity data would not be possible.

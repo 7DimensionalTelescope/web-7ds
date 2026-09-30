@@ -3,6 +3,7 @@ import { Link } from '@remix-run/react';
 import NavBar from '../routes/navigate';
 import CallBanner from './callbanner';
 import PageRail, { type RailItem } from './pagerail';
+import { Md } from './md';
 import FooterBar from '../routes/footer';
 
 /* ---------------------------------------------------------------------------
@@ -287,6 +288,20 @@ export function Figure({
         </figcaption>
       )}
     </figure>
+  );
+}
+
+export type FigureContent = { src: string; alt: string; label?: string; caption?: string };
+
+/** A figure whose words come from a content file; the caption may carry Markdown. */
+export function ContentFigure({ fig }: { fig: FigureContent }) {
+  return (
+    <Figure
+      src={fig.src}
+      alt={fig.alt}
+      label={fig.label}
+      caption={fig.caption ? <Md>{fig.caption}</Md> : undefined}
+    />
   );
 }
 

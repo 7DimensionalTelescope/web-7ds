@@ -1,0 +1,83 @@
+# /science/overview — what 7DS is built to measure, and the seven science themes.
+#
+# The themes themselves (the cards, and each theme's own page) are in content/data/science.yaml.
+
+meta:
+  title: Science · 7-Dimensional Telescope
+  description: "What 7DS is built to measure: spectral mapping and the time domain, and the
+    science themes that follow from them."
+hero:
+  eyebrow: Science
+  title: Motivation
+  lede: "7DS measures two things a conventional survey does not measure together: the spectrum of
+    every source in the field, and how that spectrum changes with time."
+  image: /img/hero/science.jpg
+  meta:
+    - value: 30–70
+      label: Spectral resolution R
+    - value: 375–875
+      unit: nm
+      label: Wavelength range
+    - value: "1"
+      unit: d
+      label: Fastest cadence
+spectral:
+  eyebrow: Spectral mapping
+  title: A spectrum for every source in the field
+  body:
+    - "Two capabilities define what 7DS can answer. The first is spectral mapping: every visit
+      samples the spectrum of every source in the field at R = 30-70 across 375 to 875 nm. That
+      is coarse compared with a spectrograph, but it resolves the 4000 Angstrom break, strong
+      emission lines and broad continuum features, and it applies to every object in 1.25 square
+      degrees at once rather than to the few that fit on a slit."
+    - The practical consequence is that classification does not depend on follow-up. A source
+      detected in a 7DS image already carries the information needed to estimate a photometric
+      redshift, separate a quasar from a star, or distinguish a kilonova from the supernovae and
+      detector artifacts that outnumber it — at the moment of detection, for every object in
+      1.25 square degrees. The filter set that makes this possible, and which bands exist on a
+      given tile, are described under [status and overview](/users/status).
+time:
+  eyebrow: Time domain
+  title: Repeating the measurement
+  body:
+    - "The second is the time domain. Because the spectral measurement is made by imaging, it
+      can be repeated: the same field is revisited on cadences from one night to two weeks, so
+      what is measured is not a spectrum but its evolution. Questions that need both at once —
+      what a transient is while it is still bright, how an active galactic nucleus responds to
+      its own variability, how a young star changes from night to night — are the ones this
+      survey is built for."
+    - "The three surveys exist to put that repetition at different cadences: one visit
+      everywhere, a revisit every 10 to 14 days over a smaller area, and nightly observation of
+      a single deep field. Which cadence a question needs is what determines which survey serves
+      it — set out under [survey design](/survey/overview)."
+reach:
+  eyebrow: Reach
+  title: What the questions require
+  body:
+    - Spectral information is only useful as far out as the survey can detect a source, and the
+      depth reached at each wavelength is what decides which of the questions below are
+      answerable. Sampling the spectrum in many narrow steps costs depth per band relative to a
+      broadband survey of the same aperture, and the survey design trades that against the three
+      cadences.
+    - "The comparison below also shows why 7DS and SPHEREx are complementary rather than
+      redundant: they reach similar depth over overlapping wavelengths, but 7DS resolves the sky
+      roughly ten times more finely, so a 7DS pixel is a measurement of one source where a
+      SPHEREx pixel is a blend of several. Measured per-band depths for the current filter set
+      are on the [performance page](/users/performance)."
+  figure:
+    src: /img/science/survey-depth.jpg
+    alt: Five-sigma depth against wavelength for 7DT single exposures, the wide-area time-domain
+      survey and the intensive monitoring survey, compared with SPHEREx, Pan-STARRS 1 and
+      SkyMapper
+    label: Depth against wavelength
+    caption: 5σ depth for a single 7DT exposure and for the accumulated wide-area and
+      intensive-monitoring surveys, against SPHEREx, Pan-STARRS 1 and SkyMapper. 7DS covers the
+      optical at medium-band resolution where SPHEREx continues into the infrared.
+program:
+  eyebrow: Program
+  title: Seven science themes
+  body: "Each theme below draws on the same data product: a medium-band spectral energy
+    distribution for every source in the field, measured repeatedly."
+  button:
+    label: Publications
+    href: /publication/list

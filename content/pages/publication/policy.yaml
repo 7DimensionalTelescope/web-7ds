@@ -1,0 +1,29 @@
+# /publication/policy — how authorship, data rights and acknowledgment work.
+
+meta:
+  title: Publication policy · 7-Dimensional Telescope
+  description: Authorship, data rights and acknowledgment for work using 7DT data.
+
+hero:
+  eyebrow: Publications
+  title: Publication policy
+  lede: How authorship, data rights and acknowledgment are handled for work based on 7DT observations.
+  image: /img/hero/policy.jpg
+
+status:
+  eyebrow: Status
+  title: In preparation
+  body: >-
+    The 7DS publication policy governs authorship, data rights and the acknowledgment of 7DT
+    observations in refereed work. It is being prepared by the collaboration and will be posted
+    here once ratified. In the meantime, anyone intending to publish results based on 7DT data is
+    asked to contact the principal investigator so that the appropriate collaboration authors and
+    funding acknowledgments can be agreed in advance.
+  meantime:
+    title: In the meantime
+    items:
+      - Contact the principal investigator at [mim@astro.snu.ac.kr](mailto:mim@astro.snu.ac.kr)
+        before submitting.
+      - Acknowledge the Center for the Gravitational-wave Universe at Seoul National University and
+        the funding bodies set out on the [funding](/about/funding) page.
+      - Cite the instrument and pipeline papers listed under [publications](/publication/list).

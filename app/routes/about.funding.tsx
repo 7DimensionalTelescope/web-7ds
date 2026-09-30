@@ -1,70 +1,52 @@
 import React from 'react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
-import {
-  fundingGWText,
-  fundingNRFText,
-  fundingKASIText,
-  fundingKreonetText,
-} from './content/text';
+import { Md, Paras } from '../components/md';
+import { metaOf } from '../lib/page';
+import page from '../content/pages/about/funding.json';
 
-export const meta: MetaFunction = () => [
-  { title: 'Funding · 7-Dimensional Telescope' },
-  {
-    name: 'description',
-    content: 'Grants and institutions supporting the 7-Dimensional Telescope and Sky Survey.',
-  },
-];
+export const meta: MetaFunction = () => metaOf(page);
 
-/* Grant numbers were deliberately taken off this page. If they are ever put
-   back, keep project-level awards separate from individual investigator awards
-   — conflating the two misrepresents colleagues' funding. */
+const Logo = ({ logo }: { logo: { src: string; alt: string } }) => (
+  <figure className="figure">
+    <img
+      src={logo.src}
+      alt={logo.alt}
+      style={{ padding: '2rem', background: '#fff' }}
+      loading="lazy"
+    />
+  </figure>
+);
 
 const Index = () => {
+  const { hero, host, agencies, network } = page;
   return (
     <PageLayout menu="manuAbout">
-      <PageHero
-        eyebrow="About"
-        title="Funding sources"
-        lede="The bodies that fund the facility, its operation, and the network that carries its data."
-        image="/img/hero/about.jpg"
-      />
+      <PageHero eyebrow={hero.eyebrow} title={hero.title} lede={hero.lede} image={hero.image} />
 
-      <Section eyebrow="Host center" title="Center for the Gravitational-wave Universe">
+      <Section eyebrow={host.eyebrow} title={host.title}>
         <div className="split split--wide-text">
-          <p className="prose">{fundingGWText}</p>
-          <figure className="figure">
-            <img
-              src="/img/institutes/gwuniv.png"
-              alt="Center for the Gravitational-wave Universe"
-              style={{ padding: '2rem', background: '#fff' }}
-              loading="lazy"
-            />
-          </figure>
+          <p className="prose">
+            <Md>{host.body}</Md>
+          </p>
+          <Logo logo={host.logo} />
         </div>
       </Section>
 
-      <Section eyebrow="Agencies" title="Project support" alt>
+      <Section eyebrow={agencies.eyebrow} title={agencies.title} alt>
         <div className="split split--wide-text">
           <div>
-            <p className="prose">{fundingNRFText}</p>
-            <p className="prose">{fundingKASIText}</p>
+            <Paras className="prose">{agencies.body}</Paras>
           </div>
-          <figure className="figure">
-            <img
-              src="/img/institutes/nrf.jpg"
-              alt="National Research Foundation of Korea"
-              style={{ padding: '2rem', background: '#fff' }}
-              loading="lazy"
-            />
-          </figure>
+          <Logo logo={agencies.logo} />
         </div>
       </Section>
 
-      <Section eyebrow="Infrastructure" title="KREONET / KISTI">
-        <p className="prose">{fundingKreonetText}</p>
+      <Section eyebrow={network.eyebrow} title={network.title}>
+        <p className="prose">
+          <Md>{network.body}</Md>
+        </p>
       </Section>
-
     </PageLayout>
   );
 };
