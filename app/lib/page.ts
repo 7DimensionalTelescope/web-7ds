@@ -14,16 +14,35 @@ export const metaOf = (page: { meta: PageMeta }) => [
   { name: 'description', content: page.meta.description },
 ];
 
+/** Formats a placeholder may name after a bar: {nightly.n_nights|num}. */
+export type Formats = Record<string, (value: never) => string>;
+
 /**
  * Fills {name.path} placeholders in content text from the data a page passes,
  * so a sentence that quotes a date or a count from a data file reads it rather
- * than restating it. A placeholder with nothing behind it is left as written,
- * which makes a mistyped name visible on the page instead of blank.
+ * than restating it. {path|format} passes the value through one of the
+ * page's formats first. A placeholder with nothing behind it is left as
+ * written, which makes a mistyped name visible on the page instead of blank.
  */
-export const fill = (text: string, vars: Record<string, unknown>) =>
-  text.replace(/\{([A-Za-z][\w.]*)\}/g, (whole, path: string) => {
+export const fill = (text: string, vars: Record<string, unknown>, formats: Formats = {}) =>
+  text.replace(/\{([A-Za-z][\w.]*)(?:\|(\w+))?\}/g, (whole, path: string, format?: string) => {
     const value = path
       .split('.')
       .reduce<unknown>((obj, key) => (obj && typeof obj === 'object' ? (obj as Record<string, unknown>)[key] : undefined), vars);
-    return value === undefined || value === null ? whole : String(value);
+    if (value === undefined || value === null) return whole;
+    const f = format ? formats[format] : undefined;
+    if (format && !f) return whole;
+    return f ? f(value as never) : String(value);
   });
+
+/** fill() over every string in a content object — a list of stats, a table. */
+export function fillAll<T>(content: T, vars: Record<string, unknown>, formats: Formats = {}): T {
+  if (typeof content === 'string') return fill(content, vars, formats) as T;
+  if (Array.isArray(content)) return content.map((item) => fillAll(item, vars, formats)) as T;
+  if (content && typeof content === 'object') {
+    return Object.fromEntries(
+      Object.entries(content).map(([k, item]) => [k, fillAll(item, vars, formats)])
+    ) as T;
+  }
+  return content;
+}

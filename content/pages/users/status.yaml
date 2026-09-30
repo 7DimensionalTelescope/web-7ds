@@ -1,0 +1,223 @@
+# /users/status — what the array can observe now and what data exist.
+#
+# Most numbers on this page are live, read from the observation database, and
+# are written here as placeholders in {braces} that name where the number comes
+# from: {telescopes.online}, {nightly.n_nights}, {ris.coverage_pct} and so on
+# (the fields of the portal's status report). A bar names a format:
+# {nightly.n_nights|num} prints 1,234; {nightly.last_night|day} prints a date.
+# Two more are counted by the page: {bandsInUse}, the bands with coverage data,
+# and {imsTileCount}; {risTiles} is the size of the reference grid.
+#
+# Numbers written out plainly here are fixed, not live.
+
+meta:
+  title: Status & overview · 7DT for users
+  description: "What 7DT can observe now and what data exist: telescopes and filters available,
+    survey coverage, measured depths and processing status."
+hero:
+  eyebrow: For users
+  title: Status
+  lede: What the array can observe at the moment, and what data already exist. Start here before
+    planning an observation or a data request.
+  image: /img/hero/data.jpg
+  meta:
+    - value: "{telescopes.online}"
+      label: Telescopes available
+      note: of {telescopes.total}
+      live: true
+    - value: "35"
+      label: Filters installed
+      note: of 40 medium bands
+    - value: "{ris.coverage_pct}"
+      unit: "%"
+      label: Sky referenced
+    - value: "{nightly.last_night|day}"
+      label: Last night observed
+tonight:
+  eyebrow: Availability
+  title: What is on sky tonight
+  updated: every 30 minutes
+  body: "{telescopes.online} of {telescopes.total} telescopes are in routine operation. Units not
+    listed as online are either awaiting installation or out of service for maintenance. Each
+    operational unit carries a nine-slot filter wheel holding Sloan broad bands and a share of
+    the medium-band set, so the number of distinct bands available on a given night depends on
+    how many units are observing."
+  stats:
+    - value: "{telescopes.online}"
+      label: Telescopes online
+      note: of {telescopes.total}
+      live: true
+    - value: "35"
+      label: Filters installed
+      note: of 40 medium bands
+    - value: "{nightly.n_nights|num}"
+      label: Nights observed
+    - value: "{nightly.last_night|day}"
+      label: Most recent night
+night:
+  eyebrow: Operations
+  title: What a night produces
+  body: Over {nightly.n_nights|num} observing nights since {nightly.first_night|day}, the array
+    has recorded {totals.science_frames|num} science frames in {totals.exposure_hours|num} hours
+    of open shutter. A typical night covers {nightly.tiles_per_night.median} tiles in
+    {nightly.exposures_per_night.median|num} exposures and writes
+    {nightly.raw_gb_per_night.median|num} GB of raw data, calibration frames included.
+  stats:
+    - value: "{nightly.tiles_per_night.median|num}"
+      label: Tiles per night
+      note: median
+    - value: "{nightly.exposures_per_night.median|num}"
+      label: Exposures per night
+      note: median
+    - value: "{nightly.raw_gb_per_night.median|num}"
+      unit: GB
+      label: Raw data per night
+      note: median
+    - value: "{totals.science_frames|num}"
+      label: Science frames
+      note: to date
+    - value: "{totals.exposure_hours|num}"
+      unit: hr
+      label: Open shutter
+      note: to date
+  footnote: "Medians rather than means: target-of-opportunity nights run to
+    {nightly.exposures_per_night.max|num} exposures and would otherwise dominate the figure.
+    Progress of each survey is on its own page — [RIS](/survey/ris), [WTS](/survey/wts) and
+    [IMS](/survey/ims)."
+bands:
+  eyebrow: Filters
+  title: Bands available
+  body:
+    - The filter set is what distinguishes 7DT from other survey arrays. Twenty medium bands of
+      25 nm width are spaced regularly at 25 nm from 400 to 875 nm. Fifteen further filters,
+      installed in late 2025, fall between them with central wavelengths from 375 to 832 nm and
+      bandwidths of 14 to 41 nm. Sloan g, r and i are carried by every unit; u is carried by one
+      and z by three.
+    - The original twenty are the calibrated set in operational use. Spectrophotometric
+      calibration of the fifteen added filters is in preparation, and their central wavelengths
+      are not aligned to a regular grid — check which bands a given tile actually carries on the
+      [data access page](/users/access), which reports the medium bands observed on any tile.
+  table:
+    caption: Medium bands, central wavelength in nm
+    rows:
+      - label: Original set (25 nm spacing)
+        bands:
+          - 400
+          - 425
+          - 450
+          - 475
+          - 500
+          - 525
+          - 550
+          - 575
+          - 600
+          - 625
+          - 650
+          - 675
+          - 700
+          - 725
+          - 750
+          - 775
+          - 800
+          - 825
+          - 850
+          - 875
+      - label: Added 2025 (irregular)
+        bands:
+          - 375
+          - 386
+          - 412
+          - 438
+          - 462
+          - 483
+          - 512
+          - 534
+          - 561
+          - 586
+          - 615
+          - 640
+          - 661
+          - 769
+          - 832
+      - label: Broad bands
+        bands:
+          - u
+          - g
+          - r
+          - i
+          - z
+perBand:
+  eyebrow: Availability
+  title: How much sky each band has reached
+  body: A band is only useful where it has been taken. Because each unit carries nine slots out of
+    the {bandsInUse} bands in use, the array works through the set over many nights, and
+    coverage runs well ahead in some bands and behind in others. The count below is tiles with
+    at least one science frame in that band.
+  caption: Tiles observed per band, of {ris.tiles_defined|num} in the reference grid
+  columns:
+    - Band
+    - Central λ
+    - Tiles in the grid
+    - Of the grid
+    - Frames
+  footnote: Counted over the original reference grid, so the percentages are comparable with the
+    {ris.coverage_pct}% figure above. Broad bands are listed at their effective wavelength.
+    Which bands a particular tile carries is reported on the [data access page](/users/access).
+response:
+  eyebrow: Response
+  title: Filter response curves
+  footnote: Curves are read from the reference data shipped with [`supy`](/users/software), which
+    is also what its simulator module uses, so a response computed there matches this figure
+    exactly.
+coverage:
+  eyebrow: Coverage
+  title: What has been observed
+  updated: daily
+  body: "{ris.coverage_pct} percent of the reference tiling has been observed at least once:
+    {ris.tiles_observed|num} of {ris.tiles_defined|num} tiles, or
+    {ris.tiles_observed_extended|num} of {ris.tiles_extended|num} counting the northern
+    extension. A tile with data has calibrated images and a source catalog."
+  layers:
+    - key: grid
+      label: RIS reference grid
+      note: "{risTiles|num} tiles"
+    - key: ext
+      label: Northern extension
+      note: to Dec +30°
+    - key: observed
+      label: Observed
+      note: colored by the scale below
+    - key: ims
+      label: IMS field
+      note: "{imsTileCount} tiles"
+  unavailable:
+    - label: WTS
+      note: not started
+      aria: "WTS layer, unavailable: not started"
+    - label: Target of opportunity
+      note: positions not published
+      aria: "Target of opportunity layer, unavailable: positions not published"
+  footnote: The reference grid is the survey as designed — every tile the array intends to reach —
+    reconstructed from the tiling rule rather than published as a list, and checked against
+    every observed tile. WTS has not begun and has no footprint to draw yet. Target-of-
+    opportunity observations are made across the whole grid, and the portal publishes their
+    counts but not their positions, so they cannot be drawn as a layer; the
+    {too.followup_events|num} follow-up campaigns to date are summarized under [how to
+    propose](/users/propose).
+  query: Is this position observed?
+  buttons:
+    - label: What the files look like
+      href: /users/format
+    - label: Measured depths
+      href: /users/performance
+    - label: Obtaining data
+      href: /users/access
+processing:
+  eyebrow: Processing
+  title: Processing status
+  body: Data are reduced the same day they are taken. Raw frames are transferred from Chile
+    overnight and a typical night clears the pipeline in about five hours of wall-clock time
+    after transfer completes, so survey data are normally available the following day.
+    Target-of-opportunity data skip compression and the wait for sunrise, which brings latency
+    down to tens of minutes. What the pipeline produces, and the quality metrics attached to
+    each product, are described under [using the data](/users/format).
