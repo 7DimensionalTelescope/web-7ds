@@ -6,7 +6,7 @@ import SurveyPage from '../components/surveypage';
 import SkyMap from '../components/skymap';
 import { getStatus, getTileMap } from '../lib/portal.server';
 import { RIS_TILES } from '../lib/tilegrid';
-import surveys from './content/surveys.json';
+import surveys from '../content/data/surveys.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Reference Imaging Survey · 7DT' },

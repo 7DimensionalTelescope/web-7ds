@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
-import call from '../routes/content/call.json';
+import call from '../content/data/call.json';
 
 /* ---------------------------------------------------------------------------
    Site-wide notice that a call for proposals is open.

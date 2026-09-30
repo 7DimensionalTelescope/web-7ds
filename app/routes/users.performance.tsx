@@ -9,8 +9,8 @@ import {
   photometryText,
   depthText,
 } from './content/text';
-import specs from './content/specs.json';
-import surveys from './content/surveys.json';
+import specs from '../content/data/specs.json';
+import surveys from '../content/data/surveys.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Performance · 7DT for users' },

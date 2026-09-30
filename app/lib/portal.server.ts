@@ -21,7 +21,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import snapshot from '../routes/content/status-snapshot.json';
+import snapshot from '../data/status-snapshot.json';
 
 /* remix-serve does not read .env in production, so do it here — once, at
    module load, and only for the keys this module needs. */

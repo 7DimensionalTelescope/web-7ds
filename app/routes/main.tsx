@@ -3,9 +3,9 @@ import { Link } from '@remix-run/react';
 import type { TileMap } from '../lib/portal.server';
 import { LiveBadge } from '../components/site';
 import SkyMap from '../components/skymap';
-import news from './content/news.json';
-import surveys from './content/surveys.json';
-import science from './content/science.json';
+import news from '../content/data/news.json';
+import surveys from '../content/data/surveys.json';
+import science from '../content/data/science.json';
 import { mainText1, mainText2, mainText3, mainText4 } from './content/text';
 import FooterBar from './footer';
 

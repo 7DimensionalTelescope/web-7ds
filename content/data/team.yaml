@@ -1,0 +1,45 @@
+members:
+  - name: Prof. Myungshin Im
+    role: Principal Investigator
+    title: Professor
+    affiliation: Seoul National University
+    email: mim@astro.snu.ac.kr
+    webpage: http://astro.snu.ac.kr/~mim
+    imgName: ImMS.jpeg
+  - name: Dr. Ji Hoon Kim
+    role: Project Manager
+    title: Principal Researcher
+    affiliation: Seoul National University
+    email: jhkim.astrosnu@gmail.com
+    imgName: KimJH.jpeg
+  - name: Dr. Seo-won Chang
+    role: Database Coordinator
+    title: Associate Research Professor
+    affiliation: Seoul National University
+    email: seowon.chang@snu.ac.kr
+    imgName: ChangSW.jpeg
+  - name: Prof. Donggeun Tak
+    role: Software Coordinator
+    title: Assistant Professor
+    affiliation: Kyung Hee University
+    email: donggeun.tak@gmail.com
+    webpage: https://sites.google.com/view/khu-mma/
+    imgName: TakDG.jpeg
+  - name: Dr. Gregory S.H. Paek
+    role: Software Development
+    title: ""
+    affiliation: Institute for Astronomy, University of Hawaii
+    email: gregorypaek94@gmail.com
+    imgName: PaekG.jpeg
+  - name: Hyeonho Choi
+    role: Control System Development
+    title: PhD Student
+    affiliation: Seoul National University
+    email: hhchoi1022@gmail.com
+    imgName: ChoiHH.jpeg
+  - name: Donghwan Hyun
+    role: Data Pipeline Development
+    title: PhD Student
+    affiliation: Seoul National University
+    email: ""
+    imgName: ""

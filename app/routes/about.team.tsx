@@ -2,8 +2,8 @@ import React from 'react';
 import type { MetaFunction } from '@remix-run/node';
 
 import { PageLayout, PageHero, Section } from '../components/site';
-import members from './content/team.json';
-import collabs from './content/collabs.json';
+import members from '../content/data/team.json';
+import collabs from '../content/data/collabs.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Team · 7-Dimensional Telescope' },

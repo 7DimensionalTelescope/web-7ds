@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
-import format from './content/dataformat.json';
+import format from '../content/data/dataformat.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Data format · 7DT for users' },

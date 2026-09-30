@@ -3,7 +3,7 @@ import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
 import { surveyOverviewText, surveyTilingText, surveyTilingText2 } from './content/text';
-import surveys from './content/surveys.json';
+import surveys from '../content/data/surveys.json';
 
 export const meta: MetaFunction = () => [
   { title: '7-Dimensional Sky Survey · 7DT' },

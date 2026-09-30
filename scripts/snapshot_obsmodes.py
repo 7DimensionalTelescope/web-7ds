@@ -4,7 +4,7 @@ Snapshot the 7DT observation modes for the website.
 
 Reads which filter each unit observes in each mode from the live TCSpy
 configuration, and the transmission curve of every filter involved from the
-7DT_calculator repository, and writes app/routes/content/obsmodes.json.
+7DT_calculator repository, and writes app/data/obsmodes.json.
 
 Run it again when the modes change:
 
@@ -23,7 +23,7 @@ from pathlib import Path
 
 CONFIG = Path('/lyman/data1/7dt/configuration')
 CURVES = Path('/home/dtak/7DT_calculator/data/transmission')
-OUT = Path(__file__).resolve().parent.parent / 'app/routes/content/obsmodes.json'
+OUT = Path(__file__).resolve().parent.parent / 'app/data/obsmodes.json'
 REMOTE = ('/home/kds/TCSpy/configuration/', '/home/kds/tcspy/configuration/')
 
 BROAD_NM = {'u': 355, 'g': 477, 'r': 623, 'i': 762, 'z': 913}

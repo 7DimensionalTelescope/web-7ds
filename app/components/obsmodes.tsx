@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import data from '../routes/content/obsmodes.json';
+import data from '../data/obsmodes.json';
 import { wavelengthColor } from './colors';
 
 /* ---------------------------------------------------------------------------

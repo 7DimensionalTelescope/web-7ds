@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
-import call from './content/call.json';
+import call from '../content/data/call.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Call for Proposals · 7DT for users' },

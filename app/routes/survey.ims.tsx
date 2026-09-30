@@ -5,7 +5,7 @@ import { useLoaderData } from '@remix-run/react';
 import SurveyPage from '../components/surveypage';
 import FieldMap from '../components/fieldmap';
 import { getStatus, getTilesNear } from '../lib/portal.server';
-import surveys from './content/surveys.json';
+import surveys from '../content/data/surveys.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Intensive Monitoring Survey · 7DT' },

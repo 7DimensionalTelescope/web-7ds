@@ -1,7 +1,7 @@
 import React from 'react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
-import links from './content/links.json';
+import links from '../content/data/links.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Links · 7-Dimensional Telescope' },

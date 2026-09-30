@@ -1,6 +1,6 @@
 import React from 'react';
 import { wavelengthColor } from './colors';
-import filters from '../routes/content/filters.json';
+import filters from '../data/filters.json';
 
 /* ---------------------------------------------------------------------------
    Filter response, drawn from the numbers rather than shown as a screenshot.

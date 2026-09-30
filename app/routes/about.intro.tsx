@@ -10,7 +10,7 @@ import {
   aboutApproachText,
   aboutApproachText2,
 } from './content/text';
-import surveys from './content/surveys.json';
+import surveys from '../content/data/surveys.json';
 
 export const meta: MetaFunction = () => [
   { title: 'What is 7DS · 7-Dimensional Telescope' },

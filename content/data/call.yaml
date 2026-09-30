@@ -1,0 +1,44 @@
+note: "The open call for proposals. Dates and files come from the Call for Proposals document
+  itself. Set active to false when the deadline passes: the site-wide bar and the call page's
+  status both follow it."
+active: true
+title: 7DT / 7DS Open Time Program
+cycle: Call for Proposals
+deadline: 23 October 2026
+deadlineNote: 23:59 KST
+observingPeriod: 1 December 2026 – 31 August 2027
+hours: 400 hours, in two pools of 200
+issuedBy: the 7DS Operating Committee
+files:
+  - name: Call for Proposals
+    href: /proposal/7DT_Call_for_Proposals.docx
+    note: Dates, eligibility, allocation, review process, data rights and authorship
+  - name: Phase 1 Proposal Form
+    href: /proposal/7DT_Phase1_Proposal_Form.docx
+    note: The form to fill in and submit
+  - name: Phase 1 Preparation Instructions
+    href: /proposal/7DT_Phase1_Instructions.docx
+    note: How to complete each item of the form
+pools: 200 hours for a PI affiliated with KASI, and 200 for a PI who is a member of the Korean
+  Astronomical Society.
+nextCall: A second call, contingent on continued operational funding, is expected in summer 2027
+  for 1 September 2027 to 31 August 2028 — twelve months, with the same 200 + 200 hours. This
+  call covers nine months for the same total, so scope and cadence should be planned
+  accordingly.
+contact:
+  name: Dr. Ji Hoon Kim
+  email: jhkim.astrosnu@gmail.com
+dates:
+  - - Call circulated via the Korean Astronomical Society
+    - by 30 September 2026
+  - - Phase 1 proposal deadline
+    - 23 October 2026
+  - - Review and selection by the 7DS Operating Committee
+    - mid-November 2026
+  - - Phase 2 submission, for selected proposals
+    - shortly after notification; the date is announced with the results
+  - - Observations begin
+    - 1 December 2026
+submit:
+  method: e-mail
+  email: 7ds.cfp@gmail.com

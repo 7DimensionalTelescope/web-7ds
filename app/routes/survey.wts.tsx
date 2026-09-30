@@ -2,7 +2,7 @@ import React from 'react';
 import type { MetaFunction } from '@remix-run/node';
 import { Section } from '../components/site';
 import SurveyPage from '../components/surveypage';
-import surveys from './content/surveys.json';
+import surveys from '../content/data/surveys.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Wide-area Time-domain Survey · 7DT' },

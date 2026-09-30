@@ -3,7 +3,7 @@ import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section, SpecTable, NextLinks } from '../components/site';
 import { telescopeOverviewText, arrayDesignText, arrayDesignText2 } from './content/text';
-import specs from './content/specs.json';
+import specs from '../content/data/specs.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Telescope · 7-Dimensional Telescope' },

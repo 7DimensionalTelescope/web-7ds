@@ -25,3 +25,6 @@ node_modules/
 .env.*
 !.env.example
 .claude/settings.local.json.doctor-backup
+
+# Generated from content/ by scripts/build-content.mjs — edit content/, not this
+/app/content/

@@ -3,7 +3,7 @@ import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section, Figure } from '../components/site';
 import { scienceOverviewText, scienceOverviewText2 } from './content/text';
-import science from './content/science.json';
+import science from '../content/data/science.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Science · 7-Dimensional Telescope' },

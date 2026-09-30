@@ -3,7 +3,7 @@ import type { MetaFunction } from '@remix-run/node';
 import { Pagination } from 'flowbite-react';
 
 import { PageLayout, PageHero, Section } from '../components/site';
-import news from './content/news.json';
+import news from '../content/data/news.json';
 
 export const meta: MetaFunction = () => [
   { title: 'Publications · 7-Dimensional Telescope' },

@@ -3,8 +3,8 @@ import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
 import { modeText } from './content/text';
-import surveys from './content/surveys.json';
-import call from './content/call.json';
+import surveys from '../content/data/surveys.json';
+import call from '../content/data/call.json';
 import ObsModes from '../components/obsmodes';
 import type { RailItem } from '../components/pagerail';
 

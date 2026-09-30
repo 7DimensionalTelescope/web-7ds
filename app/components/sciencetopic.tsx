@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from '@remix-run/react';
 import { PageLayout, PageHero, Section, Figure, NextLinks } from './site';
-import science from '../routes/content/science.json';
+import science from '../content/data/science.json';
 
 /* ---------------------------------------------------------------------------
    One page per science theme.

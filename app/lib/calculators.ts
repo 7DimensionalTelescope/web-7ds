@@ -1,4 +1,4 @@
-import calculators from '../routes/content/calculators.json';
+import calculators from '../content/data/calculators.json';
 
 /* ---------------------------------------------------------------------------
    The observation calculators.
