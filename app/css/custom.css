@@ -2884,6 +2884,106 @@ table[class*='w-full'] thead {
   .home-survey__bg .skymap { width: 160%; }
 }
 
+/* A file-type marker beside a download link. */
+.tag-docx {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-600);
+  background: var(--slate-100);
+  border-radius: 999px;
+  padding: 0.1875rem 0.5rem;
+  vertical-align: middle;
+}
+
+/* --- Call-for-proposals bar ------------------------------------------------- */
+
+/* Fixed above the fixed navigation. The bar publishes its measured height as
+   --callbar-h (see callbanner.tsx); the nav, the page and the home deck offset
+   by it. The :has() default is one line, so the layout is right before the
+   script runs and only needs correcting when the text wraps. */
+:root { --callbar-h: 0px; }
+:root:has(.callbar) { --callbar-h: 2.25rem; }
+
+.callbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  background: var(--ink-900);
+  color: rgba(255, 255, 255, 0.86);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.callbar__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.5rem var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.875rem;
+}
+
+.callbar__tag {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-900);
+  background: var(--accent-on-dark);
+  border-radius: 999px;
+  padding: 0.1875rem 0.5rem;
+  white-space: nowrap;
+}
+
+.callbar__text {
+  margin: 0;
+  flex: 1 1 22rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.callbar__text b { color: #fff; font-weight: 600; }
+
+.callbar__link {
+  font-size: 0.8125rem;
+  font-weight: 550;
+  color: var(--accent-on-dark);
+  white-space: nowrap;
+}
+
+.callbar__link:hover { color: #fff; }
+
+@media (max-width: 768px) {
+  .callbar__inner { padding: 0.5rem var(--space-lg); }
+}
+
+/* Everything that was positioned from the top of the viewport now starts
+   below the bar. Interior pages scroll the document, so a padding on the page
+   moves the hero down with it; the home page is a fixed-height deck, so the
+   deck gives up the bar's height instead of overflowing the viewport by it. */
+.site-nav { top: var(--callbar-h); }
+.fullpage-progress { top: var(--callbar-h); }
+.page { padding-top: var(--callbar-h); }
+
+.fullpage-container,
+.fullpage-wrapper {
+  height: calc(100vh - var(--callbar-h));
+  height: calc(100dvh - var(--callbar-h));
+}
+
+.fullpage-section {
+  min-height: calc(100vh - var(--callbar-h));
+  min-height: calc(100dvh - var(--callbar-h));
+}
+
+/* The footer section sizes to its content, and must keep doing so. */
+.fullpage-section--footer { min-height: 0; }
+
 /* --- Titled block inside a section ------------------------------------------ */
 
 /* For a page where only a few headings deserve to be top-level. The block gets

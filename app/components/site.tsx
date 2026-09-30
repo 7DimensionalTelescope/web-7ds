@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '@remix-run/react';
 import NavBar from '../routes/navigate';
+import CallBanner from './callbanner';
 import FooterBar from '../routes/footer';
 
 /* ---------------------------------------------------------------------------
@@ -22,6 +23,7 @@ export function PageLayout({
       <a className="skip-link" href="#content">
         Skip to content
       </a>
+      <CallBanner />
       <NavBar manu={menu} fixed={true} />
       <main id="content">{children}</main>
       <FooterBar />

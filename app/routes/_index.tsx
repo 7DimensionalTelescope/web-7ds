@@ -3,6 +3,7 @@ import type { HeadersFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import NavBar from './navigate';
+import CallBanner from '../components/callbanner';
 import MainFrame from './main';
 import { getStatus, getTileMapLite } from '../lib/portal.server';
 
@@ -62,6 +63,7 @@ const Index: React.FC = () => {
       <a className="skip-link" href="#content">
         Skip to content
       </a>
+      <CallBanner />
       <NavBar manu="manuHome" />
       <main id="content" style={{ height: '100%' }}>
         <MainFrame {...data} />

@@ -6,6 +6,7 @@ import { PageLayout, PageHero, Section, LiveBadge } from '../components/site';
 import { getStatus } from '../lib/portal.server';
 import { modeText } from './content/text';
 import surveys from './content/surveys.json';
+import call from './content/call.json';
 
 export const meta: MetaFunction = () => [
   { title: 'How to propose · 7DT for users' },
@@ -29,41 +30,103 @@ export async function loader() {
 
 const num = (value: number) => value.toLocaleString('en-US');
 
-/* What a request has to pin down. Ordered the way a proposal is written:
-   what and where first, then how it is taken, then when. */
-const REQUEST_PARAMETERS: string[][] = [
+/* The three program types. A different axis from the observation modes: the
+   type says what kind of program it is, the mode says how the array is
+   configured to carry it out. */
+const PROGRAM_TYPES: string[][] = [
   [
-    'Observing mode',
-    'Spec, Deep, Color or Search. The mode decides how the array divides itself between filters and fields.',
+    'ToO',
+    'Target of opportunity',
+    'Observations triggered by an unpredictable event — a gamma-ray burst, a gravitational-wave counterpart, a newly discovered supernova. The trigger condition is described in prose; the response time is a separate field.',
   ],
   [
     'Target',
-    'Position in RA and Dec, or a tile identifier. A tile is preferred where the science allows, since the data then coadd and difference against what already exists.',
+    'Pre-selected targets',
+    'One or more targets observed on a planned schedule. A custom tiling may be used. Every target has to be listed with its coordinates — a representative subset is not enough, since each is judged on its own visibility and priority.',
   ],
   [
-    'Filters',
-    'Which of the 35 medium bands and five broad bands, or a wavelength range and a mode that covers it. Each unit carries nine slots, so a wider set costs more units or more nights.',
+    'Survey',
+    'Wide area or many tiles',
+    "Systematic coverage of an area. Carried out on the existing 7DS tiling grid, the same one RIS, WTS and IMS use, rather than a tiling of your own. Give the coordinate range and the area in square degrees rather than a tile list.",
   ],
-  [
-    'Exposure time',
-    'Seconds per frame. One hundred is the fiducial exposure the surveys are built from, and the depth every published figure is quoted at.',
-  ],
-  [
-    'Repetitions',
-    'Frames per visit, and visits per target. Depth in the coadd goes as the square root of total time, so four frames buy 0.75 magnitudes over one.',
-  ],
-  [
-    'Cadence',
-    'For a monitoring program: interval between visits and the total span. For a single epoch: the window it has to fall in.',
-  ],
-  [
-    'Constraints',
-    'Airmass limit, moon separation and phase, time window, and anything else that would make a frame useless if violated.',
-  ],
-  [
-    'Trigger criteria',
-    'Target-of-opportunity programs only: what event triggers the observation, which response mode, and how the alert reaches the scheduler.',
-  ],
+];
+
+/* The fields of the Phase 1 form, in the order the form asks for them. The
+   Preparation Instructions are the authority; this table exists so that a
+   reader can see what they are committing to before opening a document, and so
+   that each field that a calculator answers points at that calculator. */
+const REQUEST_PARAMETERS: { field: string; what: React.ReactNode }[] = [
+  {
+    field: 'Total requested hours',
+    what: (
+      <>
+        The whole request, overheads included — slewing, filter changes, readout — not time on
+        source. The <Link to="/calculator/overhead">overhead calculator</Link> gives the difference.
+      </>
+    ),
+  },
+  {
+    field: 'Minimum acceptable hours',
+    what: 'The smallest allocation that still meets the core objective. Used when a partial allocation is considered.',
+  },
+  { field: 'Program type', what: 'ToO, Target or Survey, as above.' },
+  {
+    field: 'Observation mode',
+    what: 'Spec, Deep, Color or Search. More than one may be listed, with the time allocated to each explained.',
+  },
+  {
+    field: 'Proprietary period',
+    what: 'None, 12 months or 18 months, counted from the date the data products are delivered rather than from the observation.',
+  },
+  {
+    field: 'Observing window',
+    what: (
+      <>
+        Any constraint on when the observations may happen — a seasonal visibility window,
+        coordination with another facility, a deadline for a fading object. &ldquo;None&rdquo; if
+        there is none. The <Link to="/calculator/visibility">visibility calculator</Link> gives the
+        window a target actually has.
+      </>
+    ),
+  },
+  { field: 'Moon phase', what: 'Dark, gray or bright; more than one if the program tolerates a range.' },
+  {
+    field: 'Required response time',
+    what: 'ToO programs only: the longest acceptable delay between trigger and the start of observation.',
+  },
+  {
+    field: 'Exposure time justification',
+    what: (
+      <>
+        The exposure per target or tile and how it was derived, the target signal-to-noise and the
+        calculation or calculator used to reach it, the filters and the time on each, and the
+        arithmetic that adds up to the total requested hours. The{' '}
+        <Link to="/calculator/exposure">exposure calculator</Link> works in either direction.
+      </>
+    ),
+  },
+  {
+    field: 'Target coordinates',
+    what: (
+      <>
+        Target programs: every target in RA and Dec, J2000. Survey programs: the coordinate range
+        and the area in deg². The <Link to="/calculator/tiles">tile matcher</Link> shows which
+        tiles cover a position, and how they overlap.
+      </>
+    ),
+  },
+  {
+    field: 'Duplication with existing 7DS data',
+    what: (
+      <>
+        Whether the targets or area overlap <Link to="/survey/ris">RIS</Link>,{' '}
+        <Link to="/survey/ims">IMS</Link> or <Link to="/survey/wts">WTS</Link>.
+        &ldquo;None&rdquo;, or why the existing data are not sufficient — greater depth, a different
+        cadence, a different filter set. What exists on a given tile is on the{' '}
+        <Link to="/users/status">status page</Link>.
+      </>
+    ),
+  },
 ];
 
 const Index = () => {
@@ -75,7 +138,7 @@ const Index = () => {
         eyebrow="For users"
         title={
           <>
-            How to <em>propose</em>
+            How to <em>Propose</em>
           </>
         }
         lede="Who may ask for time on 7DT, how much of it there is, and what the array can be asked to do with it."
@@ -88,6 +151,27 @@ const Index = () => {
           could not tell which headings decided their eligibility and which
           only described the mechanics. */}
       <Section eyebrow="Before you start" title="General information">
+        {call.active && (
+          <div className="subsection">
+            <h3>The open call</h3>
+            <p className="prose">
+              Proposals are being accepted for observations between {call.observingPeriod}. The
+              deadline is <b>{call.deadline}</b>, {call.deadlineNote}. The dates, the documents to
+              download and the rules that apply to this particular call are on the{' '}
+              <Link to="/users/call">call for proposals</Link> page. This page is about writing the
+              proposal, and does not change between calls.
+            </p>
+            <div className="btn-row" style={{ marginTop: '1.5rem' }}>
+              <Link className="btn btn--primary" to="/users/call">
+                Dates and documents
+              </Link>
+              <a className="btn btn--secondary" href="/proposal/7DT_Phase1_Proposal_Form.docx" download>
+                Proposal Form
+              </a>
+            </div>
+          </div>
+        )}
+
         <div className="subsection">
           <h3>Who may propose</h3>
           <div className="split split--wide-text">
@@ -111,8 +195,8 @@ const Index = () => {
                 <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
                   <div>
                     <p className="feature-list__body" style={{ margin: 0 }}>
-                      <b>Who</b> Members of the 7DS team. Joining a science working group makes you
-                      one.
+                      <b>Who</b> Set by each call — see the{' '}
+                      <Link to="/users/call">Call for Proposals</Link>.
                     </p>
                   </div>
                 </li>
@@ -127,7 +211,8 @@ const Index = () => {
                 <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
                   <div>
                     <p className="feature-list__body" style={{ margin: 0 }}>
-                      <b>When</b> No call has opened yet. It will be announced on this page.
+                      <b>When</b> A call is open —{' '}
+                      <Link to="/users/call">dates and documents</Link>.
                     </p>
                   </div>
                 </li>
@@ -146,9 +231,10 @@ const Index = () => {
               time on the array outside the three surveys, which otherwise occupy the night.
             </p>
             <p>
-              No call for proposals has opened against either allocation. The schedule will be
-              announced here when it is fixed, together with a proposal template. The{' '}
-              <Link to="/calculator">observation calculators</Link> are available now.
+              The current call, its dates and its documents are on the{' '}
+              <Link to="/users/call">call for proposals</Link> page. The{' '}
+              <Link to="/calculator">observation calculators</Link> are available for costing a
+              program.
               Target-of-opportunity requests are handled separately and continuously, and do not
               wait for a call.
             </p>
@@ -166,17 +252,19 @@ const Index = () => {
                 groups matter as much as the allocations do.
               </p>
               <p>
-                Authorship on work using 7DS data is governed by a policy still under discussion.
-                What is settled is that it will include the initial core members of the 7DS team —
-                seven people at present — in the author list of collaborative papers drawing on 7DS
-                data. Anyone intending to publish is asked to contact the principal investigator
-                first, so that authors and acknowledgments are agreed before submission rather than
-                after.
+                Any paper, conference contribution, thesis or other public output that uses 7DT data
+                not yet in a 7DS public release must include the core members of the 7DS team as
+                co-authors. They are named in the{' '}
+                <a href="/proposal/7DT_Call_for_Proposals.docx" download>
+                  Call for Proposals
+                </a>
+                , along with the reference to cite and the acknowledgment to include. Anyone
+                intending to publish is asked to contact the principal investigator first, so that
+                authors and acknowledgments are agreed before submission rather than after.
               </p>
               <p>
-                The full policy — proprietary period, terms for sharing data outside the team, the
-                public release schedule and authorship for external collaborators — is being
-                prepared by the collaboration and will be posted under{' '}
+                The wider publication policy of the 7DS collaboration — the public release schedule
+                among it — is being finalized, and will be posted under{' '}
                 <Link to="/publication/policy">publication policy</Link> once ratified.
               </p>
             </div>
@@ -186,25 +274,25 @@ const Index = () => {
                 <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
                   <div>
                     <p className="feature-list__body" style={{ margin: 0 }}>
-                      <b>Decided</b> Team members have proprietary-period access; the seven core
-                      members appear on collaborative papers.
+                      <b>Decided</b> The PI chooses the proprietary period — none, 12 or 18
+                      months from delivery of the data products. The core members appear as
+                      co-authors on any output that uses non-public data.
                     </p>
                   </div>
                 </li>
                 <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
                   <div>
                     <p className="feature-list__body" style={{ margin: 0 }}>
-                      <b>Still open</b> How long the proprietary period runs, how data may be
-                      shared outside the team, when it becomes public, and authorship for
-                      collaborators outside the team.
+                      <b>Still open</b> The wider collaboration publication policy, including the
+                      public release schedule.
                     </p>
                   </div>
                 </li>
                 <li style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
                   <div>
                     <p className="feature-list__body" style={{ margin: 0 }}>
-                      <b>Meanwhile</b> Contact the PI before submitting, and acknowledge the
-                      funders listed on the <Link to="/about/funding">funding page</Link>.
+                      <b>Meanwhile</b> Contact the PI before submitting a paper, and use the
+                      citation and acknowledgment given in the call.
                     </p>
                   </div>
                 </li>
@@ -252,39 +340,66 @@ const Index = () => {
         <div className="subsection">
           <h3>What a request contains</h3>
           <p className="prose">
-            An observation is a mode, a target, a filter set, an exposure and a cadence, plus
-            whatever constraints the science imposes. Positions on the survey tiling are preferred
-            wherever the science allows: data taken on a tile coadd directly with the survey data
-            already there, and difference against the existing reference image without a separate
-            calibration step.
+            A request is a program type, an observation mode, a target or an area, the exposures
+            that reach the signal-to-noise the science needs, and the constraints under which the
+            array may take them. Positions on the survey tiling are preferred wherever the science
+            allows: data taken on a tile coadd directly with the survey data already there, and
+            difference against the existing reference image without a separate calibration step.
           </p>
 
           <div className="table-wrap" style={{ marginTop: '2rem' }}>
             <table className="spec-table">
-              <caption>Parameters of an observation request</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Parameter</th>
-                  <th scope="col">What to give</th>
-                </tr>
-              </thead>
+              <caption>Program types</caption>
               <tbody>
-                {REQUEST_PARAMETERS.map((row) => (
+                {PROGRAM_TYPES.map((row) => (
                   <tr key={row[0]}>
-                    <th scope="row">{row[0]}</th>
-                    <td>{row[1]}</td>
+                    <th scope="row" style={{ whiteSpace: 'nowrap' }}>
+                      {row[0]}
+                      <span className="tier-card__code" style={{ display: 'block', fontSize: '0.6875rem' }}>
+                        {row[1]}
+                      </span>
+                    </th>
+                    <td>{row[2]}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
+          <div className="table-wrap" style={{ marginTop: '2rem' }}>
+            <table className="spec-table">
+              <caption>Fields of the Phase 1 form</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Field</th>
+                  <th scope="col">What to give</th>
+                </tr>
+              </thead>
+              <tbody>
+                {REQUEST_PARAMETERS.map((row) => (
+                  <tr key={row.field}>
+                    <th scope="row">{row.field}</th>
+                    <td>{row.what}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="prose" style={{ marginTop: '2rem' }}>
+            Two limits shape the exposure time before the science does. A single frame should be at
+            least 100 seconds, which is what it takes to reach background-limited conditions, and
+            no more than 180, beyond which tracking accuracy starts to elongate the PSF. Depth
+            comes from taking frames in series, not from lengthening one. Bright targets can use
+            shorter frames at the cost of more overhead, and any frame time other than 100 seconds
+            adds overhead for its own calibration frames. Survey observations use 100 seconds as
+            standard.
+          </p>
           <p className="footnote" style={{ marginTop: '1.25rem' }}>
-            Camera gain and binning are set by the observatory rather than chosen per proposal, and
-            are recorded per frame — the pipeline matches calibration masters by camera, gain,
-            binning, unit, night and filter, so a frame always carries the settings it was taken
-            with. If a program requires a specific gain, say so and why; the selectable settings
-            are not published here.
+            Of the observing conditions, only Moon phase can be requested — seeing and cloud cover
+            cannot be specified, though observations are made under nominal conditions wherever
+            possible. A unit may also be out of service on the night, in which case the delivered
+            data lack whatever that telescope was carrying.
           </p>
         </div>
 
@@ -393,23 +508,44 @@ const Index = () => {
 
       <Section eyebrow="Submitting" title="Requesting observing time">
         <div className="panel" style={{ maxWidth: '68ch' }}>
-          <div className="panel__title">No open call at present</div>
-          <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
-            Outside the KASI and KAS allocations described above, observing time is allocated
-            within the collaboration and its partner institutions, and there is no general call for
-            proposals. A proposal template will be published here when a call opens; the{' '}
-            <Link to="/calculator">calculators</Link> for exposure time, overhead, visibility and
-            tile coverage are available now. Until a call opens, and for anything outside the
-            survey program — including target-of-opportunity requests — write to the project
-            directly.
-          </p>
-          <a
-            className="btn btn--primary"
-            href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20inquiry"
-          >
-            Contact the project
-          </a>
+          <div className="panel__title">
+            {call.active ? `By e-mail, before ${call.deadline}` : 'No open call at present'}
+          </div>
+          {call.active ? (
+            <>
+              <p className="feature-list__body" style={{ marginBottom: '1rem' }}>
+                Proposals for the current call go by e-mail to{' '}
+                <a href={`mailto:${call.submit.email}?subject=7DT%20Phase%201%20proposal`}>
+                  {call.submit.email}
+                </a>
+                : the completed <a href="/proposal/7DT_Phase1_Proposal_Form.docx" download>Proposal
+                Form</a>, with the Scientific Justification, the Technical Justification and any
+                accompanying files. Dates and the other documents are on the{' '}
+                <Link to="/users/call">call for proposals</Link> page.
+              </p>
+              <a
+                className="btn btn--primary"
+                href={`mailto:${call.submit.email}?subject=7DT%20Phase%201%20proposal`}
+              >
+                Submit a proposal
+              </a>
+            </>
+          ) : (
+            <p className="feature-list__body" style={{ marginBottom: 0 }}>
+              When a call opens, its dates, documents and submission address appear on the{' '}
+              <Link to="/users/call">call for proposals</Link> page.
+            </p>
+          )}
         </div>
+
+        <p className="footnote" style={{ marginTop: '1.25rem' }}>
+          Outside a call, and for anything outside the survey program — target-of-opportunity
+          requests among them — write to the project at{' '}
+          <a href="mailto:mim@astro.snu.ac.kr?subject=7DT%20observation%20inquiry">
+            mim@astro.snu.ac.kr
+          </a>
+          .
+        </p>
 
         <div className="btn-row" style={{ marginTop: '2rem' }}>
           <Link className="btn btn--secondary" to="/users/performance">
