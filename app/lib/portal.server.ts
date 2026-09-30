@@ -166,9 +166,23 @@ async function cached<T>(
   return revalidate(key, load);
 }
 
+/* 7DT began observing in 2023, so a night dated earlier is a bad record in
+   the database, not history: one frame stamped 1994 made the status page say
+   "769 nights since Oct 1994". Such dates are set aside rather than shown. */
+const SURVEY_START = '2023-01-01';
+const isNight = (iso?: string | null): iso is string => Boolean(iso) && (iso as string) >= SURVEY_START;
+
+/** The status report with any pre-survey first night replaced by the one in
+    the stored snapshot, which the database itself reported earlier. */
+function withValidNights(data: PortalStatus): PortalStatus {
+  if (isNight(data.nightly?.first_night)) return data;
+  const stored = (snapshot as PortalStatus).nightly.first_night;
+  return { ...data, nightly: { ...data.nightly, first_night: stored } };
+}
+
 export function getStatus(): Promise<Fetched<PortalStatus>> {
   return cached('status', async () => {
-    const data = await getJson<PortalStatus>('/status/', 'status');
+    const data = withValidNights(await getJson<PortalStatus>('/status/', 'status'));
     return { data, live: true, generatedAt: data.generated_at };
   }).catch(() => ({
     data: snapshot as PortalStatus,
@@ -275,11 +289,19 @@ export function getTileMap(): Promise<Fetched<TileMap>> {
       // order the portal happened to return.
       .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
 
-    let firstNight = tiles[0]?.first_night ?? '';
-    let lastNight = tiles[0]?.last_night ?? '';
+    // The survey's own span, leaving out any pre-survey date (SURVEY_START):
+    // one would stretch the last-visit color scale back decades.
+    let firstNight = '';
+    let lastNight = '';
     for (const tile of tiles) {
-      if (tile.first_night < firstNight) firstNight = tile.first_night;
-      if (tile.last_night > lastNight) lastNight = tile.last_night;
+      if (isNight(tile.first_night) && (!firstNight || tile.first_night < firstNight)) firstNight = tile.first_night;
+      if (isNight(tile.last_night) && tile.last_night > lastNight) lastNight = tile.last_night;
+    }
+    // A tile's own bad date is pulled up to the survey's first night, so it
+    // reads as early rather than as a negative day count.
+    for (const tile of tiles) {
+      if (!isNight(tile.first_night)) tile.first_night = firstNight;
+      if (!isNight(tile.last_night)) tile.last_night = tile.first_night;
     }
 
     const epochMs = Date.parse(`${firstNight}T00:00:00Z`);

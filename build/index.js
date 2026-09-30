@@ -10759,9 +10759,16 @@ async function cached(key, load) {
   return hit && Date.now() - hit.at < TTL[key] ? hit.value : hit ? (revalidate(key, load).catch(() => {
   }), cache.get(key).value) : revalidate(key, load);
 }
+var SURVEY_START = "2023-01-01", isNight = (iso) => Boolean(iso) && iso >= SURVEY_START;
+function withValidNights(data) {
+  if (isNight(data.nightly?.first_night))
+    return data;
+  let stored = status_snapshot_default.nightly.first_night;
+  return { ...data, nightly: { ...data.nightly, first_night: stored } };
+}
 function getStatus() {
   return cached("status", async () => {
-    let data = await getJson("/status/", "status");
+    let data = withValidNights(await getJson("/status/", "status"));
     return { data, live: !0, generatedAt: data.generated_at };
   }).catch(() => ({
     data: status_snapshot_default,
@@ -10776,9 +10783,11 @@ function filterWavelength(name) {
 }
 function getTileMap() {
   return cached("tiles", async () => {
-    let raw = await getJson("/tiles/", "tiles"), tiles = raw.tiles.filter((t) => Number.isFinite(t.ra) && Number.isFinite(t.dec)).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0), firstNight = tiles[0]?.first_night ?? "", lastNight = tiles[0]?.last_night ?? "";
+    let raw = await getJson("/tiles/", "tiles"), tiles = raw.tiles.filter((t) => Number.isFinite(t.ra) && Number.isFinite(t.dec)).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0), firstNight = "", lastNight = "";
     for (let tile of tiles)
-      tile.first_night < firstNight && (firstNight = tile.first_night), tile.last_night > lastNight && (lastNight = tile.last_night);
+      isNight(tile.first_night) && (!firstNight || tile.first_night < firstNight) && (firstNight = tile.first_night), isNight(tile.last_night) && tile.last_night > lastNight && (lastNight = tile.last_night);
+    for (let tile of tiles)
+      isNight(tile.first_night) || (tile.first_night = firstNight), isNight(tile.last_night) || (tile.last_night = tile.first_night);
     let epochMs = Date.parse(`${firstNight}T00:00:00Z`), numeric = tiles.map((t) => /^T\d{1,6}$/.test(t.name) ? Number(t.name.slice(1)) : NaN), nameDelta = numeric.every((n) => Number.isFinite(n)) && numeric.every((n, i) => i === 0 || n > numeric[i - 1]) ? numeric.map((n, i) => i === 0 ? n : n - numeric[i - 1]) : void 0, seen = /* @__PURE__ */ new Set();
     for (let tile of tiles)
       for (let name of Object.keys(tile.filters ?? {}))
