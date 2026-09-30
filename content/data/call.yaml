@@ -48,4 +48,6 @@ banner:
   tag: Open call
   text: "**{title}** — proposals for {observingPeriod} are being accepted. Deadline **{deadline}**,
     {deadlineNote}."
+  # What a phone shows instead of `text`, which is three lines at that width.
+  short: Deadline **{deadline}**
   link: Dates and documents

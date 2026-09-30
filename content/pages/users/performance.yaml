@@ -184,7 +184,7 @@ surveys:
       - Depth
   footnote: "The RIS figure is one visit of 3 × 100 s. Figures marked with an asterisk are
     cumulative over the planned operation rather than the depth of any single visit, and are
-    targets: [status and overview](/users/status) reports what has actually been observed, and
+    targets: the [status page](/users/status) reports what has actually been observed, and
     the coverage map on the [data access page](/users/access) gives the integration time and
     estimated depth reached on any individual tile."
 next:

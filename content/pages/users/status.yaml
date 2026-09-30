@@ -11,7 +11,7 @@
 # Numbers written out plainly here are fixed, not live.
 
 meta:
-  title: Status & overview · 7DT for users
+  title: Status · 7DT for users
   description: "What 7DT can observe now and what data exist: telescopes and filters available,
     survey coverage, measured depths and processing status."
 hero:
@@ -199,8 +199,8 @@ coverage:
       aria: "Target of opportunity layer, unavailable: positions not published"
   footnote: The reference grid is the survey as designed — every tile the array intends to reach —
     reconstructed from the tiling rule rather than published as a list, and checked against
-    every observed tile. WTS has not begun and has no footprint to draw yet. Target-of-
-    opportunity observations are made across the whole grid, and the portal publishes their
+    every observed tile. WTS has not begun and has no footprint to draw yet.
+    Target-of-opportunity observations are made across the whole grid, and the portal publishes their
     counts but not their positions, so they cannot be drawn as a layer; the
     {too.followup_events|num} follow-up campaigns to date are summarized under [how to
     propose](/users/propose).

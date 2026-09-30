@@ -35,7 +35,7 @@ spectral:
       redshift, separate a quasar from a star, or distinguish a kilonova from the supernovae and
       detector artifacts that outnumber it — at the moment of detection, for every object in
       1.25 square degrees. The filter set that makes this possible, and which bands exist on a
-      given tile, are described under [status and overview](/users/status).
+      given tile, are described on the [status page](/users/status).
 time:
   eyebrow: Time domain
   title: Repeating the measurement

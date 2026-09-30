@@ -8,7 +8,7 @@ filterSet:
     distributed across the array so that the full set is covered in a small number of exposures.
     The original twenty medium bands are spaced regularly at 25 nm from 400 to 875 nm with 25 nm
     FWHM. Fifteen more, procured from Edmund Optics and installed in late 2025, fill the gaps
-    between them with central wavelengths from 412 to 832 nm and bandwidths of 14 to 41 nm. The
+    between them with central wavelengths from 375 to 832 nm and bandwidths of 14 to 41 nm. The
     current suite of 35 filters covers 375 to 875 nm, advancing toward the designed complement
     of 40 medium bands at 12.5 nm spacing.
   caveat: "The additional fifteen filters depart from the regularity of the original set: their

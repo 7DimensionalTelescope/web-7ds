@@ -110,7 +110,7 @@ filters:
         - Chroma (broad), Edmund Optics (medium)
   note: Filters are designated by central wavelength in nanometers — m400 is the band centered at
     400 nm. System response curves, which fold in detector quantum efficiency, sky transmission
-    and telescope optics, are shown under [status and overview](/users/status); photometric
+    and telescope optics, are shown on the [status page](/users/status); photometric
     calibration and its accuracy are reported on the [performance page](/users/performance).
 onSky:
   eyebrow: On sky

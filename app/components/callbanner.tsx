@@ -50,7 +50,12 @@ export default function CallBanner() {
       <div className="callbar__inner">
         <span className="callbar__tag">{call.banner.tag}</span>
         <p className="callbar__text">
-          <Md>{fill(call.banner.text, call)}</Md>
+          <span className="callbar__text--full">
+            <Md>{fill(call.banner.text, call)}</Md>
+          </span>
+          <span className="callbar__text--short">
+            <Md>{fill(call.banner.short, call)}</Md>
+          </span>
         </p>
         <Link className="callbar__link" to="/users/call">
           {call.banner.link}

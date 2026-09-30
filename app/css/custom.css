@@ -2022,10 +2022,22 @@ html {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* The open menu scrolls within the screen that is left below the call notice
+   and the bar; with a section expanded it is taller than a phone. Opaque,
+   since the nav's own fill is translucent and the page read through it. */
 .site-nav__mobile {
-  max-height: calc(100dvh - 4.5rem);
+  max-height: calc(100vh - var(--callbar-h) - 4.5rem);
   overflow-y: auto;
   overscroll-behavior: contain;
+  background-color: rgb(5, 8, 15);
+}
+
+/* dvh behind @supports, never as a second declaration. With var() in it the
+   line cannot be discarded while parsing, so a browser without dvh drops it
+   only at computed-value time — as `unset`, which throws away the vh line
+   above as well. */
+@supports (height: 100dvh) {
+  .site-nav__mobile { max-height: calc(100dvh - var(--callbar-h) - 4.5rem); }
 }
 
 .site-nav__mobile > a,
@@ -2877,13 +2889,28 @@ table[class*='w-full'] thead {
 }
 
 @media (max-width: 976px) {
-  /* The stamp would sit over the heading once the copy spans the panel. */
+  /* The stamp would sit over the heading once the copy spans the panel. It
+     joins the flow above the copy instead — and since a deck section is a
+     flex row, the section turns into a column, or the stamp takes a column
+     of its own and squeezes the copy to the right. */
+  .home-survey-panel {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
   .home-survey__stamp {
     position: static;
     align-items: flex-start;
     text-align: left;
-    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto 1rem;
+    padding: 0 var(--space-xl);
   }
+}
+
+@media (max-width: 768px) {
+  .home-survey__stamp { padding: 0 var(--space-lg); }
 }
 
 @media (max-width: 720px) {
@@ -3296,12 +3323,18 @@ table[class*='w-full'] thead {
 .fullpage-container,
 .fullpage-wrapper {
   height: calc(100vh - var(--callbar-h));
-  height: calc(100dvh - var(--callbar-h));
 }
 
 .fullpage-section {
   min-height: calc(100vh - var(--callbar-h));
-  min-height: calc(100dvh - var(--callbar-h));
+}
+
+/* See .site-nav__mobile: a dvh line with var() in it, written as a second
+   declaration, unsets the property on a browser without dvh. */
+@supports (height: 100dvh) {
+  .fullpage-container,
+  .fullpage-wrapper { height: calc(100dvh - var(--callbar-h)); }
+  .fullpage-section { min-height: calc(100dvh - var(--callbar-h)); }
 }
 
 /* The footer section sizes to its content, and must keep doing so. */
@@ -3902,4 +3935,69 @@ table[class*='w-full'] thead {
   .pub { break-inside: avoid; box-shadow: none; }
 
   a { color: #000; text-decoration: underline; }
+}
+
+/* ==========================================================================
+   Phone widths
+   Each rule below fixes something measured running past the edge of a 320–414
+   px screen, or crowding it. Desktop layouts are untouched.
+   ========================================================================== */
+
+/* Grid minimums wider than a phone: a 360 px card on a 320 px screen pushed
+   the whole page sideways. min() lets the column shrink to the screen. */
+.people-grid { grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); }
+.gallery ul { grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+
+@media (max-width: 640px) {
+  /* A journal name such as "Proc. SPIE 14155, Software and Cyberinfrastructure
+     for Astronomy" is one unbreakable run under nowrap. */
+  .pub__meta span { white-space: normal; overflow-wrap: anywhere; }
+
+  /* The freshness line ("Live data · date · refreshed daily") is wider than a
+     phone. Let it wrap, as a rounded box rather than a pill. */
+  .live-badge {
+    white-space: normal;
+    align-items: flex-start;
+    border-radius: 0.75rem;
+    max-width: 100%;
+  }
+  .live-badge__dot { margin-top: 0.35rem; flex: none; }
+
+  /* Key/value tables whose values are sentences: side by side, the value
+     column was a word wide. Stack each row, key above value. */
+  .spec-table--key,
+  .spec-table--key tbody,
+  .spec-table--key tr,
+  .spec-table--key th,
+  .spec-table--key td { display: block; width: auto; }
+  .spec-table--key thead { display: none; }
+  .spec-table--key tbody th[scope='row'] {
+    width: auto;
+    padding-bottom: 0.25rem;
+    border-bottom: 0;
+    white-space: normal !important;
+  }
+  .spec-table--key tbody td { padding-top: 0; }
+
+  /* The dot navigation sat on top of the right edge of the home page copy.
+     On a phone the deck is swiped, and the dots only covered text. */
+  .fullpage-nav { display: none; }
+
+  /* The call notice, three lines of text on a phone, stayed fixed above the
+     nav and took a fifth of the screen. It gives the short form here; the
+     full sentence is on the page it links to. */
+  .callbar__text--full { display: none; }
+  .callbar__text--short { display: inline; }
+  .callbar__inner { align-items: center; padding-top: 0.375rem; padding-bottom: 0.375rem; }
+  .callbar__text { flex: 1 1 auto; }
+}
+
+@media (min-width: 641px) {
+  .callbar__text--short { display: none; }
+}
+
+@media (max-width: 400px) {
+  /* Previous 1 2 3 4 Next is 16 px wider than a 320 px screen. */
+  .pagination-wrap nav button,
+  .pagination-wrap nav a { padding-left: 0.375rem; padding-right: 0.375rem; font-size: 0.75rem; }
 }
