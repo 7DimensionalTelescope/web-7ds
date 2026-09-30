@@ -1,0 +1,72 @@
+# /survey/ims — the Intensive Monitoring Survey.
+#
+# What the survey is for — its goal, rationale, trade-off, area, region and
+# cadence — is in content/data/surveys.yaml (tiers), shared with the survey
+# overview and the front page; {tier.area} and the like read from there. The
+# headings every survey page shares are in content/shared.yaml (surveyPage).
+#
+# Live numbers are placeholders naming the portal's status report:
+# {ims.n_tiles}, {ims.min_cycles_per_tile} and so on; {median} is the median
+# tile's cycle count, which the page works out; |num adds thousands separators.
+
+meta:
+  title: Intensive Monitoring Survey · 7DT
+  description: "The deep, nightly survey of 7DS: seven tiles at the south ecliptic pole,
+    overlapping the SPHEREx Deep Field South."
+hero:
+  code: IMS
+  name: Intensive Monitoring Survey
+  lede: Seven tiles at the south ecliptic pole, observed every available night with the full
+    medium-band set.
+  image: /img/hero/status.jpg
+  meta:
+    - value: "{median|num}"
+      label: Cycles, median tile
+      live: true
+    - value: "8.5"
+      unit: deg²
+      label: Survey area
+    - value: "1"
+      unit: d
+      label: Cadence
+    - value: April 2025
+      label: Started
+parameters:
+  - - Area
+    - "{tier.area}"
+  - - Field
+    - "{tier.region}"
+  - - Field center
+    - RA 05h13m07.4s, Dec −60°28′12″
+  - - Cadence
+    - "{tier.cadence}"
+  - - Tiles
+    - "{ims.n_tiles}"
+  - - Time budget
+    - 20,000 minutes per year
+  - - Cumulative depth
+    - 23.6 mag over five years
+map:
+  title: The monitored field
+  valueLabel: cycles
+  caption: The {ims.n_tiles} monitored tiles, dashed, against their neighbors on the survey
+    tiling. Shading and the figure inside each monitored tile give the observing cycles
+    completed on it, read from the observation database.
+  note: The field covers about 8.5 square degrees near the south ecliptic pole and is drawn at its
+    own scale, on a tangent plane, rather than on an all-sky map where it would be a few pixels
+    across.
+coverage:
+  - value: "{ims.n_tiles}"
+    label: Tiles monitored
+  - value: "{median|num}"
+    label: Cycles, median tile
+  - value: "{ims.min_cycles_per_tile|num}"
+    label: Fewest cycles
+  - value: "{ims.max_cycles_per_tile|num}"
+    label: Most cycles
+progress:
+  label: "{ims.min_cycles_per_tile}–{ims.max_cycles_per_tile} observing cycles across
+    {ims.n_tiles} tiles"
+  note: Progress is the median tile against a nominal five years of observable nights. Cycle
+    counts differ between tiles because the field sets at different times through the season and
+    because weather does not fall evenly.

@@ -1,0 +1,79 @@
+# /survey/ris — the Reference Imaging Survey.
+#
+# What the survey is for — its goal, rationale, trade-off, area, region and
+# cadence — is in content/data/surveys.yaml (tiers), shared with the survey
+# overview and the front page; {tier.area} and the like read from there. The
+# headings every survey page shares are in content/shared.yaml (surveyPage).
+#
+# Live numbers are placeholders naming the portal's status report:
+# {ris.tiles_observed}, {ris.coverage_pct} and so on; |num adds thousands
+# separators.
+
+meta:
+  title: Reference Imaging Survey · 7DT
+  description: "The wide-area survey of 7DS: one medium-band visit to every tile of the southern
+    sky, with live coverage from the observation database."
+hero:
+  code: RIS
+  name: Reference Imaging Survey
+  lede: One medium-band visit to every tile the array can reach, to give the southern sky a
+    reference image against which anything that changes can be found.
+  image: /img/hero/survey.jpg
+  meta:
+    - value: "{ris.coverage_pct}"
+      unit: "%"
+      label: Tiles observed
+      live: true
+    - value: 23,000
+      unit: deg²
+      label: Survey area
+    - value: Single visit
+      label: Cadence
+    - value: July 2024
+      label: Started
+parameters:
+  - - Area
+    - "{tier.area}"
+  - - Region
+    - "{tier.region}"
+  - - Cadence
+    - "{tier.cadence}"
+  - - Visit
+    - 3 × 100 s, coadded to 300 s
+  - - Single-visit depth
+    - 19.1 mag, 5σ in m600
+  - - Tile range
+    - T00000 – T25471, plus northern extension
+map:
+  caption: "{ris.tiles_observed|num} of {ris.tiles_defined|num} tiles observed"
+  depthRef:
+    mag: 19.1
+    sec: 300
+    frameSec: 100
+    band: m600
+  note: "The survey as designed: all 25,472 tiles of the reference grid are drawn in gray, and the
+    ones with science exposures are colored over them, so what is left to observe is the gray.
+    Because RIS covers everything the array can reach, this grid is also the footprint of the
+    survey as a whole. Hover a tile for its own figures. Depth and integration time are
+    estimates: open-shutter time is recorded for the survey rather than per tile, so integration
+    time on a tile is its frame count times the survey mean. Depth is counted differently,
+    against the RIS visit itself: frames in m600 at the fiducial 100 s each, measured against
+    the 19.1 mag reached by one 3 × 100 s visit — background-limited, so the 5σ limit improves
+    as the square root of the time. Depth counts only the frames taken in m600, since a tile
+    visited in many filters is no deeper in any one of them."
+coverage:
+  - value: "{ris.tiles_observed|num}"
+    label: Tiles observed
+    note: original grid
+  - value: "{ris.tiles_defined|num}"
+    label: Tiles defined
+  - value: "{ris.coverage_pct}"
+    unit: "%"
+    label: Complete
+  - value: "{ris.tiles_observed_extended|num}"
+    label: Including extension
+    note: of {ris.tiles_extended|num}
+progress:
+  label: "{ris.tiles_observed|num} of {ris.tiles_defined|num} tiles observed"
+  note: Counted over the original grid, T00000–T25471. The northern extension carries the tiling
+    to Dec +30° and is counted separately. A full cycle is anticipated by the end of 2027.

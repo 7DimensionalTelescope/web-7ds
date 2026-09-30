@@ -1,8 +1,8 @@
 # Text used on more than one page. Each entry says where it appears; change it
 # here and every page that shows it follows.
 
+# Shown on /telescope/instrument, /users/performance.
 filterSet:
-  $usedOn: /telescope/instrument, /users/performance
   body: Every unit carries a nine-slot filter wheel. Three slots in each wheel hold Sloan g, r and
     i; one unit adds u and three units add z. The remaining slots hold medium-band filters,
     distributed across the array so that the full set is covered in a small number of exposures.
@@ -17,3 +17,36 @@ filterSet:
     reflect availability and will be addressed as the remaining five filters become available.
     Their spectrophotometric calibration is in preparation; the original twenty remain the
     calibrated set in operational use."
+
+# Shown on /survey/ris, /survey/wts, /survey/ims.
+surveyPage:
+  eyebrow: Survey · {code}
+  strategy:
+    eyebrow: Strategy
+    title: What this survey is for
+    trade: Trade
+    parameters: Design parameters
+  map:
+    eyebrow: Map
+    title: Where it has observed
+    updated: daily
+    footnote: The whole survey footprint, with per-tile detail under the pointer and a search by
+      position, is on the [data access page](/users/access).
+  coverage:
+    eyebrow: Coverage
+    title: What has been observed so far
+    updated: every 30 minutes
+    status: Status
+    meter: "{code} progress: {percent} percent"
+  related:
+    eyebrow: Elsewhere
+    title: Related pages
+    links:
+      - label: All three surveys
+        href: /survey/overview
+      - label: Sky coverage and search
+        href: /users/access
+      - label: Array operations
+        href: /users/status
+      - label: Measured performance
+        href: /users/performance
