@@ -109,7 +109,7 @@ const Index = () => (
             <Link className="btn btn--primary" to="/users/propose">
               How to write the proposal
             </Link>
-            <Link className="btn btn--secondary" to="/calculator">
+            <Link className="btn btn--secondary" to="/users/links#calculators">
               Calculators
             </Link>
             <Link className="btn btn--secondary" to="/users/performance">

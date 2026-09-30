@@ -2897,6 +2897,237 @@ table[class*='w-full'] thead {
   vertical-align: middle;
 }
 
+/* --- Observation modes: 2x2 cards, and the coverage figure -------------- */
+
+.modebox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 720px) {
+  .modebox-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+.modebox {
+  padding: 1.25rem 1.375rem;
+  border: var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+}
+
+.modebox__n {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--slate-500);
+}
+
+.modebox__name {
+  margin: 0.25rem 0 0.125rem;
+  font-size: 1.125rem;
+}
+
+.modebox__tag {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+}
+
+.modebox__body {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--slate-700, var(--ink-900));
+}
+
+.obsmodes {
+  border: var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  padding: 1.25rem 1.375rem 1.375rem;
+}
+
+.obsmodes__pick {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  border: 0;
+}
+
+.obsmodes__pick legend {
+  float: left;
+  margin-right: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+}
+
+.obsmodes__option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.obsmodes__option input { accent-color: var(--accent); }
+
+.obsmodes__layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-top: 0.75rem;
+}
+
+/* Sixteen columns do not fit a phone; the grid scrolls inside itself. */
+.modegrid {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.modegrid__row {
+  display: grid;
+  grid-template-columns: 3.5rem repeat(16, minmax(2.75rem, 1fr));
+  gap: 2px;
+  margin-bottom: 2px;
+  min-width: 48rem;
+}
+
+.modegrid__head,
+.modegrid__unit {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--slate-500);
+  text-align: center;
+  padding: 0.25rem 0;
+}
+
+.modegrid__head { text-align: left; }
+
+.modegrid__cell {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-align: center;
+  padding: 0.4rem 0.125rem;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.modegrid__cell--empty { background: var(--slate-100); }
+
+.modefields {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  padding-top: 1.25rem;
+}
+
+.modefields__grid {
+  display: grid;
+  gap: 2px;
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+.modefields__grid span {
+  background: var(--accent);
+  opacity: 0.7;
+  border-radius: 1px;
+}
+
+.modefields__label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--slate-500);
+  white-space: nowrap;
+}
+
+/* --- Tool dock (How to propose) --------------------------------------------- */
+
+/* Narrow and medium windows: a pill at the lower left that opens upward. */
+.tooldock {
+  position: fixed;
+  left: 1rem;
+  bottom: 1.25rem;
+  z-index: 900;
+}
+
+.tooldock__toggle {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 550;
+  color: #fff;
+  background: var(--ink-900);
+  border: 0;
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+}
+
+.tooldock__panel {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 0.5rem);
+  width: 13rem;
+  padding: 0.875rem 1rem;
+  border: var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  box-shadow: var(--shadow-lg);
+}
+
+.tooldock--open .tooldock__panel { display: block; }
+
+.tooldock__title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+}
+
+.tooldock ul { list-style: none; margin: 0; padding: 0; }
+.tooldock li + li { margin-top: 0.375rem; }
+.tooldock a { font-size: 0.875rem; }
+
+/* Wide windows have a margin to sit in: open, mid-height, no toggle. The
+   breakpoint is where the 1280px content column leaves at least the dock's
+   width free on the left. */
+@media (min-width: 1600px) {
+  .tooldock {
+    left: max(1rem, calc((100vw - 1280px) / 2 - 14rem));
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .tooldock__toggle { display: none; }
+  .tooldock__panel {
+    display: block;
+    position: static;
+    box-shadow: var(--shadow-md);
+  }
+}
+
+@media print {
+  .tooldock { display: none; }
+}
+
 /* --- Call-for-proposals bar ------------------------------------------------- */
 
 /* Fixed above the fixed navigation. The bar publishes its measured height as

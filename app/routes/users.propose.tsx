@@ -5,6 +5,8 @@ import { PageLayout, PageHero, Section } from '../components/site';
 import { modeText } from './content/text';
 import surveys from './content/surveys.json';
 import call from './content/call.json';
+import ObsModes from '../components/obsmodes';
+import ToolDock from '../components/tooldock';
 
 export const meta: MetaFunction = () => [
   { title: 'How to propose · 7DT for users' },
@@ -117,6 +119,7 @@ const REQUEST_PARAMETERS: { field: string; what: React.ReactNode }[] = [
 const Index = () => {
   return (
     <PageLayout menu="manuUsers">
+      <ToolDock />
       <PageHero
         eyebrow="For users"
         title={
@@ -187,7 +190,7 @@ const Index = () => {
             <p>
               The current call, its dates and its documents are on the{' '}
               <Link to="/users/call">call for proposals</Link> page. The{' '}
-              <Link to="/calculator">observation calculators</Link> are available for costing a
+              <Link to="/users/links#calculators">observation calculators</Link> are available for costing a
               program.
               Target-of-opportunity requests are handled separately and continuously, and do not
               wait for a call.
@@ -257,9 +260,10 @@ const Index = () => {
       </Section>
 
       <Section eyebrow="Writing" title="Guidelines" alt>
-        {/* In the order of the Phase 1 form: the two choices that decide the
-            shape of a program first, then the fields that pin it down, then the
-            checks worth running before any of it is written. */}
+        {/* In the order a proposal gets written: the two choices that decide
+            the shape of a program, then the checks that depend on them — the
+            exposure and overhead a mode costs — and only then the technical
+            justification those checks produce the numbers for. */}
         <p className="prose">
           A request is a program type, an observation mode, a target or an area, the exposures
           that reach the signal-to-noise the science needs, and the constraints under which the
@@ -294,73 +298,20 @@ const Index = () => {
           <h3>Observation mode</h3>
           <p className="prose">{modeText}</p>
 
-          <ul className="feature-list" style={{ marginTop: '2rem' }}>
+          <div className="modebox-grid">
             {surveys.modes.map((mode, index) => (
-              <li key={mode.name}>
-                <span className="feature-list__key">{String(index + 1).padStart(2, '0')}</span>
-                <div>
-                  <h4 className="feature-list__title" style={{ fontSize: '1.125rem' }}>
-                    {mode.name}
-                    <span
-                      style={{
-                        marginLeft: '0.75rem',
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: '0.6875rem',
-                        letterSpacing: '0.1em',
-                        textTransform: 'uppercase',
-                        color: 'var(--slate-500)',
-                        fontWeight: 400,
-                      }}
-                    >
-                      {mode.tagline}
-                    </span>
-                  </h4>
-                  <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
-                    {mode.body}
-                  </p>
-                </div>
-              </li>
+              <div className="modebox" key={mode.name}>
+                <span className="modebox__n">{String(index + 1).padStart(2, '0')}</span>
+                <h4 className="modebox__name">{mode.name}</h4>
+                <span className="modebox__tag">{mode.tagline}</span>
+                <p className="modebox__body">{mode.body}</p>
+              </div>
             ))}
-          </ul>
-        </div>
-
-        <div className="subsection">
-          <h3>Technical justification</h3>
-          <div className="table-wrap">
-            <table className="spec-table">
-              <caption>Fields of the Phase 1 form</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Field</th>
-                  <th scope="col">What to give</th>
-                </tr>
-              </thead>
-              <tbody>
-                {REQUEST_PARAMETERS.map((row) => (
-                  <tr key={row.field}>
-                    <th scope="row">{row.field}</th>
-                    <td>{row.what}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
 
-          <p className="prose" style={{ marginTop: '2rem' }}>
-            Two limits shape the exposure time before the science does. A single frame should be at
-            least 100 seconds, which is what it takes to reach background-limited conditions, and
-            no more than 180, beyond which tracking accuracy starts to elongate the PSF. Depth
-            comes from taking frames in series, not from lengthening one. Bright targets can use
-            shorter frames at the cost of more overhead, and any frame time other than 100 seconds
-            adds overhead for its own calibration frames. Survey observations use 100 seconds as
-            standard.
-          </p>
-          <p className="footnote" style={{ marginTop: '1.25rem' }}>
-            Of the observing conditions, only Moon phase can be requested — seeing and cloud cover
-            cannot be specified, though observations are made under nominal conditions wherever
-            possible. A unit may also be out of service on the night, in which case the delivered
-            data lack whatever that telescope was carrying.
-          </p>
+          <div style={{ marginTop: '2.5rem' }}>
+            <ObsModes />
+          </div>
         </div>
 
         <div className="subsection">
@@ -426,6 +377,45 @@ const Index = () => {
               </div>
             </li>
           </ul>
+        </div>
+
+        <div className="subsection">
+          <h3>Technical justification</h3>
+          <div className="table-wrap">
+            <table className="spec-table">
+              <caption>Fields of the Phase 1 form</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Field</th>
+                  <th scope="col">What to give</th>
+                </tr>
+              </thead>
+              <tbody>
+                {REQUEST_PARAMETERS.map((row) => (
+                  <tr key={row.field}>
+                    <th scope="row">{row.field}</th>
+                    <td>{row.what}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="prose" style={{ marginTop: '2rem' }}>
+            Two limits shape the exposure time before the science does. A single frame should be at
+            least 100 seconds, which is what it takes to reach background-limited conditions, and
+            no more than 180, beyond which tracking accuracy starts to elongate the PSF. Depth
+            comes from taking frames in series, not from lengthening one. Bright targets can use
+            shorter frames at the cost of more overhead, and any frame time other than 100 seconds
+            adds overhead for its own calibration frames. Survey observations use 100 seconds as
+            standard.
+          </p>
+          <p className="footnote" style={{ marginTop: '1.25rem' }}>
+            Of the observing conditions, only Moon phase can be requested — seeing and cloud cover
+            cannot be specified, though observations are made under nominal conditions wherever
+            possible. A unit may also be out of service on the night, in which case the delivered
+            data lack whatever that telescope was carrying.
+          </p>
         </div>
 
         {/* <div className="btn-row" style={{ marginTop: '2.5rem' }}>

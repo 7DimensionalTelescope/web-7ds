@@ -4,13 +4,14 @@ import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import { PageLayout, PageHero, Section } from '../components/site';
 import { readEnv } from '../lib/portal.server';
+import { tools } from '../lib/calculators';
 
 export const meta: MetaFunction = () => [
   { title: 'Useful links · 7DT for users' },
   {
     name: 'description',
     content:
-      'Project services, code repositories and documentation for users of the 7-Dimensional Telescope.',
+      'Project services and observation calculators for users of the 7-Dimensional Telescope.',
   },
 ];
 
@@ -121,6 +122,27 @@ const Index = () => {
             page.
           </p>
         )}
+      </Section>
+
+      {/* The calculators used to have a menu entry and a page of their own.
+          They are tools a user opens, like the services above, so they sit
+          with them. Each opens straight into the tool. */}
+      <Section id="calculators" eyebrow="Calculators" title="Observation calculators" alt>
+        <div className="grid grid-cols-2">
+          {tools.map((tool) => (
+            <a
+              className="theme-card"
+              href={`/calculator/${tool.slug}`}
+              target="_blank"
+              rel="noreferrer"
+              key={tool.slug}
+            >
+              <span className="theme-card__index">{tool.n}</span>
+              <h3 className="theme-card__title">{tool.name}</h3>
+              <p className="theme-card__body">{tool.question}</p>
+            </a>
+          ))}
+        </div>
       </Section>
 
     </PageLayout>

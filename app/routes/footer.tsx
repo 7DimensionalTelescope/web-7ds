@@ -57,7 +57,6 @@ const COLUMNS = [
       { label: 'Performance', href: '/users/performance' },
       { label: 'Call for Proposals', href: '/users/call' },
       { label: 'How to Propose', href: '/users/propose' },
-      { label: 'Calculators', href: '/calculator' },
       { label: 'Data Format', href: '/users/format' },
       { label: 'Data Access', href: '/users/access' },
       { label: 'Software', href: '/users/software' },
