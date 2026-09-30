@@ -2,17 +2,8 @@ import React from 'react';
 import { tools } from '../lib/calculators';
 
 /* ---------------------------------------------------------------------------
-   The four calculators as a 2x2 of icons, kept in reach while a proposal is
-   being read.
-
-   It lives in a rail that spans the page's content sections and nothing else,
-   and sticks inside that rail — so it follows the reader down the guidelines
-   but never rides up over the hero or down over the footer. Put it as the
-   first child of a `.dockzone` wrapper around the sections it accompanies.
-
-   It needs the left margin to sit in, and a 1280px content column only
-   leaves one on a wide window; below that it is not shown, and the same four
-   tools are linked from the checklist, the form-field table and Useful links.
+   The four calculators as a 2x2 of icons. Placed by PageRail, which keeps it
+   in reach while a proposal is being read.
 
    Links go to /visibility, /exptime, /overhead and /tile — the addresses the
    Call for Proposals prints.
@@ -20,12 +11,13 @@ import { tools } from '../lib/calculators';
 
 /* Line icons on a 24-unit grid, drawn in the current text color. */
 const ICONS: Record<string, React.ReactNode> = {
-  // a target's track rising over the horizon
+  // a telescope on its mount, pointed at a star: can it be observed
   visibility: (
     <>
-      <path d="M3 18h18" />
-      <path d="M5 18c1.6-7.5 12.4-7.5 14 0" />
-      <circle cx="12" cy="10.4" r="1.6" fill="currentColor" stroke="none" />
+      <path d="M2.6 15.4 11.4 10.5l1.5 2.7-8.8 4.9z" />
+      <path d="M11.4 10.5l2-1.1 1.5 2.7-2 1.1" />
+      <path d="M8 15.1 5.6 21M8 15.1l2.4 5.9" />
+      <path d="M18.40 1.70 L19.36 4.27 L22.11 4.39 L19.96 6.11 L20.69 8.76 L18.40 7.24 L16.11 8.76 L16.84 6.11 L14.69 4.39 L17.44 4.27Z" fill="currentColor" stroke="none" />
     </>
   ),
   // a stopwatch
@@ -64,10 +56,9 @@ const SHORT: Record<string, string> = {
   tile: 'Tiles',
 };
 
-export default function ToolDock() {
+export function ToolIcons() {
   return (
-    <aside className="tooldock" aria-label="Useful tools">
-      <nav className="tooldock__card">
+    <nav aria-label="Useful tools">
         <p className="tooldock__title">Tools</p>
         <ul className="tooldock__grid">
           {tools.map((tool) => (
@@ -98,7 +89,6 @@ export default function ToolDock() {
             </li>
           ))}
         </ul>
-      </nav>
-    </aside>
+    </nav>
   );
 }

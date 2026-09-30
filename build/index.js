@@ -115,10 +115,10 @@ import {
 } from "@remix-run/react";
 
 // app/css/app.css
-var app_default = "/build/_assets/app-EXTMYON2.css";
+var app_default = "/build/_assets/app-ZGOKTAR3.css";
 
 // app/css/custom.css
-var custom_default = "/build/_assets/custom-WXAEU27J.css";
+var custom_default = "/build/_assets/custom-R4DJLXFR.css";
 
 // app/root.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
@@ -2930,6 +2930,9 @@ function ObsModes() {
   ] });
 }
 
+// app/components/pagerail.tsx
+import { useEffect as useEffect4, useState as useState5 } from "react";
+
 // app/routes/content/calculators.json
 var calculators_default = {
   note: "The 7DT observation calculators. Each is served from this site at /<slug> - the addresses the Call for Proposals and the Phase 1 Instructions publish - by nginx proxying to a Streamlit app on 127.0.0.1 (deploy/). `url` is the lyman address, used only by the bridge routes while nginx does not yet serve the new paths.",
@@ -2979,11 +2982,12 @@ var tools = calculators_default.tools;
 // app/components/tooldock.tsx
 import { Fragment as Fragment6, jsx as jsx25, jsxs as jsxs19 } from "react/jsx-runtime";
 var ICONS = {
-  // a target's track rising over the horizon
+  // a telescope on its mount, pointed at a star: can it be observed
   visibility: /* @__PURE__ */ jsxs19(Fragment6, { children: [
-    /* @__PURE__ */ jsx25("path", { d: "M3 18h18" }),
-    /* @__PURE__ */ jsx25("path", { d: "M5 18c1.6-7.5 12.4-7.5 14 0" }),
-    /* @__PURE__ */ jsx25("circle", { cx: "12", cy: "10.4", r: "1.6", fill: "currentColor", stroke: "none" })
+    /* @__PURE__ */ jsx25("path", { d: "M2.6 15.4 11.4 10.5l1.5 2.7-8.8 4.9z" }),
+    /* @__PURE__ */ jsx25("path", { d: "M11.4 10.5l2-1.1 1.5 2.7-2 1.1" }),
+    /* @__PURE__ */ jsx25("path", { d: "M8 15.1 5.6 21M8 15.1l2.4 5.9" }),
+    /* @__PURE__ */ jsx25("path", { d: "M18.40 1.70 L19.36 4.27 L22.11 4.39 L19.96 6.11 L20.69 8.76 L18.40 7.24 L16.11 8.76 L16.84 6.11 L14.69 4.39 L17.44 4.27Z", fill: "currentColor", stroke: "none" })
   ] }),
   // a stopwatch
   exptime: /* @__PURE__ */ jsxs19(Fragment6, { children: [
@@ -3011,8 +3015,8 @@ var ICONS = {
   overhead: "Overhead",
   tile: "Tiles"
 };
-function ToolDock() {
-  return /* @__PURE__ */ jsx25("aside", { className: "tooldock", "aria-label": "Useful tools", children: /* @__PURE__ */ jsxs19("nav", { className: "tooldock__card", children: [
+function ToolIcons() {
+  return /* @__PURE__ */ jsxs19("nav", { "aria-label": "Useful tools", children: [
     /* @__PURE__ */ jsx25("p", { className: "tooldock__title", children: "Tools" }),
     /* @__PURE__ */ jsx25("ul", { className: "tooldock__grid", children: tools.map((tool) => /* @__PURE__ */ jsx25("li", { children: /* @__PURE__ */ jsxs19(
       "a",
@@ -3043,11 +3047,44 @@ function ToolDock() {
         ]
       }
     ) }, tool.slug)) })
+  ] });
+}
+
+// app/components/pagerail.tsx
+import { jsx as jsx26, jsxs as jsxs20 } from "react/jsx-runtime";
+function PageRail({ items }) {
+  let [active, setActive] = useState5(null);
+  return useEffect4(() => {
+    let targets = items.map((item) => document.getElementById(item.id)).filter((el) => Boolean(el));
+    if (!targets.length || typeof IntersectionObserver > "u")
+      return;
+    let observer = new IntersectionObserver(
+      (entries) => {
+        let hit = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        hit && setActive(hit.target.id);
+      },
+      { rootMargin: "-20% 0px -70% 0px" }
+    );
+    return targets.forEach((el) => observer.observe(el)), () => observer.disconnect();
+  }, [items]), /* @__PURE__ */ jsx26("aside", { className: "pagerail", "aria-label": "On this page", children: /* @__PURE__ */ jsxs20("div", { className: "pagerail__card", children: [
+    /* @__PURE__ */ jsxs20("nav", { "aria-label": "Page contents", children: [
+      /* @__PURE__ */ jsx26("p", { className: "pagerail__title", children: "On this page" }),
+      /* @__PURE__ */ jsx26("ol", { className: "pagerail__toc", children: items.map((item) => /* @__PURE__ */ jsx26("li", { className: `pagerail__item pagerail__item--${item.level}`, children: /* @__PURE__ */ jsx26(
+        "a",
+        {
+          href: `#${item.id}`,
+          className: active === item.id ? "is-active" : void 0,
+          "aria-current": active === item.id ? "location" : void 0,
+          children: item.label
+        }
+      ) }, item.id)) })
+    ] }),
+    /* @__PURE__ */ jsx26("div", { className: "pagerail__tools", children: /* @__PURE__ */ jsx26(ToolIcons, {}) })
   ] }) });
 }
 
 // app/routes/users.propose.tsx
-import { Fragment as Fragment7, jsx as jsx26, jsxs as jsxs20 } from "react/jsx-runtime";
+import { Fragment as Fragment7, jsx as jsx27, jsxs as jsxs21 } from "react/jsx-runtime";
 var meta17 = () => [
   { title: "How to propose \xB7 7DT for users" },
   {
@@ -3073,9 +3110,9 @@ var meta17 = () => [
 ], REQUEST_PARAMETERS = [
   {
     field: "Total requested hours",
-    what: /* @__PURE__ */ jsxs20(Fragment7, { children: [
+    what: /* @__PURE__ */ jsxs21(Fragment7, { children: [
       "The whole request, overheads included \u2014 slewing, filter changes, readout \u2014 not time on source. The ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/overhead", children: "overhead calculator" }),
+      /* @__PURE__ */ jsx27(Link14, { to: "/overhead", children: "overhead calculator" }),
       " gives the difference."
     ] })
   },
@@ -3094,9 +3131,9 @@ var meta17 = () => [
   },
   {
     field: "Observing window",
-    what: /* @__PURE__ */ jsxs20(Fragment7, { children: [
+    what: /* @__PURE__ */ jsxs21(Fragment7, { children: [
       "Any constraint on when the observations may happen \u2014 a seasonal visibility window, coordination with another facility, a deadline for a fading object. \u201CNone\u201D if there is none. The ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/visibility", children: "visibility calculator" }),
+      /* @__PURE__ */ jsx27(Link14, { to: "/visibility", children: "visibility calculator" }),
       " gives the window a target actually has."
     ] })
   },
@@ -3107,201 +3144,212 @@ var meta17 = () => [
   },
   {
     field: "Exposure time justification",
-    what: /* @__PURE__ */ jsxs20(Fragment7, { children: [
+    what: /* @__PURE__ */ jsxs21(Fragment7, { children: [
       "The exposure per target or tile and how it was derived, the target signal-to-noise and the calculation or calculator used to reach it, the filters and the time on each, and the arithmetic that adds up to the total requested hours. The",
       " ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/exptime", children: "exposure calculator" }),
+      /* @__PURE__ */ jsx27(Link14, { to: "/exptime", children: "exposure calculator" }),
       " works in either direction."
     ] })
   },
   {
     field: "Target coordinates",
-    what: /* @__PURE__ */ jsxs20(Fragment7, { children: [
+    what: /* @__PURE__ */ jsxs21(Fragment7, { children: [
       "Target programs: every target in RA and Dec, J2000. Survey programs: the coordinate range and the area in deg\xB2. The ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/tile", children: "tile matcher" }),
+      /* @__PURE__ */ jsx27(Link14, { to: "/tile", children: "tile matcher" }),
       " shows which tiles cover a position, and how they overlap."
     ] })
   },
   {
     field: "Duplication with existing 7DS data",
-    what: /* @__PURE__ */ jsxs20(Fragment7, { children: [
+    what: /* @__PURE__ */ jsxs21(Fragment7, { children: [
       "Whether the targets or area overlap ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/survey/ris", children: "RIS" }),
+      /* @__PURE__ */ jsx27(Link14, { to: "/survey/ris", children: "RIS" }),
       ",",
       " ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/survey/ims", children: "IMS" }),
+      /* @__PURE__ */ jsx27(Link14, { to: "/survey/ims", children: "IMS" }),
       " or ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/survey/wts", children: "WTS" }),
+      /* @__PURE__ */ jsx27(Link14, { to: "/survey/wts", children: "WTS" }),
       ". \u201CNone\u201D, or why the existing data are not sufficient \u2014 greater depth, a different cadence, a different filter set. What exists on a given tile is on the",
       " ",
-      /* @__PURE__ */ jsx26(Link14, { to: "/users/status", children: "status page" }),
+      /* @__PURE__ */ jsx27(Link14, { to: "/users/status", children: "status page" }),
       "."
     ] })
   }
-], Index17 = () => /* @__PURE__ */ jsxs20(PageLayout, { menu: "manuUsers", children: [
-  /* @__PURE__ */ jsx26(
+], RAIL = [
+  { id: "general", label: "General information", level: 2 },
+  ...call_default.active ? [{ id: "open-call", label: "The open call", level: 3 }] : [],
+  { id: "who", label: "Who may propose", level: 3 },
+  { id: "time", label: "Time available", level: 3 },
+  { id: "data-rights", label: "Data rights and authorship", level: 3 },
+  { id: "guidelines", label: "Guidelines", level: 2 },
+  { id: "program-type", label: "Program type", level: 3 },
+  { id: "observation-mode", label: "Observation mode", level: 3 },
+  { id: "before-you-write", label: "Before you write", level: 3 },
+  { id: "technical-justification", label: "Technical justification", level: 3 }
+], Index17 = () => /* @__PURE__ */ jsxs21(PageLayout, { menu: "manuUsers", children: [
+  /* @__PURE__ */ jsx27(
     PageHero,
     {
       eyebrow: "For users",
-      title: /* @__PURE__ */ jsxs20(Fragment7, { children: [
+      title: /* @__PURE__ */ jsxs21(Fragment7, { children: [
         "How to ",
-        /* @__PURE__ */ jsx26("em", { children: "Propose" })
+        /* @__PURE__ */ jsx27("em", { children: "Propose" })
       ] }),
       lede: "Who may ask for time on 7DT, how much of it there is, and what the array can be asked to do with it.",
       image: "/img/hero/telescope.jpg"
     }
   ),
-  /* @__PURE__ */ jsxs20("div", { className: "dockzone", children: [
-    /* @__PURE__ */ jsx26(ToolDock, {}),
-    /* @__PURE__ */ jsxs20(Section, { eyebrow: "Before you start", title: "General information", children: [
-      call_default.active && /* @__PURE__ */ jsxs20("div", { className: "subsection", children: [
-        /* @__PURE__ */ jsx26("h3", { children: "The open call" }),
-        /* @__PURE__ */ jsxs20("p", { className: "prose", children: [
+  /* @__PURE__ */ jsxs21("div", { className: "dockzone", children: [
+    /* @__PURE__ */ jsx27(PageRail, { items: RAIL }),
+    /* @__PURE__ */ jsxs21(Section, { id: "general", eyebrow: "Before you start", title: "General information", children: [
+      call_default.active && /* @__PURE__ */ jsxs21("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx27("h3", { id: "open-call", children: "The open call" }),
+        /* @__PURE__ */ jsxs21("p", { className: "prose", children: [
           "Proposals are being accepted for observations between ",
           call_default.observingPeriod,
           ". The deadline is ",
-          /* @__PURE__ */ jsx26("b", { children: call_default.deadline }),
+          /* @__PURE__ */ jsx27("b", { children: call_default.deadline }),
           ", ",
           call_default.deadlineNote,
           ". The dates, the documents to download and the rules that apply to this particular call are on the",
           " ",
-          /* @__PURE__ */ jsx26(Link14, { to: "/users/call", children: "call for proposals" }),
+          /* @__PURE__ */ jsx27(Link14, { to: "/users/call", children: "call for proposals" }),
           " page. This page is about writing the proposal, and does not change between calls."
         ] }),
-        /* @__PURE__ */ jsxs20("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
-          /* @__PURE__ */ jsx26(Link14, { className: "btn btn--primary", to: "/users/call", children: "Dates and documents" }),
-          /* @__PURE__ */ jsx26("a", { className: "btn btn--secondary", href: "/proposal/7DT_Phase1_Proposal_Form.docx", download: !0, children: "Proposal Form" })
+        /* @__PURE__ */ jsxs21("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
+          /* @__PURE__ */ jsx27(Link14, { className: "btn btn--primary", to: "/users/call", children: "Dates and documents" }),
+          /* @__PURE__ */ jsx27("a", { className: "btn btn--secondary", href: "/proposal/7DT_Phase1_Proposal_Form.docx", download: !0, children: "Proposal Form" })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs20("div", { className: "subsection", children: [
-        /* @__PURE__ */ jsx26("h3", { children: "Who may propose" }),
-        /* @__PURE__ */ jsxs20("div", { className: "prose", children: [
-          /* @__PURE__ */ jsxs20("p", { children: [
+      /* @__PURE__ */ jsxs21("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx27("h3", { id: "who", children: "Who may propose" }),
+        /* @__PURE__ */ jsxs21("div", { className: "prose", children: [
+          /* @__PURE__ */ jsxs21("p", { children: [
             "The 7DS team is being formally constituted. Anyone taking part in a 7DS Science Working Group becomes a member of the team automatically, without having to ask \u2014 opting out is the action that requires notice, not joining. The working groups follow the ",
-            /* @__PURE__ */ jsx26(Link14, { to: "/science/overview", children: "seven science themes" }),
+            /* @__PURE__ */ jsx27(Link14, { to: "/science/overview", children: "seven science themes" }),
             "."
           ] }),
-          /* @__PURE__ */ jsx26("p", { children: "Team membership carries two rights. The first is early access to 7DS data during its proprietary period, before it is released more widely. The second is the right to propose an independent observing program of your own on 7DT, rather than working only from what the surveys happen to collect." })
+          /* @__PURE__ */ jsx27("p", { children: "Team membership carries two rights. The first is early access to 7DS data during its proprietary period, before it is released more widely. The second is the right to propose an independent observing program of your own on 7DT, rather than working only from what the surveys happen to collect." })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs20("div", { className: "subsection", children: [
-        /* @__PURE__ */ jsx26("h3", { children: "Time available, and when" }),
-        /* @__PURE__ */ jsxs20("div", { className: "prose", children: [
-          /* @__PURE__ */ jsxs20("p", { children: [
+      /* @__PURE__ */ jsxs21("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx27("h3", { id: "time", children: "Time available, and when" }),
+        /* @__PURE__ */ jsxs21("div", { className: "prose", children: [
+          /* @__PURE__ */ jsxs21("p", { children: [
             "Two hundred hours of 7DT time are allocated to the Korea Astronomy and Space Science Institute, and a further two hundred hours to the Korean Astronomical Society \u2014 four hundred hours in total. How a proposal is assigned to a pool and reviewed is set by each call, and is given in its",
             " ",
-            /* @__PURE__ */ jsx26(Link14, { to: "/users/call", children: "Call for Proposals" }),
+            /* @__PURE__ */ jsx27(Link14, { to: "/users/call", children: "Call for Proposals" }),
             ". This is time on the array outside the three surveys, which otherwise occupy the night."
           ] }),
-          /* @__PURE__ */ jsxs20("p", { children: [
+          /* @__PURE__ */ jsxs21("p", { children: [
             "The current call, its dates and its documents are on the",
             " ",
-            /* @__PURE__ */ jsx26(Link14, { to: "/users/call", children: "call for proposals" }),
+            /* @__PURE__ */ jsx27(Link14, { to: "/users/call", children: "call for proposals" }),
             " page. The",
             " ",
-            /* @__PURE__ */ jsx26(Link14, { to: "/users/links#calculators", children: "observation calculators" }),
+            /* @__PURE__ */ jsx27(Link14, { to: "/users/links#calculators", children: "observation calculators" }),
             " are available for costing a program. Target-of-opportunity requests are handled separately and continuously, and do not wait for a call."
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs20("div", { className: "subsection", children: [
-        /* @__PURE__ */ jsx26("h3", { children: "Data rights and authorship" }),
-        /* @__PURE__ */ jsx26("div", { className: "split split--wide-text", children: /* @__PURE__ */ jsxs20("div", { className: "prose", children: [
-          /* @__PURE__ */ jsx26("p", { children: "Data taken for the surveys and for approved programs carry a proprietary period during which they are available to the 7DS team before wider release. Team membership is what grants that access, which is the practical reason the working groups matter as much as the allocations do." }),
-          /* @__PURE__ */ jsxs20("p", { children: [
+      /* @__PURE__ */ jsxs21("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx27("h3", { id: "data-rights", children: "Data rights and authorship" }),
+        /* @__PURE__ */ jsx27("div", { className: "split split--wide-text", children: /* @__PURE__ */ jsxs21("div", { className: "prose", children: [
+          /* @__PURE__ */ jsx27("p", { children: "Data taken for the surveys and for approved programs carry a proprietary period during which they are available to the 7DS team before wider release. Team membership is what grants that access, which is the practical reason the working groups matter as much as the allocations do." }),
+          /* @__PURE__ */ jsxs21("p", { children: [
             "Any paper, conference contribution, thesis or other public output that uses 7DT data not yet in a 7DS public release must include the core members of the 7DS team as co-authors. They are named in the",
             " ",
-            /* @__PURE__ */ jsx26("a", { href: "/proposal/7DT_Call_for_Proposals.docx", download: !0, children: "Call for Proposals" }),
+            /* @__PURE__ */ jsx27("a", { href: "/proposal/7DT_Call_for_Proposals.docx", download: !0, children: "Call for Proposals" }),
             ", along with the reference to cite and the acknowledgment to include. Anyone intending to publish is asked to contact the principal investigator first, so that authors and acknowledgments are agreed before submission rather than after."
           ] }),
-          /* @__PURE__ */ jsxs20("p", { children: [
+          /* @__PURE__ */ jsxs21("p", { children: [
             "The wider publication policy of the 7DS collaboration \u2014 the public release schedule among it \u2014 is being finalized, and will be posted under",
             " ",
-            /* @__PURE__ */ jsx26(Link14, { to: "/publication/policy", children: "publication policy" }),
+            /* @__PURE__ */ jsx27(Link14, { to: "/publication/policy", children: "publication policy" }),
             " once ratified."
           ] })
         ] }) })
       ] })
     ] }),
-    /* @__PURE__ */ jsxs20(Section, { eyebrow: "Writing", title: "Guidelines", alt: !0, children: [
-      /* @__PURE__ */ jsx26("p", { className: "prose", children: "A request is a program type, an observation mode, a target or an area, the exposures that reach the signal-to-noise the science needs, and the constraints under which the array may take them. Positions on the survey tiling are preferred wherever the science allows: data taken on a tile coadd directly with the survey data already there, and difference against the existing reference image without a separate calibration step." }),
-      /* @__PURE__ */ jsxs20("div", { className: "subsection", children: [
-        /* @__PURE__ */ jsx26("h3", { children: "Program type" }),
-        /* @__PURE__ */ jsx26("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs20("table", { className: "spec-table", children: [
-          /* @__PURE__ */ jsx26("caption", { children: "Program types" }),
-          /* @__PURE__ */ jsx26("tbody", { children: PROGRAM_TYPES.map((row) => /* @__PURE__ */ jsxs20("tr", { children: [
-            /* @__PURE__ */ jsxs20("th", { scope: "row", style: { whiteSpace: "nowrap" }, children: [
+    /* @__PURE__ */ jsxs21(Section, { id: "guidelines", eyebrow: "Writing", title: "Guidelines", alt: !0, children: [
+      /* @__PURE__ */ jsx27("p", { className: "prose", children: "A request is a program type, an observation mode, a target or an area, the exposures that reach the signal-to-noise the science needs, and the constraints under which the array may take them. Positions on the survey tiling are preferred wherever the science allows: data taken on a tile coadd directly with the survey data already there, and difference against the existing reference image without a separate calibration step." }),
+      /* @__PURE__ */ jsxs21("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx27("h3", { id: "program-type", children: "Program type" }),
+        /* @__PURE__ */ jsx27("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs21("table", { className: "spec-table", children: [
+          /* @__PURE__ */ jsx27("caption", { children: "Program types" }),
+          /* @__PURE__ */ jsx27("tbody", { children: PROGRAM_TYPES.map((row) => /* @__PURE__ */ jsxs21("tr", { children: [
+            /* @__PURE__ */ jsxs21("th", { scope: "row", style: { whiteSpace: "nowrap" }, children: [
               row[0],
-              /* @__PURE__ */ jsx26("span", { className: "tier-card__code", style: { display: "block", fontSize: "0.6875rem" }, children: row[1] })
+              /* @__PURE__ */ jsx27("span", { className: "tier-card__code", style: { display: "block", fontSize: "0.6875rem" }, children: row[1] })
             ] }),
-            /* @__PURE__ */ jsx26("td", { children: row[2] })
+            /* @__PURE__ */ jsx27("td", { children: row[2] })
           ] }, row[0])) })
         ] }) })
       ] }),
-      /* @__PURE__ */ jsxs20("div", { className: "subsection", children: [
-        /* @__PURE__ */ jsx26("h3", { children: "Observation mode" }),
-        /* @__PURE__ */ jsx26("p", { className: "prose", children: modeText }),
-        /* @__PURE__ */ jsx26("div", { className: "modebox-grid", children: surveys_default.modes.map((mode2, index) => /* @__PURE__ */ jsxs20("div", { className: "modebox", children: [
-          /* @__PURE__ */ jsx26("span", { className: "modebox__n", children: String(index + 1).padStart(2, "0") }),
-          /* @__PURE__ */ jsx26("h4", { className: "modebox__name", children: mode2.name }),
-          /* @__PURE__ */ jsx26("span", { className: "modebox__tag", children: mode2.tagline }),
-          /* @__PURE__ */ jsx26("p", { className: "modebox__body", children: mode2.body })
+      /* @__PURE__ */ jsxs21("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx27("h3", { id: "observation-mode", children: "Observation mode" }),
+        /* @__PURE__ */ jsx27("p", { className: "prose", children: modeText }),
+        /* @__PURE__ */ jsx27("div", { className: "modebox-grid", children: surveys_default.modes.map((mode2, index) => /* @__PURE__ */ jsxs21("div", { className: "modebox", children: [
+          /* @__PURE__ */ jsx27("span", { className: "modebox__n", children: String(index + 1).padStart(2, "0") }),
+          /* @__PURE__ */ jsx27("h4", { className: "modebox__name", children: mode2.name }),
+          /* @__PURE__ */ jsx27("span", { className: "modebox__tag", children: mode2.tagline }),
+          /* @__PURE__ */ jsx27("p", { className: "modebox__body", children: mode2.body })
         ] }, mode2.name)) }),
-        /* @__PURE__ */ jsx26("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx26(ObsModes, {}) })
+        /* @__PURE__ */ jsx27("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx27(ObsModes, {}) })
       ] }),
-      /* @__PURE__ */ jsxs20("div", { className: "subsection", children: [
-        /* @__PURE__ */ jsx26("h3", { children: "Before you write" }),
-        /* @__PURE__ */ jsx26("p", { className: "prose", children: "Four things are worth settling first, because each of them can make a program unnecessary or unworkable, and all four can be checked from this site." }),
-        /* @__PURE__ */ jsxs20("ul", { className: "feature-list", style: { marginTop: "1.5rem" }, children: [
-          /* @__PURE__ */ jsxs20("li", { children: [
-            /* @__PURE__ */ jsx26("span", { className: "feature-list__key", children: "01" }),
-            /* @__PURE__ */ jsxs20("div", { children: [
-              /* @__PURE__ */ jsx26("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Check the target is observable" }),
-              /* @__PURE__ */ jsxs20("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
+      /* @__PURE__ */ jsxs21("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx27("h3", { id: "before-you-write", children: "Before you write" }),
+        /* @__PURE__ */ jsx27("p", { className: "prose", children: "Four things are worth settling first, because each of them can make a program unnecessary or unworkable, and all four can be checked from this site." }),
+        /* @__PURE__ */ jsxs21("ul", { className: "feature-list", style: { marginTop: "1.5rem" }, children: [
+          /* @__PURE__ */ jsxs21("li", { children: [
+            /* @__PURE__ */ jsx27("span", { className: "feature-list__key", children: "01" }),
+            /* @__PURE__ */ jsxs21("div", { children: [
+              /* @__PURE__ */ jsx27("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Check the target is observable" }),
+              /* @__PURE__ */ jsxs21("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
                 "Visibility from El Sauce in the intended window, and the filter response over the wavelengths that matter, can both be computed with ",
-                /* @__PURE__ */ jsx26(Link14, { to: "/users/software", children: "supy" }),
+                /* @__PURE__ */ jsx27(Link14, { to: "/users/software", children: "supy" }),
                 ", or with the 7DT",
                 " ",
-                /* @__PURE__ */ jsx26(Link14, { to: "/visibility", children: "Visibility Tool" })
+                /* @__PURE__ */ jsx27(Link14, { to: "/visibility", children: "Visibility Tool" })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs20("li", { children: [
-            /* @__PURE__ */ jsx26("span", { className: "feature-list__key", children: "02" }),
-            /* @__PURE__ */ jsxs20("div", { children: [
-              /* @__PURE__ */ jsx26("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Check what already exists" }),
-              /* @__PURE__ */ jsxs20("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
+          /* @__PURE__ */ jsxs21("li", { children: [
+            /* @__PURE__ */ jsx27("span", { className: "feature-list__key", children: "02" }),
+            /* @__PURE__ */ jsxs21("div", { children: [
+              /* @__PURE__ */ jsx27("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Check what already exists" }),
+              /* @__PURE__ */ jsxs21("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
                 "Much of the southern sky already has a medium-band reference image, and the tile under your position may already carry the bands you need. The",
                 " ",
-                /* @__PURE__ */ jsx26(Link14, { to: "/users/access", children: "data access page" }),
+                /* @__PURE__ */ jsx27(Link14, { to: "/users/access", children: "data access page" }),
                 " reports the bands and frame counts held for any position, and the 7DT",
                 " ",
-                /* @__PURE__ */ jsx26(Link14, { to: "/tile", children: "Tile Matcher" }),
+                /* @__PURE__ */ jsx27(Link14, { to: "/tile", children: "Tile Matcher" }),
                 " shows which survey tile covers it."
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs20("li", { children: [
-            /* @__PURE__ */ jsx26("span", { className: "feature-list__key", children: "03" }),
-            /* @__PURE__ */ jsxs20("div", { children: [
-              /* @__PURE__ */ jsx26("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Estimate depth from measurements, not aperture" }),
-              /* @__PURE__ */ jsxs20("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
+          /* @__PURE__ */ jsxs21("li", { children: [
+            /* @__PURE__ */ jsx27("span", { className: "feature-list__key", children: "03" }),
+            /* @__PURE__ */ jsxs21("div", { children: [
+              /* @__PURE__ */ jsx27("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Estimate depth from measurements, not aperture" }),
+              /* @__PURE__ */ jsxs21("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
                 "The measured ",
-                /* @__PURE__ */ jsx26(Link14, { to: "/users/performance", children: "limiting magnitudes" }),
+                /* @__PURE__ */ jsx27(Link14, { to: "/users/performance", children: "limiting magnitudes" }),
                 " per band, for the fiducial 100-second exposure, are what a coadded depth should be scaled from. The 7DT ",
-                /* @__PURE__ */ jsx26(Link14, { to: "/exptime", children: "Exposure Time Calculator" }),
+                /* @__PURE__ */ jsx27(Link14, { to: "/exptime", children: "Exposure Time Calculator" }),
                 " ",
                 "uses these same measurements to compute the exposure needed for a target SNR, or the SNR for a given exposure."
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs20("li", { children: [
-            /* @__PURE__ */ jsx26("span", { className: "feature-list__key", children: "04" }),
-            /* @__PURE__ */ jsxs20("div", { children: [
-              /* @__PURE__ */ jsx26("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Calculate the total observing time" }),
-              /* @__PURE__ */ jsxs20("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
+          /* @__PURE__ */ jsxs21("li", { children: [
+            /* @__PURE__ */ jsx27("span", { className: "feature-list__key", children: "04" }),
+            /* @__PURE__ */ jsxs21("div", { children: [
+              /* @__PURE__ */ jsx27("h4", { className: "feature-list__title", style: { fontSize: "1rem" }, children: "Calculate the total observing time" }),
+              /* @__PURE__ */ jsxs21("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: [
                 "Once the exposure time per filter is set, the 7DT ",
-                /* @__PURE__ */ jsx26(Link14, { to: "/overhead", children: "Overhead Calculator" }),
+                /* @__PURE__ */ jsx27(Link14, { to: "/overhead", children: "Overhead Calculator" }),
                 " ",
                 "adds the per-frame and per-target overheads, such as filter exchange, autofocus, slewing, setup, and readout, to give the total requested hours."
               ] })
@@ -3309,21 +3357,21 @@ var meta17 = () => [
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs20("div", { className: "subsection", children: [
-        /* @__PURE__ */ jsx26("h3", { children: "Technical justification" }),
-        /* @__PURE__ */ jsx26("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs20("table", { className: "spec-table", children: [
-          /* @__PURE__ */ jsx26("caption", { children: "Fields of the Phase 1 form" }),
-          /* @__PURE__ */ jsx26("thead", { children: /* @__PURE__ */ jsxs20("tr", { children: [
-            /* @__PURE__ */ jsx26("th", { scope: "col", children: "Field" }),
-            /* @__PURE__ */ jsx26("th", { scope: "col", children: "What to give" })
+      /* @__PURE__ */ jsxs21("div", { className: "subsection", children: [
+        /* @__PURE__ */ jsx27("h3", { id: "technical-justification", children: "Technical justification" }),
+        /* @__PURE__ */ jsx27("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs21("table", { className: "spec-table", children: [
+          /* @__PURE__ */ jsx27("caption", { children: "Fields of the Phase 1 form" }),
+          /* @__PURE__ */ jsx27("thead", { children: /* @__PURE__ */ jsxs21("tr", { children: [
+            /* @__PURE__ */ jsx27("th", { scope: "col", children: "Field" }),
+            /* @__PURE__ */ jsx27("th", { scope: "col", children: "What to give" })
           ] }) }),
-          /* @__PURE__ */ jsx26("tbody", { children: REQUEST_PARAMETERS.map((row) => /* @__PURE__ */ jsxs20("tr", { children: [
-            /* @__PURE__ */ jsx26("th", { scope: "row", children: row.field }),
-            /* @__PURE__ */ jsx26("td", { children: row.what })
+          /* @__PURE__ */ jsx27("tbody", { children: REQUEST_PARAMETERS.map((row) => /* @__PURE__ */ jsxs21("tr", { children: [
+            /* @__PURE__ */ jsx27("th", { scope: "row", children: row.field }),
+            /* @__PURE__ */ jsx27("td", { children: row.what })
           ] }, row.field)) })
         ] }) }),
-        /* @__PURE__ */ jsx26("p", { className: "prose", style: { marginTop: "2rem" }, children: "Two limits shape the exposure time before the science does. A single frame should be at least 100 seconds, which is what it takes to reach background-limited conditions, and no more than 180, beyond which tracking accuracy starts to elongate the PSF. Depth comes from taking frames in series, not from lengthening one. Bright targets can use shorter frames at the cost of more overhead, and any frame time other than 100 seconds adds overhead for its own calibration frames. Survey observations use 100 seconds as standard." }),
-        /* @__PURE__ */ jsx26("p", { className: "footnote", style: { marginTop: "1.25rem" }, children: "Of the observing conditions, only Moon phase can be requested \u2014 seeing and cloud cover cannot be specified, though observations are made under nominal conditions wherever possible. A unit may also be out of service on the night, in which case the delivered data lack whatever that telescope was carrying." })
+        /* @__PURE__ */ jsx27("p", { className: "prose", style: { marginTop: "2rem" }, children: "Two limits shape the exposure time before the science does. A single frame should be at least 100 seconds, which is what it takes to reach background-limited conditions, and no more than 180, beyond which tracking accuracy starts to elongate the PSF. Depth comes from taking frames in series, not from lengthening one. Bright targets can use shorter frames at the cost of more overhead, and any frame time other than 100 seconds adds overhead for its own calibration frames. Survey observations use 100 seconds as standard." }),
+        /* @__PURE__ */ jsx27("p", { className: "footnote", style: { marginTop: "1.25rem" }, children: "Of the observing conditions, only Moon phase can be requested \u2014 seeing and cloud cover cannot be specified, though observations are made under nominal conditions wherever possible. A unit may also be out of service on the night, in which case the delivered data lack whatever that telescope was carrying." })
       ] })
     ] })
   ] })
@@ -3336,15 +3384,15 @@ __export(users_access_exports, {
   meta: () => meta18
 });
 import { Link as Link15 } from "@remix-run/react";
-import { jsx as jsx27, jsxs as jsxs21 } from "react/jsx-runtime";
+import { jsx as jsx28, jsxs as jsxs22 } from "react/jsx-runtime";
 var meta18 = () => [
   { title: "Data access \xB7 7DT for users" },
   {
     name: "description",
     content: "How 7DS data will be obtained. A public query and download service is being built; until it opens, data are requested from the project directly."
   }
-], Index18 = () => /* @__PURE__ */ jsxs21(PageLayout, { menu: "manuUsers", children: [
-  /* @__PURE__ */ jsx27(
+], Index18 = () => /* @__PURE__ */ jsxs22(PageLayout, { menu: "manuUsers", children: [
+  /* @__PURE__ */ jsx28(
     PageHero,
     {
       eyebrow: "For users",
@@ -3353,16 +3401,16 @@ var meta18 = () => [
       image: "/img/hero/data.jpg"
     }
   ),
-  /* @__PURE__ */ jsx27(Section, { eyebrow: "Status", title: "Being built", children: /* @__PURE__ */ jsxs21("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
-    /* @__PURE__ */ jsx27("div", { className: "panel__title", children: "To be determined" }),
-    /* @__PURE__ */ jsx27("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: "There is no public interface for querying or downloading 7DS data yet. How data will be searched, what may be retrieved at once, how bulk transfers are handled and what authentication is required are all still being decided, and this page will set them out once they are." }),
-    /* @__PURE__ */ jsxs21("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: [
+  /* @__PURE__ */ jsx28(Section, { eyebrow: "Status", title: "Being built", children: /* @__PURE__ */ jsxs22("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
+    /* @__PURE__ */ jsx28("div", { className: "panel__title", children: "To be determined" }),
+    /* @__PURE__ */ jsx28("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: "There is no public interface for querying or downloading 7DS data yet. How data will be searched, what may be retrieved at once, how bulk transfers are handled and what authentication is required are all still being decided, and this page will set them out once they are." }),
+    /* @__PURE__ */ jsxs22("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: [
       "Data taken for the surveys carry a proprietary period during which they are available to the 7DS team. Membership, and the data rights that come with it, are described under",
       " ",
-      /* @__PURE__ */ jsx27(Link15, { to: "/users/propose", children: "how to propose" }),
+      /* @__PURE__ */ jsx28(Link15, { to: "/users/propose", children: "how to propose" }),
       ". Until the service opens, requests \u2014 from team members and from anyone else \u2014 go to the project directly."
     ] }),
-    /* @__PURE__ */ jsx27(
+    /* @__PURE__ */ jsx28(
       "a",
       {
         className: "btn btn--primary",
@@ -3371,9 +3419,9 @@ var meta18 = () => [
       }
     )
   ] }) }),
-  /* @__PURE__ */ jsx27(Section, { eyebrow: "Query", title: "Data query", alt: !0, children: /* @__PURE__ */ jsxs21("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
-    /* @__PURE__ */ jsx27("div", { className: "panel__title", children: "TBD" }),
-    /* @__PURE__ */ jsx27("p", { className: "feature-list__body", style: { marginBottom: 0 }, children: "A query interface \u2014 search by position, tile, band, date or depth, and retrieve the matching images and catalogs \u2014 is to be determined. It will be described here." })
+  /* @__PURE__ */ jsx28(Section, { eyebrow: "Query", title: "Data query", alt: !0, children: /* @__PURE__ */ jsxs22("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
+    /* @__PURE__ */ jsx28("div", { className: "panel__title", children: "TBD" }),
+    /* @__PURE__ */ jsx28("p", { className: "feature-list__body", style: { marginBottom: 0 }, children: "A query interface \u2014 search by position, tile, band, date or depth, and retrieve the matching images and catalogs \u2014 is to be determined. It will be described here." })
   ] }) })
 ] }), users_access_default = Index18;
 
@@ -3563,25 +3611,25 @@ var dataformat_default = {
 };
 
 // app/routes/users.format.tsx
-import { jsx as jsx28, jsxs as jsxs22 } from "react/jsx-runtime";
+import { jsx as jsx29, jsxs as jsxs23 } from "react/jsx-runtime";
 var meta19 = () => [
   { title: "Data format \xB7 7DT for users" },
   {
     name: "description",
     content: "What a 7DT data product is: image and catalog products, the filename convention, WCS and unit conventions, the FITS header keywords, and the columns of a Py7DT source catalog."
   }
-], Mono = ({ children }) => /* @__PURE__ */ jsx28("span", { style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children });
+], Mono = ({ children }) => /* @__PURE__ */ jsx29("span", { style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children });
 function KeywordTable({ caption, rows }) {
-  return /* @__PURE__ */ jsx28("div", { className: "table-wrap", style: { marginTop: "1.25rem" }, children: /* @__PURE__ */ jsxs22("table", { className: "spec-table", children: [
-    /* @__PURE__ */ jsx28("caption", { children: caption }),
-    /* @__PURE__ */ jsx28("tbody", { children: rows.map((row) => /* @__PURE__ */ jsxs22("tr", { children: [
-      /* @__PURE__ */ jsx28("th", { scope: "row", style: { whiteSpace: "nowrap" }, children: /* @__PURE__ */ jsx28(Mono, { children: row[0] }) }),
-      /* @__PURE__ */ jsx28("td", { children: row[1] })
+  return /* @__PURE__ */ jsx29("div", { className: "table-wrap", style: { marginTop: "1.25rem" }, children: /* @__PURE__ */ jsxs23("table", { className: "spec-table", children: [
+    /* @__PURE__ */ jsx29("caption", { children: caption }),
+    /* @__PURE__ */ jsx29("tbody", { children: rows.map((row) => /* @__PURE__ */ jsxs23("tr", { children: [
+      /* @__PURE__ */ jsx29("th", { scope: "row", style: { whiteSpace: "nowrap" }, children: /* @__PURE__ */ jsx29(Mono, { children: row[0] }) }),
+      /* @__PURE__ */ jsx29("td", { children: row[1] })
     ] }, row[0])) })
   ] }) });
 }
-var Index19 = () => /* @__PURE__ */ jsxs22(PageLayout, { menu: "manuUsers", children: [
-  /* @__PURE__ */ jsx28(
+var Index19 = () => /* @__PURE__ */ jsxs23(PageLayout, { menu: "manuUsers", children: [
+  /* @__PURE__ */ jsx29(
     PageHero,
     {
       eyebrow: "For users",
@@ -3596,30 +3644,30 @@ var Index19 = () => /* @__PURE__ */ jsxs22(PageLayout, { menu: "manuUsers", chil
       ]
     }
   ),
-  /* @__PURE__ */ jsxs22(Section, { eyebrow: "Products", title: "What a data product is", children: [
-    /* @__PURE__ */ jsxs22("div", { className: "subsection", children: [
-      /* @__PURE__ */ jsx28("h3", { children: "Images" }),
-      /* @__PURE__ */ jsx28("p", { className: "prose", children: "A calibrated single exposure and a coadd are the two primary image products. Coadds may be nightly stacks, commonly around 300 seconds, or longer multi-epoch stacks." }),
-      /* @__PURE__ */ jsx28("div", { className: "table-wrap", style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsxs22("table", { className: "spec-table", children: [
-        /* @__PURE__ */ jsx28("caption", { children: "Primary image products" }),
-        /* @__PURE__ */ jsx28("thead", { children: /* @__PURE__ */ jsxs22("tr", { children: [
-          /* @__PURE__ */ jsx28("th", { scope: "col", children: "Product" }),
-          /* @__PURE__ */ jsx28("th", { scope: "col", children: "Filename" }),
-          /* @__PURE__ */ jsx28("th", { scope: "col", children: "Format and size" }),
-          /* @__PURE__ */ jsx28("th", { scope: "col", children: "Contents" })
+  /* @__PURE__ */ jsxs23(Section, { eyebrow: "Products", title: "What a data product is", children: [
+    /* @__PURE__ */ jsxs23("div", { className: "subsection", children: [
+      /* @__PURE__ */ jsx29("h3", { children: "Images" }),
+      /* @__PURE__ */ jsx29("p", { className: "prose", children: "A calibrated single exposure and a coadd are the two primary image products. Coadds may be nightly stacks, commonly around 300 seconds, or longer multi-epoch stacks." }),
+      /* @__PURE__ */ jsx29("div", { className: "table-wrap", style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsxs23("table", { className: "spec-table", children: [
+        /* @__PURE__ */ jsx29("caption", { children: "Primary image products" }),
+        /* @__PURE__ */ jsx29("thead", { children: /* @__PURE__ */ jsxs23("tr", { children: [
+          /* @__PURE__ */ jsx29("th", { scope: "col", children: "Product" }),
+          /* @__PURE__ */ jsx29("th", { scope: "col", children: "Filename" }),
+          /* @__PURE__ */ jsx29("th", { scope: "col", children: "Format and size" }),
+          /* @__PURE__ */ jsx29("th", { scope: "col", children: "Contents" })
         ] }) }),
-        /* @__PURE__ */ jsx28("tbody", { children: dataformat_default.products.map((row) => /* @__PURE__ */ jsxs22("tr", { children: [
-          /* @__PURE__ */ jsx28("th", { scope: "row", children: row[0] }),
-          /* @__PURE__ */ jsx28("td", { children: /* @__PURE__ */ jsx28(Mono, { children: row[1] }) }),
-          /* @__PURE__ */ jsx28("td", { children: row[2] }),
-          /* @__PURE__ */ jsx28("td", { children: row[3] })
+        /* @__PURE__ */ jsx29("tbody", { children: dataformat_default.products.map((row) => /* @__PURE__ */ jsxs23("tr", { children: [
+          /* @__PURE__ */ jsx29("th", { scope: "row", children: row[0] }),
+          /* @__PURE__ */ jsx29("td", { children: /* @__PURE__ */ jsx29(Mono, { children: row[1] }) }),
+          /* @__PURE__ */ jsx29("td", { children: row[2] }),
+          /* @__PURE__ */ jsx29("td", { children: row[3] })
         ] }, row[0])) })
       ] }) })
     ] }),
-    /* @__PURE__ */ jsxs22("div", { className: "subsection", children: [
-      /* @__PURE__ */ jsx28("h3", { children: "What a filename tells you" }),
-      /* @__PURE__ */ jsx28("p", { className: "prose", children: "A basename identifies the observation completely, so a file can be placed without opening it. A typical single exposure:" }),
-      /* @__PURE__ */ jsx28(
+    /* @__PURE__ */ jsxs23("div", { className: "subsection", children: [
+      /* @__PURE__ */ jsx29("h3", { children: "What a filename tells you" }),
+      /* @__PURE__ */ jsx29("p", { className: "prose", children: "A basename identifies the observation completely, so a file can be placed without opening it. A typical single exposure:" }),
+      /* @__PURE__ */ jsx29(
         "p",
         {
           style: {
@@ -3631,65 +3679,65 @@ var Index19 = () => /* @__PURE__ */ jsxs22(PageLayout, { menu: "manuUsers", chil
           children: "T08147_m650_7DT02_20251126_043413_100s.fits"
         }
       ),
-      /* @__PURE__ */ jsx28("div", { className: "table-wrap", style: { marginTop: "1.25rem" }, children: /* @__PURE__ */ jsxs22("table", { className: "spec-table", children: [
-        /* @__PURE__ */ jsx28("caption", { children: "Elements of a basename" }),
-        /* @__PURE__ */ jsx28("tbody", { children: dataformat_default.basename.map((row) => /* @__PURE__ */ jsxs22("tr", { children: [
-          /* @__PURE__ */ jsx28("th", { scope: "row", style: { whiteSpace: "nowrap" }, children: /* @__PURE__ */ jsx28(Mono, { children: row[0] }) }),
-          /* @__PURE__ */ jsx28("td", { children: row[1] })
+      /* @__PURE__ */ jsx29("div", { className: "table-wrap", style: { marginTop: "1.25rem" }, children: /* @__PURE__ */ jsxs23("table", { className: "spec-table", children: [
+        /* @__PURE__ */ jsx29("caption", { children: "Elements of a basename" }),
+        /* @__PURE__ */ jsx29("tbody", { children: dataformat_default.basename.map((row) => /* @__PURE__ */ jsxs23("tr", { children: [
+          /* @__PURE__ */ jsx29("th", { scope: "row", style: { whiteSpace: "nowrap" }, children: /* @__PURE__ */ jsx29(Mono, { children: row[0] }) }),
+          /* @__PURE__ */ jsx29("td", { children: row[1] })
         ] }, row[0])) })
       ] }) }),
-      /* @__PURE__ */ jsx28("p", { className: "prose", style: { marginTop: "1.5rem" }, children: "The same stem carries through to everything derived from that image, distinguished by a suffix." }),
-      /* @__PURE__ */ jsx28(KeywordTable, { caption: "Suffixes on the same stem", rows: dataformat_default.suffixes })
+      /* @__PURE__ */ jsx29("p", { className: "prose", style: { marginTop: "1.5rem" }, children: "The same stem carries through to everything derived from that image, distinguished by a suffix." }),
+      /* @__PURE__ */ jsx29(KeywordTable, { caption: "Suffixes on the same stem", rows: dataformat_default.suffixes })
     ] }),
-    /* @__PURE__ */ jsxs22("div", { className: "subsection", children: [
-      /* @__PURE__ */ jsx28("h3", { children: "Conventions" }),
-      /* @__PURE__ */ jsx28(KeywordTable, { caption: "Coordinate, unit and naming conventions", rows: dataformat_default.conventions })
+    /* @__PURE__ */ jsxs23("div", { className: "subsection", children: [
+      /* @__PURE__ */ jsx29("h3", { children: "Conventions" }),
+      /* @__PURE__ */ jsx29(KeywordTable, { caption: "Coordinate, unit and naming conventions", rows: dataformat_default.conventions })
     ] })
   ] }),
-  /* @__PURE__ */ jsxs22(Section, { eyebrow: "Headers", title: "FITS header keywords", alt: !0, children: [
-    /* @__PURE__ */ jsx28("p", { className: "prose", children: "Beyond the standard keywords, a 7DT header carries what the observation was, how good it turned out, what is needed to calibrate it, and where every input came from. Quality metrics are written by the pipeline for every image it produces and are also ingested into the observation database." }),
-    dataformat_default.headerGroups.map((group) => /* @__PURE__ */ jsxs22("div", { className: "subsection", children: [
-      /* @__PURE__ */ jsx28("h3", { children: group.title }),
-      /* @__PURE__ */ jsx28(KeywordTable, { caption: group.title, rows: group.rows })
+  /* @__PURE__ */ jsxs23(Section, { eyebrow: "Headers", title: "FITS header keywords", alt: !0, children: [
+    /* @__PURE__ */ jsx29("p", { className: "prose", children: "Beyond the standard keywords, a 7DT header carries what the observation was, how good it turned out, what is needed to calibrate it, and where every input came from. Quality metrics are written by the pipeline for every image it produces and are also ingested into the observation database." }),
+    dataformat_default.headerGroups.map((group) => /* @__PURE__ */ jsxs23("div", { className: "subsection", children: [
+      /* @__PURE__ */ jsx29("h3", { children: group.title }),
+      /* @__PURE__ */ jsx29(KeywordTable, { caption: group.title, rows: group.rows })
     ] }, group.title)),
-    /* @__PURE__ */ jsxs22("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: [
+    /* @__PURE__ */ jsxs23("p", { className: "footnote", style: { marginTop: "1.5rem" }, children: [
       "Two keywords are worth reading before any analysis. ",
-      /* @__PURE__ */ jsx28(Mono, { children: "SANITY" }),
+      /* @__PURE__ */ jsx29(Mono, { children: "SANITY" }),
       " is the pipeline's own verdict on the frame, and ",
-      /* @__PURE__ */ jsx28(Mono, { children: "False" }),
+      /* @__PURE__ */ jsx29(Mono, { children: "False" }),
       " means it should normally be excluded.",
       " ",
-      /* @__PURE__ */ jsx28(Mono, { children: "PPFLAG" }),
+      /* @__PURE__ */ jsx29(Mono, { children: "PPFLAG" }),
       " records every compromise made in finding calibration masters, so a frame calibrated against something less than ideal always says so."
     ] })
   ] }),
-  /* @__PURE__ */ jsxs22(Section, { eyebrow: "Catalogs", title: "Source catalogs", children: [
-    /* @__PURE__ */ jsxs22("div", { className: "subsection", children: [
-      /* @__PURE__ */ jsx28("h3", { children: "The naming rule" }),
-      /* @__PURE__ */ jsx28("p", { className: "prose", children: "Py7DT source catalogs are FITS binary tables following SExtractor conventions, holding instrumental measurements, calibrated photometry, source morphology and reference-catalog cross-matches. One rule explains most of the column names: an unsuffixed photometric column is an instrumental measurement, and a column suffixed with a filter name is the calibrated quantity in that filter." }),
-      /* @__PURE__ */ jsx28(KeywordTable, { caption: "The same measurement, in an m650 catalog", rows: dataformat_default.catalogExample }),
-      /* @__PURE__ */ jsx28("p", { className: "footnote", style: { marginTop: "1rem" }, children: "The suffix convention extends to the corresponding errors and related quantities wherever filter-specific columns are provided." })
+  /* @__PURE__ */ jsxs23(Section, { eyebrow: "Catalogs", title: "Source catalogs", children: [
+    /* @__PURE__ */ jsxs23("div", { className: "subsection", children: [
+      /* @__PURE__ */ jsx29("h3", { children: "The naming rule" }),
+      /* @__PURE__ */ jsx29("p", { className: "prose", children: "Py7DT source catalogs are FITS binary tables following SExtractor conventions, holding instrumental measurements, calibrated photometry, source morphology and reference-catalog cross-matches. One rule explains most of the column names: an unsuffixed photometric column is an instrumental measurement, and a column suffixed with a filter name is the calibrated quantity in that filter." }),
+      /* @__PURE__ */ jsx29(KeywordTable, { caption: "The same measurement, in an m650 catalog", rows: dataformat_default.catalogExample }),
+      /* @__PURE__ */ jsx29("p", { className: "footnote", style: { marginTop: "1rem" }, children: "The suffix convention extends to the corresponding errors and related quantities wherever filter-specific columns are provided." })
     ] }),
-    dataformat_default.catalogGroups.map((group) => /* @__PURE__ */ jsxs22("div", { className: "subsection", children: [
-      /* @__PURE__ */ jsx28("h3", { children: group.title }),
-      /* @__PURE__ */ jsx28(KeywordTable, { caption: group.title, rows: group.rows })
+    dataformat_default.catalogGroups.map((group) => /* @__PURE__ */ jsxs23("div", { className: "subsection", children: [
+      /* @__PURE__ */ jsx29("h3", { children: group.title }),
+      /* @__PURE__ */ jsx29(KeywordTable, { caption: group.title, rows: group.rows })
     ] }, group.title))
   ] }),
-  /* @__PURE__ */ jsxs22(Section, { eyebrow: "Next", title: "Working with it", alt: !0, children: [
-    /* @__PURE__ */ jsxs22("p", { className: "prose", children: [
+  /* @__PURE__ */ jsxs23(Section, { eyebrow: "Next", title: "Working with it", alt: !0, children: [
+    /* @__PURE__ */ jsxs23("p", { className: "prose", children: [
       "The pipeline that produces these files, and the packages for reading and analyzing them, are described under ",
-      /* @__PURE__ */ jsx28(Link16, { to: "/users/software", children: "software" }),
+      /* @__PURE__ */ jsx29(Link16, { to: "/users/software", children: "software" }),
       ". How the data are obtained is on ",
-      /* @__PURE__ */ jsx28(Link16, { to: "/users/access", children: "data access" }),
+      /* @__PURE__ */ jsx29(Link16, { to: "/users/access", children: "data access" }),
       ". Measured depths, zero-point accuracy and delivered image quality \u2014 the numbers behind the header keywords above \u2014 are on the",
       " ",
-      /* @__PURE__ */ jsx28(Link16, { to: "/users/performance", children: "performance page" }),
+      /* @__PURE__ */ jsx29(Link16, { to: "/users/performance", children: "performance page" }),
       "."
     ] }),
-    /* @__PURE__ */ jsxs22("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
-      /* @__PURE__ */ jsx28(Link16, { className: "btn btn--primary", to: "/users/software", children: "Software" }),
-      /* @__PURE__ */ jsx28(Link16, { className: "btn btn--secondary", to: "/users/access", children: "Data access" }),
-      /* @__PURE__ */ jsx28(Link16, { className: "btn btn--secondary", to: "/users/performance", children: "Measured performance" })
+    /* @__PURE__ */ jsxs23("div", { className: "btn-row", style: { marginTop: "1.5rem" }, children: [
+      /* @__PURE__ */ jsx29(Link16, { className: "btn btn--primary", to: "/users/software", children: "Software" }),
+      /* @__PURE__ */ jsx29(Link16, { className: "btn btn--secondary", to: "/users/access", children: "Data access" }),
+      /* @__PURE__ */ jsx29(Link16, { className: "btn btn--secondary", to: "/users/performance", children: "Measured performance" })
     ] })
   ] })
 ] }), users_format_default = Index19;
@@ -3702,7 +3750,7 @@ __export(users_status_exports, {
   loader: () => loader6,
   meta: () => meta20
 });
-import { useMemo as useMemo4, useState as useState7 } from "react";
+import { useMemo as useMemo4, useState as useState8 } from "react";
 import { json } from "@remix-run/node";
 import { Link as Link17, useLoaderData } from "@remix-run/react";
 
@@ -8035,7 +8083,7 @@ var filters_default = {
 };
 
 // app/components/filtercurves.tsx
-import { jsx as jsx29, jsxs as jsxs23 } from "react/jsx-runtime";
+import { jsx as jsx30, jsxs as jsxs24 } from "react/jsx-runtime";
 var W2 = 960, H2 = 300, L2 = 46, R2 = 12, T2 = 12, B2 = 34;
 function FilterCurves({
   showBroad = !0
@@ -8043,8 +8091,8 @@ function FilterCurves({
   let medium = filters_default.medium, broad = filters_default.broad, shown = showBroad ? [...broad, ...medium] : medium, lamMin = 300, lamMax = 950, respMax = 0.62, sx2 = (nm) => L2 + (nm - lamMin) / (lamMax - lamMin) * (W2 - L2 - R2), sy2 = (r) => T2 + (1 - r / respMax) * (H2 - T2 - B2), line = (pts) => pts.map((p, i) => `${i === 0 ? "M" : "L"}${sx2(p[0]).toFixed(1)},${sy2(p[1]).toFixed(1)}`).join(" "), area = (pts) => `${line(pts)} L${sx2(pts[pts.length - 1][0]).toFixed(1)},${sy2(0).toFixed(1)} L${sx2(
     pts[0][0]
   ).toFixed(1)},${sy2(0).toFixed(1)} Z`, xTicks = [400, 500, 600, 700, 800, 900], yTicks = [0, 0.2, 0.4, 0.6];
-  return /* @__PURE__ */ jsxs23("figure", { className: "curves", children: [
-    /* @__PURE__ */ jsxs23(
+  return /* @__PURE__ */ jsxs24("figure", { className: "curves", children: [
+    /* @__PURE__ */ jsxs24(
       "svg",
       {
         viewBox: `0 0 ${W2} ${H2}`,
@@ -8052,8 +8100,8 @@ function FilterCurves({
         role: "img",
         "aria-label": "Response curves of the 7DT filter set, from 300 to 950 nanometers.",
         children: [
-          /* @__PURE__ */ jsx29("g", { stroke: "var(--slate-200)", strokeWidth: "1", children: yTicks.map((t) => /* @__PURE__ */ jsx29("line", { x1: L2, x2: W2 - R2, y1: sy2(t), y2: sy2(t) }, t)) }),
-          showBroad && broad.map((f) => /* @__PURE__ */ jsx29(
+          /* @__PURE__ */ jsx30("g", { stroke: "var(--slate-200)", strokeWidth: "1", children: yTicks.map((t) => /* @__PURE__ */ jsx30("line", { x1: L2, x2: W2 - R2, y1: sy2(t), y2: sy2(t) }, t)) }),
+          showBroad && broad.map((f) => /* @__PURE__ */ jsx30(
             "path",
             {
               d: line(f.pts),
@@ -8065,21 +8113,21 @@ function FilterCurves({
             },
             f.name
           )),
-          medium.map((f) => /* @__PURE__ */ jsxs23("g", { children: [
-            /* @__PURE__ */ jsx29("path", { d: area(f.pts), fill: wavelengthColor(f.center), opacity: "0.22" }),
-            /* @__PURE__ */ jsx29("path", { d: line(f.pts), fill: "none", stroke: wavelengthColor(f.center), strokeWidth: "1.5" })
+          medium.map((f) => /* @__PURE__ */ jsxs24("g", { children: [
+            /* @__PURE__ */ jsx30("path", { d: area(f.pts), fill: wavelengthColor(f.center), opacity: "0.22" }),
+            /* @__PURE__ */ jsx30("path", { d: line(f.pts), fill: "none", stroke: wavelengthColor(f.center), strokeWidth: "1.5" })
           ] }, f.name)),
-          /* @__PURE__ */ jsxs23(
+          /* @__PURE__ */ jsxs24(
             "g",
             {
               fill: "var(--slate-500)",
               fontFamily: "ui-monospace, 'JetBrains Mono', monospace",
               fontSize: "11",
               children: [
-                xTicks.map((t) => /* @__PURE__ */ jsx29("text", { x: sx2(t), y: H2 - B2 + 18, textAnchor: "middle", children: t }, t)),
-                yTicks.map((t) => /* @__PURE__ */ jsx29("text", { x: L2 - 8, y: sy2(t) + 3.5, textAnchor: "end", children: t.toFixed(1) }, t)),
-                /* @__PURE__ */ jsx29("text", { x: (L2 + W2 - R2) / 2, y: H2 - 2, textAnchor: "middle", children: "Wavelength (nm)" }),
-                /* @__PURE__ */ jsx29(
+                xTicks.map((t) => /* @__PURE__ */ jsx30("text", { x: sx2(t), y: H2 - B2 + 18, textAnchor: "middle", children: t }, t)),
+                yTicks.map((t) => /* @__PURE__ */ jsx30("text", { x: L2 - 8, y: sy2(t) + 3.5, textAnchor: "end", children: t.toFixed(1) }, t)),
+                /* @__PURE__ */ jsx30("text", { x: (L2 + W2 - R2) / 2, y: H2 - 2, textAnchor: "middle", children: "Wavelength (nm)" }),
+                /* @__PURE__ */ jsx30(
                   "text",
                   {
                     x: -(T2 + (H2 - T2 - B2) / 2),
@@ -8092,13 +8140,13 @@ function FilterCurves({
               ]
             }
           ),
-          /* @__PURE__ */ jsx29("line", { x1: L2, x2: W2 - R2, y1: sy2(0), y2: sy2(0), stroke: "var(--ink-900)", strokeWidth: "1" }),
-          /* @__PURE__ */ jsx29("line", { x1: L2, x2: L2, y1: T2, y2: sy2(0), stroke: "var(--ink-900)", strokeWidth: "1" })
+          /* @__PURE__ */ jsx30("line", { x1: L2, x2: W2 - R2, y1: sy2(0), y2: sy2(0), stroke: "var(--ink-900)", strokeWidth: "1" }),
+          /* @__PURE__ */ jsx30("line", { x1: L2, x2: L2, y1: T2, y2: sy2(0), stroke: "var(--ink-900)", strokeWidth: "1" })
         ]
       }
     ),
-    /* @__PURE__ */ jsxs23("figcaption", { children: [
-      /* @__PURE__ */ jsx29("b", { children: "Filter response" }),
+    /* @__PURE__ */ jsxs24("figcaption", { children: [
+      /* @__PURE__ */ jsx30("b", { children: "Filter response" }),
       " The ",
       medium.length,
       " regularly spaced medium bands",
@@ -8111,10 +8159,10 @@ function FilterCurves({
 }
 
 // app/components/skymap.tsx
-import { useCallback, useEffect as useEffect4, useMemo as useMemo2, useRef as useRef3, useState as useState5 } from "react";
+import { useCallback, useEffect as useEffect5, useMemo as useMemo2, useRef as useRef3, useState as useState6 } from "react";
 
 // app/components/tiledetail.tsx
-import { Fragment as Fragment8, jsx as jsx30, jsxs as jsxs24 } from "react/jsx-runtime";
+import { Fragment as Fragment8, jsx as jsx31, jsxs as jsxs25 } from "react/jsx-runtime";
 var DAY_MS = 24 * 60 * 60 * 1e3, degLabel = (value) => `${value >= 0 ? "+" : "\u2212"}${Math.abs(value).toFixed(1)}\xB0`;
 function dayLabel(index, epochDate) {
   return new Date(Date.parse(`${epochDate}T00:00:00Z`) + index * DAY_MS).toISOString().slice(0, 10);
@@ -8162,59 +8210,59 @@ function TileDetail({
   exposureSec
 }) {
   let detail = breakdown(tiles, index), frames = tiles.frames?.[index] ?? 0, span = tiles.span?.[index] ?? 0;
-  return /* @__PURE__ */ jsxs24(Fragment8, { children: [
-    /* @__PURE__ */ jsxs24("div", { className: "skymap__tip-head", children: [
-      /* @__PURE__ */ jsx30("span", { className: "skymap__tip-name", children: name }),
-      /* @__PURE__ */ jsx30("span", { className: "skymap__tip-badge", children: "Observed" })
+  return /* @__PURE__ */ jsxs25(Fragment8, { children: [
+    /* @__PURE__ */ jsxs25("div", { className: "skymap__tip-head", children: [
+      /* @__PURE__ */ jsx31("span", { className: "skymap__tip-name", children: name }),
+      /* @__PURE__ */ jsx31("span", { className: "skymap__tip-badge", children: "Observed" })
     ] }),
-    /* @__PURE__ */ jsxs24("dl", { className: "skymap__tip-grid", children: [
-      /* @__PURE__ */ jsx30("dt", { children: "RA, Dec" }),
-      /* @__PURE__ */ jsxs24("dd", { children: [
+    /* @__PURE__ */ jsxs25("dl", { className: "skymap__tip-grid", children: [
+      /* @__PURE__ */ jsx31("dt", { children: "RA, Dec" }),
+      /* @__PURE__ */ jsxs25("dd", { children: [
         ra.toFixed(1),
         "\xB0, ",
         degLabel(dec)
       ] }),
-      /* @__PURE__ */ jsx30("dt", { children: "l, b" }),
-      /* @__PURE__ */ jsxs24("dd", { children: [
+      /* @__PURE__ */ jsx31("dt", { children: "l, b" }),
+      /* @__PURE__ */ jsxs25("dd", { children: [
         l.toFixed(1),
         "\xB0, ",
         degLabel(b)
       ] }),
-      /* @__PURE__ */ jsx30("dt", { children: "Visits" }),
-      /* @__PURE__ */ jsxs24("dd", { children: [
+      /* @__PURE__ */ jsx31("dt", { children: "Visits" }),
+      /* @__PURE__ */ jsxs25("dd", { children: [
         tiles.visits[index].toLocaleString("en-US"),
         " ",
         tiles.visits[index] === 1 ? "night" : "nights"
       ] }),
-      /* @__PURE__ */ jsx30("dt", { children: "Frames" }),
-      /* @__PURE__ */ jsx30("dd", { children: frames.toLocaleString("en-US") }),
-      exposureSec ? /* @__PURE__ */ jsxs24(Fragment8, { children: [
-        /* @__PURE__ */ jsx30("dt", { children: "Exposure" }),
-        /* @__PURE__ */ jsxs24("dd", { children: [
+      /* @__PURE__ */ jsx31("dt", { children: "Frames" }),
+      /* @__PURE__ */ jsx31("dd", { children: frames.toLocaleString("en-US") }),
+      exposureSec ? /* @__PURE__ */ jsxs25(Fragment8, { children: [
+        /* @__PURE__ */ jsx31("dt", { children: "Exposure" }),
+        /* @__PURE__ */ jsxs25("dd", { children: [
           "\u2248 ",
           duration(frames * exposureSec)
         ] })
       ] }) : null,
-      detail && /* @__PURE__ */ jsxs24(Fragment8, { children: [
-        /* @__PURE__ */ jsx30("dt", { children: "Filters" }),
-        /* @__PURE__ */ jsx30("dd", { children: detail.count })
+      detail && /* @__PURE__ */ jsxs25(Fragment8, { children: [
+        /* @__PURE__ */ jsx31("dt", { children: "Filters" }),
+        /* @__PURE__ */ jsx31("dd", { children: detail.count })
       ] }),
-      /* @__PURE__ */ jsx30("dt", { children: "Dates" }),
-      /* @__PURE__ */ jsxs24("dd", { children: [
+      /* @__PURE__ */ jsx31("dt", { children: "Dates" }),
+      /* @__PURE__ */ jsxs25("dd", { children: [
         dayLabel(tiles.lastDay[index] - span, tiles.epochDate),
-        span > 0 && /* @__PURE__ */ jsxs24(Fragment8, { children: [
+        span > 0 && /* @__PURE__ */ jsxs25(Fragment8, { children: [
           " \u2013 ",
           dayLabel(tiles.lastDay[index], tiles.epochDate)
         ] })
       ] })
     ] }),
-    detail && /* @__PURE__ */ jsxs24(Fragment8, { children: [
-      /* @__PURE__ */ jsx30("div", { className: "skymap__tip-bands", children: detail.strip.map((band) => /* @__PURE__ */ jsx30(
+    detail && /* @__PURE__ */ jsxs25(Fragment8, { children: [
+      /* @__PURE__ */ jsx31("div", { className: "skymap__tip-bands", children: detail.strip.map((band) => /* @__PURE__ */ jsx31(
         "span",
         {
           className: "skymap__tip-band",
           title: `${band.name}: ${band.frames} frames`,
-          children: /* @__PURE__ */ jsx30(
+          children: /* @__PURE__ */ jsx31(
             "span",
             {
               className: "skymap__tip-band-fill",
@@ -8227,13 +8275,13 @@ function TileDetail({
         },
         band.name
       )) }),
-      /* @__PURE__ */ jsxs24("div", { className: "skymap__tip-scale", children: [
-        /* @__PURE__ */ jsx30("span", { children: "400 nm" }),
-        /* @__PURE__ */ jsx30("span", { children: "frames per medium band" }),
-        /* @__PURE__ */ jsx30("span", { children: "875 nm" })
+      /* @__PURE__ */ jsxs25("div", { className: "skymap__tip-scale", children: [
+        /* @__PURE__ */ jsx31("span", { children: "400 nm" }),
+        /* @__PURE__ */ jsx31("span", { children: "frames per medium band" }),
+        /* @__PURE__ */ jsx31("span", { children: "875 nm" })
       ] }),
-      detail.broad.length > 0 && /* @__PURE__ */ jsx30("p", { className: "skymap__tip-broad", children: detail.broad.map((band) => /* @__PURE__ */ jsxs24("span", { children: [
-        /* @__PURE__ */ jsx30("b", { children: band.name }),
+      detail.broad.length > 0 && /* @__PURE__ */ jsx31("p", { className: "skymap__tip-broad", children: detail.broad.map((band) => /* @__PURE__ */ jsxs25("span", { children: [
+        /* @__PURE__ */ jsx31("b", { children: band.name }),
         " ",
         band.frames.toLocaleString("en-US")
       ] }, band.name)) })
@@ -8405,7 +8453,7 @@ function tileGrid(from = 0, to = GRID_TILES) {
 }
 
 // app/components/skymap.tsx
-import { Fragment as Fragment9, jsx as jsx31, jsxs as jsxs25 } from "react/jsx-runtime";
+import { Fragment as Fragment9, jsx as jsx32, jsxs as jsxs26 } from "react/jsx-runtime";
 var DEG = Math.PI / 180, FOV_LON = 1.34, FOV_LAT = 0.9, RATIO = 0.52, TABLE_STEP = 0.1, TABLE = (() => {
   let n = Math.round(180 / TABLE_STEP) + 1, table = new Float64Array(n);
   for (let i = 0; i < n; i += 1) {
@@ -8477,9 +8525,9 @@ function SkyMap({
   caption,
   theme = "light"
 }) {
-  let dark = theme === "dark", canvasRef = useRef3(null), wrapRef = useRef3(null), hasExposure = Boolean(exposureSec && exposureSec > 0 && tiles.frames), canDepth = Boolean(depthRef && hasExposure && tiles.filters && tiles.patterns), [mode2, setMode] = useState5(
+  let dark = theme === "dark", canvasRef = useRef3(null), wrapRef = useRef3(null), hasExposure = Boolean(exposureSec && exposureSec > 0 && tiles.frames), canDepth = Boolean(depthRef && hasExposure && tiles.filters && tiles.patterns), [mode2, setMode] = useState6(
     defaultMode ?? (canDepth ? "depth" : hasExposure ? "exposure" : "visits")
-  ), [frame, setFrame] = useState5("equatorial"), [width, setWidth] = useState5(960), [probe, setProbe] = useState5(null), hover = probe?.tile ?? null, ids2 = useMemo2(() => {
+  ), [frame, setFrame] = useState6("equatorial"), [width, setWidth] = useState6(960), [probe, setProbe] = useState6(null), hover = probe?.tile ?? null, ids2 = useMemo2(() => {
     if (!tiles.nameDelta)
       return null;
     let out = new Int32Array(tiles.nameDelta.length), running = 0;
@@ -8572,7 +8620,7 @@ function SkyMap({
     let out = [];
     return depthRange && out.push({ key: "depth", label: "Depth" }), hasExposure && out.push({ key: "exposure", label: "Exposure time" }), out.push({ key: "visits", label: "Visits" }), out.push({ key: "date", label: "Last visit" }), out;
   }, [depthRange, hasExposure]);
-  useEffect4(() => {
+  useEffect5(() => {
     modes.some((m) => m.key === mode2) || setMode(modes[0].key);
   }, [modes, mode2]);
   let value = useCallback(
@@ -8589,7 +8637,7 @@ function SkyMap({
     },
     [mode2, tiles, visitScale, months, depthRange, depthOf, hasExposure, exposureSec, exposureScale]
   );
-  useEffect4(() => {
+  useEffect5(() => {
     let element = wrapRef.current;
     if (!element)
       return;
@@ -8598,7 +8646,7 @@ function SkyMap({
       return window.addEventListener("resize", measure), () => window.removeEventListener("resize", measure);
     let observer = new ResizeObserver(measure);
     return observer.observe(element), () => observer.disconnect();
-  }, []), useEffect4(() => {
+  }, []), useEffect5(() => {
     let canvas = canvasRef.current;
     if (!canvas)
       return;
@@ -8696,10 +8744,10 @@ function SkyMap({
     () => Array.from({ length: 12 }, (_, i) => rgb(sequential(i / 11, dark))).join(", "),
     []
   ), legendTicks = useMemo2(() => mode2 === "depth" && depthRange ? [0, 0.5, 1].map((t) => (depthRange.lo + t * (depthRange.hi - depthRange.lo)).toFixed(1)) : mode2 === "exposure" ? [0, 0.5, 1].map((t) => shortDuration(Math.exp(t * exposureScale) - 1)) : mode2 === "date" ? [0, 0.5, 1].map((t) => monthLabel(Math.round(t * months.max), epoch)) : [0, 0.5, 1].map((t) => `${Math.round(Math.exp(t * visitScale) - 1).toLocaleString("en-US")}`), [mode2, tiles, visitScale, months, epoch, depthRange, exposureScale]), legendTitle = mode2 === "depth" ? `Estimated 5\u03C3 depth${depthRef ? ` \xB7 ${depthRef.band}` : ""}` : mode2 === "exposure" ? "Estimated integration time" : mode2 === "date" ? "Last observed" : "Visits per tile";
-  return /* @__PURE__ */ jsxs25("div", { className: `skymap${dark ? " skymap--dark" : ""}`, children: [
-    (interactive || showModes) && /* @__PURE__ */ jsxs25("div", { className: "skymap__controls", children: [
-      interactive && /* @__PURE__ */ jsxs25("div", { className: "skymap__modes", role: "group", "aria-label": "Coordinate system", children: [
-        /* @__PURE__ */ jsx31(
+  return /* @__PURE__ */ jsxs26("div", { className: `skymap${dark ? " skymap--dark" : ""}`, children: [
+    (interactive || showModes) && /* @__PURE__ */ jsxs26("div", { className: "skymap__controls", children: [
+      interactive && /* @__PURE__ */ jsxs26("div", { className: "skymap__modes", role: "group", "aria-label": "Coordinate system", children: [
+        /* @__PURE__ */ jsx32(
           "button",
           {
             type: "button",
@@ -8709,7 +8757,7 @@ function SkyMap({
             children: "RA / Dec"
           }
         ),
-        /* @__PURE__ */ jsx31(
+        /* @__PURE__ */ jsx32(
           "button",
           {
             type: "button",
@@ -8720,7 +8768,7 @@ function SkyMap({
           }
         )
       ] }),
-      showModes && /* @__PURE__ */ jsx31("div", { className: "skymap__modes", role: "group", "aria-label": "Color the map by", children: modes.map((option) => /* @__PURE__ */ jsx31(
+      showModes && /* @__PURE__ */ jsx32("div", { className: "skymap__modes", role: "group", "aria-label": "Color the map by", children: modes.map((option) => /* @__PURE__ */ jsx32(
         "button",
         {
           type: "button",
@@ -8731,22 +8779,22 @@ function SkyMap({
         },
         option.key
       )) }),
-      interactive && /* @__PURE__ */ jsx31("span", { className: "skymap__readout", role: "status", children: probe === null ? caption ?? `${tiles.count.toLocaleString("en-US")} tiles observed` : hover === null ? /* @__PURE__ */ jsxs25(Fragment9, { children: [
+      interactive && /* @__PURE__ */ jsx32("span", { className: "skymap__readout", role: "status", children: probe === null ? caption ?? `${tiles.count.toLocaleString("en-US")} tiles observed` : hover === null ? /* @__PURE__ */ jsxs26(Fragment9, { children: [
         "RA ",
         probe.ra.toFixed(1),
         "\xB0 Dec ",
         degLabel(probe.dec),
         " \xB7 not observed"
-      ] }) : /* @__PURE__ */ jsxs25(Fragment9, { children: [
-        /* @__PURE__ */ jsx31("b", { children: nameAt(hover) }),
+      ] }) : /* @__PURE__ */ jsxs26(Fragment9, { children: [
+        /* @__PURE__ */ jsx32("b", { children: nameAt(hover) }),
         " \xB7",
         " ",
-        frame === "equatorial" ? /* @__PURE__ */ jsxs25(Fragment9, { children: [
+        frame === "equatorial" ? /* @__PURE__ */ jsxs26(Fragment9, { children: [
           "RA ",
           probe.ra.toFixed(1),
           "\xB0 Dec ",
           degLabel(probe.dec)
-        ] }) : /* @__PURE__ */ jsxs25(Fragment9, { children: [
+        ] }) : /* @__PURE__ */ jsxs26(Fragment9, { children: [
           "l ",
           probe.l.toFixed(1),
           "\xB0 b ",
@@ -8765,8 +8813,8 @@ function SkyMap({
         monthLabel(months.index[hover], epoch)
       ] }) })
     ] }),
-    /* @__PURE__ */ jsxs25("div", { className: "skymap__canvas", ref: wrapRef, children: [
-      /* @__PURE__ */ jsx31(
+    /* @__PURE__ */ jsxs26("div", { className: "skymap__canvas", ref: wrapRef, children: [
+      /* @__PURE__ */ jsx32(
         "canvas",
         {
           ref: canvasRef,
@@ -8779,7 +8827,7 @@ function SkyMap({
           )} observed 7DS tiles in ${frame === "equatorial" ? "equatorial" : "galactic"} coordinates, colored by ${mode2 === "depth" ? "the estimated depth reached on each" : mode2 === "exposure" ? "the estimated integration time on each" : mode2 === "date" ? "the date each was last observed" : "the number of visits to each"}. Longitude increases to the left.`
         }
       ),
-      probe?.mark && /* @__PURE__ */ jsx31(
+      probe?.mark && /* @__PURE__ */ jsx32(
         "span",
         {
           className: "skymap__mark",
@@ -8792,34 +8840,34 @@ function SkyMap({
           }
         }
       ),
-      probe && /* @__PURE__ */ jsx31(
+      probe && /* @__PURE__ */ jsx32(
         "div",
         {
           className: `skymap__tip${probe.x > width * 0.55 ? " skymap__tip--left" : ""}${probe.y > width * RATIO * 0.55 ? " skymap__tip--up" : ""}`,
           style: { left: probe.x, top: probe.y },
           "aria-hidden": "true",
-          children: hover === null ? /* @__PURE__ */ jsxs25(Fragment9, { children: [
-            /* @__PURE__ */ jsxs25("div", { className: "skymap__tip-head", children: [
-              /* @__PURE__ */ jsx31("span", { className: "skymap__tip-name", children: "No observation" }),
-              /* @__PURE__ */ jsx31("span", { className: "skymap__tip-badge skymap__tip-badge--none", children: "Not observed" })
+          children: hover === null ? /* @__PURE__ */ jsxs26(Fragment9, { children: [
+            /* @__PURE__ */ jsxs26("div", { className: "skymap__tip-head", children: [
+              /* @__PURE__ */ jsx32("span", { className: "skymap__tip-name", children: "No observation" }),
+              /* @__PURE__ */ jsx32("span", { className: "skymap__tip-badge skymap__tip-badge--none", children: "Not observed" })
             ] }),
-            /* @__PURE__ */ jsxs25("dl", { className: "skymap__tip-grid", children: [
-              /* @__PURE__ */ jsx31("dt", { children: "RA" }),
-              /* @__PURE__ */ jsxs25("dd", { children: [
+            /* @__PURE__ */ jsxs26("dl", { className: "skymap__tip-grid", children: [
+              /* @__PURE__ */ jsx32("dt", { children: "RA" }),
+              /* @__PURE__ */ jsxs26("dd", { children: [
                 probe.ra.toFixed(1),
                 "\xB0"
               ] }),
-              /* @__PURE__ */ jsx31("dt", { children: "Dec" }),
-              /* @__PURE__ */ jsx31("dd", { children: degLabel(probe.dec) }),
-              /* @__PURE__ */ jsx31("dt", { children: "l, b" }),
-              /* @__PURE__ */ jsxs25("dd", { children: [
+              /* @__PURE__ */ jsx32("dt", { children: "Dec" }),
+              /* @__PURE__ */ jsx32("dd", { children: degLabel(probe.dec) }),
+              /* @__PURE__ */ jsx32("dt", { children: "l, b" }),
+              /* @__PURE__ */ jsxs26("dd", { children: [
                 probe.l.toFixed(1),
                 "\xB0, ",
                 degLabel(probe.b)
               ] })
             ] }),
-            /* @__PURE__ */ jsx31("p", { className: "skymap__tip-note", children: "No science frames recorded at this position." })
-          ] }) : /* @__PURE__ */ jsx31(
+            /* @__PURE__ */ jsx32("p", { className: "skymap__tip-note", children: "No science frames recorded at this position." })
+          ] }) : /* @__PURE__ */ jsx32(
             TileDetail,
             {
               tiles,
@@ -8835,17 +8883,17 @@ function SkyMap({
         }
       )
     ] }),
-    /* @__PURE__ */ jsxs25("div", { className: "skymap__legend", children: [
-      /* @__PURE__ */ jsx31("span", { className: "skymap__legend-title", children: legendTitle }),
-      /* @__PURE__ */ jsx31("div", { className: "skymap__ramp", style: { background: `linear-gradient(to right, ${legendStops})` } }),
-      /* @__PURE__ */ jsx31("div", { className: "skymap__ticks", children: legendTicks.map((tick, index) => /* @__PURE__ */ jsx31("span", { children: tick }, tick + index)) })
+    /* @__PURE__ */ jsxs26("div", { className: "skymap__legend", children: [
+      /* @__PURE__ */ jsx32("span", { className: "skymap__legend-title", children: legendTitle }),
+      /* @__PURE__ */ jsx32("div", { className: "skymap__ramp", style: { background: `linear-gradient(to right, ${legendStops})` } }),
+      /* @__PURE__ */ jsx32("div", { className: "skymap__ticks", children: legendTicks.map((tick, index) => /* @__PURE__ */ jsx32("span", { children: tick }, tick + index)) })
     ] })
   ] });
 }
 
 // app/components/tilequery.tsx
-import React8, { useMemo as useMemo3, useState as useState6 } from "react";
-import { Fragment as Fragment10, jsx as jsx32, jsxs as jsxs26 } from "react/jsx-runtime";
+import React9, { useMemo as useMemo3, useState as useState7 } from "react";
+import { Fragment as Fragment10, jsx as jsx33, jsxs as jsxs27 } from "react/jsx-runtime";
 var DEG2 = Math.PI / 180, NGP_RA2 = 192.85948 * DEG2, NGP_DEC2 = 27.12825 * DEG2, L_NCP2 = 122.93192 * DEG2;
 function equatorialToGalactic2(raDeg, decDeg) {
   let ra = raDeg * DEG2, dec = decDeg * DEG2, sinDec = Math.sin(dec), cosDec = Math.cos(dec), dRa = ra - NGP_RA2, sinB = Math.sin(NGP_DEC2) * sinDec + Math.cos(NGP_DEC2) * cosDec * Math.cos(dRa), b = Math.asin(Math.max(-1, Math.min(1, sinB))), y = cosDec * Math.sin(dRa), x = Math.cos(NGP_DEC2) * sinDec - Math.sin(NGP_DEC2) * cosDec * Math.cos(dRa), l = (L_NCP2 - Math.atan2(y, x)) / DEG2;
@@ -8875,7 +8923,7 @@ function TileQuery({
   tiles,
   exposureSec
 }) {
-  let [ra, setRa] = useState6(""), [dec, setDec] = useState6(""), [query, setQuery] = useState6(null), [error, setError] = useState6(null), ids2 = useMemo3(() => {
+  let [ra, setRa] = useState7(""), [dec, setDec] = useState7(""), [query, setQuery] = useState7(null), [error, setError] = useState7(null), ids2 = useMemo3(() => {
     if (!tiles.nameDelta)
       return null;
     let out = new Int32Array(tiles.nameDelta.length), running = 0;
@@ -8902,12 +8950,12 @@ function TileQuery({
     let parsedRa = parseAngle(example.ra, example.ra.includes(":")), parsedDec = parseAngle(example.dec, !1);
     parsedRa !== null && parsedDec !== null && setQuery({ ra: (parsedRa % 360 + 360) % 360, dec: parsedDec });
   }, galactic = query ? equatorialToGalactic2(query.ra, query.dec) : null;
-  return /* @__PURE__ */ jsxs26("div", { className: "tilequery", children: [
-    /* @__PURE__ */ jsxs26("div", { children: [
-      /* @__PURE__ */ jsxs26("form", { className: "tilequery__form", onSubmit: submit, children: [
-        /* @__PURE__ */ jsxs26("div", { className: "tilequery__field", children: [
-          /* @__PURE__ */ jsx32("label", { htmlFor: "q-ra", children: "Right ascension" }),
-          /* @__PURE__ */ jsx32(
+  return /* @__PURE__ */ jsxs27("div", { className: "tilequery", children: [
+    /* @__PURE__ */ jsxs27("div", { children: [
+      /* @__PURE__ */ jsxs27("form", { className: "tilequery__form", onSubmit: submit, children: [
+        /* @__PURE__ */ jsxs27("div", { className: "tilequery__field", children: [
+          /* @__PURE__ */ jsx33("label", { htmlFor: "q-ra", children: "Right ascension" }),
+          /* @__PURE__ */ jsx33(
             "input",
             {
               id: "q-ra",
@@ -8919,9 +8967,9 @@ function TileQuery({
             }
           )
         ] }),
-        /* @__PURE__ */ jsxs26("div", { className: "tilequery__field", children: [
-          /* @__PURE__ */ jsx32("label", { htmlFor: "q-dec", children: "Declination" }),
-          /* @__PURE__ */ jsx32(
+        /* @__PURE__ */ jsxs27("div", { className: "tilequery__field", children: [
+          /* @__PURE__ */ jsx33("label", { htmlFor: "q-dec", children: "Declination" }),
+          /* @__PURE__ */ jsx33(
             "input",
             {
               id: "q-dec",
@@ -8933,24 +8981,24 @@ function TileQuery({
             }
           )
         ] }),
-        /* @__PURE__ */ jsx32("button", { className: "btn btn--primary", type: "submit", children: "Check coverage" })
+        /* @__PURE__ */ jsx33("button", { className: "btn btn--primary", type: "submit", children: "Check coverage" })
       ] }),
-      error && /* @__PURE__ */ jsx32("p", { className: "tilequery__error", children: error }),
-      /* @__PURE__ */ jsxs26("p", { className: "tilequery__examples", children: [
+      error && /* @__PURE__ */ jsx33("p", { className: "tilequery__error", children: error }),
+      /* @__PURE__ */ jsxs27("p", { className: "tilequery__examples", children: [
         "Try",
         " ",
-        EXAMPLES.map((example, index) => /* @__PURE__ */ jsxs26(React8.Fragment, { children: [
+        EXAMPLES.map((example, index) => /* @__PURE__ */ jsxs27(React9.Fragment, { children: [
           index > 0 && ", ",
-          /* @__PURE__ */ jsx32("button", { type: "button", onClick: () => useExample(example), children: example.label })
+          /* @__PURE__ */ jsx33("button", { type: "button", onClick: () => useExample(example), children: example.label })
         ] }, example.label)),
         ". Right ascension is read as hours when written with colons or spaces, and as degrees when written as a single number."
       ] }),
-      query && /* @__PURE__ */ jsxs26("p", { className: "note", style: { marginTop: "1rem" }, children: [
+      query && /* @__PURE__ */ jsxs27("p", { className: "note", style: { marginTop: "1rem" }, children: [
         "Queried RA ",
         query.ra.toFixed(3),
         "\xB0, Dec ",
         degLabel(query.dec),
-        galactic && /* @__PURE__ */ jsxs26(Fragment10, { children: [
+        galactic && /* @__PURE__ */ jsxs27(Fragment10, { children: [
           " ",
           "\xB7 l ",
           galactic[0].toFixed(2),
@@ -8960,7 +9008,7 @@ function TileQuery({
         hit !== null ? " \u2014 this position falls on an observed tile." : " \u2014 no observed tile covers this position."
       ] })
     ] }),
-    /* @__PURE__ */ jsx32("div", { className: "tilequery__result", "aria-live": "polite", children: query === null ? /* @__PURE__ */ jsx32("p", { className: "tilequery__empty", children: "Enter a position to see whether it has been observed and what exists for it." }) : hit !== null && galactic ? /* @__PURE__ */ jsx32(
+    /* @__PURE__ */ jsx33("div", { className: "tilequery__result", "aria-live": "polite", children: query === null ? /* @__PURE__ */ jsx33("p", { className: "tilequery__empty", children: "Enter a position to see whether it has been observed and what exists for it." }) : hit !== null && galactic ? /* @__PURE__ */ jsx33(
       TileDetail,
       {
         tiles,
@@ -8972,29 +9020,29 @@ function TileQuery({
         b: galactic[1],
         exposureSec
       }
-    ) : /* @__PURE__ */ jsxs26(Fragment10, { children: [
-      /* @__PURE__ */ jsxs26("div", { className: "skymap__tip-head", children: [
-        /* @__PURE__ */ jsx32("span", { className: "skymap__tip-name", children: "No observation" }),
-        /* @__PURE__ */ jsx32("span", { className: "skymap__tip-badge skymap__tip-badge--none", children: "Not observed" })
+    ) : /* @__PURE__ */ jsxs27(Fragment10, { children: [
+      /* @__PURE__ */ jsxs27("div", { className: "skymap__tip-head", children: [
+        /* @__PURE__ */ jsx33("span", { className: "skymap__tip-name", children: "No observation" }),
+        /* @__PURE__ */ jsx33("span", { className: "skymap__tip-badge skymap__tip-badge--none", children: "Not observed" })
       ] }),
-      /* @__PURE__ */ jsxs26("dl", { className: "skymap__tip-grid", children: [
-        /* @__PURE__ */ jsx32("dt", { children: "RA" }),
-        /* @__PURE__ */ jsxs26("dd", { children: [
+      /* @__PURE__ */ jsxs27("dl", { className: "skymap__tip-grid", children: [
+        /* @__PURE__ */ jsx33("dt", { children: "RA" }),
+        /* @__PURE__ */ jsxs27("dd", { children: [
           query.ra.toFixed(3),
           "\xB0"
         ] }),
-        /* @__PURE__ */ jsx32("dt", { children: "Dec" }),
-        /* @__PURE__ */ jsx32("dd", { children: degLabel(query.dec) }),
-        galactic && /* @__PURE__ */ jsxs26(Fragment10, { children: [
-          /* @__PURE__ */ jsx32("dt", { children: "l, b" }),
-          /* @__PURE__ */ jsxs26("dd", { children: [
+        /* @__PURE__ */ jsx33("dt", { children: "Dec" }),
+        /* @__PURE__ */ jsx33("dd", { children: degLabel(query.dec) }),
+        galactic && /* @__PURE__ */ jsxs27(Fragment10, { children: [
+          /* @__PURE__ */ jsx33("dt", { children: "l, b" }),
+          /* @__PURE__ */ jsxs27("dd", { children: [
             galactic[0].toFixed(1),
             "\xB0, ",
             degLabel(galactic[1])
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsx32("p", { className: "skymap__tip-note", children: "No science frames are recorded on the tile at this position. It may be outside the observable declination range, or not yet reached by the survey." })
+      /* @__PURE__ */ jsx33("p", { className: "skymap__tip-note", children: "No science frames are recorded on the tile at this position. It may be outside the observable declination range, or not yet reached by the survey." })
     ] }) })
   ] });
 }
@@ -9188,7 +9236,7 @@ var EMPTY_TILES = {
 };
 
 // app/routes/users.status.tsx
-import { Fragment as Fragment11, jsx as jsx33, jsxs as jsxs27 } from "react/jsx-runtime";
+import { Fragment as Fragment11, jsx as jsx34, jsxs as jsxs28 } from "react/jsx-runtime";
 var meta20 = () => [
   { title: "Status & overview \xB7 7DT for users" },
   {
@@ -9230,30 +9278,30 @@ function CoverageMap({
   exposureSec,
   imsTiles
 }) {
-  let [on, setOn] = useState7({ grid: !0, ext: !1, observed: !0, ims: !1 }), toggle = (key) => setOn((was) => ({ ...was, [key]: !was[key] })), planned = useMemo4(() => on.grid && on.ext ? { from: 0, to: GRID_TILES } : on.grid ? { to: RIS_TILES } : on.ext ? { from: RIS_TILES, to: GRID_TILES } : null, [on.grid, on.ext]), BOXES = [
+  let [on, setOn] = useState8({ grid: !0, ext: !1, observed: !0, ims: !1 }), toggle = (key) => setOn((was) => ({ ...was, [key]: !was[key] })), planned = useMemo4(() => on.grid && on.ext ? { from: 0, to: GRID_TILES } : on.grid ? { to: RIS_TILES } : on.ext ? { from: RIS_TILES, to: GRID_TILES } : null, [on.grid, on.ext]), BOXES = [
     { key: "grid", label: "RIS reference grid", note: `${RIS_TILES.toLocaleString("en-US")} tiles` },
     { key: "ext", label: "Northern extension", note: "to Dec +30\xB0" },
     { key: "observed", label: "Observed", note: "colored by the scale below" },
     { key: "ims", label: "IMS field", note: `${imsTiles.length} tiles` }
   ];
-  return /* @__PURE__ */ jsxs27(Fragment11, { children: [
-    /* @__PURE__ */ jsxs27("div", { className: "map-layers", children: [
-      BOXES.map((box) => /* @__PURE__ */ jsxs27("label", { className: "map-layers__item", children: [
-        /* @__PURE__ */ jsx33("input", { type: "checkbox", checked: on[box.key], onChange: () => toggle(box.key) }),
-        /* @__PURE__ */ jsxs27("span", { children: [
+  return /* @__PURE__ */ jsxs28(Fragment11, { children: [
+    /* @__PURE__ */ jsxs28("div", { className: "map-layers", children: [
+      BOXES.map((box) => /* @__PURE__ */ jsxs28("label", { className: "map-layers__item", children: [
+        /* @__PURE__ */ jsx34("input", { type: "checkbox", checked: on[box.key], onChange: () => toggle(box.key) }),
+        /* @__PURE__ */ jsxs28("span", { children: [
           box.label,
-          /* @__PURE__ */ jsx33("span", { className: "map-layers__note", children: box.note })
+          /* @__PURE__ */ jsx34("span", { className: "map-layers__note", children: box.note })
         ] })
       ] }, box.key)),
-      /* @__PURE__ */ jsxs27("span", { className: "map-layers__item map-layers__item--off", "aria-disabled": "true", children: [
-        /* @__PURE__ */ jsx33("input", { type: "checkbox", disabled: !0, "aria-label": "WTS layer, unavailable: not started" }),
-        /* @__PURE__ */ jsxs27("span", { children: [
+      /* @__PURE__ */ jsxs28("span", { className: "map-layers__item map-layers__item--off", "aria-disabled": "true", children: [
+        /* @__PURE__ */ jsx34("input", { type: "checkbox", disabled: !0, "aria-label": "WTS layer, unavailable: not started" }),
+        /* @__PURE__ */ jsxs28("span", { children: [
           "WTS",
-          /* @__PURE__ */ jsx33("span", { className: "map-layers__note", children: "not started" })
+          /* @__PURE__ */ jsx34("span", { className: "map-layers__note", children: "not started" })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs27("span", { className: "map-layers__item map-layers__item--off", "aria-disabled": "true", children: [
-        /* @__PURE__ */ jsx33(
+      /* @__PURE__ */ jsxs28("span", { className: "map-layers__item map-layers__item--off", "aria-disabled": "true", children: [
+        /* @__PURE__ */ jsx34(
           "input",
           {
             type: "checkbox",
@@ -9261,13 +9309,13 @@ function CoverageMap({
             "aria-label": "Target of opportunity layer, unavailable: positions not published"
           }
         ),
-        /* @__PURE__ */ jsxs27("span", { children: [
+        /* @__PURE__ */ jsxs28("span", { children: [
           "Target of opportunity",
-          /* @__PURE__ */ jsx33("span", { className: "map-layers__note", children: "positions not published" })
+          /* @__PURE__ */ jsx34("span", { className: "map-layers__note", children: "positions not published" })
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ jsx33(
+    /* @__PURE__ */ jsx34(
       SkyMap,
       {
         tiles,
@@ -9281,12 +9329,12 @@ function CoverageMap({
 }
 var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits }), day = (iso) => new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }), Index20 = () => {
   let { data, live, generatedAt, tiles, tilesLive, exposureSec } = useLoaderData(), { telescopes, ris, nightly, totals, ims } = data, imsTiles = Object.keys(ims.cycles_per_tile ?? {});
-  return /* @__PURE__ */ jsxs27(PageLayout, { menu: "manuUsers", children: [
-    /* @__PURE__ */ jsx33(
+  return /* @__PURE__ */ jsxs28(PageLayout, { menu: "manuUsers", children: [
+    /* @__PURE__ */ jsx34(
       PageHero,
       {
         eyebrow: "For users",
-        title: /* @__PURE__ */ jsx33(Fragment11, { children: "Status" }),
+        title: /* @__PURE__ */ jsx34(Fragment11, { children: "Status" }),
         lede: "What the array can observe at the moment, and what data already exist. Start here before planning an observation or a data request.",
         image: "/img/hero/data.jpg",
         meta: [
@@ -9302,15 +9350,15 @@ var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFraction
         ]
       }
     ),
-    /* @__PURE__ */ jsxs27(Section, { eyebrow: "Availability", title: "What is on sky tonight", children: [
-      /* @__PURE__ */ jsx33("div", { style: { marginBottom: "1.5rem" }, children: /* @__PURE__ */ jsx33(LiveBadge, { live, updated: generatedAt, interval: "every 30 minutes" }) }),
-      /* @__PURE__ */ jsxs27("p", { className: "prose", children: [
+    /* @__PURE__ */ jsxs28(Section, { eyebrow: "Availability", title: "What is on sky tonight", children: [
+      /* @__PURE__ */ jsx34("div", { style: { marginBottom: "1.5rem" }, children: /* @__PURE__ */ jsx34(LiveBadge, { live, updated: generatedAt, interval: "every 30 minutes" }) }),
+      /* @__PURE__ */ jsxs28("p", { className: "prose", children: [
         telescopes.online,
         " of ",
         telescopes.total,
         " telescopes are in routine operation. Units not listed as online are either awaiting installation or out of service for maintenance. Each operational unit carries a nine-slot filter wheel holding Sloan broad bands and a share of the medium-band set, so the number of distinct bands available on a given night depends on how many units are observing."
       ] }),
-      /* @__PURE__ */ jsx33("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx33(
+      /* @__PURE__ */ jsx34("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx34(
         StatGrid,
         {
           items: [
@@ -9327,8 +9375,8 @@ var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFraction
         }
       ) })
     ] }),
-    /* @__PURE__ */ jsxs27(Section, { eyebrow: "Operations", title: "What a night produces", alt: !0, children: [
-      /* @__PURE__ */ jsxs27("p", { className: "prose", children: [
+    /* @__PURE__ */ jsxs28(Section, { eyebrow: "Operations", title: "What a night produces", alt: !0, children: [
+      /* @__PURE__ */ jsxs28("p", { className: "prose", children: [
         "Over ",
         num(nightly.n_nights),
         " observing nights since ",
@@ -9348,7 +9396,7 @@ var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFraction
         num(nightly.raw_gb_per_night.median),
         " GB of raw data, calibration frames included."
       ] }),
-      /* @__PURE__ */ jsx33("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx33(
+      /* @__PURE__ */ jsx34("div", { style: { marginTop: "2rem" }, children: /* @__PURE__ */ jsx34(
         StatGrid,
         {
           items: [
@@ -9378,98 +9426,98 @@ var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFraction
           ]
         }
       ) }),
-      /* @__PURE__ */ jsxs27("p", { className: "footnote", style: { marginTop: "1.25rem" }, children: [
+      /* @__PURE__ */ jsxs28("p", { className: "footnote", style: { marginTop: "1.25rem" }, children: [
         "Medians rather than means: target-of-opportunity nights run to",
         " ",
         num(nightly.exposures_per_night.max),
         " exposures and would otherwise dominate the figure. Progress of each survey is on its own page \u2014",
         " ",
-        /* @__PURE__ */ jsx33(Link17, { to: "/survey/ris", children: "RIS" }),
+        /* @__PURE__ */ jsx34(Link17, { to: "/survey/ris", children: "RIS" }),
         ", ",
-        /* @__PURE__ */ jsx33(Link17, { to: "/survey/wts", children: "WTS" }),
+        /* @__PURE__ */ jsx34(Link17, { to: "/survey/wts", children: "WTS" }),
         " and",
         " ",
-        /* @__PURE__ */ jsx33(Link17, { to: "/survey/ims", children: "IMS" }),
+        /* @__PURE__ */ jsx34(Link17, { to: "/survey/ims", children: "IMS" }),
         "."
       ] })
     ] }),
-    /* @__PURE__ */ jsx33(Section, { eyebrow: "Filters", title: "Bands available", children: /* @__PURE__ */ jsx33("div", { className: "split split--wide-text", children: /* @__PURE__ */ jsxs27("div", { children: [
-      /* @__PURE__ */ jsx33("p", { className: "prose", children: "The filter set is what distinguishes 7DT from other survey arrays. Twenty medium bands of 25 nm width are spaced regularly at 25 nm from 400 to 875 nm. Fifteen further filters, installed in late 2025, fall between them with central wavelengths from 375 to 832 nm and bandwidths of 14 to 41 nm. Sloan g, r and i are carried by every unit; u is carried by one and z by three." }),
-      /* @__PURE__ */ jsxs27("p", { className: "prose", children: [
+    /* @__PURE__ */ jsx34(Section, { eyebrow: "Filters", title: "Bands available", children: /* @__PURE__ */ jsx34("div", { className: "split split--wide-text", children: /* @__PURE__ */ jsxs28("div", { children: [
+      /* @__PURE__ */ jsx34("p", { className: "prose", children: "The filter set is what distinguishes 7DT from other survey arrays. Twenty medium bands of 25 nm width are spaced regularly at 25 nm from 400 to 875 nm. Fifteen further filters, installed in late 2025, fall between them with central wavelengths from 375 to 832 nm and bandwidths of 14 to 41 nm. Sloan g, r and i are carried by every unit; u is carried by one and z by three." }),
+      /* @__PURE__ */ jsxs28("p", { className: "prose", children: [
         "The original twenty are the calibrated set in operational use. Spectrophotometric calibration of the fifteen added filters is in preparation, and their central wavelengths are not aligned to a regular grid \u2014 check which bands a given tile actually carries on the",
         " ",
-        /* @__PURE__ */ jsx33(Link17, { to: "/users/access", children: "data access page" }),
+        /* @__PURE__ */ jsx34(Link17, { to: "/users/access", children: "data access page" }),
         ", which reports the medium bands observed on any tile."
       ] }),
-      /* @__PURE__ */ jsx33("div", { className: "table-wrap", style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsxs27("table", { className: "spec-table", children: [
-        /* @__PURE__ */ jsx33("caption", { children: "Medium bands, central wavelength in nm" }),
-        /* @__PURE__ */ jsxs27("tbody", { children: [
-          /* @__PURE__ */ jsxs27("tr", { children: [
-            /* @__PURE__ */ jsx33("th", { scope: "row", children: "Original set (25 nm spacing)" }),
-            /* @__PURE__ */ jsx33("td", { style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children: BANDS_ORIGINAL.join(", ") })
+      /* @__PURE__ */ jsx34("div", { className: "table-wrap", style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsxs28("table", { className: "spec-table", children: [
+        /* @__PURE__ */ jsx34("caption", { children: "Medium bands, central wavelength in nm" }),
+        /* @__PURE__ */ jsxs28("tbody", { children: [
+          /* @__PURE__ */ jsxs28("tr", { children: [
+            /* @__PURE__ */ jsx34("th", { scope: "row", children: "Original set (25 nm spacing)" }),
+            /* @__PURE__ */ jsx34("td", { style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children: BANDS_ORIGINAL.join(", ") })
           ] }),
-          /* @__PURE__ */ jsxs27("tr", { children: [
-            /* @__PURE__ */ jsx33("th", { scope: "row", children: "Added 2025 (irregular)" }),
-            /* @__PURE__ */ jsx33("td", { style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children: BANDS_ADDED.join(", ") })
+          /* @__PURE__ */ jsxs28("tr", { children: [
+            /* @__PURE__ */ jsx34("th", { scope: "row", children: "Added 2025 (irregular)" }),
+            /* @__PURE__ */ jsx34("td", { style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children: BANDS_ADDED.join(", ") })
           ] }),
-          /* @__PURE__ */ jsxs27("tr", { children: [
-            /* @__PURE__ */ jsx33("th", { scope: "row", children: "Broad bands" }),
-            /* @__PURE__ */ jsx33("td", { style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children: "u, g, r, i, z" })
+          /* @__PURE__ */ jsxs28("tr", { children: [
+            /* @__PURE__ */ jsx34("th", { scope: "row", children: "Broad bands" }),
+            /* @__PURE__ */ jsx34("td", { style: { fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }, children: "u, g, r, i, z" })
           ] })
         ] })
       ] }) })
     ] }) }) }),
-    /* @__PURE__ */ jsxs27(Section, { eyebrow: "Availability", title: "How much sky each band has reached", alt: !0, wide: !0, children: [
-      /* @__PURE__ */ jsxs27("p", { className: "prose", children: [
+    /* @__PURE__ */ jsxs28(Section, { eyebrow: "Availability", title: "How much sky each band has reached", alt: !0, wide: !0, children: [
+      /* @__PURE__ */ jsxs28("p", { className: "prose", children: [
         "A band is only useful where it has been taken. Because each unit carries nine slots out of the ",
         tiles.perFilter?.length ?? 37,
         " bands in use, the array works through the set over many nights, and coverage runs well ahead in some bands and behind in others. The count below is tiles with at least one science frame in that band."
       ] }),
-      /* @__PURE__ */ jsx33("div", { className: "table-wrap", style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsxs27("table", { className: "spec-table", children: [
-        /* @__PURE__ */ jsxs27("caption", { children: [
+      /* @__PURE__ */ jsx34("div", { className: "table-wrap", style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsxs28("table", { className: "spec-table", children: [
+        /* @__PURE__ */ jsxs28("caption", { children: [
           "Tiles observed per band, of ",
           num(ris.tiles_defined),
           " in the reference grid"
         ] }),
-        /* @__PURE__ */ jsx33("thead", { children: /* @__PURE__ */ jsxs27("tr", { children: [
-          /* @__PURE__ */ jsx33("th", { scope: "col", children: "Band" }),
-          /* @__PURE__ */ jsx33("th", { scope: "col", children: "Central \u03BB" }),
-          /* @__PURE__ */ jsx33("th", { scope: "col", children: "Tiles in the grid" }),
-          /* @__PURE__ */ jsx33("th", { scope: "col", children: "Of the grid" }),
-          /* @__PURE__ */ jsx33("th", { scope: "col", children: "Frames" })
+        /* @__PURE__ */ jsx34("thead", { children: /* @__PURE__ */ jsxs28("tr", { children: [
+          /* @__PURE__ */ jsx34("th", { scope: "col", children: "Band" }),
+          /* @__PURE__ */ jsx34("th", { scope: "col", children: "Central \u03BB" }),
+          /* @__PURE__ */ jsx34("th", { scope: "col", children: "Tiles in the grid" }),
+          /* @__PURE__ */ jsx34("th", { scope: "col", children: "Of the grid" }),
+          /* @__PURE__ */ jsx34("th", { scope: "col", children: "Frames" })
         ] }) }),
-        /* @__PURE__ */ jsx33("tbody", { children: (tiles.perFilter ?? []).map((f) => /* @__PURE__ */ jsxs27("tr", { children: [
-          /* @__PURE__ */ jsx33("th", { scope: "row", style: { fontFamily: "var(--font-mono)" }, children: f.name }),
-          /* @__PURE__ */ jsx33("td", { children: Number.isFinite(f.nm) ? `${f.nm} nm` : "\u2014" }),
-          /* @__PURE__ */ jsx33("td", { children: num(f.tilesRis) }),
-          /* @__PURE__ */ jsxs27("td", { children: [
+        /* @__PURE__ */ jsx34("tbody", { children: (tiles.perFilter ?? []).map((f) => /* @__PURE__ */ jsxs28("tr", { children: [
+          /* @__PURE__ */ jsx34("th", { scope: "row", style: { fontFamily: "var(--font-mono)" }, children: f.name }),
+          /* @__PURE__ */ jsx34("td", { children: Number.isFinite(f.nm) ? `${f.nm} nm` : "\u2014" }),
+          /* @__PURE__ */ jsx34("td", { children: num(f.tilesRis) }),
+          /* @__PURE__ */ jsxs28("td", { children: [
             (f.tilesRis / ris.tiles_defined * 100).toFixed(1),
             "%"
           ] }),
-          /* @__PURE__ */ jsx33("td", { children: num(f.frames) })
+          /* @__PURE__ */ jsx34("td", { children: num(f.frames) })
         ] }, f.name)) })
       ] }) }),
-      /* @__PURE__ */ jsxs27("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
+      /* @__PURE__ */ jsxs28("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
         "Counted over the original reference grid, so the percentages are comparable with the",
         " ",
         ris.coverage_pct,
         "% figure above. Broad bands are listed at their effective wavelength. Which bands a particular tile carries is reported on the",
         " ",
-        /* @__PURE__ */ jsx33(Link17, { to: "/users/access", children: "data access page" }),
+        /* @__PURE__ */ jsx34(Link17, { to: "/users/access", children: "data access page" }),
         "."
       ] })
     ] }),
-    /* @__PURE__ */ jsxs27(Section, { eyebrow: "Response", title: "Filter response curves", wide: !0, children: [
-      /* @__PURE__ */ jsx33(FilterCurves, {}),
-      /* @__PURE__ */ jsxs27("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
+    /* @__PURE__ */ jsxs28(Section, { eyebrow: "Response", title: "Filter response curves", wide: !0, children: [
+      /* @__PURE__ */ jsx34(FilterCurves, {}),
+      /* @__PURE__ */ jsxs28("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
         "Curves are read from the reference data shipped with",
         " ",
-        /* @__PURE__ */ jsx33(Link17, { to: "/users/software", children: /* @__PURE__ */ jsx33("code", { children: "supy" }) }),
+        /* @__PURE__ */ jsx34(Link17, { to: "/users/software", children: /* @__PURE__ */ jsx34("code", { children: "supy" }) }),
         ", which is also what its simulator module uses, so a response computed there matches this figure exactly."
       ] })
     ] }),
-    /* @__PURE__ */ jsxs27(Section, { eyebrow: "Coverage", title: "What has been observed", wide: !0, children: [
-      /* @__PURE__ */ jsxs27("p", { className: "prose", children: [
+    /* @__PURE__ */ jsxs28(Section, { eyebrow: "Coverage", title: "What has been observed", wide: !0, children: [
+      /* @__PURE__ */ jsxs28("p", { className: "prose", children: [
         ris.coverage_pct,
         " percent of the reference tiling has been observed at least once:",
         " ",
@@ -9483,31 +9531,31 @@ var num = (value, digits = 0) => value.toLocaleString("en-US", { minimumFraction
         num(ris.tiles_extended),
         " counting the northern extension. A tile with data has calibrated images and a source catalog."
       ] }),
-      /* @__PURE__ */ jsx33("div", { style: { margin: "1.5rem 0" }, children: /* @__PURE__ */ jsx33(LiveBadge, { live: tilesLive, updated: generatedAt, interval: "daily" }) }),
-      /* @__PURE__ */ jsx33(CoverageMap, { tiles, exposureSec, imsTiles }),
-      /* @__PURE__ */ jsxs27("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
+      /* @__PURE__ */ jsx34("div", { style: { margin: "1.5rem 0" }, children: /* @__PURE__ */ jsx34(LiveBadge, { live: tilesLive, updated: generatedAt, interval: "daily" }) }),
+      /* @__PURE__ */ jsx34(CoverageMap, { tiles, exposureSec, imsTiles }),
+      /* @__PURE__ */ jsxs28("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
         "The reference grid is the survey as designed \u2014 every tile the array intends to reach \u2014 reconstructed from the tiling rule rather than published as a list, and checked against every observed tile. WTS has not begun and has no footprint to draw yet. Target-of- opportunity observations are made across the whole grid, and the portal publishes their counts but not their positions, so they cannot be drawn as a layer; the",
         " ",
         num(data.too.followup_events),
         " follow-up campaigns to date are summarized under",
         " ",
-        /* @__PURE__ */ jsx33(Link17, { to: "/users/propose", children: "how to propose" }),
+        /* @__PURE__ */ jsx34(Link17, { to: "/users/propose", children: "how to propose" }),
         "."
       ] }),
-      /* @__PURE__ */ jsxs27("div", { style: { marginTop: "2.5rem" }, children: [
-        /* @__PURE__ */ jsx33("h3", { children: "Is this position observed?" }),
-        /* @__PURE__ */ jsx33(TileQuery, { tiles, exposureSec })
+      /* @__PURE__ */ jsxs28("div", { style: { marginTop: "2.5rem" }, children: [
+        /* @__PURE__ */ jsx34("h3", { children: "Is this position observed?" }),
+        /* @__PURE__ */ jsx34(TileQuery, { tiles, exposureSec })
       ] }),
-      /* @__PURE__ */ jsxs27("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
-        /* @__PURE__ */ jsx33(Link17, { className: "btn btn--primary", to: "/users/format", children: "What the files look like" }),
-        /* @__PURE__ */ jsx33(Link17, { className: "btn btn--secondary", to: "/users/performance", children: "Measured depths" }),
-        /* @__PURE__ */ jsx33(Link17, { className: "btn btn--secondary", to: "/users/access", children: "Obtaining data" })
+      /* @__PURE__ */ jsxs28("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
+        /* @__PURE__ */ jsx34(Link17, { className: "btn btn--primary", to: "/users/format", children: "What the files look like" }),
+        /* @__PURE__ */ jsx34(Link17, { className: "btn btn--secondary", to: "/users/performance", children: "Measured depths" }),
+        /* @__PURE__ */ jsx34(Link17, { className: "btn btn--secondary", to: "/users/access", children: "Obtaining data" })
       ] })
     ] }),
-    /* @__PURE__ */ jsx33(Section, { eyebrow: "Processing", title: "Processing status", alt: !0, children: /* @__PURE__ */ jsxs27("p", { className: "prose", children: [
+    /* @__PURE__ */ jsx34(Section, { eyebrow: "Processing", title: "Processing status", alt: !0, children: /* @__PURE__ */ jsxs28("p", { className: "prose", children: [
       "Data are reduced the same day they are taken. Raw frames are transferred from Chile overnight and a typical night clears the pipeline in about five hours of wall-clock time after transfer completes, so survey data are normally available the following day. Target-of-opportunity data skip compression and the wait for sunrise, which brings latency down to tens of minutes. What the pipeline produces, and the quality metrics attached to each product, are described under",
       " ",
-      /* @__PURE__ */ jsx33(Link17, { to: "/users/format", children: "using the data" }),
+      /* @__PURE__ */ jsx34(Link17, { to: "/users/format", children: "using the data" }),
       "."
     ] }) })
   ] });
@@ -9520,7 +9568,7 @@ __export(about_intro_exports, {
   meta: () => meta21
 });
 import { Link as Link18 } from "@remix-run/react";
-import { Fragment as Fragment12, jsx as jsx34, jsxs as jsxs28 } from "react/jsx-runtime";
+import { Fragment as Fragment12, jsx as jsx35, jsxs as jsxs29 } from "react/jsx-runtime";
 var meta21 = () => [
   { title: "What is 7DS \xB7 7-Dimensional Telescope" },
   {
@@ -9578,14 +9626,14 @@ var meta21 = () => [
     what: "Completing the survey",
     body: "The Wide-area Time-domain Survey commences in 2026. Four remaining units and five remaining filters complete the design, and the first full cycle of the Reference Imaging Survey is anticipated by the end of 2027."
   }
-], Index21 = () => /* @__PURE__ */ jsxs28(PageLayout, { menu: "manuAbout", children: [
-  /* @__PURE__ */ jsx34(
+], Index21 = () => /* @__PURE__ */ jsxs29(PageLayout, { menu: "manuAbout", children: [
+  /* @__PURE__ */ jsx35(
     PageHero,
     {
       eyebrow: "About",
-      title: /* @__PURE__ */ jsxs28(Fragment12, { children: [
+      title: /* @__PURE__ */ jsxs29(Fragment12, { children: [
         "What is ",
-        /* @__PURE__ */ jsx34("em", { children: "7DS" }),
+        /* @__PURE__ */ jsx35("em", { children: "7DS" }),
         "?"
       ] }),
       lede: "A medium-band survey of the southern sky that measures a low-resolution spectrum for every source it observes, and repeats the measurement over time.",
@@ -9598,13 +9646,13 @@ var meta21 = () => [
       ]
     }
   ),
-  /* @__PURE__ */ jsx34(Section, { id: "motivation", eyebrow: "Motivation", title: "Why a medium-band survey", children: /* @__PURE__ */ jsxs28("div", { className: "split split--wide-text", children: [
-    /* @__PURE__ */ jsxs28("div", { children: [
-      /* @__PURE__ */ jsx34("p", { className: "prose", children: aboutMotivationText }),
-      /* @__PURE__ */ jsx34("p", { className: "prose", children: aboutMotivationText2 })
+  /* @__PURE__ */ jsx35(Section, { id: "motivation", eyebrow: "Motivation", title: "Why a medium-band survey", children: /* @__PURE__ */ jsxs29("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsxs29("div", { children: [
+      /* @__PURE__ */ jsx35("p", { className: "prose", children: aboutMotivationText }),
+      /* @__PURE__ */ jsx35("p", { className: "prose", children: aboutMotivationText2 })
     ] }),
-    /* @__PURE__ */ jsxs28("figure", { className: "figure", children: [
-      /* @__PURE__ */ jsx34(
+    /* @__PURE__ */ jsxs29("figure", { className: "figure", children: [
+      /* @__PURE__ */ jsx35(
         "img",
         {
           src: "/img/overview.png",
@@ -9612,58 +9660,58 @@ var meta21 = () => [
           loading: "lazy"
         }
       ),
-      /* @__PURE__ */ jsxs28("figcaption", { children: [
-        /* @__PURE__ */ jsx34("b", { children: "Scale of the problem" }),
+      /* @__PURE__ */ jsxs29("figcaption", { children: [
+        /* @__PURE__ */ jsx35("b", { children: "Scale of the problem" }),
         " A gravitational-wave localization region set against the field of view of 7DT and of other survey telescopes."
       ] })
     ] })
   ] }) }),
-  /* @__PURE__ */ jsx34(Section, { eyebrow: "The name", title: "Seven dimensions", alt: !0, children: /* @__PURE__ */ jsxs28("div", { className: "split split--wide-text", children: [
-    /* @__PURE__ */ jsx34("p", { className: "prose", children: aboutText3 }),
-    /* @__PURE__ */ jsx34("ul", { className: "feature-list", style: { margin: 0 }, children: surveys_default.dimensions.map((dim) => /* @__PURE__ */ jsxs28("li", { style: { padding: "0.6rem 0" }, children: [
-      /* @__PURE__ */ jsx34("span", { className: "feature-list__key", children: dim.n }),
-      /* @__PURE__ */ jsx34("div", { children: /* @__PURE__ */ jsx34("h3", { className: "feature-list__title", style: { margin: 0, fontSize: "1rem" }, children: dim.label }) })
+  /* @__PURE__ */ jsx35(Section, { eyebrow: "The name", title: "Seven dimensions", alt: !0, children: /* @__PURE__ */ jsxs29("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsx35("p", { className: "prose", children: aboutText3 }),
+    /* @__PURE__ */ jsx35("ul", { className: "feature-list", style: { margin: 0 }, children: surveys_default.dimensions.map((dim) => /* @__PURE__ */ jsxs29("li", { style: { padding: "0.6rem 0" }, children: [
+      /* @__PURE__ */ jsx35("span", { className: "feature-list__key", children: dim.n }),
+      /* @__PURE__ */ jsx35("div", { children: /* @__PURE__ */ jsx35("h3", { className: "feature-list__title", style: { margin: 0, fontSize: "1rem" }, children: dim.label }) })
     ] }, dim.n)) })
   ] }) }),
-  /* @__PURE__ */ jsx34(Section, { eyebrow: "Approach", title: "Spectral mapping and the time domain", children: /* @__PURE__ */ jsxs28("div", { className: "split split--wide-text", children: [
-    /* @__PURE__ */ jsxs28("div", { children: [
-      /* @__PURE__ */ jsx34("p", { className: "prose", children: surveyIntroText }),
-      /* @__PURE__ */ jsx34("p", { className: "prose", children: aboutApproachText }),
-      /* @__PURE__ */ jsx34("p", { className: "prose", children: aboutApproachText2 })
+  /* @__PURE__ */ jsx35(Section, { eyebrow: "Approach", title: "Spectral mapping and the time domain", children: /* @__PURE__ */ jsxs29("div", { className: "split split--wide-text", children: [
+    /* @__PURE__ */ jsxs29("div", { children: [
+      /* @__PURE__ */ jsx35("p", { className: "prose", children: surveyIntroText }),
+      /* @__PURE__ */ jsx35("p", { className: "prose", children: aboutApproachText }),
+      /* @__PURE__ */ jsx35("p", { className: "prose", children: aboutApproachText2 })
     ] }),
-    /* @__PURE__ */ jsxs28("div", { className: "panel", children: [
-      /* @__PURE__ */ jsx34("div", { className: "panel__title", children: "Where the detail is" }),
-      /* @__PURE__ */ jsxs28("ul", { className: "feature-list", style: { borderTop: 0, margin: 0 }, children: [
-        /* @__PURE__ */ jsx34("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx34("div", { children: /* @__PURE__ */ jsxs28("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+    /* @__PURE__ */ jsxs29("div", { className: "panel", children: [
+      /* @__PURE__ */ jsx35("div", { className: "panel__title", children: "Where the detail is" }),
+      /* @__PURE__ */ jsxs29("ul", { className: "feature-list", style: { borderTop: 0, margin: 0 }, children: [
+        /* @__PURE__ */ jsx35("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx35("div", { children: /* @__PURE__ */ jsxs29("p", { className: "feature-list__body", style: { margin: 0 }, children: [
           "How the three surveys divide area, cadence and depth \u2014",
           " ",
-          /* @__PURE__ */ jsx34(Link18, { to: "/survey/overview", children: "survey design" }),
+          /* @__PURE__ */ jsx35(Link18, { to: "/survey/overview", children: "survey design" }),
           "."
         ] }) }) }),
-        /* @__PURE__ */ jsx34("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx34("div", { children: /* @__PURE__ */ jsxs28("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+        /* @__PURE__ */ jsx35("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx35("div", { children: /* @__PURE__ */ jsxs29("p", { className: "feature-list__body", style: { margin: 0 }, children: [
           "What the array is and why it is built as an array \u2014",
           " ",
-          /* @__PURE__ */ jsx34(Link18, { to: "/telescope/overview", children: "the telescope" }),
+          /* @__PURE__ */ jsx35(Link18, { to: "/telescope/overview", children: "the telescope" }),
           "."
         ] }) }) }),
-        /* @__PURE__ */ jsx34("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx34("div", { children: /* @__PURE__ */ jsxs28("p", { className: "feature-list__body", style: { margin: 0 }, children: [
+        /* @__PURE__ */ jsx35("li", { style: { gridTemplateColumns: "minmax(0, 1fr)" }, children: /* @__PURE__ */ jsx35("div", { children: /* @__PURE__ */ jsxs29("p", { className: "feature-list__body", style: { margin: 0 }, children: [
           "What the measurement is used for \u2014",
           " ",
-          /* @__PURE__ */ jsx34(Link18, { to: "/science/overview", children: "science" }),
+          /* @__PURE__ */ jsx35(Link18, { to: "/science/overview", children: "science" }),
           "."
         ] }) }) })
       ] })
     ] })
   ] }) }),
-  /* @__PURE__ */ jsxs28(Section, { id: "history", eyebrow: "History", title: "From first light to survey operation", alt: !0, children: [
-    /* @__PURE__ */ jsx34("ol", { className: "timeline", children: MILESTONES.map((item) => /* @__PURE__ */ jsxs28("li", { children: [
-      /* @__PURE__ */ jsx34("span", { className: "timeline__when", children: item.when }),
-      /* @__PURE__ */ jsxs28("div", { className: "timeline__body", children: [
-        /* @__PURE__ */ jsx34("h3", { children: item.what }),
-        /* @__PURE__ */ jsx34("p", { children: item.body })
+  /* @__PURE__ */ jsxs29(Section, { id: "history", eyebrow: "History", title: "From first light to survey operation", alt: !0, children: [
+    /* @__PURE__ */ jsx35("ol", { className: "timeline", children: MILESTONES.map((item) => /* @__PURE__ */ jsxs29("li", { children: [
+      /* @__PURE__ */ jsx35("span", { className: "timeline__when", children: item.when }),
+      /* @__PURE__ */ jsxs29("div", { className: "timeline__body", children: [
+        /* @__PURE__ */ jsx35("h3", { children: item.what }),
+        /* @__PURE__ */ jsx35("p", { children: item.body })
       ] })
     ] }, item.when)) }),
-    /* @__PURE__ */ jsx34("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx34(
+    /* @__PURE__ */ jsx35("div", { style: { marginTop: "2.5rem" }, children: /* @__PURE__ */ jsx35(
       NextLinks,
       {
         title: "Continue",
@@ -9684,8 +9732,8 @@ __export(science_agn_exports, {
   default: () => science_agn_default,
   meta: () => meta22
 });
-import { jsx as jsx35 } from "react/jsx-runtime";
-var meta22 = () => topicMeta("agn"), Index22 = () => /* @__PURE__ */ jsx35(ScienceTopic, { id: "agn" }), science_agn_default = Index22;
+import { jsx as jsx36 } from "react/jsx-runtime";
+var meta22 = () => topicMeta("agn"), Index22 = () => /* @__PURE__ */ jsx36(ScienceTopic, { id: "agn" }), science_agn_default = Index22;
 
 // app/routes/science.mma.tsx
 var science_mma_exports = {};
@@ -9693,8 +9741,8 @@ __export(science_mma_exports, {
   default: () => science_mma_default,
   meta: () => meta23
 });
-import { jsx as jsx36 } from "react/jsx-runtime";
-var meta23 = () => topicMeta("mma"), Index23 = () => /* @__PURE__ */ jsx36(ScienceTopic, { id: "mma" }), science_mma_default = Index23;
+import { jsx as jsx37 } from "react/jsx-runtime";
+var meta23 = () => topicMeta("mma"), Index23 = () => /* @__PURE__ */ jsx37(ScienceTopic, { id: "mma" }), science_mma_default = Index23;
 
 // app/routes/science.sci.tsx
 var science_sci_exports = {};
@@ -9716,7 +9764,7 @@ __export(users_links_exports, {
 });
 import { json as json2 } from "@remix-run/node";
 import { Link as Link19, useLoaderData as useLoaderData2 } from "@remix-run/react";
-import { Fragment as Fragment13, jsx as jsx37, jsxs as jsxs29 } from "react/jsx-runtime";
+import { Fragment as Fragment13, jsx as jsx38, jsxs as jsxs30 } from "react/jsx-runtime";
 var meta24 = () => [
   { title: "Useful links \xB7 7DT for users" },
   {
@@ -9763,39 +9811,39 @@ async function loader8() {
 }
 var Index24 = () => {
   let { services } = useLoaderData2(), linked = services.filter((service) => service.url);
-  return /* @__PURE__ */ jsxs29(PageLayout, { menu: "manuUsers", children: [
-    /* @__PURE__ */ jsx37(
+  return /* @__PURE__ */ jsxs30(PageLayout, { menu: "manuUsers", children: [
+    /* @__PURE__ */ jsx38(
       PageHero,
       {
         eyebrow: "For users",
-        title: /* @__PURE__ */ jsxs29(Fragment13, { children: [
+        title: /* @__PURE__ */ jsxs30(Fragment13, { children: [
           "Useful ",
-          /* @__PURE__ */ jsx37("em", { children: "links" })
+          /* @__PURE__ */ jsx38("em", { children: "links" })
         ] }),
         lede: "The services that support work with 7DT data. For partner surveys, vendors and institutions, see the site-wide links page.",
         image: "/img/hero/computer.jpg"
       }
     ),
-    /* @__PURE__ */ jsxs29(Section, { eyebrow: "Services", title: "Project services", children: [
-      linked.length > 0 ? /* @__PURE__ */ jsx37("ul", { className: "feature-list", children: linked.map((service) => /* @__PURE__ */ jsxs29("li", { children: [
-        /* @__PURE__ */ jsx37("span", { className: "feature-list__key", children: "\u2197" }),
-        /* @__PURE__ */ jsxs29("div", { children: [
-          /* @__PURE__ */ jsx37("h3", { className: "feature-list__title", children: /* @__PURE__ */ jsx37("a", { href: service.url ?? "#", target: "_blank", rel: "noreferrer", children: service.name }) }),
-          /* @__PURE__ */ jsx37("p", { className: "feature-list__body", children: service.note })
+    /* @__PURE__ */ jsxs30(Section, { eyebrow: "Services", title: "Project services", children: [
+      linked.length > 0 ? /* @__PURE__ */ jsx38("ul", { className: "feature-list", children: linked.map((service) => /* @__PURE__ */ jsxs30("li", { children: [
+        /* @__PURE__ */ jsx38("span", { className: "feature-list__key", children: "\u2197" }),
+        /* @__PURE__ */ jsxs30("div", { children: [
+          /* @__PURE__ */ jsx38("h3", { className: "feature-list__title", children: /* @__PURE__ */ jsx38("a", { href: service.url ?? "#", target: "_blank", rel: "noreferrer", children: service.name }) }),
+          /* @__PURE__ */ jsx38("p", { className: "feature-list__body", children: service.note })
         ] })
-      ] }, service.name)) }) : /* @__PURE__ */ jsxs29("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
-        /* @__PURE__ */ jsx37("div", { className: "panel__title", children: "Not publicly linked" }),
-        /* @__PURE__ */ jsx37("p", { className: "feature-list__body", style: { marginBottom: "0.75rem" }, children: "Four services support work with 7DT data \u2014 a project wiki carrying user manuals and quality-assurance criteria, a pipeline status page with per-night progress, a target-of-opportunity page holding observation requests and campaign history, and the observation database itself. They run on project infrastructure and are reached through the collaboration rather than from this page." }),
-        /* @__PURE__ */ jsxs29("p", { className: "feature-list__body", style: { marginBottom: 0 }, children: [
+      ] }, service.name)) }) : /* @__PURE__ */ jsxs30("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
+        /* @__PURE__ */ jsx38("div", { className: "panel__title", children: "Not publicly linked" }),
+        /* @__PURE__ */ jsx38("p", { className: "feature-list__body", style: { marginBottom: "0.75rem" }, children: "Four services support work with 7DT data \u2014 a project wiki carrying user manuals and quality-assurance criteria, a pipeline status page with per-night progress, a target-of-opportunity page holding observation requests and campaign history, and the observation database itself. They run on project infrastructure and are reached through the collaboration rather than from this page." }),
+        /* @__PURE__ */ jsxs30("p", { className: "feature-list__body", style: { marginBottom: 0 }, children: [
           "Ask the project for access, or see",
           " ",
-          /* @__PURE__ */ jsx37(Link19, { to: "/users/access", children: "data access" }),
+          /* @__PURE__ */ jsx38(Link19, { to: "/users/access", children: "data access" }),
           " for what can be obtained without it."
         ] })
       ] }),
-      linked.length > 0 && linked.length < services.length && /* @__PURE__ */ jsx37("p", { className: "footnote", style: { marginTop: "1rem" }, children: "Services not listed here are reached through the collaboration rather than from this page." })
+      linked.length > 0 && linked.length < services.length && /* @__PURE__ */ jsx38("p", { className: "footnote", style: { marginTop: "1rem" }, children: "Services not listed here are reached through the collaboration rather than from this page." })
     ] }),
-    /* @__PURE__ */ jsx37(Section, { id: "calculators", eyebrow: "Calculators", title: "Observation calculators", alt: !0, children: /* @__PURE__ */ jsx37("div", { className: "grid grid-cols-2", children: tools.map((tool) => /* @__PURE__ */ jsxs29(
+    /* @__PURE__ */ jsx38(Section, { id: "calculators", eyebrow: "Calculators", title: "Observation calculators", alt: !0, children: /* @__PURE__ */ jsx38("div", { className: "grid grid-cols-2", children: tools.map((tool) => /* @__PURE__ */ jsxs30(
       "a",
       {
         className: "theme-card",
@@ -9803,9 +9851,9 @@ var Index24 = () => {
         target: "_blank",
         rel: "noreferrer",
         children: [
-          /* @__PURE__ */ jsx37("span", { className: "theme-card__index", children: tool.n }),
-          /* @__PURE__ */ jsx37("h3", { className: "theme-card__title", children: tool.name }),
-          /* @__PURE__ */ jsx37("p", { className: "theme-card__body", children: tool.question })
+          /* @__PURE__ */ jsx38("span", { className: "theme-card__index", children: tool.n }),
+          /* @__PURE__ */ jsx38("h3", { className: "theme-card__title", children: tool.name }),
+          /* @__PURE__ */ jsx38("p", { className: "theme-card__body", children: tool.question })
         ]
       },
       tool.slug
@@ -9903,15 +9951,15 @@ var collabs_default = {
 };
 
 // app/routes/about.team.tsx
-import { Fragment as Fragment14, jsx as jsx38, jsxs as jsxs30 } from "react/jsx-runtime";
+import { Fragment as Fragment14, jsx as jsx39, jsxs as jsxs31 } from "react/jsx-runtime";
 var meta25 = () => [
   { title: "Team \xB7 7-Dimensional Telescope" },
   {
     name: "description",
     content: "The people who build, operate and analyze 7DT and the 7-Dimensional Sky Survey."
   }
-], initials = (name) => name.replace(/^(Prof\.|Dr\.)\s+/, "").split(/\s+/).map((part) => part[0]).slice(0, 2).join(""), Index25 = () => /* @__PURE__ */ jsxs30(PageLayout, { menu: "manuAbout", children: [
-  /* @__PURE__ */ jsx38(
+], initials = (name) => name.replace(/^(Prof\.|Dr\.)\s+/, "").split(/\s+/).map((part) => part[0]).slice(0, 2).join(""), Index25 = () => /* @__PURE__ */ jsxs31(PageLayout, { menu: "manuAbout", children: [
+  /* @__PURE__ */ jsx39(
     PageHero,
     {
       eyebrow: "About",
@@ -9925,8 +9973,8 @@ var meta25 = () => [
       ]
     }
   ),
-  /* @__PURE__ */ jsx38(Section, { eyebrow: "Core team", title: "Who does what", children: /* @__PURE__ */ jsx38("div", { className: "people-grid", children: team_default.members.map((member) => /* @__PURE__ */ jsxs30("div", { className: "person", children: [
-    /* @__PURE__ */ jsx38(
+  /* @__PURE__ */ jsx39(Section, { eyebrow: "Core team", title: "Who does what", children: /* @__PURE__ */ jsx39("div", { className: "people-grid", children: team_default.members.map((member) => /* @__PURE__ */ jsxs31("div", { className: "person", children: [
+    /* @__PURE__ */ jsx39(
       "div",
       {
         className: "person__portrait",
@@ -9934,18 +9982,18 @@ var meta25 = () => [
         children: !member.imgName && initials(member.name)
       }
     ),
-    /* @__PURE__ */ jsxs30("div", { children: [
-      /* @__PURE__ */ jsx38("h3", { className: "person__name", children: member.name }),
-      /* @__PURE__ */ jsx38("p", { className: "person__role", children: member.role }),
-      /* @__PURE__ */ jsxs30("p", { className: "person__meta", children: [
-        member.title && /* @__PURE__ */ jsxs30(Fragment14, { children: [
+    /* @__PURE__ */ jsxs31("div", { children: [
+      /* @__PURE__ */ jsx39("h3", { className: "person__name", children: member.name }),
+      /* @__PURE__ */ jsx39("p", { className: "person__role", children: member.role }),
+      /* @__PURE__ */ jsxs31("p", { className: "person__meta", children: [
+        member.title && /* @__PURE__ */ jsxs31(Fragment14, { children: [
           member.title,
-          /* @__PURE__ */ jsx38("br", {})
+          /* @__PURE__ */ jsx39("br", {})
         ] }),
         member.affiliation
       ] }),
-      /* @__PURE__ */ jsxs30("div", { className: "person__links", children: [
-        member.webpage && /* @__PURE__ */ jsx38("a", { href: member.webpage, title: "Homepage", target: "_blank", rel: "noreferrer", children: /* @__PURE__ */ jsx38("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx38(
+      /* @__PURE__ */ jsxs31("div", { className: "person__links", children: [
+        member.webpage && /* @__PURE__ */ jsx39("a", { href: member.webpage, title: "Homepage", target: "_blank", rel: "noreferrer", children: /* @__PURE__ */ jsx39("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx39(
           "path",
           {
             fillRule: "evenodd",
@@ -9953,7 +10001,7 @@ var meta25 = () => [
             clipRule: "evenodd"
           }
         ) }) }),
-        member.email && /* @__PURE__ */ jsx38("a", { href: `mailto:${member.email}`, title: member.email, children: /* @__PURE__ */ jsxs30(
+        member.email && /* @__PURE__ */ jsx39("a", { href: `mailto:${member.email}`, title: member.email, children: /* @__PURE__ */ jsxs31(
           "svg",
           {
             width: "16",
@@ -9964,42 +10012,42 @@ var meta25 = () => [
             strokeWidth: "1.7",
             "aria-hidden": "true",
             children: [
-              /* @__PURE__ */ jsx38("rect", { x: "3", y: "5", width: "18", height: "14", rx: "2" }),
-              /* @__PURE__ */ jsx38("path", { d: "m3 7 9 6 9-6" })
+              /* @__PURE__ */ jsx39("rect", { x: "3", y: "5", width: "18", height: "14", rx: "2" }),
+              /* @__PURE__ */ jsx39("path", { d: "m3 7 9 6 9-6" })
             ]
           }
         ) })
       ] })
     ] })
   ] }, member.name)) }) }),
-  /* @__PURE__ */ jsxs30(Section, { eyebrow: "Collaboration", title: "7DT/7DS team members", alt: !0, wide: !0, children: [
-    /* @__PURE__ */ jsx38("p", { className: "lede", children: "Members of the 7DT collaboration contributing to the instrument, operations, pipeline and science working groups." }),
-    /* @__PURE__ */ jsx38("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs30("table", { className: "tier-table", children: [
-      /* @__PURE__ */ jsxs30("caption", { children: [
+  /* @__PURE__ */ jsxs31(Section, { eyebrow: "Collaboration", title: "7DT/7DS team members", alt: !0, wide: !0, children: [
+    /* @__PURE__ */ jsx39("p", { className: "lede", children: "Members of the 7DT collaboration contributing to the instrument, operations, pipeline and science working groups." }),
+    /* @__PURE__ */ jsx39("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs31("table", { className: "tier-table", children: [
+      /* @__PURE__ */ jsxs31("caption", { children: [
         "7DT collaboration \u2014 ",
         collabs_default.collabs.length,
         " members"
       ] }),
-      /* @__PURE__ */ jsx38("thead", { children: /* @__PURE__ */ jsxs30("tr", { children: [
-        /* @__PURE__ */ jsx38("th", { scope: "col", children: "Name" }),
-        /* @__PURE__ */ jsx38("th", { scope: "col", children: "Affiliation" }),
-        /* @__PURE__ */ jsx38("th", { scope: "col", children: "Working group" }),
-        /* @__PURE__ */ jsx38("th", { scope: "col", children: "Contact" })
+      /* @__PURE__ */ jsx39("thead", { children: /* @__PURE__ */ jsxs31("tr", { children: [
+        /* @__PURE__ */ jsx39("th", { scope: "col", children: "Name" }),
+        /* @__PURE__ */ jsx39("th", { scope: "col", children: "Affiliation" }),
+        /* @__PURE__ */ jsx39("th", { scope: "col", children: "Working group" }),
+        /* @__PURE__ */ jsx39("th", { scope: "col", children: "Contact" })
       ] }) }),
-      /* @__PURE__ */ jsx38("tbody", { children: collabs_default.collabs.map((person) => /* @__PURE__ */ jsxs30("tr", { children: [
-        /* @__PURE__ */ jsxs30("th", { scope: "row", style: { fontWeight: 600, color: "var(--ink-900)" }, children: [
+      /* @__PURE__ */ jsx39("tbody", { children: collabs_default.collabs.map((person) => /* @__PURE__ */ jsxs31("tr", { children: [
+        /* @__PURE__ */ jsxs31("th", { scope: "row", style: { fontWeight: 600, color: "var(--ink-900)" }, children: [
           person.firstName,
           " ",
           person.lastName
         ] }),
-        /* @__PURE__ */ jsx38("td", { style: { fontFamily: "var(--font-sans)" }, children: person.affiliation }),
-        /* @__PURE__ */ jsx38("td", { style: { fontFamily: "var(--font-sans)" }, children: person.workingGroup }),
-        /* @__PURE__ */ jsx38("td", { children: person.email ? /* @__PURE__ */ jsx38("a", { href: `mailto:${person.email}`, children: person.email }) : /* @__PURE__ */ jsx38("span", { style: { color: "var(--slate-400)" }, children: "\u2014" }) })
+        /* @__PURE__ */ jsx39("td", { style: { fontFamily: "var(--font-sans)" }, children: person.affiliation }),
+        /* @__PURE__ */ jsx39("td", { style: { fontFamily: "var(--font-sans)" }, children: person.workingGroup }),
+        /* @__PURE__ */ jsx39("td", { children: person.email ? /* @__PURE__ */ jsx39("a", { href: `mailto:${person.email}`, children: person.email }) : /* @__PURE__ */ jsx39("span", { style: { color: "var(--slate-400)" }, children: "\u2014" }) })
       ] }, person.id)) })
     ] }) }),
-    /* @__PURE__ */ jsxs30("p", { className: "note", style: { marginTop: "1rem" }, children: [
+    /* @__PURE__ */ jsxs31("p", { className: "note", style: { marginTop: "1rem" }, children: [
       "To join a working group or propose a collaboration, contact the principal investigator at ",
-      /* @__PURE__ */ jsx38("a", { href: "mailto:mim@astro.snu.ac.kr", children: "mim@astro.snu.ac.kr" }),
+      /* @__PURE__ */ jsx39("a", { href: "mailto:mim@astro.snu.ac.kr", children: "mim@astro.snu.ac.kr" }),
       "."
     ] })
   ] })
@@ -10018,7 +10066,7 @@ import { useLoaderData as useLoaderData3 } from "@remix-run/react";
 
 // app/components/surveypage.tsx
 import { Link as Link20 } from "@remix-run/react";
-import { jsx as jsx39, jsxs as jsxs31 } from "react/jsx-runtime";
+import { jsx as jsx40, jsxs as jsxs32 } from "react/jsx-runtime";
 function SurveyPage(props) {
   let {
     code,
@@ -10037,8 +10085,8 @@ function SurveyPage(props) {
     progress,
     children
   } = props;
-  return /* @__PURE__ */ jsxs31(PageLayout, { menu: "manu7ds", children: [
-    /* @__PURE__ */ jsx39(
+  return /* @__PURE__ */ jsxs32(PageLayout, { menu: "manu7ds", children: [
+    /* @__PURE__ */ jsx40(
       PageHero,
       {
         eyebrow: `Survey \xB7 ${code}`,
@@ -10048,47 +10096,47 @@ function SurveyPage(props) {
         meta: heroMeta
       }
     ),
-    /* @__PURE__ */ jsx39(Section, { eyebrow: "Strategy", title: "What this survey is for", children: /* @__PURE__ */ jsxs31("div", { className: "split split--wide-text", children: [
-      /* @__PURE__ */ jsxs31("div", { children: [
-        /* @__PURE__ */ jsx39("p", { className: "rationale__goal", children: goal }),
-        /* @__PURE__ */ jsx39("p", { className: "prose", children: rationale })
+    /* @__PURE__ */ jsx40(Section, { eyebrow: "Strategy", title: "What this survey is for", children: /* @__PURE__ */ jsxs32("div", { className: "split split--wide-text", children: [
+      /* @__PURE__ */ jsxs32("div", { children: [
+        /* @__PURE__ */ jsx40("p", { className: "rationale__goal", children: goal }),
+        /* @__PURE__ */ jsx40("p", { className: "prose", children: rationale })
       ] }),
-      /* @__PURE__ */ jsxs31("div", { children: [
-        /* @__PURE__ */ jsxs31("div", { className: "panel", children: [
-          /* @__PURE__ */ jsx39("div", { className: "panel__title", children: "Trade" }),
-          /* @__PURE__ */ jsx39("p", { className: "feature-list__body", style: { margin: 0 }, children: tradeoff })
+      /* @__PURE__ */ jsxs32("div", { children: [
+        /* @__PURE__ */ jsxs32("div", { className: "panel", children: [
+          /* @__PURE__ */ jsx40("div", { className: "panel__title", children: "Trade" }),
+          /* @__PURE__ */ jsx40("p", { className: "feature-list__body", style: { margin: 0 }, children: tradeoff })
         ] }),
-        /* @__PURE__ */ jsx39("div", { className: "table-wrap", style: { marginTop: "1.25rem" }, children: /* @__PURE__ */ jsxs31("table", { className: "spec-table", children: [
-          /* @__PURE__ */ jsx39("caption", { children: "Design parameters" }),
-          /* @__PURE__ */ jsx39("tbody", { children: parameters.map((row) => /* @__PURE__ */ jsxs31("tr", { children: [
-            /* @__PURE__ */ jsx39("th", { scope: "row", children: row[0] }),
-            /* @__PURE__ */ jsx39("td", { children: row[1] })
+        /* @__PURE__ */ jsx40("div", { className: "table-wrap", style: { marginTop: "1.25rem" }, children: /* @__PURE__ */ jsxs32("table", { className: "spec-table", children: [
+          /* @__PURE__ */ jsx40("caption", { children: "Design parameters" }),
+          /* @__PURE__ */ jsx40("tbody", { children: parameters.map((row) => /* @__PURE__ */ jsxs32("tr", { children: [
+            /* @__PURE__ */ jsx40("th", { scope: "row", children: row[0] }),
+            /* @__PURE__ */ jsx40("td", { children: row[1] })
           ] }, row[0])) })
         ] }) })
       ] })
     ] }) }),
-    map && /* @__PURE__ */ jsxs31(Section, { eyebrow: "Map", title: map.title ?? "Where it has observed", alt: !0, wide: !0, children: [
-      /* @__PURE__ */ jsx39("div", { style: { marginBottom: "1.25rem" }, children: /* @__PURE__ */ jsx39(LiveBadge, { live, updated: generatedAt, interval: "daily" }) }),
+    map && /* @__PURE__ */ jsxs32(Section, { eyebrow: "Map", title: map.title ?? "Where it has observed", alt: !0, wide: !0, children: [
+      /* @__PURE__ */ jsx40("div", { style: { marginBottom: "1.25rem" }, children: /* @__PURE__ */ jsx40(LiveBadge, { live, updated: generatedAt, interval: "daily" }) }),
       map.node,
-      /* @__PURE__ */ jsxs31("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
+      /* @__PURE__ */ jsxs32("p", { className: "footnote", style: { marginTop: "1rem" }, children: [
         map.note,
         " The whole survey footprint, with per-tile detail under the pointer and a search by position, is on the ",
-        /* @__PURE__ */ jsx39(Link20, { to: "/users/access", children: "data access page" }),
+        /* @__PURE__ */ jsx40(Link20, { to: "/users/access", children: "data access page" }),
         "."
       ] })
     ] }),
-    coverage && /* @__PURE__ */ jsxs31(Section, { eyebrow: "Coverage", title: "What has been observed so far", children: [
-      /* @__PURE__ */ jsx39("div", { style: { marginBottom: "1.5rem" }, children: /* @__PURE__ */ jsx39(LiveBadge, { live, updated: generatedAt, interval: "every 30 minutes" }) }),
-      /* @__PURE__ */ jsx39(StatGrid, { items: coverage }),
-      progress && /* @__PURE__ */ jsxs31("div", { className: "panel", style: { marginTop: "2rem" }, children: [
-        /* @__PURE__ */ jsx39("div", { className: "panel__title", children: "Status" }),
-        /* @__PURE__ */ jsx39(
+    coverage && /* @__PURE__ */ jsxs32(Section, { eyebrow: "Coverage", title: "What has been observed so far", children: [
+      /* @__PURE__ */ jsx40("div", { style: { marginBottom: "1.5rem" }, children: /* @__PURE__ */ jsx40(LiveBadge, { live, updated: generatedAt, interval: "every 30 minutes" }) }),
+      /* @__PURE__ */ jsx40(StatGrid, { items: coverage }),
+      progress && /* @__PURE__ */ jsxs32("div", { className: "panel", style: { marginTop: "2rem" }, children: [
+        /* @__PURE__ */ jsx40("div", { className: "panel__title", children: "Status" }),
+        /* @__PURE__ */ jsx40(
           "div",
           {
             className: "meter",
             role: "img",
             "aria-label": `${code} progress: ${progress.percent} percent`,
-            children: /* @__PURE__ */ jsx39(
+            children: /* @__PURE__ */ jsx40(
               "span",
               {
                 className: "meter__fill meter__fill--spectrum",
@@ -10097,22 +10145,22 @@ function SurveyPage(props) {
             )
           }
         ),
-        /* @__PURE__ */ jsx39("p", { className: "note", style: { marginTop: "0.75rem", marginBottom: 0 }, children: progress.label }),
-        progress.note && /* @__PURE__ */ jsx39("p", { className: "footnote", style: { marginTop: "0.5rem", marginBottom: 0 }, children: progress.note })
+        /* @__PURE__ */ jsx40("p", { className: "note", style: { marginTop: "0.75rem", marginBottom: 0 }, children: progress.label }),
+        progress.note && /* @__PURE__ */ jsx40("p", { className: "footnote", style: { marginTop: "0.5rem", marginBottom: 0 }, children: progress.note })
       ] })
     ] }),
     children,
-    /* @__PURE__ */ jsx39(Section, { eyebrow: "Elsewhere", title: "Related pages", alt: !0, children: /* @__PURE__ */ jsxs31("div", { className: "chip-row", children: [
-      /* @__PURE__ */ jsx39(Link20, { className: "chip", to: "/survey/overview", children: "All three surveys" }),
-      /* @__PURE__ */ jsx39(Link20, { className: "chip", to: "/users/access", children: "Sky coverage and search" }),
-      /* @__PURE__ */ jsx39(Link20, { className: "chip", to: "/users/status", children: "Array operations" }),
-      /* @__PURE__ */ jsx39(Link20, { className: "chip", to: "/users/performance", children: "Measured performance" })
+    /* @__PURE__ */ jsx40(Section, { eyebrow: "Elsewhere", title: "Related pages", alt: !0, children: /* @__PURE__ */ jsxs32("div", { className: "chip-row", children: [
+      /* @__PURE__ */ jsx40(Link20, { className: "chip", to: "/survey/overview", children: "All three surveys" }),
+      /* @__PURE__ */ jsx40(Link20, { className: "chip", to: "/users/access", children: "Sky coverage and search" }),
+      /* @__PURE__ */ jsx40(Link20, { className: "chip", to: "/users/status", children: "Array operations" }),
+      /* @__PURE__ */ jsx40(Link20, { className: "chip", to: "/users/performance", children: "Measured performance" })
     ] }) })
   ] });
 }
 
 // app/components/fieldmap.tsx
-import { jsx as jsx40, jsxs as jsxs32 } from "react/jsx-runtime";
+import { jsx as jsx41, jsxs as jsxs33 } from "react/jsx-runtime";
 var DEG3 = Math.PI / 180;
 function project2(ra, dec, ra0, dec0) {
   let d = dec * DEG3, d0 = dec0 * DEG3, dRa = (ra - ra0) * DEG3, cosC = Math.sin(d0) * Math.sin(d) + Math.cos(d0) * Math.cos(d) * Math.cos(dRa);
@@ -10164,8 +10212,8 @@ function FieldMap({
       pts.push(project2(r, d, ra0, dec0));
     return pts;
   }, raLabel = (deg) => `${((deg % 360 + 360) % 360).toFixed(raStep < 1 ? 1 : 0)}\xB0`;
-  return /* @__PURE__ */ jsxs32("div", { className: "fieldmap", children: [
-    /* @__PURE__ */ jsxs32(
+  return /* @__PURE__ */ jsxs33("div", { className: "fieldmap", children: [
+    /* @__PURE__ */ jsxs33(
       "svg",
       {
         viewBox: `0 0 ${W3.toFixed(0)} ${H3.toFixed(0)}`,
@@ -10175,12 +10223,12 @@ function FieldMap({
           1
         )} degrees, declination ${dec0.toFixed(1)} degrees.`,
         children: [
-          /* @__PURE__ */ jsx40("rect", { x: L3, y: T3, width: plotW, height: plotH, fill: "#f2f5fa" }),
-          /* @__PURE__ */ jsxs32("g", { stroke: "rgba(10,16,28,0.16)", strokeWidth: "0.7", fill: "none", strokeDasharray: "2 3", children: [
-            decs.map((d) => /* @__PURE__ */ jsx40("path", { d: path2(decLine(d)) }, `d${d}`)),
-            ras.map((r) => /* @__PURE__ */ jsx40("path", { d: path2(raLine(r)) }, `r${r}`))
+          /* @__PURE__ */ jsx41("rect", { x: L3, y: T3, width: plotW, height: plotH, fill: "#f2f5fa" }),
+          /* @__PURE__ */ jsxs33("g", { stroke: "rgba(10,16,28,0.16)", strokeWidth: "0.7", fill: "none", strokeDasharray: "2 3", children: [
+            decs.map((d) => /* @__PURE__ */ jsx41("path", { d: path2(decLine(d)) }, `d${d}`)),
+            ras.map((r) => /* @__PURE__ */ jsx41("path", { d: path2(raLine(r)) }, `r${r}`))
           ] }),
-          /* @__PURE__ */ jsxs32(
+          /* @__PURE__ */ jsxs33(
             "g",
             {
               fill: "#4d5b71",
@@ -10189,7 +10237,7 @@ function FieldMap({
               children: [
                 decs.map((d) => {
                   let p = project2(ra0, d, ra0, dec0), y = sy2(p[1]);
-                  return y < T3 + 6 || y > T3 + plotH - 2 ? null : /* @__PURE__ */ jsxs32("text", { x: L3 - 8, y: y + 3.5, textAnchor: "end", children: [
+                  return y < T3 + 6 || y > T3 + plotH - 2 ? null : /* @__PURE__ */ jsxs33("text", { x: L3 - 8, y: y + 3.5, textAnchor: "end", children: [
                     d > 0 ? "+" : "\u2212",
                     Math.abs(d).toFixed(decStep < 1 ? 2 : 0),
                     "\xB0"
@@ -10197,19 +10245,19 @@ function FieldMap({
                 }),
                 ras.map((r) => {
                   let p = project2(r, dec0, ra0, dec0), x = sx2(p[0]);
-                  return x < L3 + 14 || x > L3 + plotW - 14 ? null : /* @__PURE__ */ jsx40("text", { x, y: T3 + plotH + 16, textAnchor: "middle", children: raLabel(r) }, `rl${r}`);
+                  return x < L3 + 14 || x > L3 + plotW - 14 ? null : /* @__PURE__ */ jsx41("text", { x, y: T3 + plotH + 16, textAnchor: "middle", children: raLabel(r) }, `rl${r}`);
                 }),
-                /* @__PURE__ */ jsx40("text", { x: L3 - 8, y: T3 + plotH + 16, textAnchor: "end", fill: "#8090a6", children: "Dec" }),
-                /* @__PURE__ */ jsx40("text", { x: L3 + plotW / 2, y: T3 + plotH + 30, textAnchor: "middle", fill: "#8090a6", children: "RA (deg) \u2014 increasing to the left" })
+                /* @__PURE__ */ jsx41("text", { x: L3 - 8, y: T3 + plotH + 16, textAnchor: "end", fill: "#8090a6", children: "Dec" }),
+                /* @__PURE__ */ jsx41("text", { x: L3 + plotW / 2, y: T3 + plotH + 30, textAnchor: "middle", fill: "#8090a6", children: "RA (deg) \u2014 increasing to the left" })
               ]
             }
           ),
-          /* @__PURE__ */ jsx40("g", { children: [...shapes].sort((a, b) => Number(Boolean(a.tile.highlight)) - Number(Boolean(b.tile.highlight))).map(({ tile, points }) => {
+          /* @__PURE__ */ jsx41("g", { children: [...shapes].sort((a, b) => Number(Boolean(a.tile.highlight)) - Number(Boolean(b.tile.highlight))).map(({ tile, points }) => {
             let active = tile.highlight !== !1, color = sequential(
               maxValue === minValue ? 0.65 : (tile.value - minValue) / (maxValue - minValue) * 0.75 + 0.2
             ), center = project2(tile.ra, tile.dec, ra0, dec0), cx = sx2(center[0]), cy = sy2(center[1]), text = active ? isDark(color) ? "#ffffff" : "#0a101c" : "#5b6b82";
-            return /* @__PURE__ */ jsxs32("g", { children: [
-              /* @__PURE__ */ jsx40(
+            return /* @__PURE__ */ jsxs33("g", { children: [
+              /* @__PURE__ */ jsx41(
                 "polygon",
                 {
                   points: points.filter((p) => Number.isFinite(p[0])).map((p) => `${sx2(p[0]).toFixed(1)},${sy2(p[1]).toFixed(1)}`).join(" "),
@@ -10219,7 +10267,7 @@ function FieldMap({
                   strokeDasharray: active ? "7 4" : void 0
                 }
               ),
-              /* @__PURE__ */ jsx40(
+              /* @__PURE__ */ jsx41(
                 "text",
                 {
                   x: cx,
@@ -10232,7 +10280,7 @@ function FieldMap({
                   children: tile.name
                 }
               ),
-              active && /* @__PURE__ */ jsxs32(
+              active && /* @__PURE__ */ jsxs33(
                 "text",
                 {
                   x: cx,
@@ -10251,7 +10299,7 @@ function FieldMap({
               )
             ] }, tile.name);
           }) }),
-          /* @__PURE__ */ jsx40(
+          /* @__PURE__ */ jsx41(
             "rect",
             {
               x: L3,
@@ -10266,12 +10314,12 @@ function FieldMap({
         ]
       }
     ),
-    caption && /* @__PURE__ */ jsx40("p", { className: "fieldmap__caption", children: caption })
+    caption && /* @__PURE__ */ jsx41("p", { className: "fieldmap__caption", children: caption })
   ] });
 }
 
 // app/routes/survey.ims.tsx
-import { jsx as jsx41 } from "react/jsx-runtime";
+import { jsx as jsx42 } from "react/jsx-runtime";
 var meta26 = () => [
   { title: "Intensive Monitoring Survey \xB7 7DT" },
   {
@@ -10293,7 +10341,7 @@ async function loader9() {
 }
 var num2 = (value) => value.toLocaleString("en-US"), tier = surveys_default.tiers.find((t) => t.code === "IMS"), Index26 = () => {
   let { field, ims, live, generatedAt } = useLoaderData3(), cycles = Object.values(ims.cycles_per_tile), median = [...cycles].sort((a, b) => a - b)[Math.floor(cycles.length / 2)], planned = 5 * 250;
-  return /* @__PURE__ */ jsx41(
+  return /* @__PURE__ */ jsx42(
     SurveyPage,
     {
       code: "IMS",
@@ -10322,7 +10370,7 @@ var num2 = (value) => value.toLocaleString("en-US"), tier = surveys_default.tier
       generatedAt,
       map: {
         title: "The monitored field",
-        node: /* @__PURE__ */ jsx41(
+        node: /* @__PURE__ */ jsx42(
           FieldMap,
           {
             tiles: field.map((tile) => {
@@ -10366,7 +10414,7 @@ __export(survey_ris_exports, {
 });
 import { json as json4 } from "@remix-run/node";
 import { useLoaderData as useLoaderData4 } from "@remix-run/react";
-import { jsx as jsx42 } from "react/jsx-runtime";
+import { jsx as jsx43 } from "react/jsx-runtime";
 var meta27 = () => [
   { title: "Reference Imaging Survey \xB7 7DT" },
   {
@@ -10389,7 +10437,7 @@ async function loader10() {
 }
 var num3 = (value) => value.toLocaleString("en-US"), tier2 = surveys_default.tiers.find((t) => t.code === "RIS"), Index27 = () => {
   let { tiles, ris, exposureSec, live, generatedAt } = useLoaderData4();
-  return /* @__PURE__ */ jsx42(
+  return /* @__PURE__ */ jsx43(
     SurveyPage,
     {
       code: "RIS",
@@ -10420,7 +10468,7 @@ var num3 = (value) => value.toLocaleString("en-US"), tier2 = surveys_default.tie
            page where a reader comes to ask about a particular piece of sky, so
            the map keeps its coordinate toggle, its pointer readout and its
            per-tile cards. */
-        node: /* @__PURE__ */ jsx42(
+        node: /* @__PURE__ */ jsx43(
           SkyMap,
           {
             tiles,
@@ -10457,14 +10505,14 @@ __export(survey_wts_exports, {
   default: () => survey_wts_default,
   meta: () => meta28
 });
-import { jsx as jsx43, jsxs as jsxs33 } from "react/jsx-runtime";
+import { jsx as jsx44, jsxs as jsxs34 } from "react/jsx-runtime";
 var meta28 = () => [
   { title: "Wide-area Time-domain Survey \xB7 7DT" },
   {
     name: "description",
     content: "The time-domain survey of 7DS: 800\u20131,200 deg\xB2 revisited every 10\u201314 days over five years, in fields with existing near-infrared coverage."
   }
-], tier3 = surveys_default.tiers.find((t) => t.code === "WTS"), Index28 = () => /* @__PURE__ */ jsxs33(
+], tier3 = surveys_default.tiers.find((t) => t.code === "WTS"), Index28 = () => /* @__PURE__ */ jsxs34(
   SurveyPage,
   {
     code: "WTS",
@@ -10490,21 +10538,21 @@ var meta28 = () => [
     ],
     live: !1,
     children: [
-      /* @__PURE__ */ jsx43(Section, { eyebrow: "Status", title: "Not yet started", children: /* @__PURE__ */ jsxs33("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
-        /* @__PURE__ */ jsx43("div", { className: "panel__title", children: "Field selection under consideration" }),
-        /* @__PURE__ */ jsxs33("p", { className: "feature-list__body", style: { marginBottom: 0 }, children: [
+      /* @__PURE__ */ jsx44(Section, { eyebrow: "Status", title: "Not yet started", children: /* @__PURE__ */ jsxs34("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
+        /* @__PURE__ */ jsx44("div", { className: "panel__title", children: "Field selection under consideration" }),
+        /* @__PURE__ */ jsxs34("p", { className: "feature-list__body", style: { marginBottom: 0 }, children: [
           "WTS is scheduled to commence in 2026. Fields are being selected to overlap existing near-infrared coverage \u2014 the VISTA Kilo-degree Infrared Galaxy survey footprint and the Vera C. Rubin Observatory Deep Drilling Fields are the leading candidates \u2014 so that 7DT medium-band photometry is complemented at wavelengths the array cannot reach. Until observations begin there is no coverage to report; tiles observed under the Reference Imaging Survey in these fields already exist and are shown on the",
           " ",
-          /* @__PURE__ */ jsx43("a", { href: "/users/access", children: "data access page" }),
+          /* @__PURE__ */ jsx44("a", { href: "/users/access", children: "data access page" }),
           "."
         ] })
       ] }) }),
-      /* @__PURE__ */ jsxs33(Section, { eyebrow: "Science", title: "What the cadence is chosen for", alt: !0, children: [
-        /* @__PURE__ */ jsx43("p", { className: "prose", children: tier3.depthRange }),
-        /* @__PURE__ */ jsxs33("p", { className: "prose", children: [
+      /* @__PURE__ */ jsxs34(Section, { eyebrow: "Science", title: "What the cadence is chosen for", alt: !0, children: [
+        /* @__PURE__ */ jsx44("p", { className: "prose", children: tier3.depthRange }),
+        /* @__PURE__ */ jsxs34("p", { className: "prose", children: [
           "Stacking 90 to 100 visits also reaches 22.0\u201322.5 mag across most of the medium bands, deep enough for photometric redshifts on galaxies well below the single-visit limit. Forecast redshift precision for the stacked survey is given under",
           " ",
-          /* @__PURE__ */ jsx43("a", { href: "/science/cosmology", children: "cosmology and photometric redshifts" }),
+          /* @__PURE__ */ jsx44("a", { href: "/science/cosmology", children: "cosmology and photometric redshifts" }),
           "."
         ] })
       ] })
@@ -10519,15 +10567,15 @@ __export(users_call_exports, {
   meta: () => meta29
 });
 import { Link as Link21 } from "@remix-run/react";
-import { Fragment as Fragment15, jsx as jsx44, jsxs as jsxs34 } from "react/jsx-runtime";
+import { Fragment as Fragment15, jsx as jsx45, jsxs as jsxs35 } from "react/jsx-runtime";
 var meta29 = () => [
   { title: "Call for Proposals \xB7 7DT for users" },
   {
     name: "description",
     content: "The open call for 7DT observing time: key dates, the documents to download, and where the rules are set out."
   }
-], Index29 = () => /* @__PURE__ */ jsxs34(PageLayout, { menu: "manuUsers", children: [
-  /* @__PURE__ */ jsx44(
+], Index29 = () => /* @__PURE__ */ jsxs35(PageLayout, { menu: "manuUsers", children: [
+  /* @__PURE__ */ jsx45(
     PageHero,
     {
       eyebrow: "For users",
@@ -10542,61 +10590,61 @@ var meta29 = () => [
       ] : void 0
     }
   ),
-  call_default.active ? /* @__PURE__ */ jsxs34(Fragment15, { children: [
-    /* @__PURE__ */ jsxs34(Section, { eyebrow: "Documents", title: "What to download", children: [
-      /* @__PURE__ */ jsx44("p", { className: "prose", children: "Read the first, fill in the second, and keep the third beside you while you do. This page is where the call directs proposers for the current versions, so use the copies here rather than a forwarded attachment." }),
-      /* @__PURE__ */ jsx44("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: call_default.files.map((file, index) => /* @__PURE__ */ jsxs34("li", { children: [
-        /* @__PURE__ */ jsx44("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
-        /* @__PURE__ */ jsxs34("div", { children: [
-          /* @__PURE__ */ jsxs34("h3", { className: "feature-list__title", style: { fontSize: "1.0625rem" }, children: [
-            /* @__PURE__ */ jsx44("a", { href: file.href, download: !0, children: file.name }),
+  call_default.active ? /* @__PURE__ */ jsxs35(Fragment15, { children: [
+    /* @__PURE__ */ jsxs35(Section, { eyebrow: "Documents", title: "What to download", children: [
+      /* @__PURE__ */ jsx45("p", { className: "prose", children: "Read the first, fill in the second, and keep the third beside you while you do. This page is where the call directs proposers for the current versions, so use the copies here rather than a forwarded attachment." }),
+      /* @__PURE__ */ jsx45("ul", { className: "feature-list", style: { marginTop: "2rem" }, children: call_default.files.map((file, index) => /* @__PURE__ */ jsxs35("li", { children: [
+        /* @__PURE__ */ jsx45("span", { className: "feature-list__key", children: String(index + 1).padStart(2, "0") }),
+        /* @__PURE__ */ jsxs35("div", { children: [
+          /* @__PURE__ */ jsxs35("h3", { className: "feature-list__title", style: { fontSize: "1.0625rem" }, children: [
+            /* @__PURE__ */ jsx45("a", { href: file.href, download: !0, children: file.name }),
             " ",
-            /* @__PURE__ */ jsx44("span", { className: "tag-docx", children: "docx" })
+            /* @__PURE__ */ jsx45("span", { className: "tag-docx", children: "docx" })
           ] }),
-          /* @__PURE__ */ jsx44("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: file.note })
+          /* @__PURE__ */ jsx45("p", { className: "feature-list__body", style: { maxWidth: "68ch" }, children: file.note })
         ] })
       ] }, file.href)) })
     ] }),
-    /* @__PURE__ */ jsxs34(Section, { eyebrow: "Schedule", title: "Key dates", alt: !0, children: [
-      /* @__PURE__ */ jsx44("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs34("table", { className: "spec-table", children: [
-        /* @__PURE__ */ jsx44("caption", { children: "Milestones of this call" }),
-        /* @__PURE__ */ jsx44("tbody", { children: call_default.dates.map((row) => /* @__PURE__ */ jsxs34("tr", { children: [
-          /* @__PURE__ */ jsx44("th", { scope: "row", children: row[0] }),
-          /* @__PURE__ */ jsx44("td", { children: row[1] })
+    /* @__PURE__ */ jsxs35(Section, { eyebrow: "Schedule", title: "Key dates", alt: !0, children: [
+      /* @__PURE__ */ jsx45("div", { className: "table-wrap", children: /* @__PURE__ */ jsxs35("table", { className: "spec-table", children: [
+        /* @__PURE__ */ jsx45("caption", { children: "Milestones of this call" }),
+        /* @__PURE__ */ jsx45("tbody", { children: call_default.dates.map((row) => /* @__PURE__ */ jsxs35("tr", { children: [
+          /* @__PURE__ */ jsx45("th", { scope: "row", children: row[0] }),
+          /* @__PURE__ */ jsx45("td", { children: row[1] })
         ] }, row[0])) })
       ] }) }),
-      /* @__PURE__ */ jsxs34("p", { className: "footnote", style: { marginTop: "1.25rem" }, children: [
+      /* @__PURE__ */ jsxs35("p", { className: "footnote", style: { marginTop: "1.25rem" }, children: [
         "Unless stated otherwise, deadlines are ",
         call_default.deadlineNote,
         "."
       ] })
     ] }),
-    /* @__PURE__ */ jsxs34(Section, { eyebrow: "Time", title: "What is being offered", children: [
-      /* @__PURE__ */ jsxs34("p", { className: "prose", children: [
+    /* @__PURE__ */ jsxs35(Section, { eyebrow: "Time", title: "What is being offered", children: [
+      /* @__PURE__ */ jsxs35("p", { className: "prose", children: [
         call_default.hours,
         ". ",
         call_default.pools,
         " A proposal is counted against one pool on the basis of the PI\u2019s affiliation alone; the Call for Proposals gives the rule in full, including what happens to a proposal that is not selected in the first pool it is considered in."
       ] }),
-      /* @__PURE__ */ jsx44("p", { className: "prose", children: call_default.nextCall }),
-      /* @__PURE__ */ jsxs34("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
-        /* @__PURE__ */ jsx44(Link21, { className: "btn btn--primary", to: "/users/propose", children: "How to write the proposal" }),
-        /* @__PURE__ */ jsx44(Link21, { className: "btn btn--secondary", to: "/users/links#calculators", children: "Calculators" }),
-        /* @__PURE__ */ jsx44(Link21, { className: "btn btn--secondary", to: "/users/performance", children: "Measured performance" })
+      /* @__PURE__ */ jsx45("p", { className: "prose", children: call_default.nextCall }),
+      /* @__PURE__ */ jsxs35("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
+        /* @__PURE__ */ jsx45(Link21, { className: "btn btn--primary", to: "/users/propose", children: "How to write the proposal" }),
+        /* @__PURE__ */ jsx45(Link21, { className: "btn btn--secondary", to: "/users/links#calculators", children: "Calculators" }),
+        /* @__PURE__ */ jsx45(Link21, { className: "btn btn--secondary", to: "/users/performance", children: "Measured performance" })
       ] })
     ] }),
-    /* @__PURE__ */ jsx44(Section, { eyebrow: "Submitting", title: "Where to send it", children: /* @__PURE__ */ jsxs34("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
-      /* @__PURE__ */ jsxs34("div", { className: "panel__title", children: [
+    /* @__PURE__ */ jsx45(Section, { eyebrow: "Submitting", title: "Where to send it", children: /* @__PURE__ */ jsxs35("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
+      /* @__PURE__ */ jsxs35("div", { className: "panel__title", children: [
         "By e-mail, before ",
         call_default.deadline
       ] }),
-      /* @__PURE__ */ jsxs34("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: [
+      /* @__PURE__ */ jsxs35("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: [
         "Send the completed Proposal Form together with the Scientific Justification, the Technical Justification and any accompanying files \u2014 a target list, for example \u2014 to",
         " ",
-        /* @__PURE__ */ jsx44("a", { href: `mailto:${call_default.submit.email}?subject=7DT%20Phase%201%20proposal`, children: call_default.submit.email }),
+        /* @__PURE__ */ jsx45("a", { href: `mailto:${call_default.submit.email}?subject=7DT%20Phase%201%20proposal`, children: call_default.submit.email }),
         ". There is no submission portal; e-mail is the route."
       ] }),
-      /* @__PURE__ */ jsx44(
+      /* @__PURE__ */ jsx45(
         "a",
         {
           className: "btn btn--primary",
@@ -10605,21 +10653,21 @@ var meta29 = () => [
         }
       )
     ] }) }),
-    /* @__PURE__ */ jsx44(Section, { eyebrow: "Questions", title: "Who to ask", alt: !0, children: /* @__PURE__ */ jsxs34("p", { className: "prose", children: [
+    /* @__PURE__ */ jsx45(Section, { eyebrow: "Questions", title: "Who to ask", alt: !0, children: /* @__PURE__ */ jsxs35("p", { className: "prose", children: [
       "Questions about this call, the submission process or 7DS collaboration policies go to",
       " ",
       call_default.contact.name,
       " at",
       " ",
-      /* @__PURE__ */ jsx44("a", { href: `mailto:${call_default.contact.email}?subject=7DT%20Call%20for%20Proposals`, children: call_default.contact.email }),
+      /* @__PURE__ */ jsx45("a", { href: `mailto:${call_default.contact.email}?subject=7DT%20Call%20for%20Proposals`, children: call_default.contact.email }),
       "."
     ] }) })
-  ] }) : /* @__PURE__ */ jsx44(Section, { eyebrow: "Status", title: "No call is open", children: /* @__PURE__ */ jsxs34("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
-    /* @__PURE__ */ jsx44("div", { className: "panel__title", children: "Nothing to submit at present" }),
-    /* @__PURE__ */ jsxs34("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: [
+  ] }) : /* @__PURE__ */ jsx45(Section, { eyebrow: "Status", title: "No call is open", children: /* @__PURE__ */ jsxs35("div", { className: "panel", style: { maxWidth: "68ch" }, children: [
+    /* @__PURE__ */ jsx45("div", { className: "panel__title", children: "Nothing to submit at present" }),
+    /* @__PURE__ */ jsxs35("p", { className: "feature-list__body", style: { marginBottom: "1rem" }, children: [
       "When a call opens, its dates and documents appear here and a notice goes up across the site. How proposals are written does not change between calls, and is set out under",
       " ",
-      /* @__PURE__ */ jsx44(Link21, { to: "/users/propose", children: "how to propose" }),
+      /* @__PURE__ */ jsx45(Link21, { to: "/users/propose", children: "how to propose" }),
       "."
     ] })
   ] }) })
@@ -10694,7 +10742,7 @@ __export(gallery_exports, {
   default: () => gallery_default,
   meta: () => meta30
 });
-import { useState as useState8 } from "react";
+import { useState as useState9 } from "react";
 import { Pagination as Pagination2 } from "flowbite-react";
 
 // app/routes/content/images.json
@@ -10734,14 +10782,14 @@ var images_default = [
 ];
 
 // app/routes/gallery.tsx
-import { jsx as jsx45, jsxs as jsxs35 } from "react/jsx-runtime";
+import { jsx as jsx46, jsxs as jsxs36 } from "react/jsx-runtime";
 var meta30 = () => [
   { title: "Gallery \xB7 7-Dimensional Telescope" },
   { name: "description", content: "Images of the 7-Dimensional Telescope and of the sky it observes." }
 ], PER_PAGE2 = 6, Index30 = () => {
-  let [currentPage, setCurrentPage] = useState8(1), totalPages = Math.max(1, Math.ceil(images_default.length / PER_PAGE2)), page = Math.min(currentPage, totalPages), shown = images_default.slice((page - 1) * PER_PAGE2, page * PER_PAGE2);
-  return /* @__PURE__ */ jsxs35(PageLayout, { menu: "manuGallery", children: [
-    /* @__PURE__ */ jsx45(
+  let [currentPage, setCurrentPage] = useState9(1), totalPages = Math.max(1, Math.ceil(images_default.length / PER_PAGE2)), page = Math.min(currentPage, totalPages), shown = images_default.slice((page - 1) * PER_PAGE2, page * PER_PAGE2);
+  return /* @__PURE__ */ jsxs36(PageLayout, { menu: "manuGallery", children: [
+    /* @__PURE__ */ jsx46(
       PageHero,
       {
         eyebrow: "Gallery",
@@ -10750,10 +10798,10 @@ var meta30 = () => [
         image: "/img/hero/gallery.jpg"
       }
     ),
-    /* @__PURE__ */ jsxs35(Section, { eyebrow: "Images", title: "Gallery", wide: !0, children: [
-      /* @__PURE__ */ jsx45("div", { className: "gallery", children: /* @__PURE__ */ jsx45("ul", { children: shown.map((img) => /* @__PURE__ */ jsx45("li", { children: /* @__PURE__ */ jsxs35("a", { href: `/img/images/${img.file}`, target: "_blank", rel: "noreferrer", children: [
-        /* @__PURE__ */ jsxs35("figure", { children: [
-          /* @__PURE__ */ jsx45(
+    /* @__PURE__ */ jsxs36(Section, { eyebrow: "Images", title: "Gallery", wide: !0, children: [
+      /* @__PURE__ */ jsx46("div", { className: "gallery", children: /* @__PURE__ */ jsx46("ul", { children: shown.map((img) => /* @__PURE__ */ jsx46("li", { children: /* @__PURE__ */ jsxs36("a", { href: `/img/images/${img.file}`, target: "_blank", rel: "noreferrer", children: [
+        /* @__PURE__ */ jsxs36("figure", { children: [
+          /* @__PURE__ */ jsx46(
             "img",
             {
               src: `/img/thumbs/${img.file.replace(/\.[^.]+$/, ".jpg")}`,
@@ -10764,11 +10812,11 @@ var meta30 = () => [
               decoding: "async"
             }
           ),
-          /* @__PURE__ */ jsx45("figcaption", { children: img.name })
+          /* @__PURE__ */ jsx46("figcaption", { children: img.name })
         ] }),
-        /* @__PURE__ */ jsx45("span", { className: "sr-only", children: " (opens the full-resolution image in a new tab)" })
+        /* @__PURE__ */ jsx46("span", { className: "sr-only", children: " (opens the full-resolution image in a new tab)" })
       ] }) }, img.file)) }) }),
-      totalPages > 1 && /* @__PURE__ */ jsx45("div", { className: "pagination-wrap", children: /* @__PURE__ */ jsx45(Pagination2, { currentPage: page, totalPages, onPageChange: setCurrentPage }) })
+      totalPages > 1 && /* @__PURE__ */ jsx46("div", { className: "pagination-wrap", children: /* @__PURE__ */ jsx46(Pagination2, { currentPage: page, totalPages, onPageChange: setCurrentPage }) })
     ] })
   ] });
 }, gallery_default = Index30;
@@ -10785,9 +10833,9 @@ import { json as json5 } from "@remix-run/node";
 import { useLoaderData as useLoaderData5 } from "@remix-run/react";
 
 // app/routes/main.tsx
-import { useEffect as useEffect5, useState as useState9, useRef as useRef4, useCallback as useCallback2 } from "react";
+import { useEffect as useEffect6, useState as useState10, useRef as useRef4, useCallback as useCallback2 } from "react";
 import { Link as Link22 } from "@remix-run/react";
-import { Fragment as Fragment16, jsx as jsx46, jsxs as jsxs36 } from "react/jsx-runtime";
+import { Fragment as Fragment16, jsx as jsx47, jsxs as jsxs37 } from "react/jsx-runtime";
 var SECTION_IS_DARK = [!0, !1, !0, !1, !0, !1, !0], SECTION_COUNT = SECTION_IS_DARK.length, SECTION_NAMES = [
   "Introduction",
   "About 7DT",
@@ -10798,14 +10846,14 @@ var SECTION_IS_DARK = [!0, !1, !0, !1, !0, !1, !0], SECTION_COUNT = SECTION_IS_D
   "Contact and partners"
 ];
 function ScrollChrome() {
-  let [current, setCurrent] = useState9(0), [showTop, setShowTop] = useState9(!1), sectionsRef = useRef4([]), wrapperRef = useRef4(null), frame = useRef4(0), scrollToSection = useCallback2((index) => {
+  let [current, setCurrent] = useState10(0), [showTop, setShowTop] = useState10(!1), sectionsRef = useRef4([]), wrapperRef = useRef4(null), frame = useRef4(0), scrollToSection = useCallback2((index) => {
     let target = sectionsRef.current[index];
     if (!target)
       return;
     let reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     target.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
   }, []);
-  return useEffect5(() => {
+  return useEffect6(() => {
     let wrapper = document.querySelector(".fullpage-wrapper");
     if (!wrapper)
       return;
@@ -10831,7 +10879,7 @@ function ScrollChrome() {
     return measure(), wrapper.addEventListener("scroll", onScroll, { passive: !0 }), window.addEventListener("resize", onScroll, { passive: !0 }), () => {
       frame.current && window.cancelAnimationFrame(frame.current), wrapper.removeEventListener("scroll", onScroll), window.removeEventListener("resize", onScroll), document.body.classList.remove("fullpage-active"), document.documentElement.classList.remove("fullpage-active"), document.documentElement.classList.remove("reveal-ready");
     };
-  }, []), useEffect5(() => {
+  }, []), useEffect6(() => {
     let onKey = (e) => {
       if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey || e.target?.closest("input, textarea, select, [contenteditable]") || !["ArrowDown", "PageDown", "ArrowUp", "PageUp", "Home", "End"].includes(e.key))
         return;
@@ -10839,9 +10887,9 @@ function ScrollChrome() {
       wrapper && section && section.getBoundingClientRect().height > wrapper.clientHeight + 2 && (e.key === "ArrowDown" || e.key === "ArrowUp") || (e.preventDefault(), e.key === "ArrowDown" || e.key === "PageDown" ? scrollToSection(Math.min(current + 1, SECTION_COUNT - 1)) : e.key === "ArrowUp" || e.key === "PageUp" ? scrollToSection(Math.max(current - 1, 0)) : e.key === "Home" ? scrollToSection(0) : scrollToSection(SECTION_COUNT - 1));
     };
     return window.addEventListener("keydown", onKey), () => window.removeEventListener("keydown", onKey);
-  }, [current, scrollToSection]), /* @__PURE__ */ jsxs36(Fragment16, { children: [
-    /* @__PURE__ */ jsx46("div", { className: "fullpage-progress" }),
-    /* @__PURE__ */ jsx46("div", { className: "fullpage-nav", children: Array.from({ length: SECTION_COUNT }).map((_, index) => /* @__PURE__ */ jsx46(
+  }, [current, scrollToSection]), /* @__PURE__ */ jsxs37(Fragment16, { children: [
+    /* @__PURE__ */ jsx47("div", { className: "fullpage-progress" }),
+    /* @__PURE__ */ jsx47("div", { className: "fullpage-nav", children: Array.from({ length: SECTION_COUNT }).map((_, index) => /* @__PURE__ */ jsx47(
       "button",
       {
         type: "button",
@@ -10852,7 +10900,7 @@ function ScrollChrome() {
       },
       index
     )) }),
-    /* @__PURE__ */ jsx46(
+    /* @__PURE__ */ jsx47(
       "button",
       {
         type: "button",
@@ -10866,25 +10914,25 @@ function ScrollChrome() {
 }
 var MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, exposureSec }) => {
   let latest = news_default.news.filter((item) => item.type !== "update").slice(0, 3);
-  return /* @__PURE__ */ jsxs36("div", { className: "fullpage-container", children: [
-    /* @__PURE__ */ jsx46(ScrollChrome, {}),
-    /* @__PURE__ */ jsxs36("div", { className: "fullpage-wrapper", children: [
-      /* @__PURE__ */ jsxs36(
+  return /* @__PURE__ */ jsxs37("div", { className: "fullpage-container", children: [
+    /* @__PURE__ */ jsx47(ScrollChrome, {}),
+    /* @__PURE__ */ jsxs37("div", { className: "fullpage-wrapper", children: [
+      /* @__PURE__ */ jsxs37(
         "section",
         {
           className: "fullpage-section fullpage-section--dark fullpage-hero",
           style: { backgroundImage: "url('/img/hero/home.jpg')", backgroundSize: "cover", backgroundPosition: "center" },
           children: [
-            /* @__PURE__ */ jsx46("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs36("div", { className: "reveal", children: [
-              /* @__PURE__ */ jsx46("p", { className: "fullpage-hero__eyebrow", children: "Center for the Gravitational-wave Universe \xB7 Seoul National University" }),
-              /* @__PURE__ */ jsx46("h1", { children: "7-Dimensional Sky Survey" }),
-              /* @__PURE__ */ jsx46("p", { className: "fullpage-hero__lede", children: "A medium-band survey of the southern sky, measuring a low-resolution spectrum for every source it observes and repeating the measurement over time. It is carried out with the 7-Dimensional Telescope, an array of twenty 50-cm telescopes in Chile." }),
-              /* @__PURE__ */ jsx46("div", { className: "dimension-row", style: { marginTop: "2rem" }, children: surveys_default.dimensions.map((dim) => /* @__PURE__ */ jsxs36("span", { className: "dimension-item", children: [
-                /* @__PURE__ */ jsx46("span", { className: "dimension-item__n", children: dim.n }),
+            /* @__PURE__ */ jsx47("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs37("div", { className: "reveal", children: [
+              /* @__PURE__ */ jsx47("p", { className: "fullpage-hero__eyebrow", children: "Center for the Gravitational-wave Universe \xB7 Seoul National University" }),
+              /* @__PURE__ */ jsx47("h1", { children: "7-Dimensional Sky Survey" }),
+              /* @__PURE__ */ jsx47("p", { className: "fullpage-hero__lede", children: "A medium-band survey of the southern sky, measuring a low-resolution spectrum for every source it observes and repeating the measurement over time. It is carried out with the 7-Dimensional Telescope, an array of twenty 50-cm telescopes in Chile." }),
+              /* @__PURE__ */ jsx47("div", { className: "dimension-row", style: { marginTop: "2rem" }, children: surveys_default.dimensions.map((dim) => /* @__PURE__ */ jsxs37("span", { className: "dimension-item", children: [
+                /* @__PURE__ */ jsx47("span", { className: "dimension-item__n", children: dim.n }),
                 dim.label
               ] }, dim.n)) })
             ] }) }),
-            /* @__PURE__ */ jsxs36(
+            /* @__PURE__ */ jsxs37(
               "button",
               {
                 type: "button",
@@ -10895,23 +10943,23 @@ var MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, exposu
                   });
                 },
                 children: [
-                  /* @__PURE__ */ jsx46("span", { children: "Scroll" }),
-                  /* @__PURE__ */ jsx46("span", { className: "scroll-cue__line" })
+                  /* @__PURE__ */ jsx47("span", { children: "Scroll" }),
+                  /* @__PURE__ */ jsx47("span", { className: "scroll-cue__line" })
                 ]
               }
             )
           ]
         }
       ),
-      /* @__PURE__ */ jsx46("section", { className: "fullpage-section", children: /* @__PURE__ */ jsx46("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs36("div", { className: "split split--wide-text split--middle reveal", children: [
-        /* @__PURE__ */ jsxs36("div", { children: [
-          /* @__PURE__ */ jsx46("span", { className: "eyebrow", children: "Introduction" }),
-          /* @__PURE__ */ jsx46("h2", { children: "A survey that measures spectra, not colors" }),
-          /* @__PURE__ */ jsx46("p", { className: "prose", children: mainText1 }),
-          /* @__PURE__ */ jsx46("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx46(Link22, { className: "link-arrow", to: "/about/intro", children: "What is 7DS" }) })
+      /* @__PURE__ */ jsx47("section", { className: "fullpage-section", children: /* @__PURE__ */ jsx47("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs37("div", { className: "split split--wide-text split--middle reveal", children: [
+        /* @__PURE__ */ jsxs37("div", { children: [
+          /* @__PURE__ */ jsx47("span", { className: "eyebrow", children: "Introduction" }),
+          /* @__PURE__ */ jsx47("h2", { children: "A survey that measures spectra, not colors" }),
+          /* @__PURE__ */ jsx47("p", { className: "prose", children: mainText1 }),
+          /* @__PURE__ */ jsx47("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx47(Link22, { className: "link-arrow", to: "/about/intro", children: "What is 7DS" }) })
         ] }),
-        /* @__PURE__ */ jsxs36("figure", { className: "figure", children: [
-          /* @__PURE__ */ jsx46(
+        /* @__PURE__ */ jsxs37("figure", { className: "figure", children: [
+          /* @__PURE__ */ jsx47(
             "img",
             {
               src: "/img/NGC0253.gif",
@@ -10922,33 +10970,33 @@ var MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, exposu
               decoding: "async"
             }
           ),
-          /* @__PURE__ */ jsxs36("figcaption", { children: [
-            /* @__PURE__ */ jsx46("b", { children: "NGC 253" }),
+          /* @__PURE__ */ jsxs37("figcaption", { children: [
+            /* @__PURE__ */ jsx47("b", { children: "NGC 253" }),
             " The Sculptor Galaxy seen through successive medium bands from 400 to 875 nm \u2014 each frame a different slice of the spectrum."
           ] })
         ] })
       ] }) }) }),
-      /* @__PURE__ */ jsx46(
+      /* @__PURE__ */ jsx47(
         "section",
         {
           className: "fullpage-section fullpage-section--dark",
           style: { backgroundImage: "url('/img/hero/science.jpg')", backgroundSize: "cover", backgroundPosition: "center" },
-          children: /* @__PURE__ */ jsx46("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs36("div", { className: "split split--middle reveal", children: [
-            /* @__PURE__ */ jsxs36("div", { children: [
-              /* @__PURE__ */ jsx46("span", { className: "eyebrow eyebrow--on-dark", children: "Science" }),
-              /* @__PURE__ */ jsx46("h2", { children: "Broad science topics" }),
-              /* @__PURE__ */ jsx46("p", { className: "prose", style: { color: "rgba(255,255,255,.78)" }, children: mainText2 }),
-              /* @__PURE__ */ jsx46("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx46(Link22, { className: "link-arrow", to: "/science/overview", style: { color: "var(--accent-on-dark)" }, children: "Science program" }) })
+          children: /* @__PURE__ */ jsx47("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs37("div", { className: "split split--middle reveal", children: [
+            /* @__PURE__ */ jsxs37("div", { children: [
+              /* @__PURE__ */ jsx47("span", { className: "eyebrow eyebrow--on-dark", children: "Science" }),
+              /* @__PURE__ */ jsx47("h2", { children: "Broad science topics" }),
+              /* @__PURE__ */ jsx47("p", { className: "prose", style: { color: "rgba(255,255,255,.78)" }, children: mainText2 }),
+              /* @__PURE__ */ jsx47("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx47(Link22, { className: "link-arrow", to: "/science/overview", style: { color: "var(--accent-on-dark)" }, children: "Science program" }) })
             ] }),
-            /* @__PURE__ */ jsx46("ul", { className: "theme-chips theme-chips--panel", children: science_default.themes.map((theme) => /* @__PURE__ */ jsx46("li", { children: /* @__PURE__ */ jsxs36(Link22, { to: `/science/${theme.id}`, children: [
-              /* @__PURE__ */ jsx46("span", { className: "theme-chips__hash", "aria-hidden": "true", children: "#" }),
+            /* @__PURE__ */ jsx47("ul", { className: "theme-chips theme-chips--panel", children: science_default.themes.map((theme) => /* @__PURE__ */ jsx47("li", { children: /* @__PURE__ */ jsxs37(Link22, { to: `/science/${theme.id}`, children: [
+              /* @__PURE__ */ jsx47("span", { className: "theme-chips__hash", "aria-hidden": "true", children: "#" }),
               theme.title
             ] }) }, theme.id)) })
           ] }) })
         }
       ),
-      /* @__PURE__ */ jsxs36("section", { className: "fullpage-section home-survey-panel", children: [
-        tiles && tiles.count > 0 ? /* @__PURE__ */ jsx46("div", { className: "home-survey__bg", "aria-hidden": "true", children: /* @__PURE__ */ jsx46(
+      /* @__PURE__ */ jsxs37("section", { className: "fullpage-section home-survey-panel", children: [
+        tiles && tiles.count > 0 ? /* @__PURE__ */ jsx47("div", { className: "home-survey__bg", "aria-hidden": "true", children: /* @__PURE__ */ jsx47(
           SkyMap,
           {
             tiles,
@@ -10957,110 +11005,110 @@ var MainPage = ({ tiles, tilesLive, generatedAt, telescopes, risCoverage, exposu
             defaultMode: "exposure"
           }
         ) }) : null,
-        tiles && tiles.count > 0 ? /* @__PURE__ */ jsxs36("div", { className: "home-survey__stamp", children: [
-          /* @__PURE__ */ jsx46(LiveBadge, { live: tilesLive, updated: generatedAt }),
-          /* @__PURE__ */ jsxs36("span", { className: "home-survey__count", children: [
+        tiles && tiles.count > 0 ? /* @__PURE__ */ jsxs37("div", { className: "home-survey__stamp", children: [
+          /* @__PURE__ */ jsx47(LiveBadge, { live: tilesLive, updated: generatedAt }),
+          /* @__PURE__ */ jsxs37("span", { className: "home-survey__count", children: [
             tiles.count.toLocaleString("en-US"),
             " tiles observed"
           ] })
         ] }) : null,
-        /* @__PURE__ */ jsx46("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs36("div", { className: "reveal", children: [
-          /* @__PURE__ */ jsx46("span", { className: "eyebrow", children: "7-Dimensional Sky Survey" }),
-          /* @__PURE__ */ jsx46("h2", { children: "Three surveys over the southern sky" }),
-          /* @__PURE__ */ jsx46("p", { className: "prose", style: { maxWidth: "62ch" }, children: mainText3 }),
-          tiles && tiles.count > 0 ? /* @__PURE__ */ jsx46("div", { className: "home-survey__meta", children: /* @__PURE__ */ jsx46(Link22, { className: "link-arrow", to: "/users/access", children: "Explore the coverage map" }) }) : null,
-          /* @__PURE__ */ jsx46("div", { className: "home-survey__tiers", children: surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsxs36(
+        /* @__PURE__ */ jsx47("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs37("div", { className: "reveal", children: [
+          /* @__PURE__ */ jsx47("span", { className: "eyebrow", children: "7-Dimensional Sky Survey" }),
+          /* @__PURE__ */ jsx47("h2", { children: "Three surveys over the southern sky" }),
+          /* @__PURE__ */ jsx47("p", { className: "prose", style: { maxWidth: "62ch" }, children: mainText3 }),
+          tiles && tiles.count > 0 ? /* @__PURE__ */ jsx47("div", { className: "home-survey__meta", children: /* @__PURE__ */ jsx47(Link22, { className: "link-arrow", to: "/users/access", children: "Explore the coverage map" }) }) : null,
+          /* @__PURE__ */ jsx47("div", { className: "home-survey__tiers", children: surveys_default.tiers.map((tier4) => /* @__PURE__ */ jsxs37(
             Link22,
             {
               className: "tier-card tier-card--link",
               to: `/survey/${tier4.code.toLowerCase()}`,
               children: [
-                /* @__PURE__ */ jsx46("span", { className: "tier-card__code", children: tier4.code }),
-                /* @__PURE__ */ jsx46("h3", { className: "tier-card__name", children: tier4.name }),
-                /* @__PURE__ */ jsxs36("p", { className: "home-survey__spec", children: [
+                /* @__PURE__ */ jsx47("span", { className: "tier-card__code", children: tier4.code }),
+                /* @__PURE__ */ jsx47("h3", { className: "tier-card__name", children: tier4.name }),
+                /* @__PURE__ */ jsxs37("p", { className: "home-survey__spec", children: [
                   tier4.area,
                   " \xB7 ",
                   tier4.cadence
                 ] }),
-                /* @__PURE__ */ jsx46("span", { className: `pill pill--${tier4.status}`, children: tier4.status === "live" && risCoverage !== null && tier4.code === "RIS" ? `${risCoverage}% observed` : tier4.statusLabel })
+                /* @__PURE__ */ jsx47("span", { className: `pill pill--${tier4.status}`, children: tier4.status === "live" && risCoverage !== null && tier4.code === "RIS" ? `${risCoverage}% observed` : tier4.statusLabel })
               ]
             },
             tier4.code
           )) })
         ] }) })
       ] }),
-      /* @__PURE__ */ jsx46(
+      /* @__PURE__ */ jsx47(
         "section",
         {
           className: "fullpage-section fullpage-section--dark",
           style: { backgroundImage: "url('/img/hero/survey.jpg')", backgroundSize: "cover", backgroundPosition: "center" },
-          children: /* @__PURE__ */ jsx46("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs36("div", { className: "split split--middle reveal", children: [
-            /* @__PURE__ */ jsxs36("div", { children: [
-              /* @__PURE__ */ jsx46("span", { className: "eyebrow eyebrow--on-dark", children: "The facility" }),
-              /* @__PURE__ */ jsx46("h2", { children: "Twenty telescopes, one system" }),
-              /* @__PURE__ */ jsx46("p", { className: "prose", style: { color: "rgba(255,255,255,.78)" }, children: mainText4 }),
-              /* @__PURE__ */ jsx46("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx46(Link22, { className: "link-arrow", to: "/telescope/overview", style: { color: "var(--accent-on-dark)" }, children: "Telescope & site" }) })
+          children: /* @__PURE__ */ jsx47("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs37("div", { className: "split split--middle reveal", children: [
+            /* @__PURE__ */ jsxs37("div", { children: [
+              /* @__PURE__ */ jsx47("span", { className: "eyebrow eyebrow--on-dark", children: "The facility" }),
+              /* @__PURE__ */ jsx47("h2", { children: "Twenty telescopes, one system" }),
+              /* @__PURE__ */ jsx47("p", { className: "prose", style: { color: "rgba(255,255,255,.78)" }, children: mainText4 }),
+              /* @__PURE__ */ jsx47("p", { style: { marginTop: "1.5rem" }, children: /* @__PURE__ */ jsx47(Link22, { className: "link-arrow", to: "/telescope/overview", style: { color: "var(--accent-on-dark)" }, children: "Telescope & site" }) })
             ] }),
-            /* @__PURE__ */ jsxs36("div", { className: "stat-grid stat-grid--2x2 stat-grid--on-dark", children: [
-              /* @__PURE__ */ jsxs36("div", { className: "stat", children: [
-                /* @__PURE__ */ jsx46("span", { className: "stat__value", children: telescopes?.total ?? 20 }),
-                /* @__PURE__ */ jsx46("span", { className: "stat__label", children: "Telescopes in the array" }),
-                /* @__PURE__ */ jsx46("span", { className: "stat__note stat__note--live", children: telescopes ? `${telescopes.online} online` : "16 online" })
+            /* @__PURE__ */ jsxs37("div", { className: "stat-grid stat-grid--2x2 stat-grid--on-dark", children: [
+              /* @__PURE__ */ jsxs37("div", { className: "stat", children: [
+                /* @__PURE__ */ jsx47("span", { className: "stat__value", children: telescopes?.total ?? 20 }),
+                /* @__PURE__ */ jsx47("span", { className: "stat__label", children: "Telescopes in the array" }),
+                /* @__PURE__ */ jsx47("span", { className: "stat__note stat__note--live", children: telescopes ? `${telescopes.online} online` : "16 online" })
               ] }),
-              /* @__PURE__ */ jsxs36("div", { className: "stat", children: [
-                /* @__PURE__ */ jsx46("span", { className: "stat__value", children: "40" }),
-                /* @__PURE__ */ jsx46("span", { className: "stat__label", children: "Medium-band filters" }),
-                /* @__PURE__ */ jsx46("span", { className: "stat__note", children: "35 installed" })
+              /* @__PURE__ */ jsxs37("div", { className: "stat", children: [
+                /* @__PURE__ */ jsx47("span", { className: "stat__value", children: "40" }),
+                /* @__PURE__ */ jsx47("span", { className: "stat__label", children: "Medium-band filters" }),
+                /* @__PURE__ */ jsx47("span", { className: "stat__note", children: "35 installed" })
               ] }),
-              /* @__PURE__ */ jsxs36("div", { className: "stat", children: [
-                /* @__PURE__ */ jsx46("span", { className: "stat__value", children: "30\u201370" }),
-                /* @__PURE__ */ jsx46("span", { className: "stat__label", children: "Spectral resolution R" })
+              /* @__PURE__ */ jsxs37("div", { className: "stat", children: [
+                /* @__PURE__ */ jsx47("span", { className: "stat__value", children: "30\u201370" }),
+                /* @__PURE__ */ jsx47("span", { className: "stat__label", children: "Spectral resolution R" })
               ] }),
-              /* @__PURE__ */ jsxs36("div", { className: "stat", children: [
-                /* @__PURE__ */ jsxs36("span", { className: "stat__value", children: [
+              /* @__PURE__ */ jsxs37("div", { className: "stat", children: [
+                /* @__PURE__ */ jsxs37("span", { className: "stat__value", children: [
                   "1.25",
-                  /* @__PURE__ */ jsx46("span", { className: "stat__unit", children: "deg\xB2" })
+                  /* @__PURE__ */ jsx47("span", { className: "stat__unit", children: "deg\xB2" })
                 ] }),
-                /* @__PURE__ */ jsx46("span", { className: "stat__label", children: "Per pointing" })
+                /* @__PURE__ */ jsx47("span", { className: "stat__label", children: "Per pointing" })
               ] })
             ] })
           ] }) })
         }
       ),
-      /* @__PURE__ */ jsx46("section", { className: "fullpage-section section--alt", children: /* @__PURE__ */ jsx46("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs36("div", { className: "reveal", children: [
-        /* @__PURE__ */ jsxs36("div", { className: "section-title", children: [
-          /* @__PURE__ */ jsx46("span", { className: "eyebrow", children: "Latest" }),
-          /* @__PURE__ */ jsx46("h2", { children: "News & publications" })
+      /* @__PURE__ */ jsx47("section", { className: "fullpage-section section--alt", children: /* @__PURE__ */ jsx47("div", { className: "container container--wide", children: /* @__PURE__ */ jsxs37("div", { className: "reveal", children: [
+        /* @__PURE__ */ jsxs37("div", { className: "section-title", children: [
+          /* @__PURE__ */ jsx47("span", { className: "eyebrow", children: "Latest" }),
+          /* @__PURE__ */ jsx47("h2", { children: "News & publications" })
         ] }),
-        /* @__PURE__ */ jsx46("div", { className: "grid grid-cols-3", children: latest.map((item, index) => /* @__PURE__ */ jsxs36("article", { className: "card", children: [
-          /* @__PURE__ */ jsx46("img", { src: `/img/news/${item.imgName}`, alt: "", loading: "lazy" }),
-          /* @__PURE__ */ jsxs36("div", { className: "card-info", children: [
-            /* @__PURE__ */ jsxs36("div", { className: "card-about", children: [
-              /* @__PURE__ */ jsx46(
+        /* @__PURE__ */ jsx47("div", { className: "grid grid-cols-3", children: latest.map((item, index) => /* @__PURE__ */ jsxs37("article", { className: "card", children: [
+          /* @__PURE__ */ jsx47("img", { src: `/img/news/${item.imgName}`, alt: "", loading: "lazy" }),
+          /* @__PURE__ */ jsxs37("div", { className: "card-info", children: [
+            /* @__PURE__ */ jsxs37("div", { className: "card-about", children: [
+              /* @__PURE__ */ jsx47(
                 "span",
                 {
                   className: `card-tag ${item.type === "meeting" ? "tag-news" : item.type === "publication" ? "tag-publication" : item.type === "press" ? "tag-press" : "tag-update"}`,
                   children: item.type
                 }
               ),
-              /* @__PURE__ */ jsx46("span", { className: "card-time", children: item.date })
+              /* @__PURE__ */ jsx47("span", { className: "card-time", children: item.date })
             ] }),
-            /* @__PURE__ */ jsx46("h3", { className: "card-title", children: item.title }),
-            /* @__PURE__ */ jsx46("div", { className: "card-creator", children: item.type === "meeting" ? item.place : item.type === "publication" ? item.shortAuthor : item.source })
+            /* @__PURE__ */ jsx47("h3", { className: "card-title", children: item.title }),
+            /* @__PURE__ */ jsx47("div", { className: "card-creator", children: item.type === "meeting" ? item.place : item.type === "publication" ? item.shortAuthor : item.source })
           ] })
         ] }, index)) }),
-        /* @__PURE__ */ jsxs36("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
-          /* @__PURE__ */ jsx46(Link22, { className: "btn btn--secondary", to: "/news", children: "All news" }),
-          /* @__PURE__ */ jsx46(Link22, { className: "btn btn--secondary", to: "/publication/list", children: "Publications" })
+        /* @__PURE__ */ jsxs37("div", { className: "btn-row", style: { marginTop: "2rem" }, children: [
+          /* @__PURE__ */ jsx47(Link22, { className: "btn btn--secondary", to: "/news", children: "All news" }),
+          /* @__PURE__ */ jsx47(Link22, { className: "btn btn--secondary", to: "/publication/list", children: "Publications" })
         ] })
       ] }) }) }),
-      /* @__PURE__ */ jsx46("div", { className: "fullpage-section fullpage-section--footer", children: /* @__PURE__ */ jsx46(footer_default, {}) })
+      /* @__PURE__ */ jsx47("div", { className: "fullpage-section fullpage-section--footer", children: /* @__PURE__ */ jsx47(footer_default, {}) })
     ] })
   ] });
 }, main_default = MainPage;
 
 // app/routes/_index.tsx
-import { jsx as jsx47, jsxs as jsxs37 } from "react/jsx-runtime";
+import { jsx as jsx48, jsxs as jsxs38 } from "react/jsx-runtime";
 var meta31 = () => [
   { title: "7-Dimensional Telescope" },
   {
@@ -11087,11 +11135,11 @@ async function loader17() {
 }
 var Index31 = () => {
   let data = useLoaderData5();
-  return /* @__PURE__ */ jsxs37("div", { className: "page", children: [
-    /* @__PURE__ */ jsx47("a", { className: "skip-link", href: "#content", children: "Skip to content" }),
-    /* @__PURE__ */ jsx47(CallBanner, {}),
-    /* @__PURE__ */ jsx47(navigate_default, { manu: "manuHome" }),
-    /* @__PURE__ */ jsx47("main", { id: "content", style: { height: "100%" }, children: /* @__PURE__ */ jsx47(main_default, { ...data }) })
+  return /* @__PURE__ */ jsxs38("div", { className: "page", children: [
+    /* @__PURE__ */ jsx48("a", { className: "skip-link", href: "#content", children: "Skip to content" }),
+    /* @__PURE__ */ jsx48(CallBanner, {}),
+    /* @__PURE__ */ jsx48(navigate_default, { manu: "manuHome" }),
+    /* @__PURE__ */ jsx48("main", { id: "content", style: { height: "100%" }, children: /* @__PURE__ */ jsx48(main_default, { ...data }) })
   ] });
 }, index_default = Index31;
 
@@ -11171,12 +11219,12 @@ var links_default = {
 };
 
 // app/routes/links.tsx
-import { jsx as jsx48, jsxs as jsxs38 } from "react/jsx-runtime";
+import { jsx as jsx49, jsxs as jsxs39 } from "react/jsx-runtime";
 var meta32 = () => [
   { title: "Links \xB7 7-Dimensional Telescope" },
   { name: "description", content: "Partner surveys, facilities, vendors and institutions related to 7DT." }
-], Index32 = () => /* @__PURE__ */ jsxs38(PageLayout, { menu: "manuLinks", children: [
-  /* @__PURE__ */ jsx48(
+], Index32 = () => /* @__PURE__ */ jsxs39(PageLayout, { menu: "manuLinks", children: [
+  /* @__PURE__ */ jsx49(
     PageHero,
     {
       eyebrow: "Resources",
@@ -11185,11 +11233,11 @@ var meta32 = () => [
       image: "/img/hero/links.jpg"
     }
   ),
-  links_default.groups.map((group, index) => /* @__PURE__ */ jsx48(Section, { eyebrow: String(index + 1).padStart(2, "0"), title: group.title, alt: index % 2 === 1, children: /* @__PURE__ */ jsx48("ul", { className: "feature-list", children: group.items.map((item) => /* @__PURE__ */ jsxs38("li", { children: [
-    /* @__PURE__ */ jsx48("span", { className: "feature-list__key", children: "\u2197" }),
-    /* @__PURE__ */ jsxs38("div", { children: [
-      /* @__PURE__ */ jsx48("h3", { className: "feature-list__title", children: /* @__PURE__ */ jsx48("a", { href: item.url, target: "_blank", rel: "noreferrer", children: item.name }) }),
-      /* @__PURE__ */ jsx48("p", { className: "feature-list__body", children: item.note })
+  links_default.groups.map((group, index) => /* @__PURE__ */ jsx49(Section, { eyebrow: String(index + 1).padStart(2, "0"), title: group.title, alt: index % 2 === 1, children: /* @__PURE__ */ jsx49("ul", { className: "feature-list", children: group.items.map((item) => /* @__PURE__ */ jsxs39("li", { children: [
+    /* @__PURE__ */ jsx49("span", { className: "feature-list__key", children: "\u2197" }),
+    /* @__PURE__ */ jsxs39("div", { children: [
+      /* @__PURE__ */ jsx49("h3", { className: "feature-list__title", children: /* @__PURE__ */ jsx49("a", { href: item.url, target: "_blank", rel: "noreferrer", children: item.name }) }),
+      /* @__PURE__ */ jsx49("p", { className: "feature-list__body", children: item.note })
     ] })
   ] }, item.name)) }) }, group.title))
 ] }), links_default2 = Index32;
@@ -11200,14 +11248,14 @@ __export(news_exports, {
   default: () => news_default2,
   meta: () => meta33
 });
-import { useMemo as useMemo5, useState as useState10 } from "react";
+import { useMemo as useMemo5, useState as useState11 } from "react";
 import { Pagination as Pagination3 } from "flowbite-react";
-import { jsx as jsx49, jsxs as jsxs39 } from "react/jsx-runtime";
+import { jsx as jsx50, jsxs as jsxs40 } from "react/jsx-runtime";
 var meta33 = () => [
   { title: "News \xB7 7-Dimensional Telescope" },
   { name: "description", content: "Updates, publications, meetings and press from the 7DT project." }
 ], TYPES = ["press", "publication", "meeting", "update"], PER_PAGE3 = 6, tagClass = (type) => type === "meeting" ? "tag-news" : type === "publication" ? "tag-publication" : type === "press" ? "tag-press" : "tag-update", Index33 = () => {
-  let [currentPage, setCurrentPage] = useState10(1), [selected, setSelected] = useState10([...TYPES]), toggle = (type) => {
+  let [currentPage, setCurrentPage] = useState11(1), [selected, setSelected] = useState11([...TYPES]), toggle = (type) => {
     setSelected(
       (prev) => prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
     ), setCurrentPage(1);
@@ -11215,8 +11263,8 @@ var meta33 = () => [
     () => items.filter((item) => selected.includes(item.type)),
     [items, selected]
   ), totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE3)), page = Math.min(currentPage, totalPages), shown = filtered.slice((page - 1) * PER_PAGE3, page * PER_PAGE3);
-  return /* @__PURE__ */ jsxs39(PageLayout, { menu: "manuNews", children: [
-    /* @__PURE__ */ jsx49(
+  return /* @__PURE__ */ jsxs40(PageLayout, { menu: "manuNews", children: [
+    /* @__PURE__ */ jsx50(
       PageHero,
       {
         eyebrow: "News",
@@ -11225,12 +11273,12 @@ var meta33 = () => [
         image: "/img/hero/news.jpg"
       }
     ),
-    /* @__PURE__ */ jsxs39(Section, { eyebrow: "Updates", title: "A bunch of intriguing updates", children: [
-      /* @__PURE__ */ jsxs39("div", { className: "toolbar", children: [
-        /* @__PURE__ */ jsxs39("div", { className: "toolbar__group", children: [
-          /* @__PURE__ */ jsx49("span", { className: "toolbar__label", children: "Filter" }),
-          TYPES.map((type) => /* @__PURE__ */ jsxs39("label", { className: "checkbox", htmlFor: `filter-${type}`, children: [
-            /* @__PURE__ */ jsx49(
+    /* @__PURE__ */ jsxs40(Section, { eyebrow: "Updates", title: "A bunch of intriguing updates", children: [
+      /* @__PURE__ */ jsxs40("div", { className: "toolbar", children: [
+        /* @__PURE__ */ jsxs40("div", { className: "toolbar__group", children: [
+          /* @__PURE__ */ jsx50("span", { className: "toolbar__label", children: "Filter" }),
+          TYPES.map((type) => /* @__PURE__ */ jsxs40("label", { className: "checkbox", htmlFor: `filter-${type}`, children: [
+            /* @__PURE__ */ jsx50(
               "input",
               {
                 id: `filter-${type}`,
@@ -11239,27 +11287,27 @@ var meta33 = () => [
                 onChange: () => toggle(type)
               }
             ),
-            /* @__PURE__ */ jsx49("span", { style: { textTransform: "capitalize" }, children: type })
+            /* @__PURE__ */ jsx50("span", { style: { textTransform: "capitalize" }, children: type })
           ] }, type))
         ] }),
-        /* @__PURE__ */ jsxs39("span", { className: "toolbar__label", role: "status", "aria-live": "polite", children: [
+        /* @__PURE__ */ jsxs40("span", { className: "toolbar__label", role: "status", "aria-live": "polite", children: [
           filtered.length,
           " item",
           filtered.length === 1 ? "" : "s"
         ] })
       ] }),
-      filtered.length === 0 && /* @__PURE__ */ jsx49("p", { className: "note", style: { padding: "2rem 0" }, children: "No items match the selected categories. Tick a category above to see updates." }),
-      /* @__PURE__ */ jsx49("div", { className: "news-list", children: shown.map((item, index) => /* @__PURE__ */ jsx49("article", { className: "news", children: /* @__PURE__ */ jsxs39("div", { className: "news-content", children: [
-        /* @__PURE__ */ jsx49("div", { className: "news-img-container", children: /* @__PURE__ */ jsx49("img", { src: `/img/news/${item.imgName}`, alt: "", loading: "lazy", width: 640, height: 480 }) }),
-        /* @__PURE__ */ jsxs39("div", { className: "news-info", children: [
-          /* @__PURE__ */ jsxs39("div", { className: "news-about", children: [
-            /* @__PURE__ */ jsx49("span", { className: `news-tag ${tagClass(item.type)}`, children: item.type }),
-            /* @__PURE__ */ jsx49("span", { className: "news-time", children: item.date })
+      filtered.length === 0 && /* @__PURE__ */ jsx50("p", { className: "note", style: { padding: "2rem 0" }, children: "No items match the selected categories. Tick a category above to see updates." }),
+      /* @__PURE__ */ jsx50("div", { className: "news-list", children: shown.map((item, index) => /* @__PURE__ */ jsx50("article", { className: "news", children: /* @__PURE__ */ jsxs40("div", { className: "news-content", children: [
+        /* @__PURE__ */ jsx50("div", { className: "news-img-container", children: /* @__PURE__ */ jsx50("img", { src: `/img/news/${item.imgName}`, alt: "", loading: "lazy", width: 640, height: 480 }) }),
+        /* @__PURE__ */ jsxs40("div", { className: "news-info", children: [
+          /* @__PURE__ */ jsxs40("div", { className: "news-about", children: [
+            /* @__PURE__ */ jsx50("span", { className: `news-tag ${tagClass(item.type)}`, children: item.type }),
+            /* @__PURE__ */ jsx50("span", { className: "news-time", children: item.date })
           ] }),
-          /* @__PURE__ */ jsx49("h2", { className: "news-title", children: item.title }),
-          /* @__PURE__ */ jsx49("div", { className: "news-creator", children: item.type === "meeting" ? item.place : item.type === "publication" ? item.shortAuthor : item.source }),
-          item.content && /* @__PURE__ */ jsx49("p", { className: "feature-list__body", style: { marginTop: "0.75rem", maxWidth: "64ch" }, children: item.content }),
-          item.webpage && /* @__PURE__ */ jsx49(
+          /* @__PURE__ */ jsx50("h2", { className: "news-title", children: item.title }),
+          /* @__PURE__ */ jsx50("div", { className: "news-creator", children: item.type === "meeting" ? item.place : item.type === "publication" ? item.shortAuthor : item.source }),
+          item.content && /* @__PURE__ */ jsx50("p", { className: "feature-list__body", style: { marginTop: "0.75rem", maxWidth: "64ch" }, children: item.content }),
+          item.webpage && /* @__PURE__ */ jsx50(
             "a",
             {
               className: "details-button",
@@ -11271,7 +11319,7 @@ var meta33 = () => [
           )
         ] })
       ] }) }, `${item.title}-${index}`)) }),
-      totalPages > 1 && /* @__PURE__ */ jsx49("div", { className: "pagination-wrap", children: /* @__PURE__ */ jsx49(Pagination3, { currentPage: page, totalPages, onPageChange: setCurrentPage }) })
+      totalPages > 1 && /* @__PURE__ */ jsx50("div", { className: "pagination-wrap", children: /* @__PURE__ */ jsx50(Pagination3, { currentPage: page, totalPages, onPageChange: setCurrentPage }) })
     ] })
   ] });
 }, news_default2 = Index33;
@@ -11288,7 +11336,7 @@ function loader19() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-TYAEVICJ.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-PYENLP5H.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-WQ3BNKON.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-UE6EXCGB.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-ZUWDNX4V.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/exptime": { id: "routes/exptime", parentId: "root", path: "exptime", index: void 0, caseSensitive: void 0, module: "/build/routes/exptime-B66677KU.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-6PFGXW2Z.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-BBXNIDTZ.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-HBLAAOYS.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overhead": { id: "routes/overhead", parentId: "root", path: "overhead", index: void 0, caseSensitive: void 0, module: "/build/routes/overhead-GDOVE2UB.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overview": { id: "routes/overview", parentId: "root", path: "overview", index: void 0, caseSensitive: void 0, module: "/build/routes/overview-KJQASMSO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-WW6NCK22.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-UGS7MSJW.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-LRNEPZLB.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-P7NGYWQ3.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-73RZED2L.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-K3JBI4QC.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-CYAMGIRA.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-PTXVTLKX.js", imports: ["/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-IFJD2B5U.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-MBH4SS7H.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-ZSMU3IDR.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-MOI3QCIU.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-DLX5GMNG.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-RFQ4XZ7Z.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-6C7BMXUH.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-QLPZOQAD.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-SAMROODD.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-IUTTE3TX.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/tile": { id: "routes/tile", parentId: "root", path: "tile", index: void 0, caseSensitive: void 0, module: "/build/routes/tile-VYWTWX2U.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-VAM2SKK7.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.call": { id: "routes/users.call", parentId: "root", path: "users/call", index: void 0, caseSensitive: void 0, module: "/build/routes/users.call-23OF4AR7.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-4BTPHAGG.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-DNO3SIOE.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-GBNUHZSI.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-ST2CVZRW.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-6FIGRRAY.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-TJJZS57D.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-5QURXAL3.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-WZ3H5GTH.js", imports: ["/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-6FIGRRAY.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-OC6QUAR5.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-XNWIUOKN.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/visibility": { id: "routes/visibility", parentId: "root", path: "visibility", index: void 0, caseSensitive: void 0, module: "/build/routes/visibility-3OHETBRR.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "4fbfd146", hmr: void 0, url: "/build/manifest-4FBFD146.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-P23GZZ35.js", imports: ["/build/_shared/chunk-ZTWSWTDU.js", "/build/_shared/chunk-Q3IECNXJ.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-LADUNZ4T.js", imports: void 0, hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !0 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-PYENLP5H.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.funding": { id: "routes/about.funding", parentId: "root", path: "about/funding", index: void 0, caseSensitive: void 0, module: "/build/routes/about.funding-WQ3BNKON.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.intro": { id: "routes/about.intro", parentId: "root", path: "about/intro", index: void 0, caseSensitive: void 0, module: "/build/routes/about.intro-UE6EXCGB.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/about.team": { id: "routes/about.team", parentId: "root", path: "about/team", index: void 0, caseSensitive: void 0, module: "/build/routes/about.team-ZUWDNX4V.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/data.$": { id: "routes/data.$", parentId: "root", path: "data/*", index: void 0, caseSensitive: void 0, module: "/build/routes/data.$-3AZXDCRW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/exptime": { id: "routes/exptime", parentId: "root", path: "exptime", index: void 0, caseSensitive: void 0, module: "/build/routes/exptime-B66677KU.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/gallery": { id: "routes/gallery", parentId: "root", path: "gallery", index: void 0, caseSensitive: void 0, module: "/build/routes/gallery-6PFGXW2Z.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/links": { id: "routes/links", parentId: "root", path: "links", index: void 0, caseSensitive: void 0, module: "/build/routes/links-BBXNIDTZ.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/news": { id: "routes/news", parentId: "root", path: "news", index: void 0, caseSensitive: void 0, module: "/build/routes/news-HBLAAOYS.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overhead": { id: "routes/overhead", parentId: "root", path: "overhead", index: void 0, caseSensitive: void 0, module: "/build/routes/overhead-GDOVE2UB.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/overview": { id: "routes/overview", parentId: "root", path: "overview", index: void 0, caseSensitive: void 0, module: "/build/routes/overview-KJQASMSO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.list": { id: "routes/publication.list", parentId: "root", path: "publication/list", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.list-WW6NCK22.js", imports: ["/build/_shared/chunk-CANRWFSK.js", "/build/_shared/chunk-L3X54X2D.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/publication.policy": { id: "routes/publication.policy", parentId: "root", path: "publication/policy", index: void 0, caseSensitive: void 0, module: "/build/routes/publication.policy-UGS7MSJW.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.agn": { id: "routes/science.agn", parentId: "root", path: "science/agn", index: void 0, caseSensitive: void 0, module: "/build/routes/science.agn-LRNEPZLB.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.cosmology": { id: "routes/science.cosmology", parentId: "root", path: "science/cosmology", index: void 0, caseSensitive: void 0, module: "/build/routes/science.cosmology-P7NGYWQ3.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galactic": { id: "routes/science.galactic", parentId: "root", path: "science/galactic", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galactic-73RZED2L.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.galaxies": { id: "routes/science.galaxies", parentId: "root", path: "science/galaxies", index: void 0, caseSensitive: void 0, module: "/build/routes/science.galaxies-K3JBI4QC.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.mma": { id: "routes/science.mma", parentId: "root", path: "science/mma", index: void 0, caseSensitive: void 0, module: "/build/routes/science.mma-CYAMGIRA.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.overview": { id: "routes/science.overview", parentId: "root", path: "science/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/science.overview-PTXVTLKX.js", imports: ["/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.sci": { id: "routes/science.sci", parentId: "root", path: "science/sci", index: void 0, caseSensitive: void 0, module: "/build/routes/science.sci-HXBHTJRO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.solar": { id: "routes/science.solar", parentId: "root", path: "science/solar", index: void 0, caseSensitive: void 0, module: "/build/routes/science.solar-IFJD2B5U.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/science.transients": { id: "routes/science.transients", parentId: "root", path: "science/transients", index: void 0, caseSensitive: void 0, module: "/build/routes/science.transients-MBH4SS7H.js", imports: ["/build/_shared/chunk-7UD3N4KF.js", "/build/_shared/chunk-M3GU26BS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.coverage": { id: "routes/survey.coverage", parentId: "root", path: "survey/coverage", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.coverage-K4PDY3QT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.design": { id: "routes/survey.design", parentId: "root", path: "survey/design", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.design-JMRJ3FWA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ims": { id: "routes/survey.ims", parentId: "root", path: "survey/ims", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ims-ZSMU3IDR.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.overview": { id: "routes/survey.overview", parentId: "root", path: "survey/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.overview-MOI3QCIU.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.ris": { id: "routes/survey.ris", parentId: "root", path: "survey/ris", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.ris-DLX5GMNG.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.status": { id: "routes/survey.status", parentId: "root", path: "survey/status", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.status-XAJRC3BA.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/survey.wts": { id: "routes/survey.wts", parentId: "root", path: "survey/wts", index: void 0, caseSensitive: void 0, module: "/build/routes/survey.wts-RFQ4XZ7Z.js", imports: ["/build/_shared/chunk-RH3WRP2S.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.computer": { id: "routes/telescope.computer", parentId: "root", path: "telescope/computer", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.computer-6C7BMXUH.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.instrument": { id: "routes/telescope.instrument", parentId: "root", path: "telescope/instrument", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.instrument-QLPZOQAD.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.location": { id: "routes/telescope.location", parentId: "root", path: "telescope/location", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.location-SAMROODD.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.mode": { id: "routes/telescope.mode", parentId: "root", path: "telescope/mode", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.mode-MCZ2PIML.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/telescope.overview": { id: "routes/telescope.overview", parentId: "root", path: "telescope/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/telescope.overview-IUTTE3TX.js", imports: ["/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/tile": { id: "routes/tile", parentId: "root", path: "tile", index: void 0, caseSensitive: void 0, module: "/build/routes/tile-VYWTWX2U.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.access": { id: "routes/users.access", parentId: "root", path: "users/access", index: void 0, caseSensitive: void 0, module: "/build/routes/users.access-VAM2SKK7.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.call": { id: "routes/users.call", parentId: "root", path: "users/call", index: void 0, caseSensitive: void 0, module: "/build/routes/users.call-23OF4AR7.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.data": { id: "routes/users.data", parentId: "root", path: "users/data", index: void 0, caseSensitive: void 0, module: "/build/routes/users.data-4BTPHAGG.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.faq": { id: "routes/users.faq", parentId: "root", path: "users/faq", index: void 0, caseSensitive: void 0, module: "/build/routes/users.faq-DNO3SIOE.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.format": { id: "routes/users.format", parentId: "root", path: "users/format", index: void 0, caseSensitive: void 0, module: "/build/routes/users.format-GBNUHZSI.js", imports: ["/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.links": { id: "routes/users.links", parentId: "root", path: "users/links", index: void 0, caseSensitive: void 0, module: "/build/routes/users.links-ST2CVZRW.js", imports: ["/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-6FIGRRAY.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.overview": { id: "routes/users.overview", parentId: "root", path: "users/overview", index: void 0, caseSensitive: void 0, module: "/build/routes/users.overview-TJJZS57D.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.performance": { id: "routes/users.performance", parentId: "root", path: "users/performance", index: void 0, caseSensitive: void 0, module: "/build/routes/users.performance-5QURXAL3.js", imports: ["/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-COPL6NCJ.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.propose": { id: "routes/users.propose", parentId: "root", path: "users/propose", index: void 0, caseSensitive: void 0, module: "/build/routes/users.propose-E2BGSKSN.js", imports: ["/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-6FIGRRAY.js", "/build/_shared/chunk-BG63C6QR.js", "/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.software": { id: "routes/users.software", parentId: "root", path: "users/software", index: void 0, caseSensitive: void 0, module: "/build/routes/users.software-OC6QUAR5.js", imports: ["/build/_shared/chunk-URUBXH5T.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !1, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/users.status": { id: "routes/users.status", parentId: "root", path: "users/status", index: void 0, caseSensitive: void 0, module: "/build/routes/users.status-XNWIUOKN.js", imports: ["/build/_shared/chunk-SMY7AP5K.js", "/build/_shared/chunk-KA23V6VM.js", "/build/_shared/chunk-OJF6NVWS.js", "/build/_shared/chunk-Q5UKEAV3.js"], hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 }, "routes/visibility": { id: "routes/visibility", parentId: "root", path: "visibility", index: void 0, caseSensitive: void 0, module: "/build/routes/visibility-3OHETBRR.js", imports: void 0, hasAction: !1, hasLoader: !0, hasClientAction: !1, hasClientLoader: !1, hasErrorBoundary: !1 } }, version: "c0de22be", hmr: void 0, url: "/build/manifest-C0DE22BE.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "production", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1, v3_relativeSplatPath: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

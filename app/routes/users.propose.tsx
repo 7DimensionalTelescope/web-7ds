@@ -6,7 +6,7 @@ import { modeText } from './content/text';
 import surveys from './content/surveys.json';
 import call from './content/call.json';
 import ObsModes from '../components/obsmodes';
-import ToolDock from '../components/tooldock';
+import PageRail, { type RailItem } from '../components/pagerail';
 
 export const meta: MetaFunction = () => [
   { title: 'How to propose · 7DT for users' },
@@ -116,6 +116,19 @@ const REQUEST_PARAMETERS: { field: string; what: React.ReactNode }[] = [
   },
 ];
 
+const RAIL: RailItem[] = [
+  { id: 'general', label: 'General information', level: 2 },
+  ...(call.active ? [{ id: 'open-call', label: 'The open call', level: 3 as const }] : []),
+  { id: 'who', label: 'Who may propose', level: 3 },
+  { id: 'time', label: 'Time available', level: 3 },
+  { id: 'data-rights', label: 'Data rights and authorship', level: 3 },
+  { id: 'guidelines', label: 'Guidelines', level: 2 },
+  { id: 'program-type', label: 'Program type', level: 3 },
+  { id: 'observation-mode', label: 'Observation mode', level: 3 },
+  { id: 'before-you-write', label: 'Before you write', level: 3 },
+  { id: 'technical-justification', label: 'Technical justification', level: 3 },
+];
+
 const Index = () => {
   return (
     <PageLayout menu="manuUsers">
@@ -135,13 +148,13 @@ const Index = () => {
           titled block inside one of them — as nine equal sections a reader
           could not tell which headings decided their eligibility and which
           only described the mechanics. */}
-      {/* The tool dock rides alongside these sections and no further. */}
+      {/* The page rail rides alongside these sections and no further. */}
       <div className="dockzone">
-        <ToolDock />
-        <Section eyebrow="Before you start" title="General information">
+        <PageRail items={RAIL} />
+        <Section id="general" eyebrow="Before you start" title="General information">
           {call.active && (
             <div className="subsection">
-              <h3>The open call</h3>
+              <h3 id="open-call">The open call</h3>
               <p className="prose">
                 Proposals are being accepted for observations between {call.observingPeriod}. The
                 deadline is <b>{call.deadline}</b>, {call.deadlineNote}. The dates, the documents to
@@ -161,7 +174,7 @@ const Index = () => {
           )}
 
           <div className="subsection">
-            <h3>Who may propose</h3>
+            <h3 id="who">Who may propose</h3>
             <div className="prose">
               <p>
                 The 7DS team is being formally constituted. Anyone taking part in a 7DS Science
@@ -179,7 +192,7 @@ const Index = () => {
           </div>
 
           <div className="subsection">
-            <h3>Time available, and when</h3>
+            <h3 id="time">Time available, and when</h3>
             <div className="prose">
               <p>
                 Two hundred hours of 7DT time are allocated to the Korea Astronomy and Space Science
@@ -201,7 +214,7 @@ const Index = () => {
           </div>
 
           <div className="subsection">
-            <h3>Data rights and authorship</h3>
+            <h3 id="data-rights">Data rights and authorship</h3>
             <div className="split split--wide-text">
               <div className="prose">
                 <p>
@@ -261,7 +274,7 @@ const Index = () => {
           </div>
         </Section>
 
-        <Section eyebrow="Writing" title="Guidelines" alt>
+        <Section id="guidelines" eyebrow="Writing" title="Guidelines" alt>
           {/* In the order a proposal gets written: the two choices that decide
               the shape of a program, then the checks that depend on them — the
               exposure and overhead a mode costs — and only then the technical
@@ -275,7 +288,7 @@ const Index = () => {
           </p>
 
           <div className="subsection">
-            <h3>Program type</h3>
+            <h3 id="program-type">Program type</h3>
             <div className="table-wrap">
               <table className="spec-table">
                 <caption>Program types</caption>
@@ -297,7 +310,7 @@ const Index = () => {
           </div>
 
           <div className="subsection">
-            <h3>Observation mode</h3>
+            <h3 id="observation-mode">Observation mode</h3>
             <p className="prose">{modeText}</p>
 
             <div className="modebox-grid">
@@ -317,7 +330,7 @@ const Index = () => {
           </div>
 
           <div className="subsection">
-            <h3>Before you write</h3>
+            <h3 id="before-you-write">Before you write</h3>
             <p className="prose">
               Four things are worth settling first, because each of them can make a program unnecessary 
               or unworkable, and all four can be checked from this site.
@@ -382,7 +395,7 @@ const Index = () => {
           </div>
 
           <div className="subsection">
-            <h3>Technical justification</h3>
+            <h3 id="technical-justification">Technical justification</h3>
             <div className="table-wrap">
               <table className="spec-table">
                 <caption>Fields of the Phase 1 form</caption>
