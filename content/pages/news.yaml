@@ -1,0 +1,17 @@
+# /news — the page around the news items. The items themselves are in
+# content/data/news.yaml, newest first; drafts wait in news-pending.yaml.
+
+meta:
+  title: News · 7-Dimensional Telescope
+  description: Updates, publications, meetings and press from the 7DT project.
+hero:
+  eyebrow: News
+  title: Latest from 7DT
+  lede: Survey milestones, instrument changes, publications and meetings.
+  image: /img/hero/news.jpg
+updates:
+  eyebrow: Updates
+  title: A bunch of intriguing updates
+  filter: Filter
+  empty: No items match the selected categories. Tick a category above to see updates.
+  details: Details →

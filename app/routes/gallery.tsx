@@ -3,16 +3,16 @@ import type { MetaFunction } from '@remix-run/node';
 import { Pagination } from 'flowbite-react';
 
 import { PageLayout, PageHero, Section } from '../components/site';
+import { metaOf } from '../lib/page';
 import images from '../content/data/images.json';
+import content from '../content/pages/gallery.json';
 
-export const meta: MetaFunction = () => [
-  { title: 'Gallery · 7-Dimensional Telescope' },
-  { name: 'description', content: 'Images of the 7-Dimensional Telescope and of the sky it observes.' },
-];
+export const meta: MetaFunction = () => metaOf(content);
 
 const PER_PAGE = 6;
 
 const Index = () => {
+  const { hero, images: section } = content;
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.max(1, Math.ceil(images.length / PER_PAGE));
@@ -21,14 +21,9 @@ const Index = () => {
 
   return (
     <PageLayout menu="manuGallery">
-      <PageHero
-        eyebrow="Gallery"
-        title="Our Universe, seen in seven dimensions"
-        lede="Pictures of the array, and of what it returns."
-        image="/img/hero/gallery.jpg"
-      />
+      <PageHero eyebrow={hero.eyebrow} title={hero.title} lede={hero.lede} image={hero.image} />
 
-      <Section eyebrow="Images" title="Gallery" wide>
+      <Section eyebrow={section.eyebrow} title={section.title} wide>
         <div className="gallery">
           <ul>
             {shown.map((img) => (
@@ -45,7 +40,7 @@ const Index = () => {
                     />
                     <figcaption>{img.name}</figcaption>
                   </figure>
-                  <span className="sr-only"> (opens the full-resolution image in a new tab)</span>
+                  <span className="sr-only">{section.opens}</span>
                 </a>
               </li>
             ))}

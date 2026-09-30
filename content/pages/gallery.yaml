@@ -1,0 +1,16 @@
+# /gallery — the page around the pictures. The pictures themselves, and their
+# captions, are listed in content/data/images.yaml; each file is in
+# public/img/images/ with a thumbnail of the same name in public/img/thumbs/.
+
+meta:
+  title: Gallery · 7-Dimensional Telescope
+  description: Images of the 7-Dimensional Telescope and of the sky it observes.
+hero:
+  eyebrow: Gallery
+  title: Our Universe, seen in seven dimensions
+  lede: Pictures of the array, and of what it returns.
+  image: /img/hero/gallery.jpg
+images:
+  eyebrow: Images
+  title: Gallery
+  opens: " (opens the full-resolution image in a new tab)"

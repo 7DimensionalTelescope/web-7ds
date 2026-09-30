@@ -3,12 +3,11 @@ import type { MetaFunction } from '@remix-run/node';
 import { Pagination } from 'flowbite-react';
 
 import { PageLayout, PageHero, Section } from '../components/site';
+import { metaOf } from '../lib/page';
 import news from '../content/data/news.json';
+import content from '../content/pages/news.json';
 
-export const meta: MetaFunction = () => [
-  { title: 'News · 7-Dimensional Telescope' },
-  { name: 'description', content: 'Updates, publications, meetings and press from the 7DT project.' },
-];
+export const meta: MetaFunction = () => metaOf(content);
 
 const TYPES = ['press', 'publication', 'meeting', 'update'] as const;
 const PER_PAGE = 6;
@@ -23,6 +22,7 @@ const tagClass = (type: string) =>
     : 'tag-update';
 
 const Index = () => {
+  const { hero, updates } = content;
   const [currentPage, setCurrentPage] = useState(1);
   const [selected, setSelected] = useState<string[]>([...TYPES]);
 
@@ -46,17 +46,12 @@ const Index = () => {
 
   return (
     <PageLayout menu="manuNews">
-      <PageHero
-        eyebrow="News"
-        title="Latest from 7DT"
-        lede="Survey milestones, instrument changes, publications and meetings."
-        image="/img/hero/news.jpg"
-      />
+      <PageHero eyebrow={hero.eyebrow} title={hero.title} lede={hero.lede} image={hero.image} />
 
-      <Section eyebrow="Updates" title="A bunch of intriguing updates">
+      <Section eyebrow={updates.eyebrow} title={updates.title}>
         <div className="toolbar">
           <div className="toolbar__group">
-            <span className="toolbar__label">Filter</span>
+            <span className="toolbar__label">{updates.filter}</span>
             {TYPES.map((type) => (
               <label className="checkbox" key={type} htmlFor={`filter-${type}`}>
                 <input
@@ -76,7 +71,7 @@ const Index = () => {
 
         {filtered.length === 0 && (
           <p className="note" style={{ padding: '2rem 0' }}>
-            No items match the selected categories. Tick a category above to see updates.
+            {updates.empty}
           </p>
         )}
 
@@ -112,7 +107,7 @@ const Index = () => {
                       target={item.webpage.startsWith('http') ? '_blank' : undefined}
                       rel="noreferrer"
                     >
-                      Details →
+                      {updates.details}
                     </a>
                   )}
                 </div>
