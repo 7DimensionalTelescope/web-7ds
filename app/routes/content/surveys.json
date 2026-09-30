@@ -58,7 +58,7 @@
     {
       "name": "Spec",
       "tagline": "Maximum spectral resolution",
-      "body": "The default mode. Units rotate through every available medium and broad band, covering the full spectral range in as few exposures as the filter distribution allows. This is the mode in which 7DT delivers low-resolution spectroscopy over 1.25 square degrees."
+      "body": "The default mode. Units rotate through every available medium and broad band, covering the full spectral range in as few exposures as the filter distribution allows. This is the mode in which 7DT delivers low-resolution spectroscopy over 1.25 square degrees. With the 16 telescopes currently in operation and the default 32-filter set used for Open Time proposals, this takes two sequential exposures, 16 filters at a time."
     },
     {
       "name": "Deep",

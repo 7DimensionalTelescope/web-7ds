@@ -1,9 +1,9 @@
-import React from 'react';
-import type { MetaFunction } from '@remix-run/node';
-import CalculatorPage, { calculatorMeta } from '../components/calculatorpage';
+import { redirect } from '@remix-run/node';
+import { getTool } from '../lib/calculators';
 
-export const meta: MetaFunction = () => calculatorMeta('overhead');
-
-const Index = () => <CalculatorPage slug="overhead" />;
-
-export default Index;
+/* Found, not moved permanently: the calculator will be served from this site
+   once nginx proxies it (deploy/calculators.nginx.conf), and a 301 would be
+   cached by browsers long after that. */
+export function loader() {
+  return redirect(getTool('overhead').url, 302);
+}

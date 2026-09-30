@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import { PageLayout, PageHero, Section } from '../components/site';
-import { tools } from '../components/calculatorpage';
+import { tools, type Tool } from '../lib/calculators';
 
 export const meta: MetaFunction = () => [
   { title: 'Observation calculators · 7DT for users' },
@@ -24,12 +23,20 @@ const Index = () => (
 
     <Section eyebrow="The set" title="Which one answers your question">
       <div className="grid grid-cols-2">
-        {tools.map((tool) => (
-          <Link className="theme-card" to={`/calculator/${tool.slug}`} key={tool.slug}>
+        {/* Straight to the calculator, in its own tab: a page in between only
+            asked the reader to click again. */}
+        {tools.map((tool: Tool) => (
+          <a
+            className="theme-card"
+            href={tool.url}
+            target="_blank"
+            rel="noreferrer"
+            key={tool.slug}
+          >
             <span className="theme-card__index">{tool.n}</span>
             <h3 className="theme-card__title">{tool.name}</h3>
             <p className="theme-card__body">{tool.question}</p>
-          </Link>
+          </a>
         ))}
       </div>
 

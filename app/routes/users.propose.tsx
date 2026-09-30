@@ -328,8 +328,8 @@ const Index = () => {
         <div className="subsection">
           <h3>Before you write</h3>
           <p className="prose">
-            Three things are worth settling first, because each of them can make a program
-            unnecessary or unworkable, and all three can be checked from this site.
+            Four things are worth settling first, because each of them can make a program unnecessary 
+            or unworkable, and all four can be checked from this site.
           </p>
           <ul className="feature-list" style={{ marginTop: '1.5rem' }}>
             <li>
@@ -353,12 +353,9 @@ const Index = () => {
                   Estimate depth from measurements, not aperture
                 </h4>
                 <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
-                  The <Link to="/calculator/exposure">exposure calculator</Link> does this against
-                  a depth model fitted on real observations, per filter of the mode you intend to
-                  use, and the <Link to="/calculator/overhead">overhead calculator</Link> adds what
-                  the array spends around the exposures. The measured{' '}
-                  <Link to="/users/performance">limiting magnitudes</Link> are what both are
-                  predicting against.
+                  The measured <Link to="/users/performance">limiting magnitudes</Link> per band,
+                  for the fiducial 100-second exposure, are what a coadded depth should be scaled
+                  from.
                 </p>
               </div>
             </li>
@@ -369,10 +366,12 @@ const Index = () => {
                   Check the target is observable
                 </h4>
                 <p className="feature-list__body" style={{ maxWidth: '68ch' }}>
-                  The <Link to="/calculator/visibility">visibility calculator</Link> gives the
-                  altitude track and observable hours from El Sauce for the window you have in
-                  mind, and the <Link to="/calculator/tiles">tile matcher</Link> places the target
-                  on the survey grid.
+                  Visibility from El Sauce in the intended window, and the filter response over the
+                  wavelengths that matter, can both be computed with{' '}
+                  <Link to="/users/software">
+                    <code>supy</code>
+                  </Link>
+                  .
                 </p>
               </div>
             </li>
