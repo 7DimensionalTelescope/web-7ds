@@ -227,8 +227,10 @@ const Index = () => {
             <p>
               Two hundred hours of 7DT time are allocated to the Korea Astronomy and Space Science
               Institute, and a further two hundred hours to the Korean Astronomical Society — four
-              hundred hours in total, held separately and awarded through their own routes. This is
-              time on the array outside the three surveys, which otherwise occupy the night.
+              hundred hours in total. How a proposal is assigned to a pool and reviewed is set by
+              each call, and is given in its{' '}
+              <Link to="/users/call">Call for Proposals</Link>. This is time on the array outside
+              the three surveys, which otherwise occupy the night.
             </p>
             <p>
               The current call, its dates and its documents are on the{' '}
